@@ -1,0 +1,33 @@
+= render partial: "shared/search_navbar", locals: {title: "Purchases"}
+-#
+  .container
+-#
+  .col-xs-12.col-sm-6.col-md-offset-3
+.container
+  - @purchases.sort_by(&:txn_date).reverse.each do |purchase|
+    %div.row
+      .col-xs-12.col-sm-12.col-md-12
+        %div.panel.panel-primary
+          %div.list_group
+            %a{href: purchase_path(purchase.id), class: "list-group-item"}
+              =# purchase.name
+              = @vendor_service.fetch_by_id(purchase.entity_ref).display_name unless purchase.entity_ref.blank?
+              .pull-right
+                %i.fa.fa-chevron-right
+              %br/
+              %small
+                = purchase.txn_date.strftime("%m/%d/%y")
+                %br
+                = purchase.payment_type
+                %br
+                = number_to_currency(purchase.total)
+                -#
+                  - unless vendor.primary_phone.blank?
+                    = vendor.primary_phone.free_form_number 
+                    %br
+                  = number_to_currency(vendor.balance)
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      =# link_to "New Purchase", new_purchase_path, class: 'btn btn-primary btn-lg btn-block'
+
+= render partial: "shared/footer_navbar", locals: {title: "Vendors"}

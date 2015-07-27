@@ -1,0 +1,299 @@
+GIT
+  remote: git://github.com/gregbell/active_admin.git
+  revision: cef68b7be82699f9abdc46c98e4fa6a471cb1761
+  specs:
+    activeadmin (1.0.0.pre1)
+      arbre (~> 1.0, >= 1.0.2)
+      bourbon
+      coffee-rails
+      formtastic (~> 3.1)
+      formtastic_i18n
+      inherited_resources (~> 1.6)
+      jquery-rails
+      jquery-ui-rails (~> 5.0)
+      kaminari (~> 0.15)
+      rails (>= 3.2, < 5.0)
+      ransack (~> 1.3)
+      sass-rails
+
+GIT
+  remote: git://github.com/ruckus/quickbooks-ruby.git
+  revision: 8a7af01c9ec09f53c07ddfd8450e87f25a8d66ea
+  specs:
+    quickbooks-ruby (0.2.3)
+      activemodel
+      multipart-post
+      nokogiri
+      oauth (= 0.4.7)
+      roxml (= 3.3.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionmailer (4.1.8)
+      actionpack (= 4.1.8)
+      actionview (= 4.1.8)
+      mail (~> 2.5, >= 2.5.4)
+    actionpack (4.1.8)
+      actionview (= 4.1.8)
+      activesupport (= 4.1.8)
+      rack (~> 1.5.2)
+      rack-test (~> 0.6.2)
+    actionview (4.1.8)
+      activesupport (= 4.1.8)
+      builder (~> 3.1)
+      erubis (~> 2.7.0)
+    activemodel (4.1.8)
+      activesupport (= 4.1.8)
+      builder (~> 3.1)
+    activerecord (4.1.8)
+      activemodel (= 4.1.8)
+      activesupport (= 4.1.8)
+      arel (~> 5.0.0)
+    activerecord-sqlserver-adapter (4.1.0)
+      activerecord (~> 4.1.0)
+      arel
+    activesupport (4.1.8)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
+    arbre (1.0.3)
+      activesupport (>= 3.0.0)
+    arel (5.0.1.20140414130214)
+    bcrypt (3.1.7)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
+    bootstrap-typeahead-rails (0.10.5.1)
+      railties (>= 3.0)
+    bourbon (4.2.3)
+      sass (~> 3.4)
+      thor
+    builder (3.2.2)
+    byebug (3.5.1)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+      slop (~> 3.6)
+    cancancan (1.9.1)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
+    chronic (0.10.2)
+    coffee-rails (4.1.0)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0, < 5.0)
+    coffee-script (2.3.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.8.0)
+    columnize (0.9.0)
+    connection_pool (2.1.0)
+    debug_inspector (0.0.2)
+    debugger-linecache (1.2.0)
+    devise (3.2.4)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
+    erubis (2.7.0)
+    execjs (2.2.2)
+    figaro (1.0.0)
+      thor (~> 0.14)
+    formtastic (3.1.3)
+      actionpack (>= 3.2.13)
+    formtastic_i18n (0.4.1)
+    haml (4.1.0.beta.1)
+      tilt
+    has_scope (0.6.0)
+      actionpack (>= 3.2, < 5)
+      activesupport (>= 3.2, < 5)
+    hike (1.2.3)
+    hitimes (1.2.2)
+    i18n (0.7.0)
+    inherited_resources (1.6.0)
+      actionpack (>= 3.2, < 5)
+      has_scope (~> 0.6.0.rc)
+      railties (>= 3.2, < 5)
+      responders
+    jbuilder (2.2.6)
+      activesupport (>= 3.0.0, < 5)
+      multi_json (~> 1.2)
+    jquery-rails (3.1.2)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
+    jquery-ui-rails (5.0.5)
+      railties (>= 3.2.16)
+    json (1.8.2)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+    kaminari-bootstrap (3.0.1)
+      kaminari (>= 0.13.0)
+      rails
+    kgio (2.9.3)
+    libv8 (3.16.14.3)
+    mail (2.6.3)
+      mime-types (>= 1.16, < 3)
+    mime-types (2.4.3)
+    mini_portile (0.6.2)
+    minitest (5.6.1)
+    multi_json (1.10.1)
+    multipart-post (2.0.0)
+    nokogiri (1.6.6.2)
+      mini_portile (~> 0.6.0)
+    oauth (0.4.7)
+    orm_adapter (0.5.0)
+    polyamorous (1.2.0)
+      activerecord (>= 3.0)
+    rack (1.5.3)
+    rack-protection (1.5.3)
+      rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
+    rails (4.1.8)
+      actionmailer (= 4.1.8)
+      actionpack (= 4.1.8)
+      actionview (= 4.1.8)
+      activemodel (= 4.1.8)
+      activerecord (= 4.1.8)
+      activesupport (= 4.1.8)
+      bundler (>= 1.3.0, < 2.0)
+      railties (= 4.1.8)
+      sprockets-rails (~> 2.0)
+    railties (4.1.8)
+      actionpack (= 4.1.8)
+      activesupport (= 4.1.8)
+      rake (>= 0.8.7)
+      thor (>= 0.18.1, < 2.0)
+    raindrops (0.13.0)
+    rake (10.4.2)
+    ransack (1.6.6)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.2)
+    rdoc (4.2.0)
+      json (~> 1.4)
+    redis (3.2.0)
+    redis-namespace (1.5.1)
+      redis (~> 3.0, >= 3.0.4)
+    ref (1.0.5)
+    responders (1.1.2)
+      railties (>= 3.2, < 4.2)
+    rmagick (2.13.3)
+    roxml (3.3.1)
+      activesupport (>= 2.3.0)
+      nokogiri (>= 1.3.3)
+    sass (3.4.9)
+    sass-rails (5.0.1)
+      railties (>= 4.0.0, < 5.0)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (~> 1.1)
+    sdoc (0.4.1)
+      json (~> 1.7, >= 1.7.7)
+      rdoc (~> 4.0)
+    sidekiq (3.3.0)
+      celluloid (>= 0.16.0)
+      connection_pool (>= 2.0.0)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    slop (3.6.0)
+    spring (1.2.0)
+    sprockets (2.12.3)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    sprockets-rails (2.2.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      sprockets (>= 2.8, < 4.0)
+    sqlite3 (1.3.10)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
+    thor (0.19.1)
+    thread_safe (0.3.5)
+    tilt (1.4.1)
+    timers (4.0.1)
+      hitimes
+    tiny_tds (0.6.2)
+    turbolinks (2.5.3)
+      coffee-rails
+    twbs_sass_rails (3.0.2)
+      rails (>= 4.0.12, < 5.0.0)
+      sass-rails (>= 4.0.2, < 6.0.0)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    uglifier (2.7.0)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
+    warden (1.2.3)
+      rack (>= 1.0)
+    web-console (2.0.0)
+      activemodel (~> 4.0)
+      binding_of_caller (>= 0.7.2)
+      railties (~> 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+    whenever (0.9.2)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activeadmin!
+  activerecord-sqlserver-adapter
+  bootstrap-typeahead-rails
+  byebug
+  cancancan
+  carrierwave
+  coffee-rails (~> 4.1.0)
+  devise
+  figaro
+  haml
+  jbuilder (~> 2.0)
+  jquery-rails
+  jquery-turbolinks
+  kaminari-bootstrap
+  polyamorous
+  quickbooks-ruby!
+  rails (= 4.1.8)
+  ransack
+  rmagick
+  sass-rails (~> 5.0)
+  sdoc (~> 0.4.0)
+  sidekiq
+  sinatra
+  spring
+  sqlite3
+  therubyracer
+  tiny_tds
+  turbolinks
+  twbs_sass_rails
+  uglifier (>= 1.3.0)
+  unicorn
+  web-console (~> 2.0)
+  whenever

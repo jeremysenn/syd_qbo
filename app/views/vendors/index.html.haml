@@ -1,0 +1,26 @@
+= render partial: "shared/search_navbar", locals: {title: "Vendors"}
+-#
+  .container
+-#
+  .col-xs-12.col-sm-6.col-md-offset-3
+.container
+  - @vendors.each do |vendor|
+    %div.row
+      .col-xs-12.col-sm-12.col-md-12
+        %div.panel.panel-primary
+          %div.list_group
+            %a{href: vendor_path(vendor.id), class: "list-group-item"}
+              = vendor.display_name
+              .pull-right
+                %i.fa.fa-chevron-right
+              %br/
+              %small
+                - unless vendor.primary_phone.blank?
+                  = vendor.primary_phone.free_form_number 
+                  %br
+                = number_to_currency(vendor.balance)
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      = link_to "New Vendor", new_vendor_path, class: 'btn btn-primary btn-lg btn-block'
+
+= render partial: "shared/footer_navbar", locals: {title: "Vendors"}

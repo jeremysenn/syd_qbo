@@ -1,0 +1,23 @@
+-#
+  .well.col-sm-6.col-md-4.col-md-offset-4
+.well
+  .row.form-group
+    %div{:class => "col-sm-12 col-md-12"}
+      = label_tag "Item", nil, :class => 'control-label'
+      = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| [item.name, item.id, { data: {description: "#{@item_service.fetch_by_id(item.id).description}", rate: "#{@item_service.fetch_by_id(item.id).purchase_cost}"} }] }), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+      = label_tag "Description", nil, :class => 'control-label'
+      = text_field_tag "purchase_order[line_items][][description]", nil, :placeholder => "Description", class: "form-control input-lg"
+      = label_tag "Gross", nil, :class => 'control-label'
+      = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
+      = label_tag "Tare", nil, :class => 'control-label'
+      = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field", required: true
+      = label_tag "Load", nil, :class => 'control-label'
+      = text_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Quantity", class: "form-control input-lg amount-calculation-field", required: true
+      = label_tag "Rate", nil, :class => 'control-label'
+      = text_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+      = label_tag "Amount", nil, :class => 'control-label'
+      = text_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
+      %br
+      %a{href: '#', class: 'remove_field btn btn-danger pull-right'}
+        %i.fa.fa-trash
+      

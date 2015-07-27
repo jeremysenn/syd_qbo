@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  file: MyString
+  user_id: 1
+  ticket_number: MyString
+  customer_number: MyString
+  branch_code: MyString
+  location: MyString
+  event_code: MyString
+  image_id: 1
+  container_number: MyString
+  booking_number: MyString
+  contract_number: MyString
+  hidden: false
+  blob_id: 1
+
+two:
+  name: MyString
+  file: MyString
+  user_id: 1
+  ticket_number: MyString
+  customer_number: MyString
+  branch_code: MyString
+  location: MyString
+  event_code: MyString
+  image_id: 1
+  container_number: MyString
+  booking_number: MyString
+  contract_number: MyString
+  hidden: false
+  blob_id: 1

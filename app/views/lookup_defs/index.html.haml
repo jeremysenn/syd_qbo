@@ -1,0 +1,21 @@
+= render partial: "shared/search_navbar", locals: {title: "event_codes"}
+
+.container
+  - @lookup_defs.sort_by(&:tableName).each_slice(6) do |lookup_defs|
+    %div.row
+      - lookup_defs.each do |lookup_def|
+        .col-xs-12.col-sm-2.col-md-2
+          %div.panel.panel-primary
+            %div.list_group
+              %a{href: lookup_def_path(lookup_def), class: "list-group-item"}
+                = lookup_def.LookupValue
+                .pull-right
+                  %i.fa.fa-chevron-right
+                - unless lookup_def.tableName.blank?
+                  %br/
+                  %small= lookup_def.tableName
+  %div.row
+    .col-xs-12.col-sm-2.col-md-2
+      = link_to "New", new_lookup_def_path, class: 'btn btn-primary btn-lg btn-block'
+
+= render partial: "shared/footer_navbar", locals: {title: "LookupDefs"}

@@ -1,0 +1,24 @@
+.container
+  .well.col-sm-6.col-md-4.col-md-offset-4
+    = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
+          = f.label :email, :class => "control-label"
+          %br/
+          = f.email_field :email, :autofocus => true, :placeholder => "Email", :class => "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
+          = f.label :password, :class => "control-label"
+          %br/
+          = f.password_field :password, :placeholder => "Password", :class => "form-control input-lg"
+      .row.form-group
+        - if devise_mapping.rememberable?
+          %div{:class => "col-sm-12 col-md-12"}
+            = f.check_box :remember_me
+            = f.label :remember_me
+      .row
+        %div{:class => "col-sm-12 col-md-12"}
+          = f.submit "Sign in", :class => "btn btn-block btn-lg btn-primary"
+      %p
+        %br
+        = render "devise/shared/links"

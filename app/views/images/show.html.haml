@@ -1,0 +1,42 @@
+= render partial: "shared/search_navbar", locals: {title: "#{@image.ticket_nbr}"}
+.container
+  %div.row
+    .col-xs-12.col-sm-6.col-md-offset-3
+      =# image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'thumbnail img-responsive')
+      = link_to image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'
+  - unless mobile_device?
+    %div{:id => "image_popup", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+      .modal-dialog.modal-lg
+        .modal-content
+          .modal-body
+            = image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'img-responsive')
+  %div.row
+    .col-xs-12.col-sm-6.col-md-offset-3
+      %div.panel.panel-primary
+        %div.list_group
+          -#
+            %div.list-group-item
+              %strong= "Ticket:"
+              .pull-right
+                = "#{@image.ticket_nbr}"
+          - unless @image.event_code.blank?
+            %div.list-group-item
+              %strong= "Event:"
+              .pull-right
+                = "#{@image.event_code}"
+          - unless @image.camera_name.blank?
+            %div.list-group-item
+              %strong= "Camera:"
+              .pull-right
+                = "#{@image.camera_name}"
+          %div.list-group-item
+            %strong= "Date/Time:"
+            .pull-right
+              = "#{@image.sys_date_time.strftime("%-m/%-d/%y %l:%M %p")}"
+  -#        
+    %div.row
+      .text-center
+        .col-xs-12.col-sm-6.col-md-offset-3
+          %p= link_to 'New Image', '#', :class => 'btn btn-primary btn-lg btn-block'
+
+= render partial: "shared/footer_navbar", locals: {title: "Images"}

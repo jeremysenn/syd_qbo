@@ -1,0 +1,50 @@
+=# render partial: "shared/search_navbar", locals: {title: "New PO"}
+= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "New PO"}
+.container
+  = form_tag purchase_orders_path, id: 'purchase_order_form', :class => "form-horizontal" do |f|
+    -#
+      .well.col-sm-6.col-md-4.col-md-offset-4
+    .well
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
+          = label_tag "Vendor", nil, :class => 'control-label'
+          = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+    %div.input_fields_wrap
+      -#
+        .well.col-sm-6.col-md-4.col-md-offset-4
+      .well
+        .row.form-group
+          %div{:class => "col-sm-12 col-md-12"}
+            = hidden_field_tag "purchase_order[po_status]", "Open"
+            = label_tag "Item", nil, :class => 'control-label'
+            = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| [item.name, item.id, { data: {description: "#{@item_service.fetch_by_id(item.id).description}", rate: "#{@item_service.fetch_by_id(item.id).purchase_cost}"} }] }), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+            = label_tag "Description", nil, :class => 'control-label'
+            = text_field_tag "purchase_order[line_items][][description]", nil, :placeholder => "Description", class: "form-control input-lg", readonly: true
+            = label_tag "Gross", nil, :class => 'control-label'
+            = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
+            = label_tag "Tare", nil, :class => 'control-label'
+            = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field", required: true
+            = label_tag "Load", nil, :class => 'control-label'
+            = text_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Quantity", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
+            = label_tag "Rate", nil, :class => 'control-label'
+            = text_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+            = label_tag "Amount", nil, :class => 'control-label'
+            = text_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
+            %br
+            %a{href: '#', class: 'remove_field btn btn-danger pull-right'}
+              %i.fa.fa-trash
+    -#
+      .col-sm-6.col-md-4.col-md-offset-4
+    %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+    %p= link_to 'More items', line_item_fields_purchase_orders_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right add_field", onclick: "$(this).hide(); $('#spinner').show();"
+    %br
+    %br
+    %br
+    %br
+    .row.form-group
+      %div{:class => "col-sm-12 col-md-12"}
+        -#
+          = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block') do
+          Create
+= render partial: "shared/footer_navbar", locals: {title: "Purchase Order"}

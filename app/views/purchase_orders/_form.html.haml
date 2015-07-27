@@ -1,0 +1,22 @@
+.container
+  .well.col-sm-6.col-md-4.col-md-offset-4
+    = form_for @generic_vendor, :class => "form-inline" do |f|
+      - if @generic_vendor.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@generic_vendor.errors.count, "error")} prohibited this vendor from being saved:"
+          %ul
+            - @generic_vendor.errors.full_messages.each do |msg|
+              %li= msg
+      .row.form-group
+        %div{:class => "col-sm-10"}
+          = f.label "Name", :class => "control-label"
+          = f.text_field :name, placeholder: "Display Name", :class => "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-sm-10"}
+          = f.label "Email", :class => "control-label"
+          %br/
+          = f.text_field :email, placeholder: "Email Address", :class => "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-sm-10"}
+          = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
+          = f.submit "Update", :class => "btn btn-lg btn-primary"

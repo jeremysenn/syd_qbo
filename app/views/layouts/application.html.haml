@@ -1,0 +1,37 @@
+!!!
+%html
+  %head
+    %title SYD QBO
+    -#
+      = favicon_link_tag 'favicon.ico'
+      %link{:href => "/assets/syd_logo_57x57.png", :rel => "apple-touch-icon", :type => "image/png"}/
+    
+    %meta{ charset: 'utf-8' }
+    %meta{ name: 'viewport', id: 'viewport', content: "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" }
+    -#
+      %meta{ name: 'viewport', content: "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=#{(params[:controller]=='images' and params[:action]=='show') ? '2.0' : '1.0'}" }
+    %meta{ content: 'IE=edge', 'http-equiv' => 'X-UA-Compatible' }
+    %meta{ name: "apple-mobile-web-app-capable", content: "yes"}
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    = render 'shared/navbars/no_user_navbar' if current_user.blank?
+    -#
+      - if user_signed_in?
+        = render 'shared/navbars/base_navbar'
+      - else
+        = render 'shared/navbars/no_user_navbar'
+    
+    = render 'layouts/messages'
+    = yield
+    = render 'shared/footer'
+    
+:javascript
+  var zoom = "#{((params[:controller]=='images' or params[:controller]=='image_files' or params[:controller]=='shipments' or params[:controller]=='shipment_files') and params[:action]=='show')}"
+  if (zoom == "true") {
+    $("#viewport").attr("content", "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0");
+  }
+  else {
+    $("#viewport").attr("content", "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0");
+  }

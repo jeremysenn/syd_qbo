@@ -1,0 +1,26 @@
+= render partial: "shared/navbars/purchase_orders_navbar", locals: {title: "Orders"}
+.container
+  - @purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
+    %div.row
+      .col-xs-12.col-sm-12.col-md-12
+        %div.panel.panel-primary
+          %div.list_group
+            %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
+              =# purchase_order.vendor_ref
+              = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+              .pull-right
+                %i.fa.fa-chevron-right
+              %br
+              = purchase_order.doc_number
+              %br
+              = purchase_order.po_status
+              %br/
+              %small
+                = purchase_order.txn_date.strftime("%m/%d/%y")
+                %br
+                = number_to_currency(purchase_order.total)
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      =# link_to "New Purchase Order", new_purchase_order_path, class: 'btn btn-primary btn-lg btn-block'
+
+= render partial: "shared/footer_navbar", locals: {title: "Purchase Order"}
