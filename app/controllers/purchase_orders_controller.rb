@@ -11,17 +11,21 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders
   # GET /purchase_orders.json
   def index
-    if params[:status] == "Open"
-      @purchase_orders = @purchase_order_service.query.entries.find_all{ |e| e.po_status == 'Open' }
-#      query = "Select * From PurchaseOrder Where POStatus is not null AND Where POStatus = 'Open'"
-#      @purchase_orders = @purchase_order_service.query(query, :per_page => 20)
-    elsif params[:status] == "Closed"
-      @purchase_orders = @purchase_order_service.query.entries.find_all{ |e| e.po_status == 'Closed' }
-#      query = "Select * From PurchaseOrder Where POStatus is not null AND  Where POStatus = 'Closed'"
-#      @purchase_orders = @purchase_order_service.query(query, :per_page => 20)
-    else
-      @purchase_orders = @purchase_order_service.query(nil, :per_page => 20)
-    end
+    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Open' }
+    @closed_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Closed' }
+    
+#    if params[:status] == "Open"
+#      @open_purchase_orders = @purchase_order_service.query.entries.find_all{ |e| e.po_status == 'Open' }
+##      query = "Select * From PurchaseOrder Where POStatus is not null AND Where POStatus = 'Open'"
+##      @purchase_orders = @purchase_order_service.query(query, :per_page => 20)
+#    elsif params[:status] == "Closed"
+#      @closed_purchase_orders = @purchase_order_service.query.entries.find_all{ |e| e.po_status == 'Closed' }
+##      query = "Select * From PurchaseOrder Where POStatus is not null AND  Where POStatus = 'Closed'"
+##      @purchase_orders = @purchase_order_service.query(query, :per_page => 20)
+#    else
+#      @open_purchase_orders = @purchase_order_service.query.entries.find_all{ |e| e.po_status == 'Open' }
+##      @purchase_orders = @purchase_order_service.query(nil, :per_page => 20)
+#    end
     
   end
 
@@ -74,7 +78,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]} (#{line_item[:description]})"
+      purchase_line_item.description = "Gross: #{line_item[:gross]} | Tare: #{line_item[:tare]}"
       @purchase_order.line_items.push(purchase_line_item)
     end
     
@@ -107,7 +111,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]} (#{line_item[:description]})"
+      purchase_line_item.description = "Gross: #{line_item[:gross]} | Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? and line_item[:tare].blank?)
       @purchase_order.line_items.push(purchase_line_item)
     end
     
@@ -139,9 +143,9 @@ class PurchaseOrdersController < ApplicationController
   end
   
   def line_item_fields
-    #@items = @item_service.query(nil, :per_page => 1000)
-    query = "Select * From Item Where Type = 'Inventory'"
-    @items = @item_service.query(query, :per_page => 1000)
+    @items = @item_service.query(nil, :per_page => 1000)
+#    query = "Select * From Item Where Type = 'Inventory'"
+#    @items = @item_service.query(query, :per_page => 1000)
     respond_to do |format|
       format.js
     end

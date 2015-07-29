@@ -20,7 +20,11 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    
+    respond_to do |format|
+      format.html {}
+#      format.json { render json: @item.unit_price }
+      format.json {render json: {"name" => @item.name, "description" => @item.description, "unit_price" => @item.unit_price} } 
+    end
   end
 
   # GET /items/new
@@ -32,20 +36,20 @@ class ItemsController < ApplicationController
   end
   
   def create_qb
-    @qb_item = Quickbooks::Model::Item.new
-    @qb_item.given_name = item_params[:name]
-    @qb_item.email_address = item_params[:email]
+    @item = Quickbooks::Model::Item.new
+    @item.given_name = item_params[:name]
+    @item.email_address = item_params[:email]
     unless item_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = item_params[:phone_number]
-      @qb_item.mobile_phone = phone
+      @item.mobile_phone = phone
     end
-    @qb_item = @item_service.create(item)
+    @item = @item_service.create(item)
 
     respond_to do |format|
-      if @qb_item.present?
-        format.html { redirect_to item_path(@qb_item.id), notice: 'Item was successfully created.' }
-        format.json { render :show, status: :created, location: item_path(@qb_item.id) }
+      if @item.present?
+        format.html { redirect_to item_path(@item.id), notice: 'Item was successfully created.' }
+        format.json { render :show, status: :created, location: item_path(@item.id) }
       else
         format.html { render :new }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -56,20 +60,20 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    @qb_item = Quickbooks::Model::Item.new
-    @qb_item.given_name = item_params[:name]
-    @qb_item.email_address = item_params[:email]
+    @item = Quickbooks::Model::Item.new
+    @item.given_name = item_params[:name]
+    @item.email_address = item_params[:email]
     unless item_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = item_params[:phone_number]
-      @qb_item.mobile_phone = phone
+      @item.mobile_phone = phone
     end
-    @qb_item = @item_service.create(@qb_item)
+    @item = @item_service.create(@item)
 
     respond_to do |format|
-      if @qb_item.present?
-        format.html { redirect_to item_path(@qb_item.id), notice: 'Item was successfully created.' }
-        format.json { render :show, status: :created, location: item_path(@qb_item.id) }
+      if @item.present?
+        format.html { redirect_to item_path(@item.id), notice: 'Item was successfully created.' }
+        format.json { render :show, status: :created, location: item_path(@item.id) }
       else
         format.html { render :new }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -78,19 +82,19 @@ class ItemsController < ApplicationController
   end
 
   def update_qb
-    @qb_item.display_name = item_params[:name]
-    @qb_item.email_address = item_params[:email] unless item_params[:email].blank?
+    @item.display_name = item_params[:name]
+    @item.email_address = item_params[:email] unless item_params[:email].blank?
     unless item_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = item_params[:phone_number]
-      @qb_item.mobile_phone = phone
+      @item.mobile_phone = phone
     end
-    @qb_item = @item_service.update(@qb_item)
+    @item = @item_service.update(@item)
     
     respond_to do |format|
-      if @qb_item.present?
-        format.html { redirect_to item_path(@qb_item.id), notice: 'Item was successfully updated.' }
-        format.json { render :show, status: :ok, location: item_path(@qb_item.id) }
+      if @item.present?
+        format.html { redirect_to item_path(@item.id), notice: 'Item was successfully updated.' }
+        format.json { render :show, status: :ok, location: item_path(@item.id) }
       else
         format.html { render :edit }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -140,7 +144,7 @@ class ItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       #@item = Item.find(params[:id])
-      @qb_item = @item_service.fetch_by_id(params[:id])
+      @item = @item_service.fetch_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

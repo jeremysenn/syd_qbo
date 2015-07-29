@@ -20,7 +20,9 @@
   .col-sm-6.col-md-4.col-md-offset-4
     %div.panel.panel-default
       %div.panel-heading
-        = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+        =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+        = line_item.item_based_expense_line_detail.item_ref.name
+        = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
       %div.list_group
         %div.list-group-item
           %strong Description

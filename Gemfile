@@ -91,6 +91,9 @@ gem 'whenever', :require => false
 # Quickbooks Online REST API Version 3
 gem 'quickbooks-ruby', github: 'ruckus/quickbooks-ruby'
 
+# OpenID strategy for OmniAuth (single sign on)
+gem 'omniauth-openid'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
