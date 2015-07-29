@@ -30,20 +30,23 @@ class VendorsController < ApplicationController
   # POST /vendors
   # POST /vendors.json
   def create
-    @qb_vendor = Quickbooks::Model::Vendor.new
-    @qb_vendor.given_name = vendor_params[:name]
-    @qb_vendor.email_address = vendor_params[:email]
+    @vendor = Quickbooks::Model::Vendor.new
+    @vendor.given_name = vendor_params[:given_name]
+    @vendor.family_name = vendor_params[:family_name]
+    @vendor.company_name = vendor_params[:company_name]
+    @vendor.display_name = vendor_params[:display_name]
+    @vendor.email_address = vendor_params[:email]
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = vendor_params[:phone_number]
-      @qb_vendor.mobile_phone = phone
+      @vendor.mobile_phone = phone
     end
-    @qb_vendor = @vendor_service.create(@qb_vendor)
+    @vendor = @vendor_service.create(@vendor)
 
     respond_to do |format|
-      if @qb_vendor.present?
-        format.html { redirect_to vendor_path(@qb_vendor.id), notice: 'Vendor was successfully created.' }
-        format.json { render :show, status: :created, location: vendor_path(@qb_vendor.id) }
+      if @vendor.present?
+        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.' }
+        format.json { render :show, status: :created, location: vendor_path(@vendor.id) }
       else
         format.html { render :new }
         format.json { render json: @vendor.errors, status: :unprocessable_entity }
@@ -52,19 +55,19 @@ class VendorsController < ApplicationController
   end
 
   def update_qb
-    @qb_vendor.display_name = vendor_params[:name]
-    @qb_vendor.email_address = vendor_params[:email] unless vendor_params[:email].blank?
+    @vendor.display_name = vendor_params[:display_name]
+    @vendor.email_address = vendor_params[:email] unless vendor_params[:email].blank?
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = vendor_params[:phone_number]
-      @qb_vendor.mobile_phone = phone
+      @vendor.mobile_phone = phone
     end
-    @qb_vendor = @vendor_service.update(@qb_vendor)
+    @vendor = @vendor_service.update(@vendor)
     
     respond_to do |format|
-      if @qb_vendor.present?
-        format.html { redirect_to vendor_path(@qb_vendor.id), notice: 'Vendor was successfully updated.' }
-        format.json { render :show, status: :ok, location: vendor_path(@qb_vendor.id) }
+      if @vendor.present?
+        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully updated.' }
+        format.json { render :show, status: :ok, location: vendor_path(@vendor.id) }
       else
         format.html { render :edit }
         format.json { render json: @vendor.errors, status: :unprocessable_entity }
@@ -107,12 +110,12 @@ class VendorsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_vendor
       #@vendor = Vendor.find(params[:id])
-      @qb_vendor = @vendor_service.fetch_by_id(params[:id])
+      @vendor = @vendor_service.fetch_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vendor_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:vendor).permit(:name, :email, :phone_number)
+      params.require(:vendor).permit(:given_name, :family_name, :company_name, :display_name, :email, :phone_number)
     end
 end

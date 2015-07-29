@@ -38,7 +38,7 @@
           %p
             %a.btn.btn-primary.btn-lg.btn-block{:href => new_purchase_order_path, :role => "button"} New Purchase Order
           %p
-            %a.btn.btn-primary.btn-lg{:href => "#{current_user.images_table? ? images_path : shipments_path}", :role => "button", :class => 'btn-block'} Today
+            %a.btn.btn-primary.btn-lg{:href => "#{current_user.images_table? ? images_path : shipments_path}", :role => "button", :class => 'btn-block'} Search Pictures
 
   = render partial: "shared/home_footer_navbar", locals: {title: "Welcome"} if current_user.active? and License.valid?
 

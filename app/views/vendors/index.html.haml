@@ -1,4 +1,4 @@
-= render partial: "shared/search_navbar", locals: {title: "Vendors"}
+= render partial: "shared/navbars/vendors_navbar", locals: {title: "Vendors"}
 -#
   .container
 -#
@@ -20,7 +20,8 @@
                   %br
                 = number_to_currency(vendor.balance)
   %div.row
-    .col-xs-12.col-sm-12.col-md-12
-      = link_to "New Vendor", new_vendor_path, class: 'btn btn-primary btn-lg btn-block'
+    -#
+      .col-xs-12.col-sm-12.col-md-12
+        = link_to "New Vendor", new_vendor_path, class: 'btn btn-primary btn-lg btn-block'
 
 = render partial: "shared/footer_navbar", locals: {title: "Vendors"}

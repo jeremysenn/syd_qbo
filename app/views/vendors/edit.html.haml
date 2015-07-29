@@ -1,26 +1,34 @@
-= render partial: "shared/search_navbar", locals: {title: "Edit"}
+= render partial: "shared/navbars/new_and_edit_vendor_navbar", locals: {title: "#{truncate(@vendor.display_name, length: 12)}"}
 .container
   .well.col-sm-6.col-md-4.col-md-offset-4
     = form_tag update_qb_vendor_path, method: 'get', :class => "form-horizontal" do
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Name", nil, :class => 'control-label'
-          = text_field_tag "vendor[name]", nil, :placeholder => "Display Name", value: @qb_vendor.display_name, class: "form-control input-lg"
+          = label_tag "First Name", nil, :class => 'control-label'
+          = text_field_tag "vendor[given_name]", nil, :placeholder => "First Name", value: @vendor.given_name, class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
+          = label_tag "Last Name", nil, :class => 'control-label'
+          = text_field_tag "vendor[family_name]", nil, :placeholder => "Last Name", value: @vendor.family_name, class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
+          = label_tag "Display Name", nil, :class => 'control-label'
+          = text_field_tag "vendor[display_name]", nil, :placeholder => "Display Name", value: @vendor.display_name, class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Email", nil, :class => 'control-label'
-          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@qb_vendor.primary_email_address.present? ? @qb_vendor.primary_email_address.address : ''}", class: "form-control input-lg"
+          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Phone", nil, :class => 'control-label'
-          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@qb_vendor.mobile_phone.present? ? @qb_vendor.mobile_phone.free_form_number : ''}", class: "form-control input-lg"
+          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.mobile_phone.present? ? @vendor.mobile_phone.free_form_number : ''}", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
-          = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
-          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg') do
+          =# link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
+          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block') do
             Update
   -#
-    = form_for @qb_vendor, :class => "form-inline" do |f|
+    = form_for @vendor, :class => "form-inline" do |f|
       -#
         - if @vendor.errors.any?
           #error_explanation
@@ -31,16 +39,19 @@
       .row.form-group
         %div{:class => "col-sm-10"}
           = f.label "Name", :class => "control-label"
-          = f.text_field :name, placeholder: "Display Name", value: @qb_vendor.display_name, :class => "form-control input-lg"
+          = f.text_field :name, placeholder: "Display Name", value: @vendor.display_name, :class => "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-10"}
           = f.label "Email", :class => "control-label"
           %br/
-          = f.text_field :email, placeholder: "Email Address", value: "#{@qb_vendor.primary_email_address.present? ? @qb_vendor.primary_email_address.address : ''}", :class => "form-control input-lg"
+          = f.text_field :email, placeholder: "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", :class => "form-control input-lg"
       .row.form-group
-        %div{:class => "col-sm-10"}
-          = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
-          = f.submit "Update", :class => "btn btn-lg btn-primary"
+        %div{:class => "col-sm-12 col-md-12"}
+          -#
+            = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
+          = f.submit "Update", :class => "btn btn-lg btn-primary btn-block"
 
 =# render :partial => "form"
+
+= render partial: "shared/footer_navbar", locals: {title: "Vendor"}
 

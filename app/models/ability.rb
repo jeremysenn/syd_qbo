@@ -29,52 +29,49 @@ class Ability
     # See the wiki for details:
     # https://github.com/bryanrite/cancancan/wiki/Defining-Abilities
     
-    if user.active? and License.valid?
-      # Images
-      ############
-      can :manage, Image do |image|
-  #      image.user_id == user.id
-        true
-      end
-      can :create, Image
-
-      # ImageFiles
-      ############
-      can :manage, ImageFile do |image_file|
-        image_file.user_id == user.id
-      end
-      can :create, ImageFile
-
-      # Shipments
-      ############
-      can :manage, Shipment do |shipment|
-  #      image.user_id == user.id
-        true
-      end
-      can :create, Shipment
-
-      # ShipmentFiles
-      ############
-      can :manage, ShipmentFile do |shipment_file|
-        shipment_file.user_id == user.id
-      end
-      can :create, ShipmentFile
-
-      # UserSettings
-      ############
-      can :manage, UserSetting do |user_setting|
-        user_setting.user_id == user.id
-      end
-      can :create, UserSetting
-
-      # LookupDefs
-      ############
-      can :manage, LookupDef do |lookup_def|
-  #      lookup_def.user_id == user.id
-      end
-      can :create, LookupDef
+    # Images
+    ############
+    can :manage, Image do |image|
+#      image.user_id == user.id
+      true
     end
-    
+    can :create, Image
+
+    # ImageFiles
+    ############
+    can :manage, ImageFile do |image_file|
+      image_file.user_id == user.id
+    end
+    can :create, ImageFile
+
+    # Shipments
+    ############
+    can :manage, Shipment do |shipment|
+#      image.user_id == user.id
+      true
+    end
+    can :create, Shipment
+
+    # ShipmentFiles
+    ############
+    can :manage, ShipmentFile do |shipment_file|
+      shipment_file.user_id == user.id
+    end
+    can :create, ShipmentFile
+
+    # UserSettings
+    ############
+    can :manage, UserSetting do |user_setting|
+      user_setting.user_id == user.id
+    end
+    can :create, UserSetting
+
+    # LookupDefs
+    ############
+    can :manage, LookupDef do |lookup_def|
+#      lookup_def.user_id == user.id
+    end
+    can :create, LookupDef
     
   end
 end

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, 
-         :omniauthable, :omniauth_providers => [:intuit]
+         :omniauthable, :timeoutable, :omniauth_providers => [:intuit]
        
   has_many :image_files
   has_many :shipment_files
