@@ -231,7 +231,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # 
-   config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'intuit', :identifier => 'https://openid.intuit.com/openid/xrds', :require => 'omniauth-openid'
+    require 'openid/store/filesystem'
+    config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'intuit', :identifier => 'https://openid.intuit.com/openid/xrds', :require => 'omniauth-openid'
   # 
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 

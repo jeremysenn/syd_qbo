@@ -16,7 +16,8 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = render 'shared/navbars/no_user_navbar' if current_user.blank?
+    =# render 'shared/navbars/no_user_navbar' if current_user.blank?
+    = render 'shared/navbars/no_user_navbar' if not user_signed_in?
     -#
       - if user_signed_in?
         = render 'shared/navbars/base_navbar'
