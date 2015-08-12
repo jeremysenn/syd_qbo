@@ -1,0 +1,54 @@
+= render partial: "shared/navbars/bills_navbar", locals: {title: "Bills"}
+.container
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      .btn-group{"data-toggle" => "buttons"}
+        %label.btn.btn-lg.btn-default{onclick: "$('#open_bills').show(); $('#paid_bills').hide();", class: "#{(params[:status] == 'Open' or params[:status].blank?) ? 'active' : ''}"}
+          %input#open{:autocomplete => "off", :name => "options", :type => "radio", }/
+          Open
+        %label.btn.btn-lg.btn-default{onclick: "$('#open_bills').hide(); $('#paid_bills').show();", class: "#{params[:status] == 'Paid' ? 'active' : ''}"}
+          %input#paid{:autocomplete => "off", :name => "options", :type => "radio"}/
+          Paid
+      %br
+      %br
+  %div{id: 'open_bills'}
+    - @open_bills.sort_by(&:txn_date).reverse.each do |bill|
+      %div.row
+        .col-xs-12.col-sm-12.col-md-12
+          %div.panel.panel-warning
+            %div.list_group
+              %a{href: bill_path(bill.id), class: "list-group-item"}
+                = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
+                .pull-right
+                  %i.fa.fa-chevron-right
+                %br
+                %small
+                  = bill.txn_date.strftime("%m/%d/%y")
+                  %br
+                  Total:
+                  = number_to_currency(bill.total)
+                  %br
+                  Balance:
+                  = number_to_currency(bill.balance)
+  %div{id: 'paid_bills', style: 'display: none;'}
+    - @paid_bills.sort_by(&:txn_date).reverse.each do |bill|
+      %div.row
+        .col-xs-12.col-sm-12.col-md-12
+          %div.panel.panel-primary
+            %div.list_group
+              %a{href: bill_path(bill.id), class: "list-group-item"}
+                = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
+                .pull-right
+                  %i.fa.fa-chevron-right
+                %br
+                %small
+                  = bill.txn_date.strftime("%m/%d/%y")
+                  %br
+                  Total:
+                  = number_to_currency(bill.total)
+
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      =# link_to "New Bill", new_bill_path, class: 'btn btn-primary btn-lg btn-block'
+
+= render partial: "shared/footer_navbar", locals: {title: "Bill"}

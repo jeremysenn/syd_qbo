@@ -1,14 +1,16 @@
 - unless current_user.blank?
   = render partial: "shared/navbars/base_navbar", locals: {title: "Home"}
-  .jumbotron
+  .jumbotron{style: 'background-color: #FFFFFF;'}
     .container
       %h2.text-center
-        -#
-          SYD QBO
+        - if user_signed_in? && session[:token]
+          %p= @company_info.company_name
         <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
 
         <script>
         intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
+        - if user_signed_in? && !session[:token]
+          intuit.ipp.anywhere.directConnectToIntuit();
         </script>
         
         -#
@@ -19,11 +21,12 @@
             Connecting to Quickbooks ...
           </script>
 
-        <script>
-        intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
-        - if user_signed_in? && !session[:token]
-          intuit.ipp.anywhere.directConnectToIntuit();
-        </script>
+        -#
+          <script>
+          intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
+          - if user_signed_in? && !session[:token]
+            intuit.ipp.anywhere.directConnectToIntuit();
+          </script>
         
         - unless session[:token]
           = "Connecting to Quickbooks ..."
@@ -31,14 +34,15 @@
             <!-- this will display a button that the user clicks to start the flow -->
             <ipp:connectToIntuit></ipp:connectToIntuit>
         - else
+          -#
+            %p
+              %a.btn.btn-primary.btn-lg.btn-block{:href => vendors_path, :role => "button"} Vendors
           %p
-            %a.btn.btn-primary.btn-lg.btn-block{:href => vendors_path, :role => "button"} Vendors
+            %a.btn.btn-primary.btn-lg.btn-block{:href => new_purchase_order_path, :role => "button"} New Ticket
           %p
-            %a.btn.btn-primary.btn-lg.btn-block{:href => purchase_orders_path, :role => "button"} Purchase Orders
+            %a.btn.btn-warning.btn-lg.btn-block{:href => purchase_orders_path, :role => "button"} Held Tickets
           %p
-            %a.btn.btn-primary.btn-lg.btn-block{:href => new_purchase_order_path, :role => "button"} New Purchase Order
-          %p
-            %a.btn.btn-primary.btn-lg{:href => "#{current_user.images_table? ? images_path : shipments_path}", :role => "button", :class => 'btn-block'} Search Pictures
+            %a.btn.btn-default.btn-lg{:href => "#{current_user.images_table? ? images_path : shipments_path}", :role => "button", :class => 'btn-block'} Search Pictures
 
   = render partial: "shared/home_footer_navbar", locals: {title: "Welcome"} if current_user.active? and License.valid?
 

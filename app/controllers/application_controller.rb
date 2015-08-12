@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   end
   helper_method :mobile_device?
   
+  def after_sign_in_path_for(resource)
+    root_path
+  end
+  
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end

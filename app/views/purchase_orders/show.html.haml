@@ -2,25 +2,42 @@
 .col-sm-6.col-md-4.col-md-offset-4
   %div.panel.panel-default
     %div.panel-heading
-      = "Purchase Order #{@purchase_order.doc_number}"
+      = "Ticket #{@purchase_order.doc_number}"
     %div.list_group
       %div.list-group-item
-        %strong= "Vendor:"
+        %strong= "Vendor"
         .pull-right
           = truncate(@vendor.display_name, length: 30)
       %div.list-group-item
-        %strong= "Status:"
+        %strong= "Status"
         .pull-right
           = @purchase_order.po_status
+      - unless @purchase_order.linked_transactions.blank?
+        - @purchase_order.linked_transactions.each do |linked_transaction|
+          %div.list-group-item
+            %strong= "Linked transaction"
+            .pull-right
+              - if linked_transaction.txn_type == 'Bill'
+                = link_to linked_transaction.txn_type, bill_path(linked_transaction.txn_id)
+              - else
+                = linked_transaction.txn_type
       %div.list-group-item
-        %strong= "Total:"
+        %strong= "Total"
         .pull-right
           = number_to_currency(@purchase_order.total)
-- @purchase_order.line_items.each do |line_item|
+      - if @purchase_order.po_status == 'Open'
+        %a{href: new_bill_path(purchase_order_id: @purchase_order.id), class: "list-group-item"}
+          Close ticket
+          .pull-right
+            %i.fa.fa-chevron-right
+          %br
+          %br
+- @purchase_order.line_items.each_with_index do |line_item, index|
   .col-sm-6.col-md-4.col-md-offset-4
     %div.panel.panel-default
       %div.panel-heading
         =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+        = "#{index + 1}."
         = line_item.item_based_expense_line_detail.item_ref.name
         = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
       %div.list_group

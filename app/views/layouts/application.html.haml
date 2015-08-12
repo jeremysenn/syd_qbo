@@ -18,6 +18,15 @@
   %body
     =# render 'shared/navbars/no_user_navbar' if current_user.blank?
     = render 'shared/navbars/no_user_navbar' if not user_signed_in?
+
+    / Automatically Connect to Quickbooks Online API if User Signed In and No Session Token
+    <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+    <script>
+    intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
+    - if user_signed_in? && !session[:token]
+      intuit.ipp.anywhere.directConnectToIntuit();
+    </script>
+
     -#
       - if user_signed_in?
         = render 'shared/navbars/base_navbar'

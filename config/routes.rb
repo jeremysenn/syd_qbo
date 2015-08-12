@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :bills do
+    collection do
+      get :line_item_fields
+    end
+  end
+  
   resources :items
   
   resources :purchase_orders do

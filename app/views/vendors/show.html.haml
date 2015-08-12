@@ -17,6 +17,19 @@
           %strong= "Display Name:"
           .pull-right
             = @vendor.display_name
+    %div.panel.panel-default
+      %div.panel-body
+        %strong= "Address:"
+        - unless @vendor.billing_address.blank?
+          .pull-right
+            = @vendor.billing_address.line1
+            %br
+            - unless @vendor.billing_address.line2.blank?
+              = @vendor.billing_address.line2
+              %br
+            = @vendor.billing_address.city
+    %div.panel.panel-default
+      %div.list_group
         %div.list-group-item
           %strong= "Email:"
           .pull-right

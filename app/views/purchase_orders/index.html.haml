@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/purchase_orders_navbar", locals: {title: "Orders"}
+= render partial: "shared/navbars/purchase_orders_navbar", locals: {title: "Tickets"}
 .container
   %div.row
     .col-xs-12.col-sm-12.col-md-12
@@ -20,7 +20,7 @@
     - @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
       %div.row
         .col-xs-12.col-sm-12.col-md-12
-          %div.panel.panel-primary
+          %div.panel.panel-warning
             %div.list_group
               %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
                 =# purchase_order.vendor_ref
@@ -30,12 +30,19 @@
                 %br
                 = purchase_order.doc_number
                 %br
-                = purchase_order.po_status
-                %br/
+                -#
+                  = purchase_order.po_status
+                  %br/
                 %small
                   = purchase_order.txn_date.strftime("%m/%d/%y")
                   %br
                   = number_to_currency(purchase_order.total)
+              %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
+                Close ticket
+                .pull-right
+                  %i.fa.fa-chevron-right
+                %br
+                %br
   %div{id: 'closed_purchase_orders', style: 'display: none;'}
     - @closed_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
       %div.row
@@ -50,8 +57,9 @@
                 %br
                 = purchase_order.doc_number
                 %br
-                = purchase_order.po_status
-                %br/
+                -#
+                  = purchase_order.po_status
+                  %br/
                 %small
                   = purchase_order.txn_date.strftime("%m/%d/%y")
                   %br
