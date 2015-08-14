@@ -5,6 +5,7 @@ class PurchaseOrdersController < ApplicationController
   before_action :set_purchase_order_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
+  before_action :set_bill_service, only: [:show]
   
   before_action :set_purchase_order, only: [:show, :edit, :update, :update_qb, :destroy]
 
@@ -35,6 +36,7 @@ class PurchaseOrdersController < ApplicationController
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
     @doc_number = @purchase_order.doc_number
     @images = Image.where(ticket_nbr: @doc_number)
+    @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
   end
 
   # GET /purchase_orders/new
@@ -78,7 +80,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "Gross: #{line_item[:gross]} | Tare: #{line_item[:tare]}"
+      purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}" unless line_item[:gross].blank? or line_item[:tare].blank?
       @purchase_order.line_items.push(purchase_line_item)
     end
     
@@ -86,7 +88,7 @@ class PurchaseOrdersController < ApplicationController
 
     respond_to do |format|
       if @purchase_order.present?
-        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'PurchaseOrder was successfully created.' }
+        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully created.' }
         format.json { render :show, status: :created, location: purchase_order_path(@purchase_order.id) }
       else
         format.html { render :new }
@@ -111,7 +113,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "Gross: #{line_item[:gross]} | Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? and line_item[:tare].blank?)
+      purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? or line_item[:tare].blank?)
       @purchase_order.line_items.push(purchase_line_item)
     end
     
@@ -119,7 +121,7 @@ class PurchaseOrdersController < ApplicationController
     
     respond_to do |format|
       if @purchase_order.present?
-        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'PurchaseOrder was successfully updated.' }
+        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully updated.' }
         format.json { render :show, status: :ok, location: purchase_order_path(@purchase_order.id) }
       else
         format.html { render :edit }
@@ -181,6 +183,13 @@ class PurchaseOrdersController < ApplicationController
       @item_service = Quickbooks::Service::Item.new
       @item_service.access_token = oauth_client
       @item_service.company_id = session[:realm_id]
+    end
+    
+    def set_bill_service
+      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+      @bill_service = Quickbooks::Service::Bill.new
+      @bill_service.access_token = oauth_client
+      @bill_service.company_id = session[:realm_id]
     end
     
     # Use callbacks to share common setup or constraints between actions.

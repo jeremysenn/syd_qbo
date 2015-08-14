@@ -28,7 +28,7 @@
           .well.col-sm-6.col-md-4.col-md-offset-4
         .well
           =# link_to "#{line_item.item_based_expense_line_detail.item_ref.name}: #{number_to_currency(line_item.amount)}", '#', onclick: "$(this).next().fadeToggle();"
-          = link_to "#{line_item.item_based_expense_line_detail.item_ref.name}", '#', onclick: "$(this).next().fadeToggle();"
+          = link_to "#{line_item.item_based_expense_line_detail.item_ref.name} (#{number_to_currency(line_item.amount)})", '#', onclick: "$(this).next().fadeToggle();", class: "toggle_link"
           .row.form-group.calculation_fields{style: 'display: none'}
             %div{:class => "col-sm-12 col-md-12"}
               = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true

@@ -1,6 +1,6 @@
 = render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "#{@purchase_order.doc_number}"}
 .container
-  = form_tag bills_path, id: 'purchase_order_form', :class => "form-horizontal" do |f|
+  = form_tag bills_path, id: 'bill_form', :class => "form-horizontal" do |f|
     .well
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
@@ -14,7 +14,7 @@
     %div.input_fields_wrap
       - @purchase_order.line_items.each do |line_item|
         .well
-          = link_to "#{line_item.item_based_expense_line_detail.item_ref.name}", '#', onclick: "$(this).next().fadeToggle();"
+          = link_to "#{line_item.item_based_expense_line_detail.item_ref.name} (#{number_to_currency(line_item.amount)})", '#', onclick: "$(this).next().fadeToggle();", class: "toggle_link"
           .row.form-group{style: 'display: none'}
             %div{:class => "col-sm-12 col-md-12"}
               = label_tag "Item", nil, :class => 'control-label'
@@ -42,5 +42,5 @@
     .row.form-group
       %div{:class => "col-sm-12 col-md-12"}
         = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block') do
-          Create
-=# render partial: "shared/footer_navbar", locals: {title: "Purchase Order"}
+          Finish
+=# render partial: "shared/footer_navbar", locals: {title: "Bill"}

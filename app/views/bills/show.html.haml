@@ -2,12 +2,18 @@
 .col-sm-6.col-md-4.col-md-offset-4
   %div.panel.panel-default
     %div.panel-heading
-      = "Ticket #{@bill.doc_number}" unless @bill.doc_number.blank?
+      = "Bill #{@bill.doc_number}" unless @bill.doc_number.blank?
+      .pull-right
+        %strong= "#{@bill.balance == 0 ? 'Paid' : 'Open'}"
     %div.list_group
       %div.list-group-item
         %strong= "Vendor"
         .pull-right
           = truncate(@vendor.display_name, length: 30)
+      %div.list-group-item
+        %strong= "Date"
+        .pull-right
+          = @bill.txn_date.strftime("%m/%d/%y")
       %div.list-group-item
         %strong= "Total"
         .pull-right
@@ -17,6 +23,20 @@
           %strong= "Balance"
           .pull-right
             = number_to_currency(@bill.balance)
+        %a{href: new_bill_payment_path(bill_id: @bill.id), class: "list-group-item"}
+          Pay Bill
+          .pull-right
+            %i.fa.fa-chevron-right
+          %br
+          %br
+      - if @bill_payment.present?
+        %a{href: bill_payment_path(@bill_payment.id), class: "list-group-item"}
+          = "Payment #{@bill_payment.doc_number}"
+          .pull-right
+            %i.fa.fa-chevron-right
+          %br
+          %br
+        
 - @bill.line_items.each_with_index do |line_item, index|
   .col-sm-6.col-md-4.col-md-offset-4
     %div.panel.panel-default
@@ -26,41 +46,34 @@
         = line_item.item_based_expense_line_detail.item_ref.name
         = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
       %div.list_group
-        %div.list-group-item
-          %strong Description
-          .pull-right= line_item.description
+        -#
+          %div.list-group-item
+            %strong Description
+            .pull-right= line_item.description
         %div.list-group-item
           %strong Load
           .pull-right= line_item.item_based_expense_line_detail.quantity
         %div.list-group-item
           %strong Rate
-          .pull-right= line_item.item_based_expense_line_detail.unit_price
+          .pull-right= number_to_currency(line_item.item_based_expense_line_detail.unit_price)
         %div.list-group-item
           %strong Amount
           .pull-right= number_to_currency(line_item.amount)
 
--#
-  - unless @images.blank?
-    .col-sm-6.col-md-4.col-md-offset-4
-      -#
-        .list-group
-          - @images.each do |image|
-            %a.list-group-item.clearfix{:href => "#"}
-              %strong= image.event_code
-              %span.pull-right
-                = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive col-sm-1 col-md-1')
-      - @images.each_slice(3) do |images|
-        %div.row
-          - images.each do |image|
-            .col-sm-3.col-md-3
-              %div.thumbnail
-                - unless image.hidden?
-                  = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
-                .text-center= image.event_code
+- unless @images.blank?
+  .col-sm-6.col-md-4.col-md-offset-4
+    - @images.each_slice(3) do |images|
+      %div.row
+        - images.each do |image|
+          .col-sm-3.col-md-3
+            %div.thumbnail
+              - unless image.hidden?
+                = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
+              .text-center= image.event_code
 %div.row
   -#
     .col-xs-12.col-sm-12.col-md-12
     .col-sm-6.col-md-4.col-md-offset-4
-      = link_to "Edit Purchase Order", edit_purchase_order_path(@purchase_order.id), class: 'btn btn-primary btn-lg btn-block'
+      = link_to "Edit Bill", edit_bill_path(@bill.id), class: 'btn btn-primary btn-lg btn-block'
 
 = render partial: "shared/bill_footer_navbar", locals: {title: "Bill"}

@@ -1,0 +1,50 @@
+= render partial: "shared/navbars/new_and_edit_bill_payment_navbar", locals: {title: "#{@bill.doc_number}"}
+
+.container
+  = form_tag bill_payments_path, id: 'bill_payment_form', :class => "form-horizontal" do |f|
+    .well
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
+          = label_tag "Vendor", nil, :class => 'control-label'
+          = select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+          = label_tag "Payment method", nil, :class => 'control-label'
+          = select_tag "bill_payment[pay_account]", options_from_collection_for_select(@accounts, "id", "name"), class: "form-control input-lg", required: true
+          =# select_tag "bill_payment[pay_type]", options_for_select(["Cash", "Check", "CreditCard"], "Cash"), prompt: "Choose payment type", class: "form-control input-lg", required: true
+          = label_tag "Total", nil, :class => 'control-label'
+          = text_field_tag "bill_payment[total]", number_with_precision(@bill.total, :precision => 2), :placeholder => "Total", class: "form-control input-lg"
+          = hidden_field_tag "bill_payment[doc_number]", @bill.doc_number
+          = hidden_field_tag :bill_id, @bill.id
+    -#
+      %div.input_fields_wrap
+        - @purchase_order.line_items.each do |line_item|
+          .well
+            = link_to "#{line_item.item_based_expense_line_detail.item_ref.name} (#{number_to_currency(line_item.amount)})", '#', onclick: "$(this).next().fadeToggle();", class: "toggle_link"
+            .row.form-group{style: 'display: none'}
+              %div{:class => "col-sm-12 col-md-12"}
+                = label_tag "Item", nil, :class => 'control-label'
+                = select_tag "bill[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                = label_tag "Gross", nil, :class => 'control-label'
+                = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Tare", nil, :class => 'control-label'
+                = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Load", nil, :class => 'control-label'
+                = text_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
+                = label_tag "Rate", nil, :class => 'control-label'
+                = text_field_tag "bill[line_items][][rate]", number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+                = label_tag "Amount", nil, :class => 'control-label'
+                = text_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
+            .row.form-group
+              %div{:class => "col-sm-12 col-md-12"}
+                %a{href: '#', class: 'remove_field btn btn-danger pull-right'}
+                  %i.fa.fa-trash
+      %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+      %p= link_to 'More items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right add_field", onclick: "$(this).hide(); $('#spinner').show();"
+      %br
+      %br
+      %br
+      %br
+    .row.form-group
+      %div{:class => "col-sm-12 col-md-12"}
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block') do
+          Create
+=# render partial: "shared/footer_navbar", locals: {title: "Bill Payment"}

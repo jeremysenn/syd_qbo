@@ -3,7 +3,8 @@
   .row.form-group.calculation_fields
     %div{:class => "col-sm-12 col-md-12"}
       = label_tag "Item", nil, :class => 'control-label'
-      = select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+      = select_tag "bill[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+      =# select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
       = label_tag "Gross", nil, :class => 'control-label'
       = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Tare", nil, :class => 'control-label'

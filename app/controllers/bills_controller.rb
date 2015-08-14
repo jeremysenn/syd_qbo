@@ -6,6 +6,7 @@ class BillsController < ApplicationController
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
+  before_action :set_bill_payment_service, only: [:show]
   
   before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy]
 
@@ -21,8 +22,10 @@ class BillsController < ApplicationController
   def show
     @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @doc_number = @bill.doc_number
+#    @purchase_order = @purchase_order_service.query.entries.find{ |p| p.doc_number == @doc_number }
+    @bill_payment = @bill_payment_service.query.entries.find{ |b| b.doc_number == @doc_number } if @bill.balance == 0
     
-#    @images = Image.where(ticket_nbr: @doc_number)
+    @images = Image.where(ticket_nbr: @doc_number)
   end
 
   # GET /bills/new
@@ -63,7 +66,7 @@ class BillsController < ApplicationController
       bill_line_item.detail_type = "ItemBasedExpenseLineDetail"
       bill_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       bill_line_item.amount = line_item[:amount]
-      bill_line_item.description = "Gross: #{line_item[:gross]} | Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? and line_item[:tare].blank?)
+      bill_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? or line_item[:tare].blank?)
       @bill.line_items.push(bill_line_item)
     end
     
@@ -84,7 +87,7 @@ class BillsController < ApplicationController
 
   def update_qb
     @bill.vendor_id = bill_params[:vendor]
-    @bill.po_status = bill_params[:po_status]
+    @bill.doc_number = bill_params[:doc_number]
     @bill.line_items.clear
     
     bill_params[:line_items].each do |line_item|
@@ -93,13 +96,12 @@ class BillsController < ApplicationController
       item_based_expense_line_detail.quantity = line_item[:quantity]
       item_based_expense_line_detail.item_id= line_item[:item]
 
-      purchase_line_item = Quickbooks::Model::PurchaseLineItem.new
-      purchase_line_item.detail_type = "ItemBasedExpenseLineDetail"
-      purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
-      purchase_line_item.amount = line_item[:amount]
-#      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "Gross: #{line_item[:gross]} | Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? and line_item[:tare].blank?)
-      @bill.line_items.push(purchase_line_item)
+      bill_line_item = Quickbooks::Model::BillLineItem.new
+      bill_line_item.detail_type = "ItemBasedExpenseLineDetail"
+      bill_line_item.item_based_expense_line_detail = item_based_expense_line_detail
+      bill_line_item.amount = line_item[:amount]
+      bill_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? or line_item[:tare].blank?)
+      @bill.line_items.push(bill_line_item)
     end
     
     @bill = @bill_service.update(@bill)
@@ -173,6 +175,13 @@ class BillsController < ApplicationController
       @purchase_order_service = Quickbooks::Service::PurchaseOrder.new
       @purchase_order_service.access_token = oauth_client
       @purchase_order_service.company_id = session[:realm_id]
+    end
+    
+    def set_bill_payment_service
+      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+      @bill_payment_service = Quickbooks::Service::Bill.new
+      @bill_payment_service.access_token = oauth_client
+      @bill_payment_service.company_id = session[:realm_id]
     end
     
     # Use callbacks to share common setup or constraints between actions.

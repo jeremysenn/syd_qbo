@@ -22,3 +22,6 @@
 # Ignore uploaded images.
 public/uploads/*
 /nbproject/private/
+
+# Ignore public assets
+public/assets/

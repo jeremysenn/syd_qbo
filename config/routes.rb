@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   
+  resources :bill_payments
+  
   resources :bills do
     collection do
       get :line_item_fields
+    end
+    member do
+      get :update_qb
     end
   end
   
