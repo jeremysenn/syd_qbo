@@ -1,0 +1,16 @@
+- @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      %div.panel.panel-primary
+        %div.list_group
+          %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
+            = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+            .pull-right
+              %i.fa.fa-chevron-right
+            %br
+            = purchase_order.doc_number
+            %br
+            %small
+              = purchase_order.txn_date.strftime("%m/%d/%y")
+              %br
+              = number_to_currency(purchase_order.total)

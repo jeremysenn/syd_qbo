@@ -14,7 +14,8 @@ class BillPaymentsController < ApplicationController
   # GET /bill_payments
   # GET /bill_payments.json
   def index
-    @bill_payments = @bill_payment_service.query(nil, :per_page => 1000)
+    query = "Select * From BillPayment Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
+    @bill_payments = @bill_payment_service.query(query, :per_page => 100)
   end
 
   # GET /bill_payments/1
@@ -98,9 +99,10 @@ class BillPaymentsController < ApplicationController
 
     respond_to do |format|
       if @bill_payment.present?
-        @bill.balance = @bill.balance - bill_payment_params[:total].to_f
-        @bill_service.update(@bill)
-        format.html { redirect_to bill_payment_path(@bill_payment.id), notice: 'Payment was successfully created.' }
+#        @bill.balance = @bill.balance - bill_payment_params[:total].to_f
+#        @bill_service.update(@bill)
+#        format.html { redirect_to bill_payment_path(@bill_payment.id), notice: 'Payment was successfully created.' }
+        format.html { redirect_to bill_payments_path, notice: 'Payment was successfully created.' }
         format.json { render :show, status: :created, location: bill_payment_path(@bill_payment.id) }
       else
         format.html { render :new }

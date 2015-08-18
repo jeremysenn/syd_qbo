@@ -1,0 +1,10 @@
+$('#open_purchase_orders').append('<%= j render "purchase_order" %>');
+$('#spinner').hide();
+
+<% if @open_purchase_orders.next_page %>
+  $('a.load-more-purchase-orders').show();
+  $('a.load-more-purchase-orders').attr('href', '<%= purchase_orders_path page: @open_purchase_orders.next_page %>');
+<% else %>
+  $(window).off('scroll');
+  $('a.load-more-purchase-orders').remove();
+<% end %>

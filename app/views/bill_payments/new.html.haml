@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/new_and_edit_bill_payment_navbar", locals: {title: "#{@bill.doc_number}"}
+= render partial: "shared/navbars/new_and_edit_bill_payment_navbar", locals: {title: "Pay #{@bill.doc_number}"}
 
 .container
   = form_tag bill_payments_path, id: 'bill_payment_form', :class => "form-horizontal" do |f|
@@ -7,11 +7,21 @@
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Vendor", nil, :class => 'control-label'
           = select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
-          = label_tag "Payment method", nil, :class => 'control-label'
-          = select_tag "bill_payment[pay_account]", options_from_collection_for_select(@accounts, "id", "name"), class: "form-control input-lg", required: true
+          =# label_tag "Payment method", nil, :class => 'control-label'
+          %p.text-center
+            .btn-group-vertical{"data-toggle" => "buttons"}
+              - @accounts.each_with_index do |account, index|
+                %label.btn.btn-lg.btn-default{class: "#{index == 0 ? 'active' : ''}"}
+                  - if index == 0
+                    = radio_button_tag "bill_payment[pay_account]", account.id, checked: true
+                  - else
+                    = radio_button_tag "bill_payment[pay_account]", account.id
+                  = account.name
+          =# select_tag "bill_payment[pay_account]", options_from_collection_for_select(@accounts, "id", "name"), class: "form-control input-lg", required: true
           =# select_tag "bill_payment[pay_type]", options_for_select(["Cash", "Check", "CreditCard"], "Cash"), prompt: "Choose payment type", class: "form-control input-lg", required: true
           = label_tag "Total", nil, :class => 'control-label'
-          = text_field_tag "bill_payment[total]", number_with_precision(@bill.total, :precision => 2), :placeholder => "Total", class: "form-control input-lg"
+          %div
+            = text_field_tag "bill_payment[total]", number_with_precision(@bill.total, :precision => 2), :placeholder => "Total", class: "form-control input-lg", required: true
           = hidden_field_tag "bill_payment[doc_number]", @bill.doc_number
           = hidden_field_tag :bill_id, @bill.id
     -#
@@ -45,6 +55,6 @@
       %br
     .row.form-group
       %div{:class => "col-sm-12 col-md-12"}
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block') do
-          Create
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Finish"}, autocomplete: "off") do
+          Finish
 =# render partial: "shared/footer_navbar", locals: {title: "Bill Payment"}

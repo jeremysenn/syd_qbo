@@ -40,7 +40,11 @@
           %p
             %a.btn.btn-primary.btn-lg.btn-block{:href => new_purchase_order_path, :role => "button"} New Ticket
           %p
-            %a.btn.btn-warning.btn-lg.btn-block{:href => purchase_orders_path, :role => "button"} Held Tickets
+            %a.btn.btn-warning.btn-lg.btn-block{:href => purchase_orders_path, :role => "button"} Open Tickets
+          %p
+            %a.btn.btn-success.btn-lg.btn-block{:href => bills_path, :role => "button"} Closed Tickets
+          %p
+            %a.btn.btn-info.btn-lg.btn-block{:href => bill_payments_path, :role => "button"} Payments
           %p
             %a.btn.btn-default.btn-lg{:href => "#{current_user.images_table? ? images_path : shipments_path}", :role => "button", :class => 'btn-block'} Search Pictures
 

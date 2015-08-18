@@ -13,8 +13,10 @@ class BillsController < ApplicationController
   # GET /bills
   # GET /bills.json
   def index
-    @open_bills = @bill_service.query(nil, :per_page => 20).entries.find_all{ |e| e.balance > 0 }
-    @paid_bills = @bill_service.query(nil, :per_page => 20).entries.find_all{ |e| e.balance == 0 }
+#    query = "Select * From Bill Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
+    @open_bills = @bill_service.query(nil, :per_page => 100).entries.find_all{ |e| e.balance > 0 }
+    @open_bills = Kaminari.paginate_array(@open_bills).page(params[:page]).per(4)
+#    @paid_bills = @bill_service.query(nil, :per_page => 20).entries.find_all{ |e| e.balance == 0 }
   end
 
   # GET /bills/1
@@ -76,7 +78,8 @@ class BillsController < ApplicationController
       if @bill.present?
         @purchase_order.po_status = "Closed"
         @purchase_order_service.update(@purchase_order)
-        format.html { redirect_to bill_path(@bill.id), notice: 'Bill was successfully created.' }
+#        format.html { redirect_to bill_path(@bill.id), notice: 'Bill was successfully created.' }
+        format.html { redirect_to bills_path, notice: 'Bill was successfully created.' }
         format.json { render :show, status: :created, location: bill_path(@bill.id) }
       else
         format.html { render :new }

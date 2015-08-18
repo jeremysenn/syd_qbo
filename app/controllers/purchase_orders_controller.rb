@@ -12,8 +12,11 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders
   # GET /purchase_orders.json
   def index
-    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Open' }
-    @closed_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Closed' }
+#    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
+    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 100).entries.find_all{ |e| e.po_status == 'Open' }
+    @open_purchase_orders = Kaminari.paginate_array(@open_purchase_orders).page(params[:page]).per(4)
+#    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 1000).entries.find_all{ |e| e.po_status == 'Open' }
+#    @closed_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Closed' }
     
 #    if params[:status] == "Open"
 #      @open_purchase_orders = @purchase_order_service.query.entries.find_all{ |e| e.po_status == 'Open' }
@@ -53,6 +56,7 @@ class PurchaseOrdersController < ApplicationController
   def edit
     @vendors = @vendor_service.query(nil, :per_page => 1000)
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
+    @doc_number = @purchase_order.doc_number
     
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
@@ -88,7 +92,8 @@ class PurchaseOrdersController < ApplicationController
 
     respond_to do |format|
       if @purchase_order.present?
-        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully created.' }
+#        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully created.' }
+        format.html { redirect_to edit_purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully created.' }
         format.json { render :show, status: :created, location: purchase_order_path(@purchase_order.id) }
       else
         format.html { render :new }
@@ -121,7 +126,14 @@ class PurchaseOrdersController < ApplicationController
     
     respond_to do |format|
       if @purchase_order.present?
-        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully updated.' }
+#        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully updated.' }
+        format.html { 
+          if params[:close_ticket]
+            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...' 
+          else
+            redirect_to purchase_orders_path, notice: 'Ticket was successfully updated.'
+          end
+          }
         format.json { render :show, status: :ok, location: purchase_order_path(@purchase_order.id) }
       else
         format.html { render :edit }

@@ -1,0 +1,10 @@
+$('#open_bills').append('<%= j render "bill" %>');
+$('#spinner').hide();
+
+<% if @open_bills.next_page %>
+  $('a.load-more-bills').show();
+  $('a.load-more-bills').attr('href', '<%= bills_path page: @open_bills.next_page %>');
+<% else %>
+  $(window).off('scroll');
+  $('a.load-more-bills').remove();
+<% end %>

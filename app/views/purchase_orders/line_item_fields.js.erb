@@ -1,5 +1,6 @@
 $('.calculation_fields').hide();
-$('.input_fields_wrap').append("<%= j render(:partial => 'line_item_fields') %>");
+$('.preview').show();
+$('.purchase_order_input_fields_wrap').append("<%= j render(:partial => 'line_item_fields') %>");
 $('#spinner').hide();
 $('#add_item_button').show(); 
 

@@ -12,17 +12,17 @@ jQuery ->
       return
     return
 
-  $('.input_fields_wrap').on 'change', 'select', ->
+  $('.bill_input_fields_wrap').on 'change', 'select', ->
     #alert($(this).val())
     item_id = $(this).val()
     input_select = $(this)
     $.ajax(url: "/items/" + item_id, dataType: 'json').done (data) ->
       name = data.name
       description = data.description
-      rate = data.unit_price
+      rate = parseFloat(data.unit_price).toFixed(2)
       quantity = 0
       input_select.closest('.well').find('.toggle_link').show()
-      input_select.closest('.well').find('.toggle_link').text name + ' (' + description + ')'
+      input_select.closest('.well').find('.toggle_link').text name
       input_select.siblings("input").each ->
         if $(this).is( "#bill_line_items__rate" )
           $(this).val rate
@@ -38,10 +38,12 @@ jQuery ->
         return
       return
     
-  $('.input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
+  $('.bill_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
     if $(this).is( "#bill_line_items__rate" )
       quantity = $(this).prevAll('#bill_line_items__quantity').first().val()
       rate = $(this).val()
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#bill_line_items__amount').first().val amount
     if $(this).is( "#bill_line_items__gross" )
@@ -50,6 +52,8 @@ jQuery ->
       rate = $(this).nextAll('#bill_line_items__rate').first().val()
       quantity = (parseFloat(gross) - parseFloat(tare))
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       $(this).nextAll('#bill_line_items__quantity').first().val quantity
       $(this).nextAll('#bill_line_items__amount').first().val amount
     if $(this).is( "#bill_line_items__tare" )
@@ -58,6 +62,8 @@ jQuery ->
       rate = $(this).nextAll('#bill_line_items__rate').first().val()
       quantity = (parseFloat(gross) - parseFloat(tare))
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       $(this).nextAll('#bill_line_items__quantity').first().val quantity
       $(this).nextAll('#bill_line_items__amount').first().val amount
     if $(this).is( "#bill_line_items__quantity" )

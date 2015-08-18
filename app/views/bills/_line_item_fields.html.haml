@@ -1,5 +1,5 @@
 .well
-  = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
+  = link_to "Show", '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", style: "display:none;", class: "toggle_link"
   .row.form-group.calculation_fields
     %div{:class => "col-sm-12 col-md-12"}
       = label_tag "Item", nil, :class => 'control-label'
@@ -15,6 +15,8 @@
       = text_field_tag "bill[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Amount", nil, :class => 'control-label'
       = text_field_tag "bill[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
+  %div{id: 'quantity_preview', class: 'preview', :style => "display:none;"}
+  %div{id: 'unit_price_preview', class: 'preview', :style => "display:none;"}
   .row.form-group
     %div{:class => "col-sm-12 col-md-12"}
       %a{href: '#', class: 'remove_field btn btn-danger pull-right'}

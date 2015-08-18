@@ -1,45 +1,27 @@
-= render partial: "shared/navbars/bills_navbar", locals: {title: "Bills"}
+= render partial: "shared/navbars/bills_navbar", locals: {title: "Closed"}
 .container
-  %div.row
-    .col-xs-12.col-sm-12.col-md-12
-      .btn-group{"data-toggle" => "buttons"}
-        %label.btn.btn-lg.btn-default{onclick: "$('#open_bills').show(); $('#paid_bills').hide();", class: "#{(params[:status] == 'Open' or params[:status].blank?) ? 'active' : ''}"}
-          %input#open{:autocomplete => "off", :name => "options", :type => "radio", }/
-          Open
-        %label.btn.btn-lg.btn-default{onclick: "$('#open_bills').hide(); $('#paid_bills').show();", class: "#{params[:status] == 'Paid' ? 'active' : ''}"}
-          %input#paid{:autocomplete => "off", :name => "options", :type => "radio"}/
-          Paid
-      %br
-      %br
+  %p
+    .btn-group
+      %a{href: purchase_orders_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}, autocomplete: "off"}
+        Open
+      %button{class: 'btn btn-default btn-lg active'}
+        Closed
+      %a{href: bill_payments_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}, autocomplete: "off"}
+        Paid
+  -#
+    %div.row
+      .col-xs-12.col-sm-12.col-md-12
+        .btn-group{"data-toggle" => "buttons"}
+          %label.btn.btn-lg.btn-default{onclick: "$('#open_bills').show(); $('#paid_bills').hide();", class: "#{(params[:status] == 'Open' or params[:status].blank?) ? 'active' : ''}"}
+            %input#open{:autocomplete => "off", :name => "options", :type => "radio", }/
+            Open
+          %label.btn.btn-lg.btn-default{onclick: "$('#open_bills').hide(); $('#paid_bills').show();", class: "#{params[:status] == 'Paid' ? 'active' : ''}"}
+            %input#paid{:autocomplete => "off", :name => "options", :type => "radio"}/
+            Paid
+        %br
+        %br
   %div{id: 'open_bills'}
     - @open_bills.sort_by(&:txn_date).reverse.each do |bill|
-      %div.row
-        .col-xs-12.col-sm-12.col-md-12
-          %div.panel.panel-warning
-            %div.list_group
-              %a{href: bill_path(bill.id), class: "list-group-item"}
-                = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
-                .pull-right
-                  %i.fa.fa-chevron-right
-                %br
-                = bill.doc_number
-                %br
-                %small
-                  = bill.txn_date.strftime("%m/%d/%y")
-                  %br
-                  Total:
-                  = number_to_currency(bill.total)
-                  %br
-                  Balance:
-                  = number_to_currency(bill.balance)
-              %a{href: new_bill_payment_path(bill_id: bill.id), class: "list-group-item"}
-                Pay Bill
-                .pull-right
-                  %i.fa.fa-chevron-right
-                %br
-                %br
-  %div{id: 'paid_bills', style: 'display: none;'}
-    - @paid_bills.sort_by(&:txn_date).reverse.each do |bill|
       %div.row
         .col-xs-12.col-sm-12.col-md-12
           %div.panel.panel-primary
@@ -56,9 +38,40 @@
                   %br
                   Total:
                   = number_to_currency(bill.total)
+                  %br
+                  Balance:
+                  = number_to_currency(bill.balance)
+              -#
+                %a{href: new_bill_payment_path(bill_id: bill.id), class: "list-group-item"}
+                  Pay Bill
+                  .pull-right
+                    %i.fa.fa-chevron-right
+                  %br
+                  %br
+  -#
+    %div{id: 'paid_bills', style: 'display: none;'}
+      - @paid_bills.sort_by(&:txn_date).reverse.each do |bill|
+        %div.row
+          .col-xs-12.col-sm-12.col-md-12
+            %div.panel.panel-primary
+              %div.list_group
+                %a{href: bill_path(bill.id), class: "list-group-item"}
+                  = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
+                  .pull-right
+                    %i.fa.fa-chevron-right
+                  %br
+                  = bill.doc_number
+                  %br
+                  %small
+                    = bill.txn_date.strftime("%m/%d/%y")
+                    %br
+                    Total:
+                    = number_to_currency(bill.total)
 
   %div.row
-    .col-xs-12.col-sm-12.col-md-12
-      =# link_to "New Bill", new_bill_path, class: 'btn btn-primary btn-lg btn-block'
+    .text-center
+      %div{id: 'endless_page'}
+        %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+        %p= link_to 'Load more ...', bills_path(:page => @open_bills.next_page), :class => 'load-more-bills btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @open_bills.next_page
 
 = render partial: "shared/footer_navbar", locals: {title: "Bill"}

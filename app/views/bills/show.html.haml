@@ -1,79 +1,124 @@
-= render partial: "shared/navbars/show_bill_navbar", locals: {title: "#{@bill.doc_number}", bill_id: @bill.id}
-.col-sm-6.col-md-4.col-md-offset-4
-  %div.panel.panel-default
-    %div.panel-heading
-      = "Bill #{@bill.doc_number}" unless @bill.doc_number.blank?
-      .pull-right
-        %strong= "#{@bill.balance == 0 ? 'Paid' : 'Open'}"
-    %div.list_group
-      %div.list-group-item
-        %strong= "Vendor"
-        .pull-right
-          = truncate(@vendor.display_name, length: 30)
-      %div.list-group-item
-        %strong= "Date"
-        .pull-right
-          = @bill.txn_date.strftime("%m/%d/%y")
-      %div.list-group-item
-        %strong= "Total"
-        .pull-right
-          = number_to_currency(@bill.total)
-      - unless @bill.balance == 0
-        %div.list-group-item
-          %strong= "Balance"
-          .pull-right
-            = number_to_currency(@bill.balance)
-        %a{href: new_bill_payment_path(bill_id: @bill.id), class: "list-group-item"}
-          Pay Bill
-          .pull-right
-            %i.fa.fa-chevron-right
-          %br
-          %br
-      - if @bill_payment.present?
-        %a{href: bill_payment_path(@bill_payment.id), class: "list-group-item"}
-          = "Payment #{@bill_payment.doc_number}"
-          .pull-right
-            %i.fa.fa-chevron-right
-          %br
-          %br
-        
-- @bill.line_items.each_with_index do |line_item, index|
-  .col-sm-6.col-md-4.col-md-offset-4
-    %div.panel.panel-default
-      %div.panel-heading
-        =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-        = "#{index + 1}."
-        = line_item.item_based_expense_line_detail.item_ref.name
-        = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
-      %div.list_group
-        -#
-          %div.list-group-item
-            %strong Description
-            .pull-right= line_item.description
-        %div.list-group-item
-          %strong Load
-          .pull-right= line_item.item_based_expense_line_detail.quantity
-        %div.list-group-item
-          %strong Rate
-          .pull-right= number_to_currency(line_item.item_based_expense_line_detail.unit_price)
-        %div.list-group-item
-          %strong Amount
-          .pull-right= number_to_currency(line_item.amount)
+= render partial: "shared/navbars/show_bill_navbar", locals: {title: "Closed #{@bill.doc_number}", bill_id: @bill.id}
 
-- unless @images.blank?
-  .col-sm-6.col-md-4.col-md-offset-4
-    - @images.each_slice(3) do |images|
-      %div.row
-        - images.each do |image|
-          .col-sm-3.col-md-3
-            %div.thumbnail
-              - unless image.hidden?
-                = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
-              .text-center= image.event_code
-%div.row
+.container
+  .col-sm-12.col-md-4.col-md-offset-4
+    .well
+      %div
+        %p
+          %strong= "Vendor"
+          %br
+          = @vendor.display_name
+      %div
+        %p
+          %strong= "Date"
+          %br
+          = @bill.txn_date.strftime("%m/%d/%y")
+      %div
+        %p
+          %strong= "Total"
+          %br
+          = number_to_currency(@bill.total)
+      %div
+        %p
+          %strong= "Balance"
+          %br
+          = number_to_currency(@bill.balance)
+    -#
+      %div.panel.panel-default
+        %div.panel-heading
+          = "Bill #{@bill.doc_number}" unless @bill.doc_number.blank?
+          .pull-right
+            %strong= "#{@bill.balance == 0 ? 'Paid' : 'Open'}"
+        %div.list_group
+          %div.list-group-item
+            %strong= "Vendor"
+            .pull-right
+              = truncate(@vendor.display_name, length: 30)
+          %div.list-group-item
+            %strong= "Date"
+            .pull-right
+              = @bill.txn_date.strftime("%m/%d/%y")
+          %div.list-group-item
+            %strong= "Total"
+            .pull-right
+              = number_to_currency(@bill.total)
+          - unless @bill.balance == 0
+            %div.list-group-item
+              %strong= "Balance"
+              .pull-right
+                = number_to_currency(@bill.balance)
+            %a{href: new_bill_payment_path(bill_id: @bill.id), class: "list-group-item"}
+              Pay Bill
+              .pull-right
+                %i.fa.fa-chevron-right
+              %br
+              %br
+          - if @bill_payment.present?
+            %a{href: bill_payment_path(@bill_payment.id), class: "list-group-item"}
+              = "Payment #{@bill_payment.doc_number}"
+              .pull-right
+                %i.fa.fa-chevron-right
+              %br
+              %br
+
+  - @bill.line_items.each_with_index do |line_item, index|
+    .col-sm-12.col-md-4.col-md-offset-4
+      .well
+        %div
+          %p
+            = line_item.item_based_expense_line_detail.item_ref.name
+            = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+        %div
+          %p
+            %strong Load
+            %br
+            = line_item.item_based_expense_line_detail.quantity
+        %div
+          %p
+            %strong Rate
+            %br
+            = number_to_currency(line_item.item_based_expense_line_detail.unit_price)
+        %div
+          %p
+            %strong Amount
+            %br
+            = number_to_currency(line_item.amount)
+      -#
+        %div.panel.panel-default
+          %div.panel-heading
+            =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+            = "#{index + 1}."
+            = line_item.item_based_expense_line_detail.item_ref.name
+            = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+          %div.list_group
+            -#
+              %div.list-group-item
+                %strong Description
+                .pull-right= line_item.description
+            %div.list-group-item
+              %strong Load
+              .pull-right= line_item.item_based_expense_line_detail.quantity
+            %div.list-group-item
+              %strong Rate
+              .pull-right= number_to_currency(line_item.item_based_expense_line_detail.unit_price)
+            %div.list-group-item
+              %strong Amount
+              .pull-right= number_to_currency(line_item.amount)
+
+  - unless @images.blank?
+    .col-sm-12.col-md-4.col-md-offset-4
+      - @images.each_slice(3) do |images|
+        %div.row
+          - images.each do |image|
+            .col-sm-3.col-md-3
+              %div.thumbnail
+                - unless image.hidden?
+                  = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
+                .text-center= image.event_code
   -#
     .col-xs-12.col-sm-12.col-md-12
-    .col-sm-6.col-md-4.col-md-offset-4
-      = link_to "Edit Bill", edit_bill_path(@bill.id), class: 'btn btn-primary btn-lg btn-block'
+  .col-sm-12.col-md-4.col-md-offset-4
+    - unless @bill.balance == 0
+      = link_to "Pay ticket", new_bill_payment_path(bill_id: @bill.id), class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay ticket"}, autocomplete: "off"
 
 = render partial: "shared/bill_footer_navbar", locals: {title: "Bill"}

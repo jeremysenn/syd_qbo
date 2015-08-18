@@ -1,55 +1,32 @@
-= render partial: "shared/navbars/purchase_orders_navbar", locals: {title: "Tickets"}
+= render partial: "shared/navbars/purchase_orders_navbar", locals: {title: "Open"}
 .container
-  %div.row
-    .col-xs-12.col-sm-12.col-md-12
-      .btn-group{"data-toggle" => "buttons"}
-        %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').show(); $('#closed_purchase_orders').hide();", class: "#{(params[:status] == 'Open' or params[:status].blank?) ? 'active' : ''}"}
-          %input#open{:autocomplete => "off", :name => "options", :type => "radio", }/
-          Open
-        %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').hide(); $('#closed_purchase_orders').show();", class: "#{params[:status] == 'Closed' ? 'active' : ''}"}
-          %input#closed{:autocomplete => "off", :name => "options", :type => "radio"}/
-          Closed
-      -#
-        %button.active.btn.btn-lg.btn-default#open_filter{:autocomplete => "off", :name => "options", :type => "radio", onclick: "$('button.active').removeClass('active'); $(this).addClass('active'); $('#open_purchase_orders').show();  $('#closed_purchase_orders').hide();"}/
-          Open
-        %button.btn.btn-lg.btn-default#closed_filter{:autocomplete => "off", :name => "options", :type => "radio", onclick: "$('button.active').removeClass('active'); $(this).addClass('active'); $('#open_purchase_orders').hide(); $('#closed_purchase_orders').show();"}/
-          Closed
-      %br
-      %br
+  %p
+    .btn-group
+      %button{class: 'btn btn-default btn-lg active'}
+        Open
+      %a{href: bills_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}, autocomplete: "off"}
+        Closed
+      %a{href: bill_payments_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}, autocomplete: "off"}
+        Paid
+  -#
+    %div.row
+      .col-xs-12.col-sm-12.col-md-12
+        .btn-group{"data-toggle" => "buttons"}
+          %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').show(); $('#closed_purchase_orders').hide();", class: "#{(params[:status] == 'Open' or params[:status].blank?) ? 'active' : ''}"}
+            %input#open{:autocomplete => "off", :name => "options", :type => "radio", }/
+            Open
+          %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').hide(); $('#closed_purchase_orders').show();", class: "#{params[:status] == 'Closed' ? 'active' : ''}"}
+            %input#closed{:autocomplete => "off", :name => "options", :type => "radio"}/
+            Closed
+        %br
+        %br
   %div{id: 'open_purchase_orders'}
     - @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
       %div.row
         .col-xs-12.col-sm-12.col-md-12
-          %div.panel.panel-warning
-            %div.list_group
-              %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
-                =# purchase_order.vendor_ref
-                = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
-                .pull-right
-                  %i.fa.fa-chevron-right
-                %br
-                = purchase_order.doc_number
-                %br
-                -#
-                  = purchase_order.po_status
-                  %br/
-                %small
-                  = purchase_order.txn_date.strftime("%m/%d/%y")
-                  %br
-                  = number_to_currency(purchase_order.total)
-              %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
-                Close ticket
-                .pull-right
-                  %i.fa.fa-chevron-right
-                %br
-                %br
-  %div{id: 'closed_purchase_orders', style: 'display: none;'}
-    - @closed_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
-      %div.row
-        .col-xs-12.col-sm-12.col-md-12
           %div.panel.panel-primary
             %div.list_group
-              %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
+              %a{href: edit_purchase_order_path(purchase_order.id), class: "list-group-item"}
                 =# purchase_order.vendor_ref
                 = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
                 .pull-right
@@ -64,9 +41,40 @@
                   = purchase_order.txn_date.strftime("%m/%d/%y")
                   %br
                   = number_to_currency(purchase_order.total)
+              -#
+                %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
+                  Close ticket
+                  .pull-right
+                    %i.fa.fa-chevron-right
+                  %br
+                  %br
+  -#
+    %div{id: 'closed_purchase_orders', style: 'display: none;'}
+      - @closed_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
+        %div.row
+          .col-xs-12.col-sm-12.col-md-12
+            %div.panel.panel-primary
+              %div.list_group
+                %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
+                  =# purchase_order.vendor_ref
+                  = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+                  .pull-right
+                    %i.fa.fa-chevron-right
+                  %br
+                  = purchase_order.doc_number
+                  %br
+                  -#
+                    = purchase_order.po_status
+                    %br/
+                  %small
+                    = purchase_order.txn_date.strftime("%m/%d/%Y")
+                    %br
+                    = number_to_currency(purchase_order.total)
 
   %div.row
-    .col-xs-12.col-sm-12.col-md-12
-      =# link_to "New Purchase Order", new_purchase_order_path, class: 'btn btn-primary btn-lg btn-block'
+    .text-center
+      %div{id: 'endless_page'}
+        %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+        %p= link_to 'Load more ...', purchase_orders_path(:page => @open_purchase_orders.next_page), :class => 'load-more-purchase-orders btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @open_purchase_orders.next_page
 
-= render partial: "shared/footer_navbar", locals: {title: "Purchase Order"}
+= render partial: "shared/footer_navbar", locals: {title: "Purchase Orders"}

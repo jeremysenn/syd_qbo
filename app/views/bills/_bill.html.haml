@@ -1,0 +1,20 @@
+- @open_bills.sort_by(&:txn_date).reverse.each do |bill|
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      %div.panel.panel-primary
+        %div.list_group
+          %a{href: bill_path(bill.id), class: "list-group-item"}
+            = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
+            .pull-right
+              %i.fa.fa-chevron-right
+            %br
+            = bill.doc_number
+            %br
+            %small
+              = bill.txn_date.strftime("%m/%d/%y")
+              %br
+              Total:
+              = number_to_currency(bill.total)
+              %br
+              Balance:
+              = number_to_currency(bill.balance)

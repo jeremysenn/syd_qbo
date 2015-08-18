@@ -1,6 +1,14 @@
-= render partial: "shared/navbars/bill_payments_navbar", locals: {title: "Payments"}
+= render partial: "shared/navbars/bill_payments_navbar", locals: {title: "Paid"}
 
 .container
+  %p
+    .btn-group
+      %a{href: purchase_orders_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}, autocomplete: "off"}
+        Open
+      %a{href: bills_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}, autocomplete: "off"}
+        Closed
+      %button{class: 'btn btn-default btn-lg active'}
+        Paid
   - @bill_payments.sort_by(&:txn_date).reverse.each do |bill_payment|
     %div.row
       .col-xs-12.col-sm-12.col-md-12

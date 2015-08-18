@@ -12,17 +12,18 @@ jQuery ->
       return
     return
 
-  $('.input_fields_wrap').on 'change', 'select', ->
+  $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
     #alert($(this).val())
     item_id = $(this).val()
     input_select = $(this)
     $.ajax(url: "/items/" + item_id, dataType: 'json').done (data) ->
       name = data.name
       description = data.description
-      rate = data.unit_price
+      rate = parseFloat(data.unit_price).toFixed(2)
       quantity = 0
       input_select.closest('.well').find('.toggle_link').show()
-      input_select.closest('.well').find('.toggle_link').text name + ' (' + description + ')'
+      input_select.closest('.well').find('.toggle_link').text name
+      #input_select.closest('.well').find('.toggle_link').html '<p>' + name + ' (' + description + ')' + '<br>' + 0 + '<br>' + '$' + rate + '</p>'
       #input_select.closest('.toggle_link').show()
       input_select.siblings("input").each ->
         if $(this).is( "#purchase_order_line_items__rate" )
@@ -38,29 +39,14 @@ jQuery ->
           $(this).val amount
         return
       return
-    
-    #description = $(this).find(":selected").data("description")
-    #rate = $(this).find(":selected").data("rate")
-    #quantity = 1
-    #$(this).siblings("input").each ->
-      #alert($(this).val())
-      #if $(this).is( "#purchase_order_line_items__description" )
-      #  $(this).val description
-      #if $(this).is( "#purchase_order_line_items__rate" )
-      #  $(this).val rate
-      #if $(this).is( "#purchase_order_line_items__quantity" )
-      #  $(this).val 1
-      #if $(this).is( "#purchase_order_line_items__amount" )
-      #  amount = (parseFloat(rate) * parseFloat(quantity))
-      #  $(this).val amount
-      #return
-    #return
 
   #$('.amount-calculation-field').keyup ->
-  $('.input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
+  $('.purchase_order_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
     if $(this).is( "#purchase_order_line_items__rate" )
       quantity = $(this).prevAll('#purchase_order_line_items__quantity').first().val()
       rate = $(this).val()
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
     if $(this).is( "#purchase_order_line_items__gross" )
@@ -69,7 +55,10 @@ jQuery ->
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
       quantity = (parseFloat(gross) - parseFloat(tare))
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
     if $(this).is( "#purchase_order_line_items__tare" )
       gross = $(this).prevAll('#purchase_order_line_items__gross').first().val()
@@ -77,7 +66,10 @@ jQuery ->
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
       quantity = (parseFloat(gross) - parseFloat(tare))
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
     if $(this).is( "#purchase_order_line_items__quantity" )
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
@@ -85,3 +77,20 @@ jQuery ->
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
     return
+
+  ### Re-enable disabled_with buttons ###
+  $(document).on 'page:change', ->
+    $.rails.enableElement $('a[data-disable-with]')
+    return
+
+  ### Start endless page stuff ###
+  loading_shipments = false
+  $('a.load-more-purchase-orders').on 'inview', (e, visible) ->
+    return if loading_purchase_orders or not visible
+    loading_purchase_orders = true
+    $('#spinner').show()
+    $('a.load-more-purchase-orders').hide()
+
+    $.getScript $(this).attr('href'), ->
+      loading_purchase_orders = false
+  ### End endless page stuff ###

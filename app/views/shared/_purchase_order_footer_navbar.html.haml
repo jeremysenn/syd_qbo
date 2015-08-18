@@ -12,8 +12,9 @@
             %i.fa.fa-camera.fa-lg
             = "Picture" unless mobile_device?
         .col-xs-4.col-sm-4
-          %a{href: "#{current_user.images_table? ? images_path(today: true) : shipments_path(today: true)}"}
-            %i.fa.fa-calendar-o.fa-lg
-            = "Today" unless mobile_device?
+          -#
+            %a{href: "#{current_user.images_table? ? images_path(today: true) : shipments_path(today: true)}"}
+              %i.fa.fa-calendar-o.fa-lg
+              = "Today" unless mobile_device?
 
 = render partial: "#{current_user.user_setting.table_name.singularize}_files/upload_modal"
