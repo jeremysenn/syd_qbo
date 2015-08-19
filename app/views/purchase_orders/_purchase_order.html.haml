@@ -3,7 +3,7 @@
     .col-xs-12.col-sm-12.col-md-12
       %div.panel.panel-primary
         %div.list_group
-          %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
+          %a{href: edit_purchase_order_path(purchase_order.id), class: "list-group-item"}
             = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
             .pull-right
               %i.fa.fa-chevron-right

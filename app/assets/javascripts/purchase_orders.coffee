@@ -4,12 +4,17 @@
 
 jQuery ->
   $(document).ready ->
-    wrapper = $('.input_fields_wrap')
+    wrapper = $('.purchase_order_input_fields_wrap')
     $(wrapper).on 'click', '.remove_field', (e) ->
       #user click on item trash button
-      e.preventDefault()
-      $(this).closest('.well').remove()
-      return
+      confirm1 = confirm('Are you sure you want to delete this?')
+      if confirm1
+        e.preventDefault()
+        $(this).closest('.well').remove()
+        return
+      else
+        e.preventDefault()
+        return
     return
 
   $('.purchase_order_input_fields_wrap').on 'change', 'select', ->

@@ -3,7 +3,7 @@
     .col-xs-12.col-sm-12.col-md-12
       %div.panel.panel-primary
         %div.list_group
-          %a{href: bill_path(bill.id), class: "list-group-item"}
+          %a{href: edit_bill_path(bill.id), class: "list-group-item"}
             = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
             .pull-right
               %i.fa.fa-chevron-right
