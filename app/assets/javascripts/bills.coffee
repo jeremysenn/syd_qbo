@@ -7,12 +7,17 @@ jQuery ->
     wrapper = $('.bill_input_fields_wrap')
     $(wrapper).on 'click', '.remove_field', (e) ->
       #user click on item trash button
-      confirm1 = confirm('Are you sure you want to delete this?')
-      if confirm1
-        e.preventDefault()
-        $(this).closest('.well').remove()
-        return
+      if $('.well').length > 2
+        confirm1 = confirm('Are you sure you want to delete this?')
+        if confirm1
+          e.preventDefault()
+          $(this).closest('.well').remove()
+          return
+        else
+          e.preventDefault()
+          return
       else
+        alert 'You can not delete this because you must have at least one item.'
         e.preventDefault()
         return
     return
