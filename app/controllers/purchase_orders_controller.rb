@@ -6,6 +6,7 @@ class PurchaseOrdersController < ApplicationController
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
   before_action :set_bill_service, only: [:show]
+  before_action :set_company_service, only: [:show]
   
   before_action :set_purchase_order, only: [:show, :edit, :update, :update_qb, :destroy]
 
@@ -40,6 +41,14 @@ class PurchaseOrdersController < ApplicationController
     @doc_number = @purchase_order.doc_number
     @images = Image.where(ticket_nbr: @doc_number)
     @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "file_name",
+        :layout => 'pdf.html.haml'
+      end
+    end
   end
 
   # GET /purchase_orders/new
@@ -118,7 +127,11 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? or line_item[:tare].blank?)
+      unless (line_item[:gross].blank? and line_item[:tare].blank?)
+        purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}"
+      else
+        purchase_line_item.description = line_item[:description]
+      end
       @purchase_order.line_items.push(purchase_line_item)
     end
     
@@ -129,7 +142,9 @@ class PurchaseOrdersController < ApplicationController
 #        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully updated.' }
         format.html { 
           if params[:close_ticket]
-            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...' 
+            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...'
+          elsif params[:save_and_print]
+            redirect_to purchase_order_path(@purchase_order.id, format: 'pdf')
           else
             redirect_to purchase_orders_path, notice: 'Ticket was successfully updated.'
           end
@@ -202,6 +217,14 @@ class PurchaseOrdersController < ApplicationController
       @bill_service = Quickbooks::Service::Bill.new
       @bill_service.access_token = oauth_client
       @bill_service.company_id = session[:realm_id]
+    end
+    
+    def set_company_service
+      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+      @company_info_service = Quickbooks::Service::CompanyInfo.new
+      @company_info_service.access_token = oauth_client
+      @company_info_service.company_id = session[:realm_id]
+      @company_info = @company_info_service.fetch_by_id(session[:realm_id])
     end
     
     # Use callbacks to share common setup or constraints between actions.

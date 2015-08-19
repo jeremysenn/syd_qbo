@@ -272,6 +272,7 @@ GEM
       chronic (>= 0.6.3)
     wicked_pdf (0.11.0)
       rails
+    wkhtmltopdf-binary (0.9.9.3)
 
 PLATFORMS
   ruby
@@ -312,3 +313,4 @@ DEPENDENCIES
   web-console (~> 2.0)
   whenever
   wicked_pdf
+  wkhtmltopdf-binary

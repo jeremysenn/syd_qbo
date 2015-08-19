@@ -103,7 +103,11 @@ class BillsController < ApplicationController
       bill_line_item.detail_type = "ItemBasedExpenseLineDetail"
       bill_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       bill_line_item.amount = line_item[:amount]
-      bill_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}" unless (line_item[:gross].blank? or line_item[:tare].blank?)
+      unless (line_item[:gross].blank? and line_item[:tare].blank?)
+        bill_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}"
+      else
+        bill_line_item.description = line_item[:description]
+      end
       @bill.line_items.push(bill_line_item)
     end
     
