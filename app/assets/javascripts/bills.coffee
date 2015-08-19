@@ -73,6 +73,18 @@ jQuery ->
       $(this).nextAll('#bill_line_items__amount').first().val amount
     return
 
+  ### Start endless page stuff ###
+  loading_bills = false
+  $('a.load-more-bills').on 'inview', (e, visible) ->
+    return if loading_bills or not visible
+    loading_bills = true
+    $('#spinner').show()
+    $('a.load-more-bills').hide()
+
+    $.getScript $(this).attr('href'), ->
+      loading_bills = false
+  ### End endless page stuff ###
+
   ### Re-enable disabled_with buttons for back button ###
   $(document).on 'page:change', ->
     $.rails.enableElement $('#bills_to_open')

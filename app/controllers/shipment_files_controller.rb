@@ -33,7 +33,8 @@ class ShipmentFilesController < ApplicationController
     respond_to do |format|
       if @shipment_file.save
 #        format.html { redirect_to shipments_path, notice: 'Shipment file was successfully created.' }
-        format.html { redirect_to @shipment_file, notice: 'Shipment file was successfully created.' }
+#        format.html { redirect_to @shipment_file, notice: 'Shipment file was successfully created.' }
+        format.html { redirect_to :back, notice: 'Shipment file was successfully created.' }
         format.json { render :show, status: :created, location: @shipment_file }
       else
         format.html { render :new }

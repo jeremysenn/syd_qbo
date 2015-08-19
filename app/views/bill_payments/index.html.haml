@@ -10,29 +10,35 @@
   - if @bill_payments.blank?
     .jumbotron
       %p.text-center No payments found
-  - @bill_payments.sort_by(&:txn_date).reverse.each do |bill_payment|
-    %div.row
-      .col-xs-12.col-sm-12.col-md-12
-        %div.panel.panel-primary
-          %div.list_group
-            %a{href: bill_payment_path(bill_payment.id), class: "list-group-item"}
-              = @vendor_service.fetch_by_id(bill_payment.vendor_ref).display_name unless bill_payment.vendor_ref.blank?
-              .pull-right
-                %i.fa.fa-chevron-right
-              %br
-              = bill_payment.doc_number
-              %br
-              %small
-                = bill_payment.pay_type
+  %div{id: 'bill_payments'}
+    - @bill_payments.sort_by(&:txn_date).reverse.each do |bill_payment|
+      %div.row
+        .col-xs-12.col-sm-12.col-md-12
+          %div.panel.panel-primary
+            %div.list_group
+              %a{href: bill_payment_path(bill_payment.id), class: "list-group-item"}
+                = @vendor_service.fetch_by_id(bill_payment.vendor_ref).display_name unless bill_payment.vendor_ref.blank?
+                .pull-right
+                  %i.fa.fa-chevron-right
                 %br
-                = bill_payment.txn_date.strftime("%m/%d/%y")
+                = bill_payment.doc_number
                 %br
-                Total:
-                = number_to_currency(bill_payment.total)
+                %small
+                  = bill_payment.pay_type
+                  %br
+                  = bill_payment.txn_date.strftime("%m/%d/%y")
+                  %br
+                  Total:
+                  = number_to_currency(bill_payment.total)
   %div.row
     .col-xs-12.col-sm-12.col-md-12
       =# link_to "New Bill Payment", new_bill_payment_path, class: 'btn btn-primary btn-lg btn-block'
     
-  = paginate @bill_payments
+  %div.row
+    .text-center
+      %div{id: 'endless_page'}
+        %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+        %p= link_to 'Load more ...', bill_payments_path(:page => @bill_payments.next_page), :class => 'load-more-bill-payments btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @bill_payments.next_page
+
 
 = render partial: "shared/footer_navbar", locals: {title: "BillPayment"}

@@ -1,0 +1,10 @@
+$('#bill_payments').append('<%= j render "bill_payment" %>');
+$('#spinner').hide();
+
+<% if @bill_payments.next_page %>
+  $('a.load-more-bill-payments').show();
+  $('a.load-more-bill-payments').attr('href', '<%= bill_payments_path page: @bill_payments.next_page %>');
+<% else %>
+  $(window).off('scroll');
+  $('a.load-more-bill-payments').remove();
+<% end %>

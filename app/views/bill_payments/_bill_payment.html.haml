@@ -1,0 +1,19 @@
+- @bill_payments.sort_by(&:txn_date).reverse.each do |bill_payment|
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      %div.panel.panel-primary
+        %div.list_group
+          %a{href: bill_payment_path(bill_payment.id), class: "list-group-item"}
+            = @vendor_service.fetch_by_id(bill_payment.vendor_ref).display_name unless bill_payment.vendor_ref.blank?
+            .pull-right
+              %i.fa.fa-chevron-right
+            %br
+            = bill_payment.doc_number
+            %br
+            %small
+              = bill_payment.pay_type
+              %br
+              = bill_payment.txn_date.strftime("%m/%d/%y")
+              %br
+              Total:
+              = number_to_currency(bill_payment.total)

@@ -85,7 +85,7 @@ jQuery ->
     return
 
   ### Start endless page stuff ###
-  loading_shipments = false
+  loading_purchase_orders = false
   $('a.load-more-purchase-orders').on 'inview', (e, visible) ->
     return if loading_purchase_orders or not visible
     loading_purchase_orders = true
