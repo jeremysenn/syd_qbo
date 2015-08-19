@@ -12,7 +12,7 @@
       - @bill.line_items.each do |line_item|
         .well
           = link_to "#{line_item.item_based_expense_line_detail.item_ref.name}", '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", class: "toggle_link"
-          .row.form-group.calculation_fields{style: 'display: none'}
+          .row.form-group.calculation_fields{style: "#{@bill.line_items.count > 1 ? 'display: none;' : 'display: block;'}"}
             %div{:class => "col-sm-12 col-md-12"}
               = select_tag "bill[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
               = label_tag "Gross", nil, :class => 'control-label'
@@ -41,7 +41,7 @@
     %br
     .row.form-group
       %div{:class => "col-sm-12 col-md-12"}
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#pay_button').first().removeAttr('data-disable-with');") do
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#pay_button').first().removeAttr('data-disable-with');") do
           Save
         %br
         = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do

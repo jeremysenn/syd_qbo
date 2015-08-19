@@ -72,3 +72,9 @@ jQuery ->
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#bill_line_items__amount').first().val amount
     return
+
+  ### Re-enable disabled_with buttons for back button ###
+  $(document).on 'page:change', ->
+    $.rails.enableElement $('#bills_to_open')
+    $.rails.enableElement $('#bills_to_paid')
+    return

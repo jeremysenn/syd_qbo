@@ -4,10 +4,8 @@
     .btn-group
       %button{class: 'btn btn-default btn-lg active'}
         Open
-      %a{href: bills_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}, autocomplete: "off"}
-        Closed
-      %a{href: bill_payments_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}, autocomplete: "off"}
-        Paid
+      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'purchase_orders_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
+      = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg", id: 'purchase_orders_to_paid', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
   -#
     %div.row
       .col-xs-12.col-sm-12.col-md-12
@@ -20,6 +18,9 @@
             Closed
         %br
         %br
+  - if @open_purchase_orders.blank?
+    .jumbotron
+      %p.text-center No held tickets found
   %div{id: 'open_purchase_orders'}
     - @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
       %div.row

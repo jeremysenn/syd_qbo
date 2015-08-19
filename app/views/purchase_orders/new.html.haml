@@ -1,5 +1,5 @@
-=# render partial: "shared/search_navbar", locals: {title: "New"}
 = render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "New ticket"}
+
 .container
   = form_tag purchase_orders_path, id: 'purchase_order_form', :class => "form-horizontal" do |f|
     -#
@@ -51,6 +51,6 @@
       %div{:class => "col-sm-12 col-md-12"}
         -#
           = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block') do
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Next"}, autocomplete: "off") do
           Next
 = render partial: "shared/footer_navbar", locals: {title: "Purchase Order"}

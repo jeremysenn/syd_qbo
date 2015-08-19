@@ -66,8 +66,8 @@
       .well
         %div
           %p
-            = line_item.item_based_expense_line_detail.item_ref.name
-            = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+            = line_item.item_based_expense_line_detail.item_ref.name unless line_item.item_based_expense_line_detail.blank? or line_item.item_based_expense_line_detail.item_ref.blank?
+            = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})" unless line_item.item_based_expense_line_detail.blank? or line_item.item_based_expense_line_detail.item_ref.blank?
         %div
           %p
             %strong Load

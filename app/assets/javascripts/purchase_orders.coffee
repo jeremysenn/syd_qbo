@@ -78,9 +78,10 @@ jQuery ->
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
     return
 
-  ### Re-enable disabled_with buttons ###
+  ### Re-enable disabled_with buttons for back button ###
   $(document).on 'page:change', ->
-    $.rails.enableElement $('a[data-disable-with]')
+    $.rails.enableElement $('#purchase_orders_to_closed')
+    $.rails.enableElement $('#purchase_orders_to_paid')
     return
 
   ### Start endless page stuff ###

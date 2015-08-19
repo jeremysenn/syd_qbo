@@ -3,12 +3,13 @@
 .container
   %p
     .btn-group
-      %a{href: purchase_orders_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}, autocomplete: "off"}
-        Open
-      %a{href: bills_path, :class => "btn btn-default btn-lg", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}, autocomplete: "off"}
-        Closed
+      = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg", id: 'payments_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
+      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'payments_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
       %button{class: 'btn btn-default btn-lg active'}
         Paid
+  - if @bill_payments.blank?
+    .jumbotron
+      %p.text-center No payments found
   - @bill_payments.sort_by(&:txn_date).reverse.each do |bill_payment|
     %div.row
       .col-xs-12.col-sm-12.col-md-12
@@ -31,5 +32,7 @@
   %div.row
     .col-xs-12.col-sm-12.col-md-12
       =# link_to "New Bill Payment", new_bill_payment_path, class: 'btn btn-primary btn-lg btn-block'
+    
+  = paginate @bill_payments
 
 = render partial: "shared/footer_navbar", locals: {title: "BillPayment"}

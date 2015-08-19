@@ -14,7 +14,7 @@ class PurchaseOrdersController < ApplicationController
   def index
 #    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 100).entries.find_all{ |e| e.po_status == 'Open' }
-    @open_purchase_orders = Kaminari.paginate_array(@open_purchase_orders).page(params[:page]).per(4)
+    @open_purchase_orders = Kaminari.paginate_array(@open_purchase_orders).page(params[:page]).per(3)
 #    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 1000).entries.find_all{ |e| e.po_status == 'Open' }
 #    @closed_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Closed' }
     

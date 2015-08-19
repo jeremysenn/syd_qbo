@@ -15,7 +15,7 @@ class BillsController < ApplicationController
   def index
 #    query = "Select * From Bill Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     @open_bills = @bill_service.query(nil, :per_page => 100).entries.find_all{ |e| e.balance > 0 }
-    @open_bills = Kaminari.paginate_array(@open_bills).page(params[:page]).per(4)
+    @open_bills = Kaminari.paginate_array(@open_bills).page(params[:page]).per(3)
 #    @paid_bills = @bill_service.query(nil, :per_page => 20).entries.find_all{ |e| e.balance == 0 }
   end
 
@@ -111,7 +111,13 @@ class BillsController < ApplicationController
     
     respond_to do |format|
       if @bill.present?
-        format.html { redirect_to bill_path(@bill.id), notice: 'Bill was successfully updated.' }
+        format.html { 
+          if params[:pay_ticket]
+            redirect_to new_bill_payment_path(bill_id: @bill.id), notice: 'Bill was successfully updated.'
+          else
+            redirect_to bill_path(@bill.id), notice: 'Bill was successfully updated.' 
+          end
+          }
         format.json { render :show, status: :ok, location: bill_path(@bill.id) }
       else
         format.html { render :edit }
