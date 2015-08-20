@@ -14,7 +14,7 @@ class BillsController < ApplicationController
   # GET /bills.json
   def index
 #    query = "Select * From Bill Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
-    @open_bills = @bill_service.query(nil, :per_page => 100).entries.find_all{ |e| e.balance > 0 }
+    @open_bills = @bill_service.query(nil, :per_page => 30).entries.find_all{ |e| e.balance > 0 }
     @open_bills = Kaminari.paginate_array(@open_bills).page(params[:page]).per(3)
 #    @paid_bills = @bill_service.query(nil, :per_page => 20).entries.find_all{ |e| e.balance == 0 }
   end
