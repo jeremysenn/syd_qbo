@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/show_bill_payment_navbar", locals: {title: "#{@bill_payment.doc_number}", bill_payment_id: @bill_payment.id}
+= render partial: "shared/navbars/show_bill_payment_navbar", locals: {title: "Paid Ticket #{@bill_payment.doc_number}", bill_payment_id: @bill_payment.id}
 
 -#
   - @bill_payment.line_items.each do |line_item|
@@ -12,7 +12,7 @@
       = "Payment #{@bill_payment.doc_number}" unless @bill_payment.doc_number.blank?
     %div.list_group
       %div.list-group-item
-        %strong= "Vendor"
+        %strong= "Customer"
         .pull-right
           = truncate(@vendor.display_name, length: 30)
       %div.list-group-item

@@ -1,16 +1,18 @@
-= render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "#{@bill.doc_number}"}
+= render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "Closed Ticket #{@bill.doc_number}"}
 
 .container
   = form_tag update_qb_bill_path, method: 'get', id: 'bill_form', :class => "form-horizontal" do
     .well
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Vendor", nil, :class => 'control-label'
-          = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+          = label_tag "Customer", nil, :class => 'control-label'
+          = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @vendor.id), prompt: "Choose a customer", class: "form-control input-lg", required: true
           = hidden_field_tag "bill[doc_number]", @bill.doc_number
     %div.bill_input_fields_wrap
       - @bill.line_items.each do |line_item|
         .well
+          %a{href: '#', class: 'remove_field pull-right'}
+            %i.fa.fa-trash
           = link_to "#{line_item.item_based_expense_line_detail.item_ref.name}", '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", class: "toggle_link"
           .row.form-group.calculation_fields{style: "#{@bill.line_items.count > 1 ? 'display: none;' : 'display: block;'}"}
             %div{:class => "col-sm-12 col-md-12"}
@@ -20,20 +22,17 @@
               = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
               = label_tag "Tare", nil, :class => 'control-label'
               = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
-              = label_tag "Load", nil, :class => 'control-label'
-              = text_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
+              = label_tag "Net", nil, :class => 'control-label'
+              = text_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
               = label_tag "Rate", nil, :class => 'control-label'
               = text_field_tag "bill[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
               = label_tag "Amount", nil, :class => 'control-label'
               = text_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
           %div{id: 'quantity_preview', class: 'preview', style: "#{@bill.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
-            = "Load: #{line_item.item_based_expense_line_detail.quantity}"
+            = "Net: #{line_item.item_based_expense_line_detail.quantity}"
           %div{id: 'unit_price_preview', class: 'preview', style: "#{@bill.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
             = "Rate: #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
-          .row.form-group
-            %div{:class => "col-sm-12 col-md-12"}
-              %a{href: '#', class: 'remove_field btn btn-danger btn-sm pull-right'}
-                %i.fa.fa-trash
+              
     %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
     %p= link_to 'More items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right add_field", onclick: "$(this).hide(); $('#spinner').show();"
     %br

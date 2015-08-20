@@ -79,7 +79,7 @@ class BillsController < ApplicationController
         @purchase_order.po_status = "Closed"
         @purchase_order_service.update(@purchase_order)
 #        format.html { redirect_to bill_path(@bill.id), notice: 'Bill was successfully created.' }
-        format.html { redirect_to bills_path, notice: 'Bill was successfully created.' }
+        format.html { redirect_to purchase_orders_path, notice: 'Bill was successfully created.' }
         format.json { render :show, status: :created, location: bill_path(@bill.id) }
       else
         format.html { render :new }
@@ -119,7 +119,8 @@ class BillsController < ApplicationController
           if params[:pay_ticket]
             redirect_to new_bill_payment_path(bill_id: @bill.id), notice: 'Bill was successfully updated.'
           else
-            redirect_to bill_path(@bill.id), notice: 'Bill was successfully updated.' 
+#            redirect_to bill_path(@bill.id), notice: 'Bill was successfully updated.' 
+            redirect_to purchase_orders_path, notice: 'Bill was successfully updated.'
           end
           }
         format.json { render :show, status: :ok, location: bill_path(@bill.id) }

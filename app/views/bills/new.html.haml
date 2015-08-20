@@ -6,8 +6,8 @@
       .well
         .row.form-group
           %div{:class => "col-sm-12 col-md-12"}
-            = label_tag "Vendor", nil, :class => 'control-label'
-            = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+            = label_tag "Customer", nil, :class => 'control-label'
+            = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a customer", class: "form-control input-lg", required: true
             =# label_tag "Balance", nil, :class => 'control-label'
             =# text_field_tag "bill[balance]", @purchase_order.total, :placeholder => "Balance", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
             =# hidden_field_tag "bill[total]", @purchase_order.total

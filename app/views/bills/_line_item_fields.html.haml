@@ -1,4 +1,6 @@
 .well
+  %a{href: '#', class: 'remove_field pull-right'}
+    %i.fa.fa-trash
   = link_to "Show", '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", style: "display:none;", class: "toggle_link"
   .row.form-group.calculation_fields
     %div{:class => "col-sm-12 col-md-12"}
@@ -9,16 +11,11 @@
       = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Tare", nil, :class => 'control-label'
       = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field", required: true
-      = label_tag "Load", nil, :class => 'control-label'
-      = text_field_tag "bill[line_items][][quantity]", nil, :placeholder => "Quantity", class: "form-control input-lg amount-calculation-field", required: true
+      = label_tag "Net", nil, :class => 'control-label'
+      = text_field_tag "bill[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Rate", nil, :class => 'control-label'
       = text_field_tag "bill[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Amount", nil, :class => 'control-label'
       = text_field_tag "bill[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
   %div{id: 'quantity_preview', class: 'preview', :style => "display:none;"}
   %div{id: 'unit_price_preview', class: 'preview', :style => "display:none;"}
-  .row.form-group
-    %div{:class => "col-sm-12 col-md-12"}
-      %a{href: '#', class: 'remove_field btn btn-danger btn-sm pull-right'}
-        %i.fa.fa-trash
-      

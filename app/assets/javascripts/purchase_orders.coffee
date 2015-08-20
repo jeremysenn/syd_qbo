@@ -17,7 +17,7 @@ jQuery ->
           e.preventDefault()
           return
       else
-        alert 'You can not delete this because you must have at least one item.'
+        alert 'You cannot delete this because you must have at least one item.'
         e.preventDefault()
         return
     return
@@ -55,7 +55,7 @@ jQuery ->
     if $(this).is( "#purchase_order_line_items__rate" )
       quantity = $(this).prevAll('#purchase_order_line_items__quantity').first().val()
       rate = $(this).val()
-      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Net: " + quantity
       $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
@@ -65,10 +65,10 @@ jQuery ->
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
       quantity = (parseFloat(gross) - parseFloat(tare))
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
-      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Net: " + quantity
       $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
-      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Net: " + quantity
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
     if $(this).is( "#purchase_order_line_items__tare" )
       gross = $(this).prevAll('#purchase_order_line_items__gross').first().val()
@@ -76,10 +76,10 @@ jQuery ->
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
       quantity = (parseFloat(gross) - parseFloat(tare))
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
-      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Net: " + quantity
       $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
-      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Load: " + quantity
+      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Net: " + quantity
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
     if $(this).is( "#purchase_order_line_items__quantity" )
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()

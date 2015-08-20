@@ -5,7 +5,7 @@
     .well
       %div
         %p
-          %strong= "Vendor"
+          %strong= "Customer"
           %br
           = truncate(@vendor.display_name, length: 30)
       %div
@@ -76,7 +76,7 @@
             = line_item.description
         %div
           %p
-            %strong Load
+            %strong Net
             %br
             = line_item.item_based_expense_line_detail.quantity
         %div

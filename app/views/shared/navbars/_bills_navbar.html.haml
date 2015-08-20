@@ -8,6 +8,7 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
-          %a{href: new_bill_path}
-            %i.fa.fa-plus.fa-lg
-            = "New" unless mobile_device?
+          -#
+            %a{href: new_bill_path}
+              %i.fa.fa-plus.fa-lg
+              = "New" unless mobile_device?

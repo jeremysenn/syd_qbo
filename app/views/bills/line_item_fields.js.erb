@@ -3,13 +3,3 @@ $('.preview').show();
 $('.bill_input_fields_wrap').append("<%= j render(:partial => 'line_item_fields') %>");
 $('#spinner').hide();
 $('#add_item_button').show(); 
-
-<% if false %>
-  <% if @transactions.next_page %>
-    $('a.load-more-transactions').show();
-    $('a.load-more-transactions').attr('href', '<%= device_path(@device, transactions_page: @transactions.next_page) %>');
-  <% else %>
-    $(window).off('scroll');
-    $('a.load-more-transactions').remove();
-  <% end %>
-<% end %>
