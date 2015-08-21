@@ -7,8 +7,8 @@
     .well
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Customer", nil, :class => 'control-label'
-          = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name"), prompt: "Choose a customer", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
+          = label_tag "Vendor", nil, :class => 'control-label'
+          = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name"), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
     %div.purchase_order_input_fields_wrap
       -#
         .well.col-sm-6.col-md-4.col-md-offset-4

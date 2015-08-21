@@ -5,8 +5,8 @@
     .well
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Customer", nil, :class => 'control-label'
-          = select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a customer", class: "form-control input-lg", required: true
+          = label_tag "Vendor", nil, :class => 'control-label'
+          = select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
           =# label_tag "Payment method", nil, :class => 'control-label'
           %p.text-center
             .btn-group-vertical{"data-toggle" => "buttons"}

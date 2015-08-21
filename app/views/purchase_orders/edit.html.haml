@@ -7,9 +7,9 @@
     .well
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Customer", nil, :class => 'control-label'
+          = label_tag "Vendor", nil, :class => 'control-label'
           =# @vendor.display_name
-          = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @vendor.id), prompt: "Choose a customer", class: "form-control input-lg", required: true
+          = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
           -#
             = label_tag "Status", nil, :class => 'control-label'
             = select_tag "purchase_order[po_status]", options_for_select(["Open", "Closed"], @purchase_order.po_status), class: "form-control input-lg item_select"
