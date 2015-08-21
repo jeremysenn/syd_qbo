@@ -10,6 +10,8 @@
   %div.panel.panel-default
     %div.panel-heading
       = "Payment #{@bill_payment.doc_number}" unless @bill_payment.doc_number.blank?
+      .pull-right
+        = link_to 'Print check', 'https://sandbox.qbo.intuit.com/app/expenses', target: '_blank'
     %div.list_group
       %div.list-group-item
         %strong= "Customer"
