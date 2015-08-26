@@ -1,102 +1,47 @@
-%div{:id => "upload_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+%div{:id => "signature_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
   = form_for ImageFile.new do |f|
-    .modal-dialog.modal-sm
+    .modal-dialog
       .modal-content
-        -#
-          .modal-header
-            = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
-            %strong New Picture
         .modal-body
           = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :ticket_number, value: @doc_number
+          = f.hidden_field :event_code, value: 'SIG'
           .form-group
-            = f.label "Ticket Number*", :class => 'control-label'
-            -#
-              .input-group
-            = f.text_field :ticket_number, :placeholder => "Ticket Number", value: "#{@doc_number.present? ? @doc_number : @ticket_number}", class: "form-control input-lg", autofocus: true, required: true
-            -#
-              %span.input-group-addon 
-                %a{href: '#', onclick: "$('#image_file_ticket_number').val('');"}
-                  %i.fa.fa-remove.fa-lg
-          .form-group{:id => "event_code"}
-            = f.label "Event Code*", :class => 'control-label'
-            =# f.select :event_code, options_for_select(Image.event_codes.map(&:event_code)), {prompt: "Select event code"}, {:class => "form-control input-lg", required: true}
-            =# f.text_field :event_code, :placeholder => "Event Code", class: "form-control typeahead input-lg", data: { events: "#{Image.event_codes.map(&:event_code)}"}, required: true
-            =# f.text_field :event_code, :placeholder => "Event Code", class: "form-control typeahead input-lg", data: { events: "#{LookupDef.image_event_codes.map(&:LookupDisplay)}"}, required: true
-            =# f.select :event_code, options_for_select(Image.event_codes.map(&:event_code)), {prompt: "Select event code"}, {:class => "form-control input-lg", required: true}
-            = f.select :event_code, options_for_select(LookupDef.image_event_codes.map(&:LookupValue)), {prompt: "Select event code"}, {:class => "form-control input-lg", required: true}
-          .form-group
-            = f.label "File*", :class => 'control-label'
-            = f.file_field :file, title: "<i class='fa fa-photo'/> Choose image".html_safe, class: 'btn btn-warning', required: true
+            .sigPad
+              %div.sigNav
+                .clearButton
+                  %a{href: "#clear", class: 'pull-right'} Clear
+              .sig.sigWrapper
+                .typed
+                %canvas.pad{height: "85", width: "498"}
+                %input.output{name: "output", type: "hidden"}/
         .modal-footer
-          %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} x
-          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit") do
-            Upload
-            %i.fa.fa-arrow-up
-
+          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
+            I accept the terms of this agreement
 -#
-  %script
-    $('input[type=file]').bootstrapFileInput();
+  %div{:id => "signature_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+    .modal-dialog
+      .modal-content
+        .modal-body
+          %form.sigPad{action: signature_purchase_order_path, method: "post"}
+            %div.sigNav
+              .clearButton
+                %a{href: "#clear", class: 'pull-right'} Clear
+            .sig.sigWrapper
+              %canvas.pad{height: "75", width: "498"}
+              %input.output{name: "output", type: "hidden"}/
+            .modal-footer
+              %button.btn.btn-primary.btn-lg.pull-right{type: "submit"} I accept the terms of this agreement
+          -#
+            .modal-footer
+              %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} x
+              = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_signature_submit") do
+                Upload
+                %i.fa.fa-arrow-up
 
 :javascript
   $('input[type=file]').bootstrapFileInput();
 
-  //Required attribute fallback
-  function attributeSupported(attribute) {
-    return (attribute in document.createElement("input"));
-  }
-  function isSafariOnly() {
-    return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-  }
-  $(function () {
-    $('#new_image_file').submit(function () {
-      if (!attributeSupported("required") || isSafariOnly()) {
-        $("#new_image_file [required]").each(function (index) {
-          if (!$(this).val()) {
-            alert("Please Fill In All Required Fields.");
-            return false;
-          }
-        });
-      }
-      return true;
-    });
-  });
-
-  // Don't allow for form submit until form fields completed
-  //$("#new_image_file_submit").attr("disabled", "disabled");
-  $("#new_image_file_submit").hide();
-
-  // Make check if ticket number changes
-  $("#image_file_ticket_number").on("change", function() {
-    if($("#image_file_ticket_number").val() && $("#image_file_file").val() && $("#image_file_event_code").val()) {
-      //$("#new_image_file_submit").removeAttr("disabled");
-      $("#new_image_file_submit").show();
-    }
-    else {
-      //$("#new_image_file_submit").attr("disabled", "disabled");
-      $("#new_image_file_submit").hide();
-    }
-  });
-
-  // Make check if file changes
-  $("#image_file_file").on("change", function() {
-    if($("#image_file_ticket_number").val() && $("#image_file_file").val() && $("#image_file_event_code").val()) {
-      //$("#new_image_file_submit").removeAttr("disabled");
-      $("#new_image_file_submit").show();
-    }
-    else {
-      //$("#new_image_file_submit").attr("disabled", "disabled");
-      $("#new_image_file_submit").hide();
-    }
-  });
-
-  // Make check if event code changes
-  $("#image_file_event_code").on("change", function() {
-    if($("#image_file_ticket_number").val() && $("#image_file_file").val() && $("#image_file_event_code").val()) {
-      //$("#new_image_file_submit").removeAttr("disabled");
-      $("#new_image_file_submit").show();
-    }
-    else {
-      //$("#new_image_file_submit").attr("disabled", "disabled");
-      $("#new_image_file_submit").hide();
-    }
+  $(document).ready(function() {
+    $('.sigPad').signaturePad({drawOnly:true, lineWidth: 0});
   });

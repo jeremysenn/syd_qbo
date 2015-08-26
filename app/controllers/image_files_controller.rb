@@ -29,6 +29,16 @@ class ImageFilesController < ApplicationController
   # POST /image_files.json
   def create
     @image_file = ImageFile.new(image_file_params)
+    @signature = params[:output]
+    
+    unless @signature.blank?
+      instructions = JSON.parse(@signature).map { |h| "line #{h['mx'].to_i},#{h['my'].to_i} #{h['lx'].to_i},#{h['ly'].to_i}" } * ' '
+      tempfile = Tempfile.new(["ticket_#{@image_file.ticket_number}_signature", '.png'])
+      Open3.popen3("convert -size 498x85 xc:transparent -stroke blue -draw @- #{tempfile.path}") do |input, output, error|
+          input.puts instructions
+      end
+      @image_file.file = tempfile
+    end
 
     respond_to do |format|
       if @image_file.save

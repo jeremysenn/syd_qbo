@@ -14,7 +14,7 @@
         .col-xs-4.col-sm-4
           %a{href: "#signature_form", "data-toggle" => "modal", :alt => "new_signature_form"}
             %i.fa.fa-pencil.fa-lg
-            = "Signature" unless mobile_device?
+            = "Sign" unless mobile_device?
           -#
             %a{href: "#{current_user.images_table? ? images_path(today: true) : shipments_path(today: true)}"}
               %i.fa.fa-calendar-o.fa-lg
