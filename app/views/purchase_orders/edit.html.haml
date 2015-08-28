@@ -48,6 +48,8 @@
               = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
               = label_tag "Amount", nil, :class => 'control-label'
               = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
+          %div{id: 'description_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
+            = "#{line_item.description}"
           %div{id: 'quantity_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
             = "Net: #{line_item.item_based_expense_line_detail.quantity}"
           %div{id: 'unit_price_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}

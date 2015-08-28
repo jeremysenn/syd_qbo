@@ -26,22 +26,14 @@
       %div.row
         .col-xs-12.col-sm-12.col-md-12
           %div.panel.panel-primary
-            %div.list_group
-              %a{href: edit_purchase_order_path(purchase_order.id), class: "list-group-item"}
+            %div.panel-body
+              %a{href: edit_purchase_order_path(purchase_order.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Loading open ticket ..."}}
                 =# purchase_order.vendor_ref
-                = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
-                .pull-right
-                  %i.fa.fa-chevron-right
-                %br
-                = purchase_order.doc_number
-                %br
-                -#
-                  = purchase_order.po_status
-                  %br/
-                %small
-                  = purchase_order.txn_date.strftime("%m/%d/%y")
-                  %br
-                  = number_to_currency(purchase_order.total)
+                %div.col-xs-12.col-sm-3.col-md-3= purchase_order.txn_date.strftime("%m/%d/%y")
+                %div.col-xs-12.col-sm-3.col-md-3= purchase_order.doc_number
+                %div.col-xs-12.col-sm-3.col-md-3
+                  = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+                %div.col-xs-12.col-sm-3.col-md-3= number_to_currency(purchase_order.total)
               -#
                 %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
                   Close ticket
@@ -49,6 +41,8 @@
                     %i.fa.fa-chevron-right
                   %br
                   %br
+                .pull-right
+                  %i.fa.fa-chevron-right
   -#
     %div{id: 'closed_purchase_orders', style: 'display: none;'}
       - @closed_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|

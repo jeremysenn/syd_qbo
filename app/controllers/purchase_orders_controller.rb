@@ -14,7 +14,8 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders.json
   def index
 #    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
-    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 30).entries.find_all{ |e| e.po_status == 'Open' }
+    query = "Select * From PurchaseOrder Where TxnDate>'#{2.days.ago.strftime("%Y-%m-%d")}'"
+    @open_purchase_orders = @purchase_order_service.query(query, :per_page => 30).entries.find_all{ |e| e.po_status == 'Open' }
     @open_purchase_orders = Kaminari.paginate_array(@open_purchase_orders).page(params[:page]).per(3)
 #    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 1000).entries.find_all{ |e| e.po_status == 'Open' }
 #    @closed_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Closed' }
