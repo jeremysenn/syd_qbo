@@ -22,11 +22,11 @@ set :environment, 'production'
 
 # Learn more: http://github.com/javan/whenever
 
-#every :reboot do
-#  job_type :application, "cd /usr/local/Ruby/syd_qbo && :task :output"
-#  application "bundle exec unicorn -l 3000 -E production"
-#  application "bundle exec sidekiq"
-#end
+every :reboot do
+  job_type :application, "cd /usr/local/Ruby/syd_qbo && :task :output"
+  application "bundle exec unicorn -l 3000 -E production"
+  application "bundle exec sidekiq"
+end
 #
 ## Clear out public/uploads/tmp directory
 #every 1.day, :at => '4:30 am' do
