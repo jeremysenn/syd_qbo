@@ -14,29 +14,36 @@
       %div.row
         .col-xs-12.col-sm-12.col-md-12
           %div.panel.panel-primary
-            %div.list_group
-              %a{href: edit_bill_path(bill.id), class: "list-group-item"}
-                = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
-                .pull-right
-                  %i.fa.fa-chevron-right
-                %br
-                = bill.doc_number
-                %br
-                %small
-                  = bill.txn_date.strftime("%m/%d/%y")
-                  %br
-                  Total:
-                  = number_to_currency(bill.total)
-                  %br
-                  Balance:
-                  = number_to_currency(bill.balance)
-              -#
-                %a{href: new_bill_payment_path(bill_id: bill.id), class: "list-group-item"}
-                  Pay Bill
+            %div.panel-body
+              %a{href: edit_bill_path(bill.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Loading closed ticket ..."}}
+                %div.col-xs-12.col-sm-3.col-md-3= bill.txn_date.strftime("%m/%d/%y")
+                %div.col-xs-12.col-sm-3.col-md-3= bill.doc_number
+                %div.col-xs-12.col-sm-3.col-md-3= @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
+                %div.col-xs-12.col-sm-3.col-md-3= number_to_currency(bill.balance)
+            -#
+              %div.list_group
+                %a{href: edit_bill_path(bill.id), class: "list-group-item"}
+                  = @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
                   .pull-right
                     %i.fa.fa-chevron-right
                   %br
+                  = bill.doc_number
                   %br
+                  %small
+                    = bill.txn_date.strftime("%m/%d/%y")
+                    %br
+                    Total:
+                    = number_to_currency(bill.total)
+                    %br
+                    Balance:
+                    = number_to_currency(bill.balance)
+                -#
+                  %a{href: new_bill_payment_path(bill_id: bill.id), class: "list-group-item"}
+                    Pay Bill
+                    .pull-right
+                      %i.fa.fa-chevron-right
+                    %br
+                    %br
   -#
     %div{id: 'paid_bills', style: 'display: none;'}
       - @paid_bills.sort_by(&:txn_date).reverse.each do |bill|

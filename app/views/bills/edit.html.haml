@@ -34,7 +34,7 @@
             = "Rate: #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
               
     %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-    %p= link_to 'More items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right add_field", onclick: "$(this).hide(); $('#spinner').show();"
+    %p= link_to 'Add items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right add_field", onclick: "$(this).hide(); $('#spinner').show();"
     %br
     %br
     %br
