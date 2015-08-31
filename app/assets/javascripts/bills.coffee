@@ -100,4 +100,7 @@ jQuery ->
   $(document).on 'page:change', ->
     $.rails.enableElement $('#bills_to_open')
     $.rails.enableElement $('#bills_to_paid')
+    $('.pay_button').each ->
+      $.rails.enableElement $(this)
+      return
     return

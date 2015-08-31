@@ -14,7 +14,7 @@
           %a{href: '#', class: 'remove_field pull-right'}
             %i.fa.fa-trash
           = link_to "#{line_item.item_based_expense_line_detail.item_ref.name}", '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", class: "toggle_link"
-          .row.form-group.calculation_fields{style: "#{@bill.line_items.count > 1 ? 'display: none;' : 'display: block;'}"}
+          .row.form-group.calculation_fields{style: 'display: none;'}
             %div{:class => "col-sm-12 col-md-12"}
               = select_tag "bill[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
               = hidden_field_tag "bill[line_items][][description]", line_item.description
@@ -28,9 +28,11 @@
               = text_field_tag "bill[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
               = label_tag "Amount", nil, :class => 'control-label'
               = text_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
-          %div{id: 'quantity_preview', class: 'preview', style: "#{@bill.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
+          %div{id: 'description_preview', class: 'preview', style: 'display: block;'}
+            = "#{line_item.description}"
+          %div{id: 'quantity_preview', class: 'preview', style: 'display: block;'}
             = "Net: #{line_item.item_based_expense_line_detail.quantity}"
-          %div{id: 'unit_price_preview', class: 'preview', style: "#{@bill.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
+          %div{id: 'unit_price_preview', class: 'preview', style: 'display: block;'}
             = "Rate: #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
               
     %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")

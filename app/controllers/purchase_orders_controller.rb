@@ -3,7 +3,7 @@ class PurchaseOrdersController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_purchase_order_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
-  before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
+  before_action :set_vendor_service, only: [:show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
   before_action :set_bill_service, only: [:show]
   before_action :set_company_service, only: [:show]
@@ -94,7 +94,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}" unless line_item[:gross].blank? or line_item[:tare].blank?
+      purchase_line_item.description = "G: #{line_item[:gross]} T: #{line_item[:tare]}" unless line_item[:gross].blank? or line_item[:tare].blank?
       @purchase_order.line_items.push(purchase_line_item)
     end
     
@@ -129,7 +129,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
       unless (line_item[:gross].blank? and line_item[:tare].blank?)
-        purchase_line_item.description = "Gross: #{line_item[:gross]}, Tare: #{line_item[:tare]}"
+        purchase_line_item.description = "G: #{line_item[:gross]} T: #{line_item[:tare]}"
       else
         purchase_line_item.description = line_item[:description]
       end

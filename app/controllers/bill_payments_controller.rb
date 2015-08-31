@@ -31,7 +31,7 @@ class BillPaymentsController < ApplicationController
 
   # GET /bill_payments/new
   def new
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @bill= @bill_service.fetch_by_id(params[:bill_id])
     
     query_banks = "Select * from Account Where AccountType = 'Bank'"

@@ -3,16 +3,21 @@
     .col-xs-12.col-sm-12.col-md-12
       %div.panel.panel-primary
         %div.panel-body
-          %a{href: edit_purchase_order_path(purchase_order.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Loading open ticket ..."}}
+          %a{href: edit_purchase_order_path(purchase_order.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait..."}}
             %div.col-xs-12.col-sm-3.col-md-3= purchase_order.txn_date.strftime("%m/%d/%y")
             %div.col-xs-12.col-sm-3.col-md-3= purchase_order.doc_number
             %div.col-xs-12.col-sm-3.col-md-3
-              = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+              =# @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+              = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
             %div.col-xs-12.col-sm-3.col-md-3= number_to_currency(purchase_order.total)
+          .pull-right
+            %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), target: '_blank'}
+              %i.fa.fa-file-pdf-o.fa-lg
         -#
           %div.list_group
             %a{href: edit_purchase_order_path(purchase_order.id), class: "list-group-item"}
-              = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+              =# @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
+              = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
               .pull-right
                 %i.fa.fa-chevron-right
               %br

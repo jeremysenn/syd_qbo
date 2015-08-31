@@ -1,59 +1,83 @@
-= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "Open Ticket #{@purchase_order.doc_number}"}
+= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "Open Ticket #{@purchase_order.doc_number}", total: number_to_currency(@purchase_order.total)}
 
 .container
   = form_tag update_qb_purchase_order_path, method: 'get', id: 'purchase_order_form', :class => "form-horizontal" do
     -#
       .well.col-sm-6.col-md-4.col-md-offset-4
-    .well
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Vendor", nil, :class => 'control-label'
-          =# @vendor.display_name
-          = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
-          -#
-            = label_tag "Status", nil, :class => 'control-label'
-            = select_tag "purchase_order[po_status]", options_for_select(["Open", "Closed"], @purchase_order.po_status), class: "form-control input-lg item_select"
-          -#
-            %p
-              = label_tag "Status", nil, :class => 'control-label'
-              .btn-group{"data-toggle" => "buttons"}
-                %label.btn.btn-lg.btn-default{class: "#{@purchase_order.po_status == 'Open' ? 'active' : ''}"}
-                  = radio_button_tag "purchase_order[po_status]", "Open", "#{@purchase_order.po_status == 'Open'}"
-                  Open
-                %label.btn.btn-lg.btn-default{class: "#{@purchase_order.po_status == 'Closed' ? 'active' : ''}"}
-                  = radio_button_tag "purchase_order[po_status]", "Closed", "#{@purchase_order.po_status == 'Closed'}"
-                  Closed
+      .well
+    #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+      .panel.panel-default
+        %div.panel-heading{:role => "tab", id: "vendor_heading"}
+          %h4.panel-title
+            %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button"}
+              Vendor
+        #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+          .panel-body
+            =# label_tag "Vendor", nil, :class => 'control-label'
+            = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+        %div.panel-footer
+          .vendor_name= @purchase_order.vendor_ref.name
     %div.purchase_order_input_fields_wrap
-      - @purchase_order.line_items.each do |line_item|
-        .well
-          %a{href: '#', class: 'remove_field pull-right'}
-            %i.fa.fa-trash
-          =# link_to "#{line_item.item_based_expense_line_detail.item_ref.name}: #{number_to_currency(line_item.amount)}", '#', onclick: "$(this).next().fadeToggle();"
-          =# link_to "#{line_item.item_based_expense_line_detail.item_ref.name} (#{number_to_currency(line_item.amount)})", '#', onclick: "$(this).next().fadeToggle();", class: "toggle_link"
-          %a{href: '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", class: "toggle_link"}
-            %p= "#{line_item.item_based_expense_line_detail.item_ref.name}"
-          .row.form-group.calculation_fields{style: "#{@purchase_order.line_items.count > 1 ? 'display: none;' : 'display: block;'}"}
-            %div{:class => "col-sm-12 col-md-12"}
-              = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-              = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
-              = label_tag "Gross", nil, :class => 'control-label'
-              = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
-              = label_tag "Tare", nil, :class => 'control-label'
-              = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
-              = label_tag "Net", nil, :class => 'control-label'
-              = text_field_tag "purchase_order[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
-              
-              = label_tag "Rate", nil, :class => 'control-label'
-              =# text_field_tag "purchase_order[line_items][][rate]", line_item.item_based_expense_line_detail.unit_price, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
-              = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
-              = label_tag "Amount", nil, :class => 'control-label'
-              = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
-          %div{id: 'description_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
-            = "#{line_item.description}"
-          %div{id: 'quantity_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
-            = "Net: #{line_item.item_based_expense_line_detail.quantity}"
-          %div{id: 'unit_price_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
-            = "Rate: #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
+      #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+        - @purchase_order.line_items.each do |line_item|
+          .panel.panel-default
+            %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
+              %h4.panel-title
+                %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}"}
+                  =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
+                  = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+                %a{href: '#', class: 'remove_field pull-right'}
+                  %i.fa.fa-trash
+            %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@purchase_order.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}"}
+              .panel-body
+                = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
+                = label_tag "Gross", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Tare", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Net", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
+
+                = label_tag "Rate", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+                = label_tag "Amount", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true 
+            %div.panel-footer
+              = "#{line_item.description}"
+              = "N: #{line_item.item_based_expense_line_detail.quantity}"
+              = "R: #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
+              = "T: #{number_to_currency(line_item.amount)}"
+        -#
+          .well
+            %a{href: '#', class: 'remove_field pull-right'}
+              %i.fa.fa-trash
+            =# link_to "#{line_item.item_based_expense_line_detail.item_ref.name}: #{number_to_currency(line_item.amount)}", '#', onclick: "$(this).next().fadeToggle();"
+            =# link_to "#{line_item.item_based_expense_line_detail.item_ref.name} (#{number_to_currency(line_item.amount)})", '#', onclick: "$(this).next().fadeToggle();", class: "toggle_link"
+            %a{href: '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", class: "toggle_link"}
+              %p= "#{line_item.item_based_expense_line_detail.item_ref.name}"
+            .row.form-group.calculation_fields{style: "#{@purchase_order.line_items.count > 1 ? 'display: none;' : 'display: block;'}"}
+              %div{:class => "col-sm-12 col-md-12"}
+                = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
+                = label_tag "Gross", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Tare", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Net", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
+
+                = label_tag "Rate", nil, :class => 'control-label'
+                =# text_field_tag "purchase_order[line_items][][rate]", line_item.item_based_expense_line_detail.unit_price, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+                = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+                = label_tag "Amount", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
+            %div{id: 'description_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
+              = "#{line_item.description}"
+            %div{id: 'quantity_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
+              = "Net: #{line_item.item_based_expense_line_detail.quantity}"
+            %div{id: 'unit_price_preview', class: 'preview', style: "#{@purchase_order.line_items.count > 1 ? 'display: block;' : 'display: none;'}"}
+              = "Rate: #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
           
     %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
     %p= link_to 'Add items', line_item_fields_purchase_orders_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right", onclick: "$(this).hide(); $('#spinner').show();"
@@ -68,9 +92,10 @@
         = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
           Save
         %br
-        = button_tag(:type => 'submit', :class => 'btn btn-info btn-lg btn-block', id: 'save_and_print_button', name: 'save_and_print', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save & Print"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
-          Save & Print
-        %br
+        -#
+          = button_tag(:type => 'submit', :class => 'btn btn-info btn-lg btn-block', id: 'save_and_print_button', name: 'save_and_print', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save & Print"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
+            Save & Print
+          %br
         = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
           Close ticket
 

@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "New ticket"}
+= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "New ticket", total: number_to_currency(0)}
 
 .container
   = form_tag purchase_orders_path, id: 'purchase_order_form', :class => "form-horizontal" do |f|

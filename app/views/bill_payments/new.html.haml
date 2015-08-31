@@ -6,10 +6,13 @@
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Vendor", nil, :class => 'control-label'
-          = select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
-          =# label_tag "Payment method", nil, :class => 'control-label'
+          %p= @bill.vendor_ref.name
+          =# select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+          =# select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+          = hidden_field "bill_payment[vendor]", @bill.vendor_ref
+          = label_tag "Payment method", nil, :class => 'control-label'
           %p.text-center
-            .btn-group-vertical{"data-toggle" => "buttons"}
+            .btn-group-horizontal{"data-toggle" => "buttons"}
               - @accounts.each_with_index do |account, index|
                 %label.btn.btn-lg.btn-default{class: "#{index == 0 ? 'active' : ''}"}
                   - if index == 0
@@ -20,8 +23,11 @@
           =# select_tag "bill_payment[pay_account]", options_from_collection_for_select(@accounts, "id", "name"), class: "form-control input-lg", required: true
           =# select_tag "bill_payment[pay_type]", options_for_select(["Cash", "Check", "CreditCard"], "Cash"), prompt: "Choose payment type", class: "form-control input-lg", required: true
           = label_tag "Total", nil, :class => 'control-label'
-          %div
-            = text_field_tag "bill_payment[total]", number_with_precision(@bill.total, :precision => 2), :placeholder => "Total", class: "form-control input-lg", required: true
+          %p= number_to_currency(@bill.total)
+          = hidden_field "bill_payment[total]", @bill.total
+          -#
+            %div
+              = text_field_tag "bill_payment[total]", number_with_precision(@bill.total, :precision => 2), :placeholder => "Total", class: "form-control input-lg", required: true
           = hidden_field_tag "bill_payment[doc_number]", @bill.doc_number
           = hidden_field_tag :bill_id, @bill.id
     -#
