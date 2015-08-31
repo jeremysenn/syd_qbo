@@ -42,7 +42,7 @@
                 = label_tag "Rate", nil, :class => 'control-label'
                 = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
                 = label_tag "Amount", nil, :class => 'control-label'
-                = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true 
+                = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true 
             %div.panel-footer
               = "#{line_item.description}"
               = "N: #{line_item.item_based_expense_line_detail.quantity}"

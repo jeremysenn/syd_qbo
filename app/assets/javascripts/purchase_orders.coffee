@@ -71,7 +71,7 @@ jQuery ->
       gross = $(this).val()
       tare = $(this).nextAll('#purchase_order_line_items__tare').first().val()
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
-      quantity = (parseFloat(gross) - parseFloat(tare))
+      quantity = (parseFloat(gross) - parseFloat(tare)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
@@ -79,7 +79,7 @@ jQuery ->
       gross = $(this).prevAll('#purchase_order_line_items__gross').first().val()
       tare = $(this).val()
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
-      quantity = (parseFloat(gross) - parseFloat(tare))
+      quantity = (parseFloat(gross) - parseFloat(tare)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
@@ -94,6 +94,11 @@ jQuery ->
     rate = $(this).closest('.panel').find('#purchase_order_line_items__rate').val()
     amount = $(this).closest('.panel').find('#purchase_order_line_items__amount').val()
     $(this).closest('.panel').find('.panel-footer').text 'G: ' + gross + ' ' + 'T: ' + tare + ' ' + 'N: ' + quantity + ' '  + 'R: $' + rate + ' ' +  'T: $' + amount
+    sum = 0;
+    $('.amount').each ->
+      sum += Number($(this).val())
+      return
+    $('#total').text '$' + sum.toFixed(2)
     return
 
   ### Re-enable disabled_with buttons for back button ###
