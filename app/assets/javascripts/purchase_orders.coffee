@@ -7,13 +7,16 @@ jQuery ->
     wrapper = $('.purchase_order_input_fields_wrap')
     $(wrapper).on 'click', '.remove_field', (e) ->
       #user click on item trash button
-      #if $('.well').length > 2
       if $('.panel').length > 2
         confirm1 = confirm('Are you sure you want to delete this?')
         if confirm1
           e.preventDefault()
-          #$(this).closest('.well').remove()
           $(this).closest('.panel').remove()
+          sum = 0;
+          $('.amount').each ->
+            sum += Number($(this).val())
+            return
+          $('#total').text '$' + sum.toFixed(2)
           return
         else
           e.preventDefault()
@@ -48,10 +51,10 @@ jQuery ->
       input_select.siblings("input").each ->
         if $(this).is( "#purchase_order_line_items__rate" )
           $(this).val rate
-        if $(this).is( "#purchase_order_line_items__gross" )
-          $(this).val 0
-        if $(this).is( "#purchase_order_line_items__tare" )
-          $(this).val 0
+        #if $(this).is( "#purchase_order_line_items__gross" )
+          #$(this).val 0
+        #if $(this).is( "#purchase_order_line_items__tare" )
+          #$(this).val 0
         if $(this).is( "#purchase_order_line_items__quantity" )
           $(this).val 0
         if $(this).is( "#purchase_order_line_items__amount" )

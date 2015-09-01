@@ -77,12 +77,9 @@
   %h2.text-center PURCHASE TICKET
   %h4.text-center= @company_info.company_name
   %p
-    %strong Ticket
-    %br
+    %strong= "Ticket: "
     = @purchase_order.doc_number
-  %p
-    %strong Vendor
-    %br
+    %strong= "Vendor: "
     = @vendor.display_name
   %table.table
     %thead
