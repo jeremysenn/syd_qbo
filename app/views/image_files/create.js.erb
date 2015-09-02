@@ -9,4 +9,5 @@
 <% else %>
   $("#pictures").prepend("<%= j render(@image_file) %>");
   $(".picture_loading_spinner").hide();
+  $('#signature_form').modal('hide');
 <% end %>
