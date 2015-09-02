@@ -14,6 +14,8 @@
  *= require twbs
  *= require bootstrap-typeahead-rails
  *= require checkbox-x.min.css
+ *= jquery.fileupload.css
+ *= jquery.fileupload-ui.css
  *= require_tree .
  *= require_self
  */
