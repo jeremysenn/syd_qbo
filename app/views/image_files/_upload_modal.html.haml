@@ -1,37 +1,56 @@
 %div{:id => "upload_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
   = form_for ImageFile.new do |f|
-    .modal-dialog.modal-sm
+    .modal-dialog
       .modal-content
-        -#
-          .modal-header
-            = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
-            %strong New Picture
+        .modal-header
+          = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
+          %strong Pictures
         .modal-body
           = f.hidden_field :user_id, value: current_user.id
           .form-group
             = f.label "Ticket Number*", :class => 'control-label'
-            -#
-              .input-group
-            = f.text_field :ticket_number, :placeholder => "Ticket Number", value: "#{@doc_number.present? ? @doc_number : @ticket_number}", class: "form-control input-lg", autofocus: true, required: true
-            -#
-              %span.input-group-addon 
-                %a{href: '#', onclick: "$('#image_file_ticket_number').val('');"}
-                  %i.fa.fa-remove.fa-lg
+            = f.text_field :ticket_number, :placeholder => "Ticket Number", value: "#{@doc_number.present? ? @doc_number : @ticket_number}", class: "form-control input-lg", autofocus: true, required: true, readonly: true
           .form-group{:id => "event_code"}
-            = f.label "Event Code*", :class => 'control-label'
-            =# f.select :event_code, options_for_select(Image.event_codes.map(&:event_code)), {prompt: "Select event code"}, {:class => "form-control input-lg", required: true}
-            =# f.text_field :event_code, :placeholder => "Event Code", class: "form-control typeahead input-lg", data: { events: "#{Image.event_codes.map(&:event_code)}"}, required: true
-            =# f.text_field :event_code, :placeholder => "Event Code", class: "form-control typeahead input-lg", data: { events: "#{LookupDef.image_event_codes.map(&:LookupDisplay)}"}, required: true
-            =# f.select :event_code, options_for_select(Image.event_codes.map(&:event_code)), {prompt: "Select event code"}, {:class => "form-control input-lg", required: true}
-            = f.select :event_code, options_for_select(LookupDef.image_event_codes.map(&:LookupValue)), {prompt: "Select event code"}, {:class => "form-control input-lg", required: true}
+            = f.label "Event Code", :class => 'control-label'
+            = f.select :event_code, options_for_select(LookupDef.image_event_codes.map(&:LookupValue)), {prompt: "Select event code"}, {:class => "form-control input-lg"}
           .form-group
-            = f.label "File*", :class => 'control-label'
-            = f.file_field :file, title: "<i class='fa fa-photo'/> Choose image".html_safe, class: 'btn btn-warning', required: true
+            -#
+              = f.label "File*", :class => 'control-label'
+              = f.file_field :file, title: "<i class='fa fa-photo'/> Choose image".html_safe, class: 'btn btn-warning', required: true
+
+          %div{:id => 'uploads', :style => 'display:block;'}
+            %p{id: "upload_button", style: "display:block;"}
+              = f.file_field :file, name: "image_file[file]", :type => 'file', :class => 'file btn-primary btn-large', title: "<i class='fa fa-photo'/> Choose image".html_safe
+          .picture_loading_spinner{:style => "display:none;", :id => "spinner"}
+            = image_tag("ajax-loader.gif", :id => "loading_spinner", :alt => "Loading")
+            Saving ...
+          #pictures.col-sm-1.col-sm-1.col-md-1.col-lg-1
+
+          .clear
+          %script{:id => "template-upload", :type => "text/x-tmpl"}
+            .upload
+              {%=o.name%}
+              .progress
+                .bar{:style => "width: 0%"}
+          %script{:id => "template-download", :type => "text/x-tmpl"}
+            .download
+              {%=o.name%}
+        
         .modal-footer
-          %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} x
-          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
-            Upload
-            %i.fa.fa-arrow-up
+          - unless @images.blank?
+            %div#images
+              - @images.each_slice(2) do |images|
+                %div.row
+                  - images.each do |image|
+                    .col-xs-12.col-sm-6.col-md-6.col-lg-6
+                      %div.thumbnail
+                        - unless image.hidden?
+                          = image_tag(show_preview_image_image_path(image))
+          -#
+            %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} x
+            = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
+              Upload
+              %i.fa.fa-arrow-up
 
 :javascript
   //$('input[type=file]').bootstrapFileInput();

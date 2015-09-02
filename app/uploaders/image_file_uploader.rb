@@ -21,7 +21,7 @@ class ImageFileUploader < CarrierWave::Uploader::Base
     process :rotate
     process :cover
 #    process :resize_to_fit => [320, 240]
-    process :resize_to_fit => [320, 320]
+    process :resize_to_fit => [320, 240]
     process :convert => :jpg
 
     def full_filename (for_file = model.source.file)
@@ -31,7 +31,7 @@ class ImageFileUploader < CarrierWave::Uploader::Base
   
   version :large, if: :ready_to_process? do
     process :rotate
-    process :resize_to_fit => [2000, 2000]
+#    process :resize_to_fit => [2000, 2000]
     process :caption
   end
 

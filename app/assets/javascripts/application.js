@@ -18,4 +18,12 @@
 //= require jquery.inview.min.js
 //= require bootstrap-typeahead-rails
 //= require checkbox-x.min.js
+//= require jquery-fileupload/jquery.tmpl.min.js
+//= require jquery-fileupload/jquery.load-image.min.js
+//= require jquery-fileupload/jquery.canvas-to-blob.min.js
+//= require jquery-fileupload/jquery.ui.widget
+//= require jquery-fileupload/jquery.iframe-transport
+//= require jquery-fileupload/jquery.fileupload
+//= require jquery-fileupload/jquery.fileupload-process
+//= require jquery-fileupload/jquery.fileupload-image
 //= require_tree .
