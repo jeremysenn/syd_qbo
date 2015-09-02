@@ -1,5 +1,5 @@
 %div{:id => "signature_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
-  = form_for ImageFile.new do |f|
+  = form_for ImageFile.new, remote: true do |f|
     .modal-dialog
       .modal-content
         .modal-body

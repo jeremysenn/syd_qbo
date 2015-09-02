@@ -38,8 +38,8 @@
               {%=o.name%}
         
         .modal-footer
-          - unless @images.blank?
-            %div#images
+          %div#images
+            - unless @images.blank?
               - @images.each_slice(2) do |images|
                 %div.row
                   - images.each do |image|
