@@ -121,3 +121,6 @@ jQuery ->
     $.getScript $(this).attr('href'), ->
       loading_purchase_orders = false
   ### End endless page stuff ###
+
+  ### Prettier file upload buttons ###
+  $('input[type=file]').bootstrapFileInput()
