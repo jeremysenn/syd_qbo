@@ -85,7 +85,8 @@
     %thead
       %tr
         %td Item
-        %td Gross/Tare
+        %td Gross
+        %td Tare
         %td Net
         %td Rate
         %td Total
@@ -95,11 +96,13 @@
           %td
             = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
             = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
-          %td= line_item.description
+          %td= line_item.description.split(' - ').first
+          %td= line_item.description.split(' - ').last
           %td= line_item.item_based_expense_line_detail.quantity
           %td= number_to_currency(line_item.item_based_expense_line_detail.unit_price)
           %td= number_to_currency(line_item.amount)
       %tr
+        %td
         %td
         %td
         %td
