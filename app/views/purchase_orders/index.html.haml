@@ -26,13 +26,14 @@
       .col-xs-12.col-sm-12.col-md-12
         %div.panel{style: 'border: 0;'}
           %div.panel-body
-            %div.col-xs-3.col-sm-3.col-md-3
-              %strong Date
-            %div.col-xs-3.col-sm-3.col-md-3
+            -#
+              %div.col-xs-3.col-sm-3.col-md-3
+                %strong Date
+            %div.col-xs-4.col-sm-4.col-md-4
               %strong Ticket
-            %div.col-xs-3.col-sm-3.col-md-3
+            %div.col-xs-4.col-sm-4.col-md-4
               %strong Vendor
-            %div.col-xs-3.col-sm-3.col-md-3
+            %div.col-xs-4.col-sm-4.col-md-4
               %strong Total
     - @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
       %div.row
@@ -41,12 +42,13 @@
             %div.panel-body
               %a{href: edit_purchase_order_path(purchase_order.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait..."}}
                 =# purchase_order.vendor_ref
-                %div.col-xs-3.col-sm-3.col-md-3= purchase_order.txn_date.strftime("%m/%d/%y")
-                %div.col-xs-3.col-sm-3.col-md-3= purchase_order.doc_number
-                %div.col-xs-3.col-sm-3.col-md-3
+                -#
+                  %div.col-xs-3.col-sm-3.col-md-3= purchase_order.txn_date.strftime("%m/%d/%y")
+                %div.col-xs-4.col-sm-4.col-md-4= purchase_order.doc_number
+                %div.col-xs-4.col-sm-4.col-md-4
                   =# @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
                   = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
-                %div.col-xs-3.col-sm-3.col-md-3= number_to_currency(purchase_order.total)
+                %div.col-xs-4.col-sm-4.col-md-4= number_to_currency(purchase_order.total)
               .pull-right
                 %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), target: '_blank'}
                   %i.fa.fa-file-pdf-o.fa-lg

@@ -15,7 +15,10 @@ class PurchaseOrdersController < ApplicationController
   def index
 #    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     query = "Select * From PurchaseOrder Where TxnDate>'#{2.days.ago.strftime("%Y-%m-%d")}'"
-    @open_purchase_orders = @purchase_order_service.query(query, :per_page => 30).entries.find_all{ |e| e.po_status == 'Open' }
+    @open_purchase_orders = @purchase_order_service.query(query).entries.find_all{ |e| e.po_status == 'Open' }
+    if @open_purchase_orders.blank?
+      @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 10).entries.find_all{ |e| e.po_status == 'Open' }
+    end
     @open_purchase_orders = Kaminari.paginate_array(@open_purchase_orders).page(params[:page]).per(3)
 #    @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 1000).entries.find_all{ |e| e.po_status == 'Open' }
 #    @closed_purchase_orders = @purchase_order_service.query(nil, :per_page => 20).entries.find_all{ |e| e.po_status == 'Closed' }
@@ -95,7 +98,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
-      purchase_line_item.description = "G: #{line_item[:gross]} T: #{line_item[:tare]}" unless line_item[:gross].blank? or line_item[:tare].blank?
+      purchase_line_item.description = "#{line_item[:gross]} - #{line_item[:tare]}" unless line_item[:gross].blank? or line_item[:tare].blank?
       @purchase_order.line_items.push(purchase_line_item)
     end
     
@@ -130,7 +133,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.amount = line_item[:amount]
 #      purchase_line_item.description = line_item[:description]
       unless (line_item[:gross].blank? and line_item[:tare].blank?)
-        purchase_line_item.description = "G: #{line_item[:gross]} T: #{line_item[:tare]}"
+        purchase_line_item.description = "#{line_item[:gross]} - #{line_item[:tare]}"
       else
         purchase_line_item.description = line_item[:description]
       end
