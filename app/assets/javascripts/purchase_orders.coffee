@@ -35,7 +35,7 @@ jQuery ->
     #alert $(this).closest('.panel').find('.vendor_name').text $(this).text()
     input_select.closest('.panel').find('.vendor_name').text name
     panel.closest('.collapse').collapse('toggle')
-    $(this).closest('.panel-collapse').collapse('hide');
+    $(this).closest('.panel-collapse').collapse('hide')
 
   ### Line item changed ###
   $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
@@ -47,14 +47,14 @@ jQuery ->
       rate = parseFloat(data.unit_price).toFixed(2)
       quantity = 0
       input_select.closest('.panel').find('.panel-footer').text ''
-      input_select.closest('.panel').find('.line_item_name').text name
+      input_select.closest('.panel').find('.line_item_name').text name + ' (' + description + ')'
       input_select.siblings("input").each ->
         if $(this).is( "#purchase_order_line_items__rate" )
           $(this).val rate
-        #if $(this).is( "#purchase_order_line_items__gross" )
-          #$(this).val 0
-        #if $(this).is( "#purchase_order_line_items__tare" )
-          #$(this).val 0
+        if $(this).is( "#purchase_order_line_items__gross" )
+          $(this).val 0
+        if $(this).is( "#purchase_order_line_items__tare" )
+          $(this).val 0
         if $(this).is( "#purchase_order_line_items__quantity" )
           $(this).val 0
         if $(this).is( "#purchase_order_line_items__amount" )
@@ -96,7 +96,7 @@ jQuery ->
     quantity = $(this).closest('.panel').find('#purchase_order_line_items__quantity').val()
     rate = $(this).closest('.panel').find('#purchase_order_line_items__rate').val()
     amount = $(this).closest('.panel').find('#purchase_order_line_items__amount').val()
-    $(this).closest('.panel').find('.panel-footer').text 'G: ' + gross + ' ' + 'T: ' + tare + ' ' + 'N: ' + quantity + ' '  + 'R: $' + rate + ' ' +  'T: $' + amount
+    $(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + quantity + ' x '  + '$' + rate + ' = ' +  '$' + amount
     sum = 0;
     $('.amount').each ->
       sum += Number($(this).val())
