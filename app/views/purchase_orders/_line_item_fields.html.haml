@@ -8,7 +8,8 @@
   %div.panel-collapse{id: "collapse_#{index}", "aria-labelledby" => "headingitem", :role => "tabpanel", class: "collapse in"}
     .panel-body
       = label_tag "Item", nil, :class => 'control-label'
-      = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+      = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+      =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
       = label_tag "Gross", nil, :class => 'control-label'
       = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Tare", nil, :class => 'control-label'
