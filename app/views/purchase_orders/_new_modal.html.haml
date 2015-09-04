@@ -1,0 +1,31 @@
+%div{:id => "new_purchase_order_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+  = form_tag purchase_orders_path, id: 'purchase_order_form', :class => "form-horizontal" do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
+          %strong New Ticket
+        .modal-body
+          .row.form-group
+            %div{:class => "col-sm-12 col-md-12"}
+              = label_tag "Vendor", nil, :class => 'control-label'
+              = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.item').show();"
+          %div.purchase_order_input_fields_wrap
+            .item{style: "display:none;"}
+              = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
+              .row.form-group.calculation_fields
+                %div{:class => "col-sm-12 col-md-12"}
+                  = hidden_field_tag "purchase_order[po_status]", "Open"
+                  = label_tag "Item", nil, :class => 'control-label'
+                  = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
+                  = hidden_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                  = hidden_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                  = hidden_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", readonly: true
+                  = hidden_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field"
+                  = hidden_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true
+        
+        .modal-footer{style: 'display:none;'}
+          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Next"}, autocomplete: "off") do
+            Next
+          -#
+            %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} Done

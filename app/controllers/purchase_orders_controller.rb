@@ -43,12 +43,14 @@ class PurchaseOrdersController < ApplicationController
   def show
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
     @doc_number = @purchase_order.doc_number
-    @images = Image.where(ticket_nbr: @doc_number)
-    @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
     
     respond_to do |format|
-      format.html
+      format.html do
+        @images = Image.where(ticket_nbr: @doc_number)
+        @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
+      end
       format.pdf do
+        @signature = Image.where(ticket_nbr: @doc_number, event_code: "SIG").last
         render pdf: "file_name",
         :layout => 'pdf.html.haml'
       end
@@ -57,7 +59,7 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders/new
   def new
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
     
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
@@ -67,14 +69,14 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders/1/edit
   def edit
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
     @doc_number = @purchase_order.doc_number
     
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
     
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
     @images = Image.where(ticket_nbr: @doc_number)
   end
   

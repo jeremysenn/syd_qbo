@@ -89,7 +89,7 @@
         %td Tare
         %td Net
         %td Rate
-        %td Total
+        %td Amount
     %tbody
       - @purchase_order.line_items.each do |line_item|
         %tr
@@ -109,3 +109,6 @@
         %td
         %td
           %strong= "Total: #{number_to_currency(@purchase_order.total)}"
+
+  - unless @signature.blank?
+    =# show_jpeg_image_image_url(@signature)

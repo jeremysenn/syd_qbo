@@ -32,9 +32,9 @@ class ImageFileUploader < CarrierWave::Uploader::Base
   version :large, if: :ready_to_process? do
     process :rotate
 #    process :resize_to_fit => [2000, 2000]
-    process :caption
+    process :caption, :if => :not_signature?
   end
-
+  
   def rotate
     manipulate! do |image|
       image.auto_orient
@@ -119,6 +119,15 @@ class ImageFileUploader < CarrierWave::Uploader::Base
     # Check if it is ready
     def ready_to_process?(file)
       return model.process
+    end
+    
+    # Check if it's a signature event code
+    def signature?(file)
+      return model.event_code == "SIG"
+    end
+    
+    def not_signature?(file)
+      return model.event_code != "SIG"
     end
 
 end

@@ -6,7 +6,8 @@
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Vendor", nil, :class => 'control-label'
-          = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name"), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
+          = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
+          =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name"), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
     %div.purchase_order_input_fields_wrap
       .well{style: "display:none;"}
         = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
@@ -14,7 +15,8 @@
           %div{:class => "col-sm-12 col-md-12"}
             = hidden_field_tag "purchase_order[po_status]", "Open"
             = label_tag "Item", nil, :class => 'control-label'
-            = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"#, onchange: "this.form.submit();"
+            = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"
+            =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"#, onchange: "this.form.submit();"
             =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
             =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| [item.name, item.id, { data: {description: "#{@item_service.fetch_by_id(item.id).description}", rate: "#{@item_service.fetch_by_id(item.id).purchase_cost}"} }] }), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
             =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
