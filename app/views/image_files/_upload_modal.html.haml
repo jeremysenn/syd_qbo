@@ -38,17 +38,18 @@
               {%=o.name%}
         
         .modal-footer
-          %div#images
-            - unless @images.blank?
-              - @images.each_slice(2) do |images|
-                %div.row
-                  - images.each do |image|
-                    .col-xs-12.col-sm-6.col-md-6.col-lg-6
-                      %div.thumbnail
-                        - unless image.hidden?
-                          = image_tag(show_preview_image_image_path(image))
+          %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} Done
           -#
-            %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} x
+            %div#images
+              - unless @images.blank?
+                - @images.each_slice(2) do |images|
+                  %div.row
+                    - images.each do |image|
+                      .col-xs-12.col-sm-6.col-md-6.col-lg-6
+                        %div.thumbnail
+                          - unless image.hidden?
+                            = image_tag(show_preview_image_image_path(image))
+          -#
             = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
               Upload
               %i.fa.fa-arrow-up
