@@ -31,7 +31,9 @@ class ImageBlobWorker
 
     # Remove the newly uploaded file and versions once copied over to jpegger
 #    sleep 2 # pause 2 seconds to allow for image_file to display before deleting
+    pn = Pathname.new(image_file.file_url) # Get the path to the file
     image_file.remove_file!
+    FileUtils.remove_dir "#{Rails.root}/public#{pn.dirname}" # Remove the now empty directory
 
     image_file.save
   end
