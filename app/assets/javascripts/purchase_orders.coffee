@@ -25,6 +25,12 @@ jQuery ->
         alert 'You cannot delete this because you must have at least one item.'
         e.preventDefault()
         return
+  
+    # Automatically highlight field value when focused
+    $(wrapper).on 'click', '.amount-calculation-field', (e) ->
+      $(this).select()
+      return
+
     return
 
   ### Vendor value changed ###
