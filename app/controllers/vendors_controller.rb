@@ -35,6 +35,11 @@ class VendorsController < ApplicationController
     @vendor.family_name = vendor_params[:family_name]
     @vendor.company_name = vendor_params[:company_name]
     @vendor.display_name = vendor_params[:display_name]
+    unless vendor_params[:billing_address].blank?
+      billing_address = Quickbooks::Model::PhysicalAddress.new
+      billing_address.line1 = vendor_params[:billing_address][:line1]
+      @vendor.billing_address = billing_address
+    end
     @vendor.email_address = vendor_params[:email]
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
@@ -45,7 +50,14 @@ class VendorsController < ApplicationController
 
     respond_to do |format|
       if @vendor.present?
-        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.' }
+        
+        # Update the all_vendors rails cache
+        vendors = @vendor_service.query(nil, :per_page => 1000)
+        Rails.cache.delete("all_vendors")
+        Rails.cache.fetch("all_vendors") {Hash[vendors.map{ |v| [v.display_name,v.id] }]}
+        
+        format.html { redirect_to :back, notice: 'Vendor was successfully created.' }
+#        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.' }
         format.json { render :show, status: :created, location: vendor_path(@vendor.id) }
       else
         format.html { render :new }
@@ -57,6 +69,13 @@ class VendorsController < ApplicationController
   def update_qb
     @vendor.display_name = vendor_params[:display_name]
     @vendor.email_address = vendor_params[:email] unless vendor_params[:email].blank?
+    
+    unless vendor_params[:billing_address].blank?
+      billing_address = Quickbooks::Model::PhysicalAddress.new
+      billing_address.line1 = vendor_params[:billing_address][:line1]
+      @vendor.billing_address = billing_address
+    end
+    
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = vendor_params[:phone_number]
@@ -116,6 +135,6 @@ class VendorsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vendor_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:vendor).permit(:given_name, :family_name, :company_name, :display_name, :email, :phone_number)
+      params.require(:vendor).permit(:given_name, :family_name, :company_name, :display_name, :email, :phone_number, billing_address: [:line1])
     end
 end

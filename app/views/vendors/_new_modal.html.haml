@@ -1,0 +1,36 @@
+%div{:id => "new_vendor_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+  = form_tag vendors_path, id: 'vendor_form', :class => "form-horizontal" do |f|
+    .modal-dialog
+      .modal-content
+        .modal-header
+          = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
+          %strong New Vendor
+        .modal-body
+          .row.form-group
+            %div{:class => "col-sm-12 col-md-12"}
+              = label_tag "First Name", nil, :class => 'control-label'
+              = text_field_tag "vendor[given_name]", nil, :placeholder => "First Name", class: "form-control input-lg"
+          .row.form-group
+            %div{:class => "col-sm-12 col-md-12"}
+              = label_tag "Last Name", nil, :class => 'control-label'
+              = text_field_tag "vendor[family_name]", nil, :placeholder => "Last Name", class: "form-control input-lg"
+          .row.form-group
+            %div{:class => "col-sm-12 col-md-12"}
+              = label_tag "Company Name", nil, :class => 'control-label'
+              = text_field_tag "vendor[company_name]", nil, :placeholder => "Company Name", class: "form-control input-lg"
+          .row.form-group
+            %div{:class => "col-sm-12 col-md-12"}
+              = label_tag "Display Name", nil, :class => 'control-label'
+              = text_field_tag "vendor[display_name]", nil, :placeholder => "Display Name", class: "form-control input-lg", required: true
+          .row.form-group
+            %div{:class => "col-sm-12 col-md-12"}
+              = label_tag "Email", nil, :class => 'control-label'
+              = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", class: "form-control input-lg"
+          .row.form-group
+            %div{:class => "col-sm-12 col-md-12"}
+              = label_tag "Phone", nil, :class => 'control-label'
+              = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", class: "form-control input-lg"
+        
+        .modal-footer
+          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating..."}) do
+            Create

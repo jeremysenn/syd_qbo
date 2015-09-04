@@ -72,4 +72,4 @@
         %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
         %p= link_to 'Load more ...', bills_path(:page => @open_bills.next_page), :class => 'load-more-bills btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @open_bills.next_page
 
-= render partial: "shared/footer_navbar", locals: {title: "Bill"}
+= render partial: "shared/bills_footer_navbar", locals: {title: "Bills"}

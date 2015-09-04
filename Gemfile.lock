@@ -62,6 +62,9 @@ GEM
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
+    autoprefixer-rails (5.1.7)
+      execjs
+      json
     bcrypt (3.1.7)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -248,9 +251,10 @@ GEM
     tiny_tds (0.6.2)
     turbolinks (2.5.3)
       coffee-rails
-    twbs_sass_rails (3.0.2)
-      rails (>= 4.0.12, < 5.0.0)
-      sass-rails (>= 4.0.2, < 6.0.0)
+    twbs_sass_rails (3.6.0)
+      autoprefixer-rails (~> 5.0)
+      rails (>= 4.0.13, < 5.0.0)
+      sass-rails (>= 4.0.5, < 6.0.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.0)

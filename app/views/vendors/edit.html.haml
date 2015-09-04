@@ -16,6 +16,10 @@
           = text_field_tag "vendor[display_name]", nil, :placeholder => "Display Name", value: @vendor.display_name, class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
+          = label_tag "Street Address", nil, :class => 'control-label'
+          = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg", required: true
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Email", nil, :class => 'control-label'
           = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", class: "form-control input-lg"
       .row.form-group
