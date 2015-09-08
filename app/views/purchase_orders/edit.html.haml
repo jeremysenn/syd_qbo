@@ -28,6 +28,7 @@
                   =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
                   = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
                   = " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+                = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
                 %a{href: '#', class: 'remove_field pull-right'}
                   %i.fa.fa-trash
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@purchase_order.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}"}
@@ -38,9 +39,9 @@
                 = label_tag "Gross", nil, :class => 'control-label'
                 = text_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", type: "number", required: true
                 = label_tag "Tare", nil, :class => 'control-label'
-                = text_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field", type: "number", required: true
+                = text_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", type: "number", required: true
                 = label_tag "Net", nil, :class => 'control-label'
-                = text_field_tag "purchase_order[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
+                = text_field_tag "purchase_order[line_items][][quantity]", number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0), :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
 
                 = label_tag "Rate", nil, :class => 'control-label'
                 = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).unit_price, :precision => 2), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
@@ -48,7 +49,7 @@
                 = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true 
             %div.panel-footer
               = "(#{line_item.description}) ="
-              = "#{line_item.item_based_expense_line_detail.quantity}"
+              = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description}"
               = " x #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
               = "= #{number_to_currency(line_item.amount)}"
         -#
@@ -92,14 +93,14 @@
       %div{:class => "col-sm-12 col-md-12"}
         -#
           = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
-          Save
+        = button_tag(:type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
+          Hold
         %br
         -#
           = button_tag(:type => 'submit', :class => 'btn btn-info btn-lg btn-block', id: 'save_and_print_button', name: 'save_and_print', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save & Print"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
             Save & Print
           %br
-        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
           Close ticket
     %div#images
       - unless @images.blank?

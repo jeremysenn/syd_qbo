@@ -3,6 +3,7 @@
     %h4.panel-title
       %a.line_item_name{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button"}
         Choose an item*
+      = hidden_field_tag :item_description, nil
       %a{href: '#', class: 'remove_field pull-right'}
         %i.fa.fa-trash
   %div.panel-collapse{id: "collapse_#{index}", "aria-labelledby" => "headingitem", :role => "tabpanel", class: "collapse in"}
@@ -13,7 +14,7 @@
       = label_tag "Gross", nil, :class => 'control-label'
       = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Tare", nil, :class => 'control-label'
-      = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field", required: true
+      = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
       = label_tag "Net", nil, :class => 'control-label'
       = text_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
       = label_tag "Rate", nil, :class => 'control-label'

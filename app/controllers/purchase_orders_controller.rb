@@ -14,9 +14,9 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders.json
   def index
 #    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
-    query = "Select * From PurchaseOrder Where TxnDate>'#{2.days.ago.strftime("%Y-%m-%d")}'"
+    query = "Select * From PurchaseOrder Where TxnDate>'#{1.day.ago.strftime("%Y-%m-%d")}'"
     @open_purchase_orders = @purchase_order_service.query(query).entries.find_all{ |e| e.po_status == 'Open' }
-    if @open_purchase_orders.blank?
+    if @open_purchase_orders.blank? # Get last 10 if none today
       @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 10).entries.find_all{ |e| e.po_status == 'Open' }
     end
     @open_purchase_orders = Kaminari.paginate_array(@open_purchase_orders).page(params[:page]).per(3)

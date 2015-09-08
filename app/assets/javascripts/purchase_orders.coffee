@@ -54,6 +54,7 @@ jQuery ->
       quantity = 0
       input_select.closest('.panel').find('.panel-footer').text ''
       input_select.closest('.panel').find('.line_item_name').text name + ' (' + description + ')'
+      input_select.closest('.panel').find('#item_description').val description
       input_select.siblings("input").each ->
         if $(this).is( "#purchase_order_line_items__rate" )
           $(this).val rate
@@ -80,7 +81,7 @@ jQuery ->
       gross = $(this).val()
       tare = $(this).nextAll('#purchase_order_line_items__tare').first().val()
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
-      quantity = (parseFloat(gross) - parseFloat(tare)).toFixed(2)
+      quantity = (parseFloat(gross) - parseFloat(tare)).toFixed(0)
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
@@ -88,7 +89,7 @@ jQuery ->
       gross = $(this).prevAll('#purchase_order_line_items__gross').first().val()
       tare = $(this).val()
       rate = $(this).nextAll('#purchase_order_line_items__rate').first().val()
-      quantity = (parseFloat(gross) - parseFloat(tare)).toFixed(2)
+      quantity = (parseFloat(gross) - parseFloat(tare)).toFixed(0)
       $(this).nextAll('#purchase_order_line_items__quantity').first().val quantity
       amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
       $(this).nextAll('#purchase_order_line_items__amount').first().val amount
@@ -100,9 +101,10 @@ jQuery ->
     gross = $(this).closest('.panel').find('#purchase_order_line_items__gross').val()
     tare = $(this).closest('.panel').find('#purchase_order_line_items__tare').val()
     quantity = $(this).closest('.panel').find('#purchase_order_line_items__quantity').val()
+    description = $(this).closest('.panel').find('#item_description').val()
     rate = $(this).closest('.panel').find('#purchase_order_line_items__rate').val()
     amount = $(this).closest('.panel').find('#purchase_order_line_items__amount').val()
-    $(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + quantity + ' x '  + '$' + rate + ' = ' +  '$' + amount
+    $(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + quantity + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
     sum = 0;
     $('.amount').each ->
       sum += Number($(this).val())
@@ -166,3 +168,24 @@ jQuery ->
       if data.context
         progress = parseInt(data.loaded / data.total * 100, 10)
         data.context.find('.progress-bar').css('width', progress + '%')
+
+  
+
+  ### Check if any tares are zero ###
+  $('#close_button').on 'click', (e) ->
+    numZeroTare = 0
+    $('.tare').each (index) ->
+      if ($(this).val() == '0') || ($(this).val() == '')
+        numZeroTare++
+        return
+      return
+    if numZeroTare > 0
+      confirm1 = confirm('You have empty or zero tare(s). Are you sure you want to close this ticket?')
+      if confirm1
+        return
+      else
+        e.preventDefault()
+        return
+      return
+    return
+    

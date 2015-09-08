@@ -21,20 +21,21 @@
   - if @open_purchase_orders.blank?
     .jumbotron
       %p.text-center No held tickets found
-  %div{id: 'open_purchase_orders'}
-    %div.row
-      .col-xs-12.col-sm-12.col-md-12
-        %div.panel{style: 'border: 0;'}
-          %div.panel-body
-            -#
-              %div.col-xs-3.col-sm-3.col-md-3
-                %strong Date
-            %div.col-xs-4.col-sm-4.col-md-4
-              %strong Ticket
-            %div.col-xs-4.col-sm-4.col-md-4
-              %strong Vendor
-            %div.col-xs-4.col-sm-4.col-md-4
-              %strong Total
+  - else
+    %div{id: 'open_purchase_orders'}
+      %div.row
+        .col-xs-12.col-sm-12.col-md-12
+          %div.panel{style: 'border: 0;'}
+            %div.panel-body
+              -#
+                %div.col-xs-3.col-sm-3.col-md-3
+                  %strong Date
+              %div.col-xs-4.col-sm-4.col-md-4
+                %strong Ticket
+              %div.col-xs-4.col-sm-4.col-md-4
+                %strong Vendor
+              %div.col-xs-4.col-sm-4.col-md-4
+                %strong Total
     - @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
       %div.row
         .col-xs-12.col-sm-12.col-md-12
