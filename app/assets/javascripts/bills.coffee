@@ -104,3 +104,7 @@ jQuery ->
       $.rails.enableElement $(this)
       return
     return
+
+  $ ->
+    $('[data-toggle="popover"]').popover()
+    return

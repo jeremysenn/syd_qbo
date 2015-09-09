@@ -1,5 +1,6 @@
 $('#open_bills').append('<%= j render "bill" %>');
 $('#spinner').hide();
+$('[data-toggle="popover"]').popover()
 
 <% if @open_bills.next_page %>
   $('a.load-more-bills').show();
