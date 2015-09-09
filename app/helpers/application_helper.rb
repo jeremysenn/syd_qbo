@@ -15,6 +15,14 @@ module ApplicationHelper
     end
   
     end
+    
+  def ticket_event_codes
+    ["Gross", "Tare", "Deduction", "License Plate", "Title", "VIN", "Signature", "Vehicle", "Vendor"]
+  end
+  
+  def cust_pic_event_codes
+    ["Photo ID", "Customer Photo", "Certificate", "Finger Print"]
+  end
 
     
     
