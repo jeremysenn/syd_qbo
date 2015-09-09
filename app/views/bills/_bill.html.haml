@@ -4,10 +4,11 @@
       %div.panel.panel-primary
         %div.panel-body
           %a{href: edit_bill_path(bill.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait..."}}
-            %div.col-xs-12.col-sm-3.col-md-3= bill.txn_date.strftime("%m/%d/%y")
-            %div.col-xs-12.col-sm-3.col-md-3= bill.doc_number
-            %div.col-xs-12.col-sm-3.col-md-3= @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
-            %div.col-xs-12.col-sm-3.col-md-3= number_to_currency(bill.balance)
+            -#
+              %div.col-xs-12.col-sm-3.col-md-3= bill.txn_date.strftime("%m/%d/%y")
+            %div.col-xs-4.col-sm-4.col-md-4= bill.doc_number
+            %div.col-xs-4.col-sm-4.col-md-4= @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
+            %div.col-xs-4.col-sm-4.col-md-4= number_to_currency(bill.balance)
           .pull-right
             = link_to "Pay", new_bill_payment_path(bill_id: bill.id), class: 'btn btn-sm btn-primary pay_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay..."}
         -#

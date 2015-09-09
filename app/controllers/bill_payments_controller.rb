@@ -90,7 +90,7 @@ class BillPaymentsController < ApplicationController
     
     bill_payment_line_item = Quickbooks::Model::BillPaymentLineItem.new
 #    bill_payment_line_item.detail_type = "ItemBasedExpenseLineDetail"
-    bill_payment_line_item.amount = @bill.total
+    bill_payment_line_item.amount = @bill_payment.total
     bill_payment_line_item.linked_transactions = []
     bill_payment_line_item.linked_transactions.push(linked_transaction)
     
