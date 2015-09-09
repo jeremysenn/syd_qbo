@@ -46,7 +46,7 @@
                     - if Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").count > 0
                       = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").last.id), class: 'img-responsive')
                     - else
-                      = image_tag("no_photo.jpg", class: 'img-responsive')
+                      = image_tag("no_photo320x240.jpeg", class: 'img-responsive')
                   %div.col-xs-3.col-sm-3.col-md-3
                     = purchase_order.doc_number
                     %br

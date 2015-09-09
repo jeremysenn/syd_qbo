@@ -109,7 +109,7 @@ class PurchaseOrdersController < ApplicationController
     respond_to do |format|
       if @purchase_order.present?
 #        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully created.' }
-        format.html { redirect_to edit_purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully created.' }
+        format.html { redirect_to edit_purchase_order_path(@purchase_order.id) }
         format.json { render :show, status: :created, location: purchase_order_path(@purchase_order.id) }
       else
         format.html { render :new }
@@ -155,7 +155,7 @@ class PurchaseOrdersController < ApplicationController
             redirect_to purchase_orders_path, notice: "Ticket was saved.  Click #{view_context.link_to 'here', purchase_order_path(@purchase_order.id, format: 'pdf'), target: '_blank'} to print."
             #"Ticket was saved. Click <a href='#{purchase_order_path(@purchase_order.id, format: 'pdf')}'>here</a> to print."
           else
-            redirect_to purchase_orders_path, notice: 'Ticket was successfully updated.'
+            redirect_to purchase_orders_path
           end
           }
         format.json { render :show, status: :ok, location: purchase_order_path(@purchase_order.id) }

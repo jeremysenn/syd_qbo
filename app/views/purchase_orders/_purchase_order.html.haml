@@ -2,13 +2,13 @@
   %div.row
     .col-xs-12.col-sm-12.col-md-12
       %div.panel.panel-primary
-        %div.panel-body
+        %div.panel-body{style: "padding: 0;"}
           %a{href: edit_purchase_order_path(purchase_order.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait..."}}
-            %div.col-xs-3.col-sm-3.col-md-3
+            %div.col-xs-3.col-sm-3.col-md-3{style: "padding: 0;"}
               - if Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").count > 0
-                = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
+                = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").last.id), class: 'img-responsive')
               - else
-                = image_tag("no_photo.jpg", class: 'img-responsive thumbnail')
+                = image_tag("no_photo320x240.jpeg", class: 'img-responsive')
             %div.col-xs-3.col-sm-3.col-md-3
               = purchase_order.doc_number
               %br
