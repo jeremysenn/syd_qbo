@@ -157,7 +157,7 @@ jQuery ->
           data.submit()
         #$("#new_image_file").prepend data.context
         #$('#new_image_file').append('<img src="' + URL.createObjectURL(data.files[0]) + '"/>')
-        $('#images').prepend('<div class="row"><div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
+        $('#pictures').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
         #data.submit()
         $(".picture_loading_spinner").show()
         #$("#uploads").hide()

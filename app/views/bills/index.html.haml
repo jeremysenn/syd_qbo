@@ -36,7 +36,9 @@
                 %div.col-xs-4.col-sm-4.col-md-4= @vendor_service.fetch_by_id(bill.vendor_ref).display_name unless bill.vendor_ref.blank?
                 %div.col-xs-4.col-sm-4.col-md-4= number_to_currency(bill.balance)
               .pull-right
-                = link_to "Pay", new_bill_payment_path(bill_id: bill.id), class: 'btn btn-sm btn-primary pay_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay..."}
+                =# link_to "Pay", new_bill_payment_path(bill_id: bill.id), class: 'btn btn-sm btn-primary pay_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay..."}
+                %a.btn.btn-xs.btn-danger{"data-content" => "#{render partial: 'quick_pay', locals: {bill: bill}}", "data-placement" => 'left', "data-html" => "true", "data-toggle" => "popover", "data-trigger" => "focus", :role => "button", :tabindex => "0"}
+                  Pay
             -#
               %div.list_group
                 %a{href: edit_bill_path(bill.id), class: "list-group-item"}

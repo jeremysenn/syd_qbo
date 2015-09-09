@@ -7,6 +7,7 @@ class BillsController < ApplicationController
   before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_bill_payment_service, only: [:show]
+  before_action :set_account_service, only: [:index]
   
   before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy]
 
@@ -18,6 +19,15 @@ class BillsController < ApplicationController
     @open_bills = @bill_service.query(query, :per_page => 30).entries.find_all{ |e| e.balance > 0 }
     @open_bills = Kaminari.paginate_array(@open_bills).page(params[:page]).per(3)
 #    @paid_bills = @bill_service.query(nil, :per_page => 20).entries.find_all{ |e| e.balance == 0 }
+
+    ### Get bank information for quick pay option
+    query_banks = "Select * from Account Where AccountType = 'Bank'"
+    @bank_accounts = @account_service.query(query_banks, :per_page => 1000)
+    @accounts = []
+    @bank_accounts.each do |bank_account|
+      @accounts.push(bank_account)
+    end
+    
   end
 
   # GET /bills/1
@@ -197,6 +207,13 @@ class BillsController < ApplicationController
       @bill_payment_service = Quickbooks::Service::Bill.new
       @bill_payment_service.access_token = oauth_client
       @bill_payment_service.company_id = session[:realm_id]
+    end
+    
+    def set_account_service
+      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+      @account_service = Quickbooks::Service::Account.new
+      @account_service.access_token = oauth_client
+      @account_service.company_id = session[:realm_id]
     end
     
     # Use callbacks to share common setup or constraints between actions.
