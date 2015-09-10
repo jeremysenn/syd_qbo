@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "Open Ticket #{@purchase_order.doc_number}", total: number_to_currency(@purchase_order.total)}
+= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "Open - #{@purchase_order.doc_number}", total: number_to_currency(@purchase_order.total)}
 
 .container
   = form_tag update_qb_purchase_order_path, method: 'get', id: 'purchase_order_form', :class => "form-horizontal" do
@@ -93,15 +93,14 @@
       %div{:class => "col-sm-12 col-md-12"}
         -#
           = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
-        = button_tag(:type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Hold"}, autocomplete: "off", onclick: "$(this).nextAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
+        = button_tag(:type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Hold"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
           Hold
         %br
-        -#
-          = button_tag(:type => 'submit', :class => 'btn btn-info btn-lg btn-block', id: 'save_and_print_button', name: 'save_and_print', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save & Print"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
-            Save & Print
-          %br
-        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_and_print_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
           Close ticket
+        %br
+        = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-success btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close & Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#close_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+          Close & Pay
     %div#images
       - unless @images.blank?
         - @images.each_slice(6) do |images|

@@ -21,10 +21,15 @@
         %strong= "Date"
         .pull-right
           = @bill_payment.txn_date.strftime("%m/%d/%y")
+      -#
+        %div.list-group-item
+          %strong= "Type"
+          .pull-right
+            = @bill_payment.pay_type
       %div.list-group-item
-        %strong= "Type"
+        %strong= "Account"
         .pull-right
-          = @bill_payment.pay_type
+          = @bill_payment.check_payment.bank_account_ref.name
       %div.list-group-item
         %strong= "Total"
         .pull-right

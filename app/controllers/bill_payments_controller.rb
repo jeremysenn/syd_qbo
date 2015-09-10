@@ -102,9 +102,9 @@ class BillPaymentsController < ApplicationController
       if @bill_payment.present?
 #        @bill.balance = @bill.balance - bill_payment_params[:total].to_f
 #        @bill_service.update(@bill)
-#        format.html { redirect_to bill_payment_path(@bill_payment.id), notice: 'Payment was successfully created.' }
+        format.html { redirect_to bill_payment_path(@bill_payment.id), notice: 'Payment was successfully created.' }
 #        format.html { redirect_to bill_payments_path, notice: 'Payment was successfully created.' }
-        format.html { redirect_to bills_path }
+#        format.html { redirect_to bills_path }
         format.json { render :show, status: :created, location: bill_payment_path(@bill_payment.id) }
       else
         format.html { render :new }

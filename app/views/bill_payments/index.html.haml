@@ -24,7 +24,8 @@
                 = bill_payment.doc_number
                 %br
                 %small
-                  = bill_payment.pay_type
+                  =# bill_payment.pay_type
+                  = bill_payment.check_payment.bank_account_ref.name
                   %br
                   = bill_payment.txn_date.strftime("%m/%d/%y")
                   %br

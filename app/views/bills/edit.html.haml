@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "Closed Ticket #{@bill.doc_number}"}
+= render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "Closed - #{@bill.doc_number}"}
 
 .container
   = form_tag update_qb_bill_path, method: 'get', id: 'bill_form', :class => "form-horizontal" do

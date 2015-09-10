@@ -1,4 +1,4 @@
-%div{style: "#{params[:close_ticket].present? ? 'display:none;' : 'display:block;'}"}
+%div{style: "#{(params[:close_ticket].present? or params[:close_and_pay].present?) ? 'display:none;' : 'display:block;'}"}
   = render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "#{@purchase_order.doc_number}"}
 
   .container
@@ -6,6 +6,8 @@
       .well
         .row.form-group
           %div{:class => "col-sm-12 col-md-12"}
+            - if params[:close_and_pay].present?
+              = hidden_field_tag :pay_ticket, true
             = label_tag "Vendor", nil, :class => 'control-label'
             = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             =# label_tag "Balance", nil, :class => 'control-label'
@@ -52,7 +54,7 @@
   =# render partial: "shared/footer_navbar", locals: {title: "Bill"}
 
 -# Submit new bill form automatically
-- if params[:close_ticket].present?
+- if (params[:close_ticket].present?) || (params[:close_and_pay].present?)
   %p.text-center
     %i.fa.fa-spinner.fa-spin.fa-4x
   :javascript

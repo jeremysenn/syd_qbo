@@ -150,10 +150,8 @@ class PurchaseOrdersController < ApplicationController
         format.html { 
           if params[:close_ticket]
             redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...'
-          elsif params[:save_and_print]
-#            redirect_to purchase_order_path(@purchase_order.id, format: 'pdf')
-            redirect_to purchase_orders_path, notice: "Ticket was saved.  Click #{view_context.link_to 'here', purchase_order_path(@purchase_order.id, format: 'pdf'), target: '_blank'} to print."
-            #"Ticket was saved. Click <a href='#{purchase_order_path(@purchase_order.id, format: 'pdf')}'>here</a> to print."
+          elsif params[:close_and_pay]
+            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true), notice: 'Closing ticket, please wait ...'
           else
             redirect_to purchase_orders_path
           end
