@@ -8,6 +8,7 @@ class BillsController < ApplicationController
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_bill_payment_service, only: [:show]
   before_action :set_account_service, only: [:index]
+  before_action :set_company_service, only: [:show]
   
   before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy]
 
@@ -36,9 +37,18 @@ class BillsController < ApplicationController
     @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @doc_number = @bill.doc_number
 #    @purchase_order = @purchase_order_service.query.entries.find{ |p| p.doc_number == @doc_number }
-    @bill_payment = @bill_payment_service.query.entries.find{ |b| b.doc_number == @doc_number } if @bill.balance == 0
     
-    @images = Image.where(ticket_nbr: @doc_number)
+    respond_to do |format|
+      format.html do
+        @images = Image.where(ticket_nbr: @doc_number)
+        @bill_payment = @bill_payment_service.query.entries.find{ |b| b.doc_number == @doc_number } if @bill.balance == 0
+      end
+      format.pdf do
+        @signature = Image.where(ticket_nbr: @doc_number, event_code: "SIG").last
+        render pdf: "file_name",
+        :layout => 'pdf.html.haml'
+      end
+    end
   end
 
   # GET /bills/new
@@ -220,6 +230,14 @@ class BillsController < ApplicationController
       @account_service = Quickbooks::Service::Account.new
       @account_service.access_token = oauth_client
       @account_service.company_id = session[:realm_id]
+    end
+    
+    def set_company_service
+      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+      @company_info_service = Quickbooks::Service::CompanyInfo.new
+      @company_info_service.access_token = oauth_client
+      @company_info_service.company_id = session[:realm_id]
+      @company_info = @company_info_service.fetch_by_id(session[:realm_id])
     end
     
     # Use callbacks to share common setup or constraints between actions.

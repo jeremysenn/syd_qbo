@@ -1,0 +1,39 @@
+.container
+  %h2.text-center PURCHASE TICKET
+  %h4.text-center= @company_info.company_name
+  %p
+    %strong= "Ticket: "
+    = @bill.doc_number
+    %strong= "Vendor: "
+    = @vendor.display_name
+  %table.table
+    %thead
+      %tr
+        %td Item
+        %td Gross
+        %td Tare
+        %td Net
+        %td Rate
+        %td Amount
+    %tbody
+      - @bill.line_items.each do |line_item|
+        %tr
+          %td
+            = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+            = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+          %td= line_item.description.split(' - ').first unless line_item.description.blank?
+          %td= line_item.description.split(' - ').last unless line_item.description.blank?
+          %td= line_item.item_based_expense_line_detail.quantity
+          %td= number_to_currency(line_item.item_based_expense_line_detail.unit_price)
+          %td= number_to_currency(line_item.amount)
+      %tr
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td
+          %strong= "Total: #{number_to_currency(@bill.balance)}"
+
+  - unless @signature.blank?
+    =# show_jpeg_image_image_url(@signature)

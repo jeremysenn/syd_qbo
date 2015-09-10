@@ -1,3 +1,8 @@
+%p
+  %a{href: bill_path(bill.id, format: 'pdf'), class: 'btn btn-default btn-lg btn-block', target: '_blank'}
+    %i.fa.fa-file-pdf-o.fa-lg
+    Print
+
 = form_tag bill_payments_path, id: 'bill_payment_form', :class => "form-inline" do |f|
   .form-group
     = hidden_field "bill_payment[vendor]", bill.vendor_ref
@@ -6,4 +11,4 @@
     = hidden_field_tag "bill_payment[doc_number]", bill.doc_number
     = hidden_field_tag :bill_id, bill.id
   = button_tag(:type => 'submit', :class => 'btn btn-success btn-lg', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay..."}, autocomplete: "off") do
-    Pay
+    $ Pay
