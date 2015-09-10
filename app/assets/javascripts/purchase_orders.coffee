@@ -38,7 +38,6 @@ jQuery ->
     input_select = $(this)
     panel = input_select.closest('.panel')
     name = input_select.closest('.panel').find($( "#purchase_order_vendor option:selected" )).text()
-    #alert $(this).closest('.panel').find('.vendor_name').text $(this).text()
     input_select.closest('.panel').find('.vendor_name').text name
     panel.closest('.collapse').collapse('toggle')
     $(this).closest('.panel-collapse').collapse('hide')

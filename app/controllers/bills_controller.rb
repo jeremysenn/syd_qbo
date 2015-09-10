@@ -147,7 +147,8 @@ class BillsController < ApplicationController
             redirect_to new_bill_payment_path(bill_id: @bill.id), notice: 'Bill was successfully updated.'
           else
 #            redirect_to bill_path(@bill.id), notice: 'Bill was successfully updated.' 
-            redirect_to purchase_orders_path
+#            redirect_to purchase_orders_path
+            redirect_to bills_path
           end
           }
         format.json { render :show, status: :ok, location: bill_path(@bill.id) }
