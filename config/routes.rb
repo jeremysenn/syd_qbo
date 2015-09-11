@@ -54,6 +54,8 @@ Rails.application.routes.draw do
   resources :image_files
   
   resources :shipment_files
+  
+  resources :cust_pic_files
 
 #  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
@@ -69,6 +71,13 @@ Rails.application.routes.draw do
   end
   
   resources :shipments do
+    member do
+      get 'show_jpeg_image'
+      get 'show_preview_image'
+    end
+  end
+  
+  resources :cust_pics do
     member do
       get 'show_jpeg_image'
       get 'show_preview_image'

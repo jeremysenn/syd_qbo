@@ -1,0 +1,64 @@
+%div{:id => "upload_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+  = form_for CustPicFile.new do |f|
+    .modal-dialog.modal-sm
+      .modal-content
+        .modal-body
+          = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :cust_nbr, value: @vendor.id
+          .form-group{:id => "event_code"}
+            = f.label "Event Code*", :class => 'control-label'
+            = f.select :event_code, options_for_select(LookupDef.shipment_event_codes.map(&:LookupValue)), {prompt: "Select event code"}, {:class => "form-control input-lg", required: true}
+          .form-group
+            = f.label "File*", :class => 'control-label'
+            = f.file_field :file, title: "<i class='fa fa-photo'/> Choose image".html_safe, class: 'btn btn-warning', required: true
+        .modal-footer
+          %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} x
+          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_cust_pic_file_submit") do
+            Upload
+            %i.fa.fa-arrow-up
+
+:javascript
+
+  //Required attribute fallback
+  function attributeSupported(attribute) {
+    return (attribute in document.createElement("input"));
+  }
+  function isSafariOnly() {
+    return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+  }
+  $(function () {
+    $('#new_cust_pic_file').submit(function () {
+      if (!attributeSupported("required") || isSafariOnly()) {
+        $("#new_cust_pic_file [required]").each(function (index) {
+          if (!$(this).val()) {
+            alert("Please Fill In All Required Fields.");
+            return false;
+          }
+        });
+      }
+      return true;
+    });
+  });
+
+  // Don't allow for form submit until form fields completed
+  $("#new_cust_pic_file_submit").hide();
+
+  // Make check if file changes
+  $("#cust_pic_file_file").on("change", function() {
+    if($("#cust_pic_file_file").val() && $("#cust_pic_file_event_code").val()) {
+      $("#new_cust_pic_file_submit").show();
+    }
+    else {
+      $("#new_cust_pic_file_submit").hide();
+    }
+  });
+
+  // Make check if event code changes
+  $("#cust_pic_file_event_code").on("change", function() {
+    if($("#cust_pic_file_file").val() && $("#shipment_file_event_code").val()) {
+      $("#new_cust_pic_file_submit").show();
+    }
+    else {
+      $("#new_cust_pic_file_submit").hide();
+    }
+  });
