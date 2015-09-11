@@ -8,6 +8,8 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
+          - unless total.blank?
+            #total= total
           -#
             %a{href: edit_bill_payment_path(bill_payment_id)}
               = "Edit" unless mobile_device?

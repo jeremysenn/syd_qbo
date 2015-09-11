@@ -31,9 +31,15 @@
                 = select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = hidden_field_tag "bill[line_items][][description]", line_item.description
                 = label_tag "Gross", nil, :class => 'control-label'
-                = text_field_tag "bill[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                - unless line_item.description.blank?
+                  = text_field_tag "bill[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                - else
+                  = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
                 = label_tag "Tare", nil, :class => 'control-label'
-                = text_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                - unless line_item.description.blank?
+                  = text_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                - else
+                  = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
                 = label_tag "Net", nil, :class => 'control-label'
                 = text_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
                 = label_tag "Rate", nil, :class => 'control-label'
@@ -59,5 +65,15 @@
         %br
         = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
           Pay ticket
+
+    %div#images
+      - unless @images.blank?
+        - @images.each_slice(6) do |images|
+          %div.row
+            - images.each do |image|
+              .col-xs-12.col-sm-2.col-md-2.col-lg-2
+                %div.thumbnail
+                  - unless image.hidden?
+                    = image_tag(show_preview_image_image_path(image))
 
 = render partial: "shared/bill_footer_navbar", locals: {title: "Bill"}

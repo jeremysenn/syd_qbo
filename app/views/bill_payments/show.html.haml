@@ -1,4 +1,54 @@
-= render partial: "shared/navbars/show_bill_payment_navbar", locals: {title: "Paid Ticket #{@bill_payment.doc_number}", bill_payment_id: @bill_payment.id}
+= render partial: "shared/navbars/show_bill_payment_navbar", locals: {title: "Paid #{@bill_payment.doc_number}", bill_payment_id: @bill_payment.id, total: "#{number_to_currency(@bill_payment.total)}"}
+
+.container
+  #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+    .panel.panel-default
+      %div.panel-heading{:role => "tab", id: "vendor_heading"}
+        %h4.panel-title
+          %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button"}
+            Vendor
+      #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+        .panel-body
+      %div.panel-footer
+        .vendor_name= @bill_payment.vendor_ref.name
+  #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+    - @bill.line_items.each do |line_item|
+      .panel.panel-default
+        %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
+          %h4.panel-title
+            %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
+              = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+              = " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+            =# hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
+        %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse", "aria-expanded" => false}
+          .panel-body
+        %div.panel-footer
+          = "(#{line_item.description}) ="
+          = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description}"
+          = " x #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
+          = "= #{number_to_currency(line_item.amount)}"
+
+  .well
+    .row.form-group
+      %div{:class => "col-sm-12 col-md-12"}
+        = label_tag "Payment", nil, :class => 'control-label'
+        %br
+        = "#{number_to_currency(@bill_payment.total)} (#{@bill_payment.check_payment.bank_account_ref.name})"
+  .row.form-group
+    %div{:class => "col-sm-12 col-md-12"}
+      %a{href: bill_payment_path(@bill_payment.id, format: 'pdf'), class: 'btn btn-primary btn-lg btn-block', target: '_blank'}
+        %i.fa.fa-file-pdf-o.fa-lg
+        Print  
+  
+  %div#images
+    - unless @images.blank?
+      - @images.each_slice(6) do |images|
+        %div.row
+          - images.each do |image|
+            .col-xs-12.col-sm-2.col-md-2.col-lg-2
+              %div.thumbnail
+                - unless image.hidden?
+                  = image_tag(show_preview_image_image_path(image))
 
 -#
   - @bill_payment.line_items.each do |line_item|
@@ -6,41 +56,41 @@
     = line_item.detail_type
     = line_item.linked_transactions
 
-.col-sm-12.col-md-4.col-md-offset-4
-  %div.panel.panel-default
-    %div.panel-heading
-      = "Payment #{@bill_payment.doc_number}" unless @bill_payment.doc_number.blank?
-      - if @bill_payment.pay_type == 'Check'
-        .pull-right= link_to 'Print check', 'https://sandbox.qbo.intuit.com/app/expenses', target: '_blank'
-    %div.list_group
-      %div.list-group-item
-        %strong= "Vendor"
-        .pull-right
-          = truncate(@vendor.display_name, length: 30)
-      %div.list-group-item
-        %strong= "Date"
-        .pull-right
-          = @bill_payment.txn_date.strftime("%m/%d/%y")
-      -#
+  .col-sm-12.col-md-4.col-md-offset-4
+    %div.panel.panel-default
+      %div.panel-heading
+        = "Payment #{@bill_payment.doc_number}" unless @bill_payment.doc_number.blank?
+        - if @bill_payment.pay_type == 'Check'
+          .pull-right= link_to 'Print check', 'https://sandbox.qbo.intuit.com/app/expenses', target: '_blank'
+      %div.list_group
         %div.list-group-item
-          %strong= "Type"
+          %strong= "Vendor"
           .pull-right
-            = @bill_payment.pay_type
-      %div.list-group-item
-        %strong= "Account"
-        .pull-right
-          = @bill_payment.check_payment.bank_account_ref.name
-      %div.list-group-item
-        %strong= "Total"
-        .pull-right
-          = number_to_currency(@bill_payment.total)
-      - unless @bill.blank?
-        %a{href: bill_path(@bill.id), class: "list-group-item"}
-          = "Bill # #{@bill.doc_number} (#{@bill.txn_date.strftime("%m/%d/%Y")})"
+            = truncate(@vendor.display_name, length: 30)
+        %div.list-group-item
+          %strong= "Date"
           .pull-right
-            %i.fa.fa-chevron-right
-          %br
-          %br
+            = @bill_payment.txn_date.strftime("%m/%d/%y")
+        -#
+          %div.list-group-item
+            %strong= "Type"
+            .pull-right
+              = @bill_payment.pay_type
+        %div.list-group-item
+          %strong= "Account"
+          .pull-right
+            = @bill_payment.check_payment.bank_account_ref.name
+        %div.list-group-item
+          %strong= "Total"
+          .pull-right
+            = number_to_currency(@bill_payment.total)
+        - unless @bill.blank?
+          %a{href: bill_path(@bill.id), class: "list-group-item"}
+            = "Bill # #{@bill.doc_number} (#{@bill.txn_date.strftime("%m/%d/%Y")})"
+            .pull-right
+              %i.fa.fa-chevron-right
+            %br
+            %br
 -#
   - unless @images.blank?
     .col-sm-6.col-md-4.col-md-offset-4
@@ -58,4 +108,4 @@
     .col-sm-12.col-md-4.col-md-offset-4
       = link_to "Edit Bill Payment", edit_bill_payment_path(@bill_payment.id), class: 'btn btn-primary btn-lg btn-block'
 
-= render partial: "shared/bill_footer_navbar", locals: {title: "Bill"}
+= render partial: "shared/bill_payment_footer_navbar", locals: {title: "BillPayment"}

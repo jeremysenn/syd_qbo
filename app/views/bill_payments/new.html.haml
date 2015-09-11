@@ -19,11 +19,11 @@
           .panel.panel-default
             %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
               %h4.panel-title
-                %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@bill.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@bill.line_items.count > 1 ? 'collapsed' : ''}"}
+                %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
                   = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
                   = " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
                 =# hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
-            %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@bill.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@bill.line_items.count > 1 ? false : true}"}
+            %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse", "aria-expanded" => false}
               .panel-body
                 =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 =# hidden_field_tag "bill[line_items][][description]", line_item.description
@@ -48,7 +48,7 @@
           =# select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
           =# select_tag "bill_payment[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
           
-          = label_tag "Payment method", nil, :class => 'control-label'
+          = label_tag "Payment", nil, :class => 'control-label'
           %p.text-center
             .btn-group-horizontal{"data-toggle" => "buttons"}
               - @accounts.each_with_index do |account, index|
@@ -102,4 +102,15 @@
       %div{:class => "col-sm-12 col-md-12"}
         = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off") do
           Pay
+
+    %div#images
+      - unless @images.blank?
+        - @images.each_slice(6) do |images|
+          %div.row
+            - images.each do |image|
+              .col-xs-12.col-sm-2.col-md-2.col-lg-2
+                %div.thumbnail
+                  - unless image.hidden?
+                    = image_tag(show_preview_image_image_path(image))
+
 =# render partial: "shared/footer_navbar", locals: {title: "Bill Payment"}

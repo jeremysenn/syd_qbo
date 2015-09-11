@@ -64,11 +64,14 @@ class BillsController < ApplicationController
   def edit
     @vendors = @vendor_service.query(nil, :per_page => 1000)
     @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
+    @doc_number = @bill.doc_number
+    @contract = Contract.find(session[:realm_id]) # Find contract for this company
     
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
     
     @items = @item_service.query(nil, :per_page => 1000)
+    @images = Image.where(ticket_nbr: @doc_number)
   end
   
   # POST /bills
@@ -144,7 +147,7 @@ class BillsController < ApplicationController
       if @bill.present?
         format.html { 
           if params[:pay_ticket]
-            redirect_to new_bill_payment_path(bill_id: @bill.id), notice: 'Bill was successfully updated.'
+            redirect_to new_bill_payment_path(bill_id: @bill.id)
           else
 #            redirect_to bill_path(@bill.id), notice: 'Bill was successfully updated.' 
 #            redirect_to purchase_orders_path

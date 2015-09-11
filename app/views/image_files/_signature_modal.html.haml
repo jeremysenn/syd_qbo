@@ -5,7 +5,12 @@
         .modal-body
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :ticket_number, value: @doc_number
-          = f.hidden_field :event_code, value: 'SIG'
+          = f.hidden_field :event_code, value: 'Signature'
+          - unless @contract.blank?
+            %p= @contract.text1
+            %p= @contract.text2
+            %p= @contract.text3
+            %p= @contract.text4
           .form-group
             .sigPad
               %div.sigNav
@@ -15,9 +20,9 @@
                 .typed
                 %canvas.pad{height: "85", width: "498"}
                 %input.output{name: "output", type: "hidden"}/
-        .modal-footer
-          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
-            I accept the terms of this agreement
+          %p
+            = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
+              I accept the terms of this agreement
 -#
   %div{:id => "signature_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
     .modal-dialog
