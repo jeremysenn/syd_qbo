@@ -43,6 +43,9 @@
           %p= link_to "Closed Tickets", bills_path, :class => "btn btn-success btn-lg btn-block", id: 'welcome_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed Tickets..."}
           %p= link_to "Payments", bill_payments_path, :class => "btn btn-info btn-lg btn-block", id: 'welcome_to_paid', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Payments..."}
           %p= link_to "Search Pictures", "#{current_user.images_table? ? images_path : shipments_path}", :class => "btn btn-default btn-lg btn-block", id: 'welcome_to_search_pictures', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Search Pictures..."}
+          %p
+            %a{href: "https://sandbox.qbo.intuit.com/app/homepage", :class => "btn btn-primary btn-lg btn-block", target: '_blank'}
+              = image_tag('qb_logo_small.png', class: 'img-responsive center-block')
 
   = render partial: "shared/home_footer_navbar", locals: {title: "Welcome"} if current_user.active? and License.valid?
 
