@@ -32,7 +32,7 @@ class ImageFileUploader < CarrierWave::Uploader::Base
   version :large, if: :ready_to_process? do
     process :rotate
 #    process :resize_to_fit => [2000, 2000]
-    process :caption, :if => :not_signature?
+    process :caption, :if => :should_process_caption?
   end
   
   def rotate
@@ -121,13 +121,12 @@ class ImageFileUploader < CarrierWave::Uploader::Base
       return model.process
     end
     
-    # Check if it's a signature event code
-    def signature?(file)
-      return model.event_code == "SIG"
-    end
-    
     def not_signature?(file)
       return model.event_code != "SIG"
+    end
+    
+    def should_process_caption?(file)
+      model.class.name == "ImageFile" or model.class.name == "ShipmentFile"
     end
 
 end

@@ -16,7 +16,7 @@ class VendorsController < ApplicationController
   # GET /vendors/1
   # GET /vendors/1.json
   def show
-    
+    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
 
   # GET /vendors/new
@@ -38,13 +38,16 @@ class VendorsController < ApplicationController
     unless vendor_params[:billing_address].blank?
       billing_address = Quickbooks::Model::PhysicalAddress.new
       billing_address.line1 = vendor_params[:billing_address][:line1]
+      billing_address.city = vendor_params[:billing_address][:city]
+      billing_address.country_sub_division_code = vendor_params[:billing_address][:country_sub_division_code]
+      billing_address.postal_code = vendor_params[:billing_address][:postal_code]
       @vendor.billing_address = billing_address
     end
     @vendor.email_address = vendor_params[:email]
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = vendor_params[:phone_number]
-      @vendor.mobile_phone = phone
+      @vendor.primary_phone = phone
     end
     @vendor = @vendor_service.create(@vendor)
 
@@ -67,19 +70,26 @@ class VendorsController < ApplicationController
   end
 
   def update_qb
+    @vendor.given_name = vendor_params[:given_name]
+    @vendor.family_name = vendor_params[:family_name]
+    @vendor.company_name = vendor_params[:company_name]
     @vendor.display_name = vendor_params[:display_name]
-    @vendor.email_address = vendor_params[:email] unless vendor_params[:email].blank?
     
     unless vendor_params[:billing_address].blank?
       billing_address = Quickbooks::Model::PhysicalAddress.new
       billing_address.line1 = vendor_params[:billing_address][:line1]
+      billing_address.city = vendor_params[:billing_address][:city]
+      billing_address.country_sub_division_code = vendor_params[:billing_address][:country_sub_division_code]
+      billing_address.postal_code = vendor_params[:billing_address][:postal_code]
       @vendor.billing_address = billing_address
     end
+    
+    @vendor.email_address = vendor_params[:email]
     
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = vendor_params[:phone_number]
-      @vendor.mobile_phone = phone
+      @vendor.primary_phone = phone
     end
     @vendor = @vendor_service.update(@vendor)
     
@@ -123,7 +133,7 @@ class VendorsController < ApplicationController
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @vendor_service = Quickbooks::Service::Vendor.new
       @vendor_service.access_token = oauth_client
-      @vendor_service.company_id = session[:realm_id]
+      @vendor_service.company_id = current_company_id
     end
   
     # Use callbacks to share common setup or constraints between actions.
@@ -135,6 +145,6 @@ class VendorsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vendor_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:vendor).permit(:given_name, :family_name, :company_name, :display_name, :email, :phone_number, billing_address: [:line1])
+      params.require(:vendor).permit(:given_name, :family_name, :company_name, :display_name, :email, :phone_number, billing_address: [:line1, :city, :country_sub_division_code, :postal_code])
     end
 end

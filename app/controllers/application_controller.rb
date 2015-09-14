@@ -16,4 +16,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
   
+  private
+  def current_company_id
+    session[:realm_id]
+  end
+  helper_method :current_company_id
+  
 end

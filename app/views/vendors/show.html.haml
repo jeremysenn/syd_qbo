@@ -1,50 +1,60 @@
 = render partial: "shared/navbars/show_vendor_navbar", locals: {title: "#{truncate(@vendor.display_name, length: 12)}", purchase_order_id: @vendor.id}
 .container
+  %div.panel.panel-primary
+    %div.list_group
+      %div.list-group-item
+        %strong= "Name:"
+        .pull-right
+          = "#{@vendor.given_name} #{@vendor.family_name}"
+      %div.list-group-item
+        %strong= "Company Name:"
+        .pull-right
+          = @vendor.company_name
+      %div.list-group-item
+        %strong= "Display Name:"
+        .pull-right
+          = @vendor.display_name
+  %div.panel.panel-primary
+    %div.panel-body
+      %strong= "Address:"
+      - unless @vendor.billing_address.blank?
+        %p
+          = @vendor.billing_address.line1
+          %br
+          - unless @vendor.billing_address.line2.blank?
+            = @vendor.billing_address.line2
+            %br
+          = @vendor.billing_address.city
+          = @vendor.billing_address.country_sub_division_code
+          = @vendor.billing_address.postal_code
+      - else
+        %p None
+  %div.panel.panel-primary
+    %div.list_group
+      %div.list-group-item
+        %strong= "Email:"
+        .pull-right
+          = mail_to @vendor.primary_email_address.address unless @vendor.primary_email_address.blank?
+      %div.list-group-item
+        %strong= "Phone:"
+        .pull-right
+          = @vendor.mobile_phone.free_form_number unless @vendor.mobile_phone.blank?
+      %div.list-group-item
+        %strong= "Balance:"
+        .pull-right
+          = number_to_currency(@vendor.balance)
   %div.row
     -#
-      .col-xs-12.col-sm-6.col-md-offset-3
-    %div.panel.panel-default
-      %div.list_group
-        %div.list-group-item
-          %strong= "Name:"
-          .pull-right
-            = "#{@vendor.given_name} #{@vendor.family_name}"
-        %div.list-group-item
-          %strong= "Company Name:"
-          .pull-right
-            = @vendor.company_name
-        %div.list-group-item
-          %strong= "Display Name:"
-          .pull-right
-            = @vendor.display_name
-    %div.panel.panel-default
-      %div.panel-body
-        %strong= "Address:"
-        - unless @vendor.billing_address.blank?
-          .pull-right
-            = @vendor.billing_address.line1
-            %br
-            - unless @vendor.billing_address.line2.blank?
-              = @vendor.billing_address.line2
-              %br
-            = @vendor.billing_address.city
-    %div.panel.panel-default
-      %div.list_group
-        %div.list-group-item
-          %strong= "Email:"
-          .pull-right
-            = mail_to @vendor.primary_email_address.address unless @vendor.primary_email_address.blank?
-        %div.list-group-item
-          %strong= "Phone:"
-          .pull-right
-            = @vendor.mobile_phone.free_form_number unless @vendor.mobile_phone.blank?
-        %div.list-group-item
-          %strong= "Balance:"
-          .pull-right
-            = number_to_currency(@vendor.balance)
-    %div.row
-      -#
-        .col-xs-12.col-sm-12.col-md-12
-          = link_to "Edit Vendor", edit_vendor_path(@vendor.id), class: 'btn btn-primary btn-lg btn-block'
+      .col-xs-12.col-sm-12.col-md-12
+        = link_to "Edit Vendor", edit_vendor_path(@vendor.id), class: 'btn btn-primary btn-lg btn-block'
+  %div#cust_pics
+    - unless @cust_pics.blank?
+      - @cust_pics.each_slice(6) do |cust_pics|
+        %div.row
+          - cust_pics.each do |cust_pic|
+            .col-xs-12.col-sm-2.col-md-2.col-lg-2
+              %div.thumbnail
+                - unless cust_pic.hidden?
+                  = image_tag(show_preview_image_cust_pic_path(cust_pic))
 
 = render partial: "shared/vendor_footer_navbar", locals: {title: "Vendor"}

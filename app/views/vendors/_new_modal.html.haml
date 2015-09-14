@@ -19,9 +19,9 @@
               = text_field_tag "vendor[company_name]", nil, :placeholder => "Company Name", class: "form-control input-lg"
             %div{:class => "col-xs-12 col-sm-6 col-md-6"}
               = label_tag "Display Name", nil, :class => 'control-label'
-              = text_field_tag "vendor[display_name]", nil, :placeholder => "Display Name", class: "form-control input-lg", required: true
+              = text_field_tag "vendor[display_name]", nil, :placeholder => "Display Name", class: "form-control input-lg"
           .row.form-group
-            %div{:class => "col-xs-12 col-sm-12 col-md-12"}
+            %div{:class => "col-xs-12 col-sm-6 col-md-6"}
               = label_tag "Street Address", nil, :class => 'control-label'
               = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg", required: true
           .row.form-group

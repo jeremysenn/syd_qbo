@@ -3,7 +3,6 @@
 # and open the template in the editor.
 %>
 
-alert("here we are");
 <% if @cust_pic_file.new_record? %>
   alert("Failed to upload picture <%= j @cust_pic_file.errors.full_messages.join(', ').html_safe %>");
 <% else %>

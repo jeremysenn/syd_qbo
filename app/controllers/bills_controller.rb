@@ -65,7 +65,7 @@ class BillsController < ApplicationController
     @vendors = @vendor_service.query(nil, :per_page => 1000)
     @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @doc_number = @bill.doc_number
-    @contract = Contract.find(session[:realm_id]) # Find contract for this company
+    @contract = Contract.find(current_company_id) # Find contract for this company
     
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
@@ -198,50 +198,50 @@ class BillsController < ApplicationController
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @bill_service = Quickbooks::Service::Bill.new
       @bill_service.access_token = oauth_client
-      @bill_service.company_id = session[:realm_id]
+      @bill_service.company_id = current_company_id
     end
     
     def set_vendor_service
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @vendor_service = Quickbooks::Service::Vendor.new
       @vendor_service.access_token = oauth_client
-      @vendor_service.company_id = session[:realm_id]
+      @vendor_service.company_id = current_company_id
     end
     
     def set_item_service
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @item_service = Quickbooks::Service::Item.new
       @item_service.access_token = oauth_client
-      @item_service.company_id = session[:realm_id]
+      @item_service.company_id = current_company_id
     end
     
     def set_purchase_order_service
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @purchase_order_service = Quickbooks::Service::PurchaseOrder.new
       @purchase_order_service.access_token = oauth_client
-      @purchase_order_service.company_id = session[:realm_id]
+      @purchase_order_service.company_id = current_company_id
     end
     
     def set_bill_payment_service
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @bill_payment_service = Quickbooks::Service::Bill.new
       @bill_payment_service.access_token = oauth_client
-      @bill_payment_service.company_id = session[:realm_id]
+      @bill_payment_service.company_id = current_company_id
     end
     
     def set_account_service
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @account_service = Quickbooks::Service::Account.new
       @account_service.access_token = oauth_client
-      @account_service.company_id = session[:realm_id]
+      @account_service.company_id = current_company_id
     end
     
     def set_company_service
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @company_info_service = Quickbooks::Service::CompanyInfo.new
       @company_info_service.access_token = oauth_client
-      @company_info_service.company_id = session[:realm_id]
-      @company_info = @company_info_service.fetch_by_id(session[:realm_id])
+      @company_info_service.company_id = current_company_id
+      @company_info = @company_info_service.fetch_by_id(current_company_id)
     end
     
     # Use callbacks to share common setup or constraints between actions.
