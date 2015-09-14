@@ -58,6 +58,20 @@ class Ability
       shipment_file.user_id == user.id
     end
     can :create, ShipmentFile
+    
+    # CustPics
+    ############
+    can :manage, CustPic do |cust_pic|
+      true
+    end
+    can :create, CustPic
+
+    # CustPicFiles
+    ############
+    can :manage, CustPicFile do |cust_pic_file|
+      cust_pic_file.user_id == user.id
+    end
+    can :create, CustPicFile
 
     # UserSettings
     ############
