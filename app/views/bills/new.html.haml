@@ -1,5 +1,5 @@
 %div{style: "#{(params[:close_ticket].present? or params[:close_and_pay].present?) ? 'display:none;' : 'display:block;'}"}
-  = render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "#{@purchase_order.doc_number}"}
+  = render partial: "shared/navbars/new_and_edit_bill_navbar", locals: {title: "#{@purchase_order.doc_number}", total: "#{number_to_currency(@purchase_order.total)}"}
 
   .container
     = form_tag bills_path, id: 'bill_form', :class => "form-horizontal" do |f|
