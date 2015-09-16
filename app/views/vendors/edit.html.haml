@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/new_and_edit_vendor_navbar", locals: {title: "#{truncate(@vendor.display_name, length: 12)}"}
+= render partial: "shared/navbars/new_and_edit_vendor_navbar", locals: {title: truncate(@vendor.display_name, length: 12)}
 .container
   .well.col-sm-12.col-md-12
     = form_tag update_qb_vendor_path, method: 'get', :class => "form-horizontal" do
@@ -48,37 +48,22 @@
           = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", class: "form-control input-lg"
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "Phone", nil, :class => 'control-label'
-          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.mobile_phone.present? ? @vendor.mobile_phone.free_form_number : ''}", class: "form-control input-lg"
+          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.primary_phone.present? ? @vendor.primary_phone.free_form_number : ''}", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           =# link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
           = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Updating..."}) do
             Update
-  -#
-    = form_for @vendor, :class => "form-inline" do |f|
-      -#
-        - if @vendor.errors.any?
-          #error_explanation
-            %h2= "#{pluralize(@vendor.errors.count, "error")} prohibited this vendor from being saved:"
-            %ul
-              - @vendor.errors.full_messages.each do |msg|
-                %li= msg
-      .row.form-group
-        %div{:class => "col-sm-10"}
-          = f.label "Name", :class => "control-label"
-          = f.text_field :name, placeholder: "Display Name", value: @vendor.display_name, :class => "form-control input-lg"
-      .row.form-group
-        %div{:class => "col-sm-10"}
-          = f.label "Email", :class => "control-label"
-          %br/
-          = f.text_field :email, placeholder: "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", :class => "form-control input-lg"
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          -#
-            = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
-          = f.submit "Update", :class => "btn btn-lg btn-primary btn-block"
 
-=# render :partial => "form"
+  %div#cust_pics
+    - unless @cust_pics.blank?
+      - @cust_pics.each_slice(6) do |cust_pics|
+        %div.row
+          - cust_pics.each do |cust_pic|
+            .col-xs-12.col-sm-2.col-md-2.col-lg-2
+              %div.thumbnail
+                - unless cust_pic.hidden?
+                  = image_tag(show_preview_image_cust_pic_path(cust_pic))
 
-= render partial: "shared/footer_navbar", locals: {title: "Vendor"}
+= render partial: "shared/vendor_footer_navbar", locals: {title: "Vendor"}
 

@@ -36,11 +36,14 @@ jQuery ->
   ### Vendor value changed ###
   $('#purchase_order_vendor').on 'change', ->
     input_select = $(this)
+    vendor_id = input_select.val()
     panel = input_select.closest('.panel')
     name = input_select.closest('.panel').find($( "#purchase_order_vendor option:selected" )).text()
-    input_select.closest('.panel').find('.vendor_name').text name
+    #input_select.closest('.panel').find('.vendor_name').text name
     panel.closest('.collapse').collapse('toggle')
     $(this).closest('.panel-collapse').collapse('hide')
+    input_select.closest('.panel').find('#edit_vendor_link').attr('href', "/vendors/" + vendor_id + "/edit"); 
+    input_select.closest('.panel').find('#edit_vendor_link').text name
 
   ### Line item changed ###
   $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
@@ -157,6 +160,7 @@ jQuery ->
         #$("#new_image_file").prepend data.context
         #$('#new_image_file').append('<img src="' + URL.createObjectURL(data.files[0]) + '"/>')
         $('#pictures').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
+        $('#images').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
         #data.submit()
         $(".picture_loading_spinner").show()
         #$("#uploads").hide()

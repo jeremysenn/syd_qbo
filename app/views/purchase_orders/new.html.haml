@@ -2,14 +2,20 @@
 
 .container
   = form_tag purchase_orders_path, id: 'purchase_order_form', :class => "form-horizontal" do |f|
-    .well
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Vendor", nil, :class => 'control-label'
-          = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
-          =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name"), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
+    #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+      .panel.panel-default
+        %div.panel-heading{:role => "tab", id: "vendor_heading"}
+          %h4.panel-title
+            %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button"}
+              Vendor
+        #collapseVendor.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+          .panel-body
+            = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), params[:vendor_id]), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
+            =# select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+        %div.panel-footer
+          %a{href: '#', id: "edit_vendor_link", target: '_blank'}
     %div.purchase_order_input_fields_wrap
-      .well{style: "display:none;"}
+      .well{style: "display:block;"}
         = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
         .row.form-group.calculation_fields
           %div{:class => "col-sm-12 col-md-12"}
@@ -51,4 +57,4 @@
           = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
         = button_tag(style: 'display:none;', id: 'next_button', :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Next"}, autocomplete: "off") do
           Next
-= render partial: "shared/footer_navbar", locals: {title: "Purchase Order"}
+= render partial: "shared/purchase_orders_footer_navbar", locals: {title: "Purchase Order"}

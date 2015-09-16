@@ -31,10 +31,10 @@ class VendorsController < ApplicationController
   # POST /vendors.json
   def create
     @vendor = Quickbooks::Model::Vendor.new
-    @vendor.given_name = vendor_params[:given_name]
-    @vendor.family_name = vendor_params[:family_name]
-    @vendor.company_name = vendor_params[:company_name]
-    @vendor.display_name = vendor_params[:display_name]
+    @vendor.given_name = vendor_params[:given_name] unless vendor_params[:given_name].blank?
+    @vendor.family_name = vendor_params[:family_name] unless vendor_params[:family_name].blank?
+    @vendor.company_name = vendor_params[:company_name] unless vendor_params[:company_name].blank?
+    @vendor.display_name = vendor_params[:display_name] unless vendor_params[:display_name].blank?
     unless vendor_params[:billing_address].blank?
       billing_address = Quickbooks::Model::PhysicalAddress.new
       billing_address.line1 = vendor_params[:billing_address][:line1]
@@ -43,7 +43,7 @@ class VendorsController < ApplicationController
       billing_address.postal_code = vendor_params[:billing_address][:postal_code]
       @vendor.billing_address = billing_address
     end
-    @vendor.email_address = vendor_params[:email]
+    @vendor.email_address = vendor_params[:email] unless vendor_params[:email].blank?
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new
       phone.free_form_number = vendor_params[:phone_number]
@@ -59,7 +59,13 @@ class VendorsController < ApplicationController
         Rails.cache.delete("all_vendors")
         Rails.cache.fetch("all_vendors") {Hash[vendors.map{ |v| [v.display_name,v.id] }]}
         
-        format.html { redirect_to :back, notice: 'Vendor was successfully created.' }
+        format.html { 
+          if params[:vendor_quick_create]
+            redirect_to :back, notice: 'Vendor was successfully created.'
+          else
+            redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
+          end
+          }
 #        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.' }
         format.json { render :show, status: :created, location: vendor_path(@vendor.id) }
       else
@@ -83,8 +89,7 @@ class VendorsController < ApplicationController
       billing_address.postal_code = vendor_params[:billing_address][:postal_code]
       @vendor.billing_address = billing_address
     end
-    
-    @vendor.email_address = vendor_params[:email]
+    @vendor.email_address = vendor_params[:email] unless vendor_params[:email].blank?
     
     unless vendor_params[:phone_number].blank?
       phone = Quickbooks::Model::TelephoneNumber.new

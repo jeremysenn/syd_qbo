@@ -6,12 +6,25 @@
           = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
           %strong New Ticket
         .modal-body
-          .row.form-group
-            %div{:class => "col-sm-12 col-md-12"}
-              = label_tag "Vendor", nil, :class => 'control-label'
-              = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.item').show();"
+          #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+            .panel.panel-default
+              %div.panel-heading{:role => "tab", id: "vendor_heading"}
+                %h4.panel-title
+                  %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button"}
+                    Vendor
+              #collapseVendor.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+                .panel-body
+                  = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
+              %div.panel-footer
+                %a{href: '#', id: "edit_vendor_link", target: '_blank'}
+          -#
+            .row.form-group
+              %div{:class => "col-sm-12 col-md-12"}
+                = label_tag "Vendor", nil, :class => 'control-label'
+                = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.item').show();"
+                %a{href: '#', id: "edit_vendor_link", target: '_blank'}
           %div.purchase_order_input_fields_wrap
-            .item{style: "display:none;"}
+            .well{style: "display:none;"}
               = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
               .row.form-group.calculation_fields
                 %div{:class => "col-sm-12 col-md-12"}

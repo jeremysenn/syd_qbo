@@ -36,11 +36,14 @@ jQuery ->
   ### Vendor value changed ###
   $('#bill_vendor').on 'change', ->
     input_select = $(this)
+    vendor_id = input_select.val()
     panel = input_select.closest('.panel')
     name = input_select.closest('.panel').find($( "#bill_vendor option:selected" )).text()
-    input_select.closest('.panel').find('.vendor_name').text name
+    #input_select.closest('.panel').find('.vendor_name').text name
     panel.closest('.collapse').collapse('toggle')
     $(this).closest('.panel-collapse').collapse('hide')
+    input_select.closest('.panel').find('#edit_vendor_link').attr('href', "/vendors/" + vendor_id + "/edit"); 
+    input_select.closest('.panel').find('#edit_vendor_link').text name
 
   ### Line item changed ###
   $('.bill_input_fields_wrap').on 'change', 'select', ->

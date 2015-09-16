@@ -7,40 +7,42 @@
           %strong New Vendor
         .modal-body
           .row.form-group
+            = hidden_field_tag :vendor_quick_create, true
             %div{:class => "col-xs-12 col-sm-6 col-md-6"}
               = label_tag "First Name", nil, :class => 'control-label'
               = text_field_tag "vendor[given_name]", nil, :placeholder => "First Name", class: "form-control input-lg"
             %div{:class => "col-xs-12 col-sm-6 col-md-6"}
               = label_tag "Last Name", nil, :class => 'control-label'
               = text_field_tag "vendor[family_name]", nil, :placeholder => "Last Name", class: "form-control input-lg"
-          .row.form-group
-            %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-              = label_tag "Company Name", nil, :class => 'control-label'
-              = text_field_tag "vendor[company_name]", nil, :placeholder => "Company Name", class: "form-control input-lg"
-            %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-              = label_tag "Display Name", nil, :class => 'control-label'
-              = text_field_tag "vendor[display_name]", nil, :placeholder => "Display Name", class: "form-control input-lg"
-          .row.form-group
-            %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-              = label_tag "Street Address", nil, :class => 'control-label'
-              = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg", required: true
-          .row.form-group
-            %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-              = label_tag "City", nil, :class => 'control-label'
-              = text_field_tag "vendor[billing_address][city]", nil, :placeholder => "City", class: "form-control input-lg", required: true
-            %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-              = label_tag "State", nil, :class => 'control-label'
-              = text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg", required: true
-            %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-              = label_tag "Zipcode", nil, :class => 'control-label'
-              = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg", required: true
-          .row.form-group
-            %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-              = label_tag "Email", nil, :class => 'control-label'
-              = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", class: "form-control input-lg"
-            %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-              = label_tag "Phone", nil, :class => 'control-label'
-              = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", class: "form-control input-lg"
+          -#
+            .row.form-group
+              %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+                = label_tag "Company Name", nil, :class => 'control-label'
+                = text_field_tag "vendor[company_name]", nil, :placeholder => "Company Name", class: "form-control input-lg"
+              %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+                = label_tag "Display Name", nil, :class => 'control-label'
+                = text_field_tag "vendor[display_name]", nil, :placeholder => "Display Name", class: "form-control input-lg"
+            .row.form-group
+              %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+                = label_tag "Street Address", nil, :class => 'control-label'
+                = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg", required: true
+            .row.form-group
+              %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+                = label_tag "City", nil, :class => 'control-label'
+                = text_field_tag "vendor[billing_address][city]", nil, :placeholder => "City", class: "form-control input-lg", required: true
+              %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+                = label_tag "State", nil, :class => 'control-label'
+                = text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg", required: true
+              %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+                = label_tag "Zipcode", nil, :class => 'control-label'
+                = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg", required: true
+            .row.form-group
+              %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+                = label_tag "Email", nil, :class => 'control-label'
+                = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", class: "form-control input-lg"
+              %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+                = label_tag "Phone", nil, :class => 'control-label'
+                = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", class: "form-control input-lg"
         
         .modal-footer
           = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating..."}) do

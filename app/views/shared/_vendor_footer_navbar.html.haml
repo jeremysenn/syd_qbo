@@ -11,6 +11,9 @@
             %i.fa.fa-camera.fa-lg
             = "Pictures" unless mobile_device?
         .col-xs-4.col-sm-4
+          %a{href: new_purchase_order_path(vendor_id: @vendor.id)}
+            %i.fa.fa-plus.fa-lg
+            Ticket
           -#
             %a{href: "#{current_user.images_table? ? images_path(today: true) : shipments_path(today: true)}"}
               %i.fa.fa-calendar-o.fa-lg

@@ -10,7 +10,8 @@
       #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
         .panel-body
       %div.panel-footer
-        .vendor_name= @bill_payment.vendor_ref.name
+        %a{href: edit_vendor_path(@bill_payment.vendor_ref), id: "edit_vendor_link", target: '_blank'}
+          = @bill_payment.vendor_ref.name
   #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
     - @bill.line_items.each do |line_item|
       .panel.panel-default

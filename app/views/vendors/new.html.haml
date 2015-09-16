@@ -19,17 +19,17 @@
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "Street Address", nil, :class => 'control-label'
-          = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg", required: true
+          = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg" #, required: true
       .row.form-group
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "City", nil, :class => 'control-label'
-          = text_field_tag "vendor[billing_address][city]", nil, :placeholder => "City", class: "form-control input-lg", required: true
+          = text_field_tag "vendor[billing_address][city]", nil, :placeholder => "City", class: "form-control input-lg" #, required: true
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "State", nil, :class => 'control-label'
-          = text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg", required: true
+          = text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg" #, required: true
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Zipcode", nil, :class => 'control-label'
-          = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg", required: true
+          = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg" #, required: true
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "Email", nil, :class => 'control-label'
@@ -39,7 +39,7 @@
           = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
-          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block') do
+          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating..."}) do
             Create
 
 = render partial: "shared/footer_navbar", locals: {title: "Vendor"}

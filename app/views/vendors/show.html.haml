@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/show_vendor_navbar", locals: {title: "#{truncate(@vendor.display_name, length: 12)}", purchase_order_id: @vendor.id}
+= render partial: "shared/navbars/show_vendor_navbar", locals: {title: truncate(@vendor.display_name, length: 12), purchase_order_id: @vendor.id}
 .container
   %div.panel.panel-primary
     %div.list_group
@@ -38,7 +38,7 @@
       %div.list-group-item
         %strong= "Phone:"
         .pull-right
-          = @vendor.mobile_phone.free_form_number unless @vendor.mobile_phone.blank?
+          = @vendor.primary_phone.free_form_number unless @vendor.primary_phone.blank?
       %div.list-group-item
         %strong= "Balance:"
         .pull-right
