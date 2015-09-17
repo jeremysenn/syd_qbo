@@ -25,6 +25,7 @@ class VendorsController < ApplicationController
 
   # GET /vendors/1/edit
   def edit
+    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
   
   # POST /vendors
