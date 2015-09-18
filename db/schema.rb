@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911185943) do
+ActiveRecord::Schema.define(version: 20150917192041) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -77,6 +77,9 @@ ActiveRecord::Schema.define(version: 20150911185943) do
     t.integer  "blob_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tare_seq_nbr"
+    t.string   "cmdy_name"
+    t.decimal  "weight"
   end
 
   create_table "licenses", force: true do |t|

@@ -63,6 +63,8 @@ class VendorsController < ApplicationController
         format.html { 
           if params[:vendor_quick_create]
             redirect_to :back, notice: 'Vendor was successfully created.'
+          elsif params[:vendor_quick_create_from_ticket]
+            redirect_to new_purchase_order_path(vendor_id: @vendor.id), notice: 'Vendor was successfully created.'
           else
             redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
           end

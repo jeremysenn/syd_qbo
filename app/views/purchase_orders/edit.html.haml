@@ -40,9 +40,17 @@
                 =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
                 = label_tag "Gross", nil, :class => 'control-label'
-                = text_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", type: "number", required: true
+                %div.input-group
+                  = text_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
+                  %span.input-group-addon
+                    %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => line_item.description.split(' - ').first}
+                      %i.fa.fa-camera.fa-lg
                 = label_tag "Tare", nil, :class => 'control-label'
-                = text_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", type: "number", required: true
+                %div.input-group
+                  = text_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
+                  %span.input-group-addon
+                    %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => line_item.description.split(' - ').last}
+                      %i.fa.fa-camera.fa-lg
                 = label_tag "Net", nil, :class => 'control-label'
                 = text_field_tag "purchase_order[line_items][][quantity]", number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0), :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
 
@@ -114,4 +122,5 @@
                   - unless image.hidden?
                     = image_tag(show_preview_image_image_path(image))
 
+=# render partial: "image_files/upload_form", locals: {event_code: "Gross"}
 = render partial: "shared/purchase_order_footer_navbar", locals: {title: "Purchase Order"}
