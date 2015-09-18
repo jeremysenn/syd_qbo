@@ -57,60 +57,35 @@ jQuery ->
       input_select.closest('.panel').find('.panel-footer').text ''
       input_select.closest('.panel').find('.line_item_name').text name + ' (' + description + ')'
       input_select.closest('.panel').find('#item_description').val description
-      input_select.siblings("input").each ->
-        if $(this).is( "#bill_line_items__rate" )
-          $(this).val rate
-        if $(this).is( "#bill_line_items__gross" )
-          $(this).val 0
-        if $(this).is( "#bill_line_items__tare" )
-          $(this).val 0
-        if $(this).is( "#bill_line_items__quantity" )
-          $(this).val 0
-        if $(this).is( "#bill_line_items__amount" )
-          amount = (parseFloat(rate) * parseFloat(quantity))
-          $(this).val amount
-        return
+
+      input_select.closest('.panel').find('#bill_line_items__rate:first').val rate
+      input_select.closest('.panel').find('#bill_line_items__gross:first').val 0
+      input_select.closest('.panel').find('#bill_line_items__tare:first').val 0
+      input_select.closest('.panel').find('#bill_line_items__quantity:first').val 0
+      amount = (parseFloat(rate) * parseFloat(quantity))
+      input_select.closest('.panel').find('#bill_line_items__amount:first').val amount
+      input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-name', name 
+      input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-name', name
+      input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-id', item_id 
+      input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-id', item_id
+
       return
     
   ### Line item calculation field value changed ###
   $('.bill_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
-    if $(this).is( "#bill_line_items__rate" )
-      quantity = $(this).prevAll('#bill_line_items__quantity').first().val()
-      rate = $(this).val()
-      amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
-      $(this).nextAll('#bill_line_items__amount').first().val amount
-    if $(this).is( "#bill_line_items__gross" )
-      gross = $(this).val()
-      tare = $(this).nextAll('#bill_line_items__tare').first().val()
-      rate = $(this).nextAll('#bill_line_items__rate').first().val()
-      quantity = (parseFloat(gross) - parseFloat(tare))
-      amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
-      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Net: " + quantity
-      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
-      $(this).nextAll('#bill_line_items__quantity').first().val quantity
-      $(this).nextAll('#bill_line_items__amount').first().val amount
-    if $(this).is( "#bill_line_items__tare" )
-      gross = $(this).prevAll('#bill_line_items__gross').first().val()
-      tare = $(this).val()
-      rate = $(this).nextAll('#bill_line_items__rate').first().val()
-      quantity = (parseFloat(gross) - parseFloat(tare))
-      amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
-      $(this).closest('.calculation_fields').nextAll('#quantity_preview').text "Net: " + quantity
-      $(this).closest('.calculation_fields').nextAll('#unit_price_preview').text "Rate: " + "$" + rate
-      $(this).nextAll('#bill_line_items__quantity').first().val quantity
-      $(this).nextAll('#bill_line_items__amount').first().val amount
-    if $(this).is( "#bill_line_items__quantity" )
-      rate = $(this).nextAll('#bill_line_items__rate').first().val()
-      quantity = $(this).val()
-      amount = (parseFloat(rate) * parseFloat(quantity)).toFixed(2)
-      $(this).nextAll('#bill_line_items__amount').first().val amount
     gross = $(this).closest('.panel').find('#bill_line_items__gross').val()
     tare = $(this).closest('.panel').find('#bill_line_items__tare').val()
-    quantity = $(this).closest('.panel').find('#bill_line_items__quantity').val()
+    net = (parseFloat(gross) - parseFloat(tare)).toFixed(0)
+    $(this).closest('.panel').find('#bill_line_items__quantity').val net
+    $(this).closest('.panel').find('#gross_picture_button:first').attr 'data-weight', gross
+    $(this).closest('.panel').find('#tare_picture_button:first').attr 'data-weight', tare
+
     description = $(this).closest('.panel').find('#item_description').val()
     rate = $(this).closest('.panel').find('#bill_line_items__rate').val()
-    amount = $(this).closest('.panel').find('#bill_line_items__amount').val()
-    $(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + quantity + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
+    amount = (parseFloat(rate) * parseFloat(net)).toFixed(2)
+    $(this).closest('.panel').find('#bill_line_items__amount').val amount
+
+    $(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + net + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
     sum = 0;
     $('.amount').each ->
       sum += Number($(this).val())
