@@ -23,7 +23,8 @@ class ImageBlobWorker
     time_stamp = image_file.created_at.in_time_zone("Eastern Time (US & Canada)")
     image = Image.create(:file_name => File.basename(image_file.file_url), :branch_code => image_file.branch_code, :location => image_file.location, :ticket_nbr => image_file.ticket_number,
       :container_nbr => image_file.container_number, :booking_nbr => image_file.booking_number, :contr_nbr => image_file.contract_number, :blob_id => blob.id, :camera_name => image_file.user.email, :camera_group => "Scrap Yard Dog",
-      :sys_date_time => time_stamp, :event_code => image_file.event_code, :cust_nbr => image_file.customer_number, :hidden => image_file.hidden)
+      :sys_date_time => time_stamp, :event_code => image_file.event_code, :cust_nbr => image_file.customer_number, :hidden => image_file.hidden,
+      :tare_seq_nbr => image_file.tare_seq_nbr, :cmdy_nbr =>  image_file.tare_seq_nbr, :cmdy_name => image_file.cmdy_name, :weight => image_file.weight)
     
     # Save new image_file data
     image_file.image_id = image.id

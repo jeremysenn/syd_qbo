@@ -63,22 +63,10 @@ jQuery ->
       input_select.closest('.panel').find('#purchase_order_line_items__quantity:first').val 0
       amount = (parseFloat(rate) * parseFloat(quantity))
       input_select.closest('.panel').find('#purchase_order_line_items__amount:first').val amount
-      input_select.closest('.panel').find('#gross_picture_button:first').data 'item-name', name 
-      input_select.closest('.panel').find('#tare_picture_button:first').data 'item-name', name
-
-      #input_select.siblings("input").each ->
-        #if $(this).is( "#purchase_order_line_items__rate" )
-        #  $(this).val rate
-        #if $(this).is( "#purchase_order_line_items__gross" )
-        #  $(this).val 0
-        #if $(this).is( "#purchase_order_line_items__tare" )
-        #  $(this).val 0
-        #if $(this).is( "#purchase_order_line_items__quantity" )
-        #  $(this).val 0
-        #if $(this).is( "#purchase_order_line_items__amount" )
-        #  amount = (parseFloat(rate) * parseFloat(quantity))
-        #  $(this).val amount
-        #return
+      input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-name', name 
+      input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-name', name
+      input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-id', item_id 
+      input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-id', item_id
 
       return
 
@@ -88,6 +76,8 @@ jQuery ->
     tare = $(this).closest('.panel').find('#purchase_order_line_items__tare').val()
     net = (parseFloat(gross) - parseFloat(tare)).toFixed(0)
     $(this).closest('.panel').find('#purchase_order_line_items__quantity').val net
+    $(this).closest('.panel').find('#gross_picture_button:first').attr 'data-weight', gross
+    $(this).closest('.panel').find('#tare_picture_button:first').attr 'data-weight', tare
 
     description = $(this).closest('.panel').find('#item_description').val()
     rate = $(this).closest('.panel').find('#purchase_order_line_items__rate').val()
@@ -124,7 +114,7 @@ jQuery ->
   $('input[type=file]').bootstrapFileInput()
 
   ### Picture Uploads ###
-  $('.gross_or_tare_picture_button').on 'click', ->
+  $(document).on 'click', '.gross_or_tare_picture_button', ->
     event_code = $(this).data( "event-code" )
     item_id = $(this).data( "item-id" )
     item_name = $(this).data( "item-name" )
