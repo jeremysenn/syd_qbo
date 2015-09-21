@@ -123,7 +123,7 @@ jQuery ->
 
     $('#image_file_event_code').val event_code
     $('#image_file_tare_seq_nbr').val item_id
-    $('#image_file_cmdy_name').val item_name
+    $('#image_file_commodity_name').val item_name
     $('#image_file_weight').val weight
 
     $('input[type=file]').trigger 'click'

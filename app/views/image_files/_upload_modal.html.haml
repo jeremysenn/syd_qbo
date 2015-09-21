@@ -9,6 +9,8 @@
         .modal-body
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :location, value: session[:realm_id]
+          = f.hidden_field :customer_number, value: @vendor.id unless @vendor.blank?
+          = f.hidden_field :customer_name, value: @vendor.display_name unless @vendor.blank?
           = f.hidden_field :tare_seq_nbr
           = f.hidden_field :commodity_name
           = f.hidden_field :weight
