@@ -137,11 +137,11 @@ class ImageFileUploader < CarrierWave::Uploader::Base
     end
     
     def not_signature?(file)
-      return model.event_code != "SIG"
+      return model.event_code != "Signature"
     end
     
     def should_process_caption?(file)
-      model.class.name == "ImageFile" or model.class.name == "ShipmentFile"
+      (model.class.name == "ImageFile" or model.class.name == "ShipmentFile") and model.event_code != "Signature"
     end
 
 end
