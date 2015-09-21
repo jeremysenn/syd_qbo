@@ -62,7 +62,7 @@ class ImageFileUploader < CarrierWave::Uploader::Base
     end
 
     # lower captions
-    unless model.cmdy_name.blank?
+    unless model.commodity_name.blank?
       manipulate! do |source|
         txt = Magick::Draw.new
         txt.pointsize = 20
@@ -71,7 +71,7 @@ class ImageFileUploader < CarrierWave::Uploader::Base
         txt.stroke = "#000000"
         txt.fill = "#F3F315"
         txt.font_weight = Magick::BoldWeight
-        name = "#{model.cmdy_name}"
+        name = "#{model.commodity_name}"
         source.annotate(txt, 0, 0, 0, 20, name)
       end
     end

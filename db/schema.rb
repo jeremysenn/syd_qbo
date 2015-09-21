@@ -78,8 +78,11 @@ ActiveRecord::Schema.define(version: 20150917192041) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tare_seq_nbr"
-    t.string   "cmdy_name"
+    t.string   "commodity_name"
     t.decimal  "weight"
+    t.string   "customer_name"
+    t.string   "tag_number"
+    t.string   "vin_number"
   end
 
   create_table "licenses", force: true do |t|

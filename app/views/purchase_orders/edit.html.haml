@@ -125,7 +125,7 @@
               .col-xs-12.col-sm-2.col-md-2.col-lg-2
                 %div.thumbnail
                   - unless image.hidden?
-                    = image_tag(show_preview_image_image_path(image))
+                    = link_to image_tag(show_preview_image_image_path(image)), image, target: '_blank'
 
 =# render partial: "image_files/upload_form", locals: {event_code: "Gross"}
 = render partial: "shared/purchase_order_footer_navbar", locals: {title: "Purchase Order"}
