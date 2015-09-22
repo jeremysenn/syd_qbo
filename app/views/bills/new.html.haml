@@ -24,9 +24,15 @@
                 = label_tag "Item", nil, :class => 'control-label'
                 = select_tag "bill[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = label_tag "Gross", nil, :class => 'control-label'
-                = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                - unless line_item.description.blank?
+                  = text_field_tag "bill[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                - else
+                  = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
                 = label_tag "Tare", nil, :class => 'control-label'
-                = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                - unless line_item.description.blank?
+                  = text_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                - else
+                  = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
                 = label_tag "Load", nil, :class => 'control-label'
                 = text_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
                 = label_tag "Rate", nil, :class => 'control-label'
