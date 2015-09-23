@@ -26,8 +26,9 @@
       intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
 
     -# if user_signed_in? && !session[:token]
-    - if user_signed_in? && current_user.qbo_access_credential.blank?
-      intuit.ipp.anywhere.directConnectToIntuit();
+    -# 
+      - if user_signed_in? && current_user.qbo_access_credential.blank?
+        intuit.ipp.anywhere.directConnectToIntuit();
     </script>
 
     -#
