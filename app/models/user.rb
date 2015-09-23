@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :image_files
   has_many :shipment_files
   has_one :user_setting
+  has_one :qbo_access_credential
   
   after_commit :create_user_settings, :on => :create
   

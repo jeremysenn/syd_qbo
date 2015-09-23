@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917192041) do
+ActiveRecord::Schema.define(version: 20150923183043) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -87,6 +87,17 @@ ActiveRecord::Schema.define(version: 20150917192041) do
 
   create_table "licenses", force: true do |t|
     t.boolean "license_valid", default: true
+  end
+
+  create_table "qbo_access_credentials", force: true do |t|
+    t.integer  "user_id"
+    t.string   "access_token"
+    t.string   "access_secret"
+    t.string   "company_id"
+    t.datetime "token_expires_at"
+    t.datetime "reconnect_token_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "shipment_files", force: true do |t|

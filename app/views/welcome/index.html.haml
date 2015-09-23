@@ -3,14 +3,17 @@
   .jumbotron{style: 'background-color: #FFFFFF;'}
     .container
       %h2.text-center
-        - if user_signed_in? && session[:token]
+        -# if user_signed_in? && session[:token]
+        - if user_signed_in? and not @company_info.blank?
           %p= @company_info.company_name
         <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
 
         <script>
-        intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
-        - if user_signed_in? && !session[:token]
-          intuit.ipp.anywhere.directConnectToIntuit();
+        - if current_user and current_user.qbo_access_credential.blank?
+          intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
+        -#
+          - if user_signed_in? && !session[:token]
+            intuit.ipp.anywhere.directConnectToIntuit();
         </script>
         
         -#
@@ -28,7 +31,8 @@
             intuit.ipp.anywhere.directConnectToIntuit();
           </script>
         
-        - unless session[:token]
+        -# unless session[:token]
+        - if user_signed_in? && current_user.qbo_access_credential.blank?
           %i.fa.fa-spinner.fa-spin
           = "Connecting to Quickbooks ..."
           -#

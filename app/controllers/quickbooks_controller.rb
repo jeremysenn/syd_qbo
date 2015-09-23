@@ -9,9 +9,11 @@ class QuickbooksController < ApplicationController
 
   def oauth_callback
     quickbooks_authentication = Marshal.load(session[:qb_request_token]).get_access_token(:oauth_verifier => params[:oauth_verifier])
-    session[:token] = quickbooks_authentication.token
-    session[:secret] = quickbooks_authentication.secret
-    session[:realm_id] = params['realmId']
+#    session[:token] = quickbooks_authentication.token
+#    session[:secret] = quickbooks_authentication.secret
+#    session[:realm_id] = params['realmId']
+    QboAccessCredential.create(user_id: current_user.id, access_token: quickbooks_authentication.token, 
+      access_secret: quickbooks_authentication.secret, company_id: params['realmId'])
     
     # If current_user doesn't have a location (company_id), then set it with params['realmId'] (the QB company ID)
     if current_user.location.blank?

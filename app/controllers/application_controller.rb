@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   
   private
   def current_company_id
-    session[:realm_id]
+    session[:realm_id] ||= current_user.location
   end
   helper_method :current_company_id
   

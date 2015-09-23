@@ -1,7 +1,8 @@
 class VendorsController < ApplicationController
   before_filter :authenticate_user!
 #  load_and_authorize_resource
-
+  
+  before_action :set_oauth_client
   before_action :set_vendor_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_vendor, only: [:show, :edit, :update, :update_qb, :destroy]
 
@@ -137,10 +138,14 @@ class VendorsController < ApplicationController
   end
   
   private
+    def set_oauth_client
+      @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret)
+    end
+  
     def set_vendor_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @vendor_service = Quickbooks::Service::Vendor.new
-      @vendor_service.access_token = oauth_client
+      @vendor_service.access_token = @oauth_client
       @vendor_service.company_id = current_company_id
     end
   

@@ -2,6 +2,7 @@ class BillsController < ApplicationController
   before_filter :authenticate_user!
 #  load_and_authorize_resource
 
+  before_action :set_oauth_client
   before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
@@ -194,17 +195,21 @@ class BillsController < ApplicationController
   end
   
   private
+    def set_oauth_client
+      @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret)
+    end
+  
     def set_bill_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @bill_service = Quickbooks::Service::Bill.new
-      @bill_service.access_token = oauth_client
+      @bill_service.access_token = @oauth_client
       @bill_service.company_id = current_company_id
     end
     
     def set_vendor_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @vendor_service = Quickbooks::Service::Vendor.new
-      @vendor_service.access_token = oauth_client
+      @vendor_service.access_token = @oauth_client
       @vendor_service.company_id = current_company_id
     end
     
@@ -216,30 +221,30 @@ class BillsController < ApplicationController
     end
     
     def set_purchase_order_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @purchase_order_service = Quickbooks::Service::PurchaseOrder.new
-      @purchase_order_service.access_token = oauth_client
+      @purchase_order_service.access_token = @oauth_client
       @purchase_order_service.company_id = current_company_id
     end
     
     def set_bill_payment_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @bill_payment_service = Quickbooks::Service::Bill.new
-      @bill_payment_service.access_token = oauth_client
+      @bill_payment_service.access_token = @oauth_client
       @bill_payment_service.company_id = current_company_id
     end
     
     def set_account_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @account_service = Quickbooks::Service::Account.new
-      @account_service.access_token = oauth_client
+      @account_service.access_token = @oauth_client
       @account_service.company_id = current_company_id
     end
     
     def set_company_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @company_info_service = Quickbooks::Service::CompanyInfo.new
-      @company_info_service.access_token = oauth_client
+      @company_info_service.access_token = @oauth_client
       @company_info_service.company_id = current_company_id
       @company_info = @company_info_service.fetch_by_id(current_company_id)
     end
