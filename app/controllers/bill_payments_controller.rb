@@ -38,7 +38,7 @@ class BillPaymentsController < ApplicationController
       end
     end
     
-    #@images = Image.where(ticket_nbr: @doc_number)
+    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
   end
 
   # GET /bill_payments/new
