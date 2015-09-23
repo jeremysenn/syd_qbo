@@ -13,11 +13,33 @@
       %a{class: 'navbar-brand', :href => root_path}
         = image_tag('syd_logo_20x37.png')
     .collapse.navbar-collapse
-      -#
-        %ul.nav.navbar-nav
-          %li{:class => params[:controller] == "images" ? "active" : ""}
-            %a{href: images_path}
-              Tickets
+      %ul.nav.navbar-nav
+        %li.dropdown{:class => (params[:controller] == "purchase_orders" or params[:controller] == "bills") ? "active" : ""}
+          %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+            Tickets
+            %b.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: new_purchase_order_path} New Ticket
+            %li
+              %a{href: purchase_orders_path} Open Tickets
+            %li
+              %a{href: bills_path} Closed Tickets
+        %li{:class => params[:controller] == "bill_payments" ? "active" : ""}
+          %a{href: bill_payments_path}
+            Payments
+        %li.dropdown{:class => (params[:controller] == "vendors") ? "active" : ""}
+          %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+            Vendors
+            %b.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: new_vendor_path} New Vendor
+            %li
+              %a{href: vendors_path} All Vendors
+        %li{:class => params[:controller] == "items" ? "active" : ""}
+          %a{href: items_path}
+            Items
       %ul.nav.navbar-nav.navbar-right
         %li= link_to "<strong>#{current_user.email}</strong>".html_safe, edit_user_registration_path(current_user)
         %li= link_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out?' }
