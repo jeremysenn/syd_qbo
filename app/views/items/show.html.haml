@@ -1,28 +1,20 @@
-= render partial: "shared/search_navbar", locals: {title: "#{truncate(@qb_vendor.display_name, length: 10)}"}
--#
-  .container
-%div.row
-  -#
-    .col-xs-12.col-sm-6.col-md-offset-3
+.container
   %div.panel.panel-default
     %div.list_group
       %div.list-group-item
         %strong= "Name:"
         .pull-right
-          = @qb_vendor.display_name
+          = @item.name
       %div.list-group-item
-        %strong= "Email:"
+        %strong= "Unit Price:"
         .pull-right
-          = mail_to @qb_vendor.primary_email_address.address unless @qb_vendor.primary_email_address.blank?
+          = number_to_currency(@item.unit_price) unless @item.unit_price.blank?
       %div.list-group-item
-        %strong= "Phone:"
+        %strong= "Purchase Cost:"
         .pull-right
-          = @qb_vendor.mobile_phone.free_form_number unless @qb_vendor.mobile_phone.blank?
-      %div.list-group-item
-        %strong= "Balance:"
-        .pull-right
-          = number_to_currency(@qb_vendor.balance)
+          = number_to_currency(@item.purchase_cost) unless @item.purchase_cost.blank?
   %div.row
     .col-xs-12.col-sm-12.col-md-12
-      = link_to "Edit Vendor", edit_vendor_path(@qb_vendor.id), class: 'btn btn-primary btn-lg btn-block'
+      = link_to "Edit Item", edit_item_path(@item.id), class: 'btn btn-primary btn-lg btn-block'
+
 = render partial: "shared/footer_navbar", locals: {title: "Vendor"}

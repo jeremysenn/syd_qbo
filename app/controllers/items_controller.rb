@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
       format.html {}
 #      format.json { render json: @item.unit_price }
 #      format.json {render json: {"name" => @item.name, "description" => @item.description, "unit_price" => @item.unit_price} } 
-      format.json {render json: {"name" => @item.name, "description" => @item.description, "unit_price" => @item.purchase_cost} } 
+      format.json {render json: {"name" => @item.name, "description" => @item.description, "purchase_cost" => @item.purchase_cost, "unit_price" => @item.unit_price} } 
     end
   end
 

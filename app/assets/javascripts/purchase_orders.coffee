@@ -52,7 +52,7 @@ jQuery ->
     $.ajax(url: "/items/" + item_id, dataType: 'json').done (data) ->
       name = data.name
       description = data.description
-      rate = parseFloat(data.unit_price).toFixed(2)
+      rate = parseFloat(data.purchase_cost).toFixed(2)
       quantity = 0
       input_select.closest('.panel').find('.panel-footer').text ''
       input_select.closest('.panel').find('.line_item_name').text name + ' (' + description + ')'
