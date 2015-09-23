@@ -13,6 +13,11 @@ class QuickbooksController < ApplicationController
     session[:secret] = quickbooks_authentication.secret
     session[:realm_id] = params['realmId']
     
+    # If current_user doesn't have a location (company_id), then set it with params['realmId'] (the QB company ID)
+    if current_user.location.blank?
+      current_user.update_attribute(:location, params['realmId'])
+    end
+    
     
     ### Set Rails.cache for Quickbooks Vendors and Items ###
     oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])

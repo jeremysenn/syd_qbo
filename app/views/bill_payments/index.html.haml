@@ -74,4 +74,4 @@
         %p= link_to 'Load more ...', bill_payments_path(:page => @bill_payments.next_page), :class => 'load-more-bill-payments btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @bill_payments.next_page
 
 
-= render partial: "shared/footer_navbar", locals: {title: "BillPayment"}
+= render partial: "shared/bill_payments_footer_navbar", locals: {title: "BillPayment"}

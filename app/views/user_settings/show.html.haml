@@ -17,19 +17,19 @@
               = "#{@user_setting.table_name}"
           %div.list-group-item
             = link_to "Edit", edit_user_setting_path(@user_setting), class: 'btn btn-primary btn-lg btn-block'
-
-  %div.row
-    .col-xs-12.col-sm-6.col-md-offset-3
-      %div.panel.panel-default
-        %div.panel-heading
-          Event Codes
-        %div.list_group
-          - @lookup_defs.each do |lookup_def|
+  -#
+    %div.row
+      .col-xs-12.col-sm-6.col-md-offset-3
+        %div.panel.panel-default
+          %div.panel-heading
+            Event Codes
+          %div.list_group
+            - @lookup_defs.each do |lookup_def|
+              %div.list-group-item
+                %strong= lookup_def.LookupValue
+                .pull-right
+                  = lookup_def.tableName
             %div.list-group-item
-              %strong= lookup_def.LookupValue
-              .pull-right
-                = lookup_def.tableName
-          %div.list-group-item
-            = link_to "New", new_lookup_def_path, class: 'btn btn-primary btn-lg btn-block'
+              = link_to "New", new_lookup_def_path, class: 'btn btn-primary btn-lg btn-block'
 
 = render partial: "shared/footer_navbar", locals: {title: "Settings"}
