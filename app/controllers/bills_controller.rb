@@ -214,9 +214,9 @@ class BillsController < ApplicationController
     end
     
     def set_item_service
-      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @item_service = Quickbooks::Service::Item.new
-      @item_service.access_token = oauth_client
+      @item_service.access_token = @oauth_client
       @item_service.company_id = current_company_id
     end
     
