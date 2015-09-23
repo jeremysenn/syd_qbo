@@ -25,7 +25,7 @@ class QuickbooksController < ApplicationController
     oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
     @vendor_service = Quickbooks::Service::Vendor.new
     @vendor_service.access_token = oauth_client
-    @vendor_service.company_id = session[:realm_id]
+    @vendor_service.company_id = current_company_id
     
     vendors = @vendor_service.query(nil, :per_page => 1000)
     Rails.cache.delete("all_vendors")
@@ -33,7 +33,7 @@ class QuickbooksController < ApplicationController
     
     @item_service = Quickbooks::Service::Item.new
     @item_service.access_token = oauth_client
-    @item_service.company_id = session[:realm_id]
+    @item_service.company_id = current_company_id
     
     items = @item_service.query(nil, :per_page => 1000)
     Rails.cache.delete("all_items")

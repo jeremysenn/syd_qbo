@@ -73,7 +73,7 @@ class PurchaseOrdersController < ApplicationController
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
     @doc_number = @purchase_order.doc_number
-    @contract = Contract.find(session[:realm_id]) # Find contract for this company
+    @contract = Contract.find(current_company_id) # Find contract for this company
     
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)

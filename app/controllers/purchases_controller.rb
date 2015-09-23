@@ -122,14 +122,14 @@ class PurchasesController < ApplicationController
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @purchase_service = Quickbooks::Service::Purchase.new
       @purchase_service.access_token = oauth_client
-      @purchase_service.company_id = session[:realm_id]
+      @purchase_service.company_id = current_company_id
     end
     
     def set_vendor_service
       oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
       @vendor_service = Quickbooks::Service::Vendor.new
       @vendor_service.access_token = oauth_client
-      @vendor_service.company_id = session[:realm_id]
+      @vendor_service.company_id = current_company_id
     end
   
     # Use callbacks to share common setup or constraints between actions.
