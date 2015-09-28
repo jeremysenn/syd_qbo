@@ -15,30 +15,72 @@
         %div.panel-footer
           %a{href: '#', id: "edit_vendor_link", target: '_blank'}
     %div.purchase_order_input_fields_wrap
-      .panel.panel-default{style: "display:block;"}
-        .panel-body
-          = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
-          .row.form-group.calculation_fields
-            %div{:class => "col-sm-12 col-md-12"}
-              = hidden_field_tag "purchase_order[po_status]", "Open"
-              =# label_tag "Item", nil, :class => 'control-label'
+      #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+        .panel.panel-default
+          %div.panel-heading{:role => "tab", id: "heading1"}
+            %h4.panel-title
+              %a.line_item_name{"aria-controls" => "collapse1", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_1", :role => "button"}
+                Choose an item*
+              = hidden_field_tag :item_description, nil
+              %a{href: '#', class: 'remove_field pull-right'}
+                %i.fa.fa-trash
+          %div.panel-collapse{id: "collapse_1", "aria-labelledby" => "headingitem", :role => "tabpanel", class: "collapse in"}
+            .panel-body
+              = label_tag "Item", nil, :class => 'control-label'
               = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"
-              =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"#, onchange: "this.form.submit();"
-              =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-              =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| [item.name, item.id, { data: {description: "#{@item_service.fetch_by_id(item.id).description}", rate: "#{@item_service.fetch_by_id(item.id).purchase_cost}"} }] }), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-              =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-              =# label_tag "Description", nil, :class => 'control-label'
-              =# text_field_tag "purchase_order[line_items][][description]", nil, :placeholder => "Description", class: "form-control input-lg", readonly: true
-              =# label_tag "Gross", nil, :class => 'control-label'
-              = hidden_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
-              =# label_tag "Tare", nil, :class => 'control-label'
-              = hidden_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
-              =# label_tag "Load", nil, :class => 'control-label'
-              = hidden_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", readonly: true
-              =# label_tag "Rate", nil, :class => 'control-label'
-              = hidden_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field"
-              =# label_tag "Amount", nil, :class => 'control-label'
-              = hidden_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true
+              %div{id: "initial_input_fields", style: "display:none;"}
+                = label_tag "Gross", nil, :class => 'control-label'
+                %div.input-group
+                  = phone_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
+                  %span.input-group-addon
+                    %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-weight' => 0}
+                      %i.fa.fa-camera.fa-lg
+                = label_tag "Tare", nil, :class => 'control-label'
+                %div.input-group
+                  = phone_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
+                  %span.input-group-addon
+                    %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-weight' => 0}
+                      %i.fa.fa-camera.fa-lg
+                = label_tag "Net", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
+                = label_tag "Rate", nil, :class => 'control-label'
+                %div.input-group
+                  %span.input-group-addon
+                    $
+                  = text_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+                = label_tag "Amount", nil, :class => 'control-label'
+                %div.input-group
+                  %span.input-group-addon
+                    $
+                  = text_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
+          %div.panel-footer
+
+    -#
+      %div.purchase_order_input_fields_wrap
+        .panel.panel-default{style: "display:block;"}
+          .panel-body
+            = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
+            .row.form-group.calculation_fields
+              %div{:class => "col-sm-12 col-md-12"}
+                = hidden_field_tag "purchase_order[po_status]", "Open"
+                =# label_tag "Item", nil, :class => 'control-label'
+                = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"
+                =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"#, onchange: "this.form.submit();"
+                =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| [item.name, item.id, { data: {description: "#{@item_service.fetch_by_id(item.id).description}", rate: "#{@item_service.fetch_by_id(item.id).purchase_cost}"} }] }), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                =# label_tag "Description", nil, :class => 'control-label'
+                =# text_field_tag "purchase_order[line_items][][description]", nil, :placeholder => "Description", class: "form-control input-lg", readonly: true
+                = label_tag "Gross", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Tare", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                = label_tag "Load", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", readonly: true
+                = label_tag "Rate", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field"
+                =# label_tag "Amount", nil, :class => 'control-label'
+                = text_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true
     -#
       .col-sm-6.col-md-4.col-md-offset-4
       %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
@@ -51,6 +93,6 @@
       %div{:class => "col-sm-12 col-md-12"}
         -#
           = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
-        = button_tag(style: 'display:none;', id: 'next_button', :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Next"}, autocomplete: "off") do
+        = button_tag(style: 'display:none;', id: 'next_button', :type => 'submit', remote: true, :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Next"}, autocomplete: "off") do
           Next
 = render partial: "shared/new_purchase_order_footer_navbar", locals: {title: "Purchase Order"}

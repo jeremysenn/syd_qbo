@@ -26,7 +26,8 @@
           = text_field_tag "vendor[billing_address][city]", nil, :placeholder => "City", class: "form-control input-lg" #, required: true
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "State", nil, :class => 'control-label'
-          = text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg" #, required: true
+          = select_tag "vendor[billing_address][country_sub_division_code]", options_for_select(us_states), :class => "form-control input-lg"
+          =# text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg" #, required: true
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Zipcode", nil, :class => 'control-label'
           = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg" #, required: true

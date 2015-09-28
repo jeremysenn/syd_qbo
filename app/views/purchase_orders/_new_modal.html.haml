@@ -14,7 +14,7 @@
                     Vendor
               #collapseVendor.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
                 .panel-body
-                  = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.panel').show();"
+                  = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), class: "form-control input-lg", required: true, onchange: "$('.panel').show();"
               %div.panel-footer
                 %a{href: '#', id: "edit_vendor_link", target: '_blank'}
           -#
@@ -24,22 +24,25 @@
                 = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), nil), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.item').show();"
                 %a{href: '#', id: "edit_vendor_link", target: '_blank'}
           %div.purchase_order_input_fields_wrap
-            .panel.panel-default{style: "display:none;"}
+            .panel.panel-default{style: "display:block;"}
               .panel-body
                 = link_to "Show", '#', onclick: "$(this).next().fadeToggle();", style: "display:none;", class: "toggle_link"
                 .row.form-group.calculation_fields
                   %div{:class => "col-sm-12 col-md-12"}
                     = hidden_field_tag "purchase_order[po_status]", "Open"
                     = label_tag "Item", nil, :class => 'control-label'
-                    = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
+                    = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
                     = hidden_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
                     = hidden_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
                     = hidden_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", readonly: true
                     = hidden_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field"
                     = hidden_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true
-        
-        .modal-footer{style: 'display:none;'}
-          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Next"}, autocomplete: "off") do
+
+        .modal-footer{style: 'display:block;'}
+          = button_tag(:type => 'submit', id: 'new_purchase_order_form_submit_button', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Next"}, autocomplete: "off") do
             Next
           -#
             %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} Done
+
+:javascript
+  $(function(){ $('.item_select').trigger('change'); });

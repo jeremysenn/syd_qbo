@@ -33,9 +33,11 @@
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "State", nil, :class => 'control-label'
           - unless @vendor.billing_address.blank?
-            = text_field_tag "vendor[billing_address][country_sub_division_code]", @vendor.billing_address.country_sub_division_code, :placeholder => "State", class: "form-control input-lg", required: true
+            = select_tag "vendor[billing_address][country_sub_division_code]", options_for_select(us_states, @vendor.billing_address.country_sub_division_code), :class => "form-control input-lg"
+            =# text_field_tag "vendor[billing_address][country_sub_division_code]", @vendor.billing_address.country_sub_division_code, :placeholder => "State", class: "form-control input-lg", required: true
           - else
-            = text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg", required: true
+            = select_tag "vendor[billing_address][country_sub_division_code]", options_for_select(us_states), :class => "form-control input-lg"
+            =# text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg", required: true
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Zipcode", nil, :class => 'control-label'
           - unless @vendor.billing_address.blank?
