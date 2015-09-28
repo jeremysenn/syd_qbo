@@ -13,9 +13,19 @@ class QboAccessCredential < ActiveRecord::Base
     self.reconnect_token_at = 5.months.from_now
   end
   
+  def ready_to_expire?
+    reconnect_token_at < Date.today
+  end
+  
   #############################
   #     Class Methods      #
   #############################
+  
+  def self.remove_expired_token_credentials
+    QboAccessCredential.select{|q| (q.ready_to_expire?)}.each do |qbo_access_credential|
+      qbo_access_credential.destroy
+    end
+  end
   
 end
 

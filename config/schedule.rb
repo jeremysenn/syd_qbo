@@ -37,3 +37,7 @@ end
 #every 1.day, :at => '4:30 am' do
 #  runner "License.dog_license_check"
 #end
+
+every 1.day, :at => '4:30 am' do
+  runner "QboAccessCredential.remove_expired_token_credentials"
+end
