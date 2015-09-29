@@ -11,7 +11,9 @@
             %i.fa.fa-camera.fa-lg
             = "Pictures" unless mobile_device?
         .col-xs-4.col-sm-4
-          %a{href: new_purchase_order_path(vendor_id: @vendor.id)}
+          -#
+            %a{href: new_purchase_order_path(vendor_id: @vendor.id)}
+          %a{href: '#', id: 'new_ticket_navbar_link', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Ticket"}}
             %i.fa.fa-plus.fa-lg
             Ticket
           -#
@@ -20,3 +22,4 @@
               = "Today" unless mobile_device?
 
 = render partial: "cust_pic_files/upload_modal"
+= render partial: "purchase_orders/new_modal"

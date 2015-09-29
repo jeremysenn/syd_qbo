@@ -122,7 +122,7 @@ class PurchaseOrdersController < ApplicationController
 
   def update_qb
     @purchase_order.vendor_id = purchase_order_params[:vendor]
-    @purchase_order.po_status = purchase_order_params[:po_status]
+#    @purchase_order.po_status = purchase_order_params[:po_status]
     @purchase_order.line_items.clear
     
     purchase_order_params[:line_items].each do |line_item|
