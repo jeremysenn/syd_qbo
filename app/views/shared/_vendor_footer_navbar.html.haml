@@ -15,7 +15,7 @@
             %a{href: new_purchase_order_path(vendor_id: @vendor.id)}
           %a{href: '#', id: 'new_ticket_navbar_link', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Ticket"}}
             %i.fa.fa-plus.fa-lg
-            Ticket
+            = "Ticket" unless mobile_device?
           -#
             %a{href: "#{current_user.images_table? ? images_path(today: true) : shipments_path(today: true)}"}
               %i.fa.fa-calendar-o.fa-lg

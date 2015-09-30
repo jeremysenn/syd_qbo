@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery.maskedinput
-//= require jquery-ui
 //= require jquery_ujs
 //= require twbs/bootstrap
 //= require turbolinks
