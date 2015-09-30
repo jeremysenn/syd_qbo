@@ -8,6 +8,9 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
-          %a{href: edit_vendor_path(purchase_order_id)}
-            %i.fa.fa-edit.fa-lg
-            = "Edit" unless mobile_device?
+          %a{href: '#', id: 'new_ticket_navbar_link'}
+            %i.fa.fa-plus.fa-lg
+            = "Ticket" unless mobile_device?
+
+= render partial: "purchase_orders/new_modal"
+          
