@@ -8,6 +8,6 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
-          %a{href: edit_vendor_path(purchase_order_id)}
+          %a{href: edit_vendor_path(purchase_order_id), data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"}}
             %i.fa.fa-edit.fa-lg
             = "Edit" unless mobile_device?
