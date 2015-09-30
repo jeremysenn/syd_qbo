@@ -10,4 +10,5 @@ jQuery ->
     $.rails.enableElement $('#welcome_to_closed')
     $.rails.enableElement $('#welcome_to_paid')
     $.rails.enableElement $('#welcome_to_search_pictures')
+    $.rails.enableElement $('#welcome_to_vendors')
     return

@@ -40,23 +40,22 @@
             <!-- this will display a button that the user clicks to start the flow -->
             <ipp:connectToIntuit></ipp:connectToIntuit>
         - else
+          %p
+            %a.btn.btn-primary.btn-lg.btn-block{:href => vendors_path,  id: 'welcome_to_vendors', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}} Vendors
           -#
             %p
-              %a.btn.btn-primary.btn-lg.btn-block{:href => vendors_path, :role => "button"} Vendors
-          %p
-            =# link_to "New Ticket", new_purchase_order_path, :class => "btn btn-primary btn-lg btn-block", id: 'welcome_to_new_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> New Ticket..."}
-            %a{href: '#', id: 'new_ticket_navbar_link', :class => "btn btn-primary btn-lg btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> New Ticket"}}
-              New Ticket
-          %p= link_to "Open Tickets", purchase_orders_path, :class => "btn btn-warning btn-lg btn-block", id: 'welcome_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open Tickets..."}
-          %p= link_to "Closed Tickets", bills_path, :class => "btn btn-success btn-lg btn-block", id: 'welcome_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed Tickets..."}
-          %p= link_to "Payments", bill_payments_path, :class => "btn btn-info btn-lg btn-block", id: 'welcome_to_paid', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Payments..."}
-          %p= link_to "Search Pictures", "#{current_user.images_table? ? images_path : shipments_path}", :class => "btn btn-default btn-lg btn-block", id: 'welcome_to_search_pictures', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Search Pictures..."}
-          %p
-            %a{href: "https://sandbox.qbo.intuit.com/app/homepage", :class => "btn btn-primary btn-lg btn-block", target: '_blank'}
-              = image_tag('qb_logo_small.png', class: 'img-responsive center-block')
+              =# link_to "New Ticket", new_purchase_order_path, :class => "btn btn-primary btn-lg btn-block", id: 'welcome_to_new_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> New Ticket..."}
+              %a{href: '#', id: 'new_ticket_navbar_link', :class => "btn btn-primary btn-lg btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> New Ticket"}}
+                New Ticket
+            %p= link_to "Open Tickets", purchase_orders_path, :class => "btn btn-warning btn-lg btn-block", id: 'welcome_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open Tickets..."}
+            %p= link_to "Closed Tickets", bills_path, :class => "btn btn-success btn-lg btn-block", id: 'welcome_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed Tickets..."}
+            %p= link_to "Payments", bill_payments_path, :class => "btn btn-info btn-lg btn-block", id: 'welcome_to_paid', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Payments..."}
+            %p
+              %a{href: "https://sandbox.qbo.intuit.com/app/homepage", :class => "btn btn-primary btn-lg btn-block", target: '_blank'}
+                = image_tag('qb_logo_small.png', class: 'img-responsive center-block')
 
   = render partial: "shared/home_footer_navbar", locals: {title: "Welcome"} if current_user.active? and License.valid?
-  = render partial: "purchase_orders/new_modal"
+  =# render partial: "purchase_orders/new_modal"
 
 - else
   .jumbotron

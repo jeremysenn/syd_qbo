@@ -101,6 +101,7 @@ jQuery ->
   $(document).on 'page:change', ->
     $.rails.enableElement $('#purchase_orders_to_closed')
     $.rails.enableElement $('#purchase_orders_to_paid')
+    $.rails.enableElement $('#purchase_orders_to_vendors')
     return
 
   ### Start endless page stuff ###

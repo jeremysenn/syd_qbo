@@ -4,7 +4,7 @@ class PurchaseOrdersController < ApplicationController
 
   before_action :set_oauth_client
   before_action :set_purchase_order_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
-  before_action :set_vendor_service, only: [:show, :new, :create, :edit, :update]
+  before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
   before_action :set_bill_service, only: [:show]
   before_action :set_company_service, only: [:show]
@@ -14,6 +14,7 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders
   # GET /purchase_orders.json
   def index
+    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     query = "Select * From PurchaseOrder Where TxnDate>'#{1.day.ago.strftime("%Y-%m-%d")}'"
     @open_purchase_orders = @purchase_order_service.query(query).entries.find_all{ |e| e.po_status == 'Open' }
@@ -70,7 +71,7 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders/1/edit
   def edit
-#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
     @doc_number = @purchase_order.doc_number
     @contract = Contract.find(current_company_id) # Find contract for this company

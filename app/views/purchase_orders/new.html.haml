@@ -10,8 +10,9 @@
               Vendor
         #collapseVendor.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
           .panel-body
-            = select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), params[:vendor_id]), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
+            =# select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), params[:vendor_id]), prompt: "Choose a vendor", class: "form-control input-lg", required: true, onchange: "$('.well').show();"
             =# select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+            = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", params[:vendor_id]), prompt: "Choose a vendor", class: "form-control input-lg", required: true
         %div.panel-footer
           %a{href: '#', id: "edit_vendor_link", target: '_blank'}
     %div.purchase_order_input_fields_wrap

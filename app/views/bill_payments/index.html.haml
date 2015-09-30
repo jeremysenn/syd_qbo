@@ -1,4 +1,5 @@
 = render partial: "shared/navbars/bill_payments_navbar", locals: {title: "Paid"}
+- @title="Paid" 
 
 .container
   %p
@@ -7,6 +8,7 @@
       = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'payments_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
       %button{class: 'btn btn-default btn-lg active'}
         Paid
+      = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg", id: 'payments_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
   - if @bill_payments.blank?
     .jumbotron
       %p.text-center No payments found

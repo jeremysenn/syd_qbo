@@ -23,18 +23,17 @@ class QuickbooksController < ApplicationController
     
     ### Set Rails.cache for Quickbooks Vendors and Items ###
     oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
-    @vendor_service = Quickbooks::Service::Vendor.new
-    @vendor_service.access_token = oauth_client
-    @vendor_service.company_id = current_company_id
     
-    vendors = @vendor_service.query(nil, :per_page => 1000)
-    Rails.cache.delete("all_vendors")
-    Rails.cache.fetch("all_vendors") {Hash[vendors.map{ |v| [v.display_name,v.id] }]}
+#    @vendor_service = Quickbooks::Service::Vendor.new
+#    @vendor_service.access_token = oauth_client
+#    @vendor_service.company_id = current_company_id
+#    vendors = @vendor_service.query(nil, :per_page => 1000)
+#    Rails.cache.delete("all_vendors")
+#    Rails.cache.fetch("all_vendors") {Hash[vendors.map{ |v| [v.display_name,v.id] }]}
     
     @item_service = Quickbooks::Service::Item.new
     @item_service.access_token = oauth_client
     @item_service.company_id = current_company_id
-    
     items = @item_service.query(nil, :per_page => 1000)
     Rails.cache.delete("all_items")
     Rails.cache.fetch("all_items") {Hash[items.map{ |i| ["#{i.name} (#{i.description})",i.id] }]}

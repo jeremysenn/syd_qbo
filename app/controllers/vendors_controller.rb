@@ -9,14 +9,27 @@ class VendorsController < ApplicationController
   # GET /vendors
   # GET /vendors.json
   def index
-#    @vendors = Vendor.all
-#    @vendors = current_user.vendors
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
+    respond_to do |format|
+      format.html {
+        unless params[:search].blank?
+#          query = "SELECT * FROM Vendor WHERE DisplayName LIKE #{params[:search]};"
+          query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
+          @vendors = @vendor_service.query(query, :per_page => 1000)
+        else
+          @vendors = @vendor_service.query(nil, :per_page => 1000)
+        end
+      }
+      format.json {
+        @vendors = @vendor_service.query(nil, :per_page => 1000)
+        render json: @vendors.map{|v| v.display_name}
+      }
+    end
   end
 
   # GET /vendors/1
   # GET /vendors/1.json
   def show
+    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
 

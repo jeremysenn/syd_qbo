@@ -19,4 +19,5 @@ jQuery ->
   $(document).on 'page:change', ->
     $.rails.enableElement $('#payments_to_open')
     $.rails.enableElement $('#payments_to_closed')
+    $.rails.enableElement $('#payments_to_vendors')
     return

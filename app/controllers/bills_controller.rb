@@ -16,6 +16,7 @@ class BillsController < ApplicationController
   # GET /bills
   # GET /bills.json
   def index
+    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    query = "Select * From Bill Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     query = "Select * From Bill Where TxnDate>'#{1.week.ago.strftime("%Y-%m-%d")}'"
     @open_bills = @bill_service.query(query, :per_page => 30).entries.find_all{ |e| e.balance > 0 }

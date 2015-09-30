@@ -1,4 +1,5 @@
 = render partial: "shared/navbars/show_bill_payment_navbar", locals: {title: "Paid #{@bill_payment.doc_number}", bill_payment_id: @bill_payment.id, total: "#{number_to_currency(@bill_payment.total)}"}
+- @title="Paid #{@bill_payment.doc_number}" 
 
 .container
   %p
@@ -7,6 +8,7 @@
       = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'payments_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
       %button{class: 'btn btn-default btn-lg active'}
         Paid
+      = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg", id: 'payments_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
   #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
     .panel.panel-default
       %div.panel-heading{:role => "tab", id: "vendor_heading"}

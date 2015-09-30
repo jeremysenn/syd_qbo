@@ -36,3 +36,16 @@ jQuery ->
       if data.context
         progress = parseInt(data.loaded / data.total * 100, 10)
         data.context.find('.progress-bar').css('width', progress + '%')
+
+  ### Re-enable disabled_with buttons for back button ###
+  $(document).on 'page:change', ->
+    $.rails.enableElement $('#vendors_to_open')
+    $.rails.enableElement $('#vendors_to_closed')
+    $.rails.enableElement $('#vendors_to_paid')
+    $('.vendor_button').each ->
+      $.rails.enableElement $(this)
+      return
+    return
+
+  #$('#search').autocomplete 
+  #  source: "/vendors"
