@@ -18,6 +18,7 @@ class VendorsController < ApplicationController
         else
           @vendors = @vendor_service.query(nil, :per_page => 1000)
         end
+        @vendors = Kaminari.paginate_array(@vendors.entries).page(params[:page]).per(5)
       }
       format.json {
         @vendors = @vendor_service.query(nil, :per_page => 1000)

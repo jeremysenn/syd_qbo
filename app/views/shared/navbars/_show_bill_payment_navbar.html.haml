@@ -8,7 +8,9 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
-          %a{href: "#new_purchase_order_form", "data-toggle" => "modal", :alt => "new_purchase_order_form"}
+          -#
+            %a{href: "#new_purchase_order_form", "data-toggle" => "modal", :alt => "new_purchase_order_form"}
+          %a{href: vendors_path, data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Ticket"}}
             %i.fa.fa-plus.fa-lg
             = "Ticket" unless mobile_device?
           -#

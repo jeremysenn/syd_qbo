@@ -30,7 +30,7 @@
                   = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
                 = label_tag "Tare", nil, :class => 'control-label'
                 - unless line_item.description.blank?
-                  = text_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                  = text_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
                 - else
                   = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
                 = label_tag "Load", nil, :class => 'control-label'

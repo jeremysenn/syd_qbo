@@ -48,9 +48,9 @@
                       %i.fa.fa-camera.fa-lg
                 = label_tag "Tare", nil, :class => 'control-label'
                 %div.input-group
-                  = phone_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').last, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
+                  = phone_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
                   %span.input-group-addon
-                    %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => line_item.description.split(' - ').last}
+                    %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => line_item.description.split(' - ').second}
                       %i.fa.fa-camera.fa-lg
                 = label_tag "Net", nil, :class => 'control-label'
                 = text_field_tag "purchase_order[line_items][][quantity]", number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0), :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
@@ -65,7 +65,8 @@
                     $
                   = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true 
             %div.panel-footer
-              = "(#{line_item.description}) ="
+              =# "(#{line_item.description}) ="
+              = "(#{line_item.description.split(' - ').first} - #{line_item.description.split(' - ').second}) ="
               = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description}"
               = " x #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
               = "= #{number_to_currency(line_item.amount)}"
