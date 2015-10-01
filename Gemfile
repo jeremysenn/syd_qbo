@@ -98,6 +98,9 @@ gem 'omniauth-openid'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
+# SOAP calls (TUD devices web service calls)
+gem 'savon'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

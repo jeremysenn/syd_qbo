@@ -17,4 +17,4 @@
             = link_to 'Done', '#', onclick: "$(this).hide(); $('#spinner').show(); $('#purchase_order_form').submit();"
 
 - unless params[:controller]=='vendors' and params[:action]=='new'
-  = render partial: "purchase_orders/new_modal"
+  = render partial: "purchase_orders/quick_new_purchase_order"

@@ -15,7 +15,8 @@
               #collapseVendor.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
                 .panel-body
                   =# select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), "#{@vendor.present? ? @vendor.id : nil }"), class: "form-control input-lg", required: true, onchange: "$('.panel').show();"
-                  = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+                  =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+                  = text_field_tag "purchase_order[vendor]", "#{@vendor.present? ? @vendor.id : nil }"
               %div.panel-footer
                 %a{href: '#', id: "edit_vendor_link", target: '_blank'}
           -#
@@ -46,5 +47,4 @@
             %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} Done
 
 :javascript
-  // auto trigger the change so that it pulls the correct rate pricing for the item
   $(function(){ $('.item_select').trigger('change'); });

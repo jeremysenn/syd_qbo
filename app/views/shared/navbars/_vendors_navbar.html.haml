@@ -9,6 +9,8 @@
           = title
         .col-xs-4.col-sm-4
           -#
-            %a{href: new_vendor_path}
+            %a{href: '#', id: 'new_ticket_navbar_link'}
               %i.fa.fa-plus.fa-lg
-              = "Vendor" unless mobile_device?
+              = "Ticket" unless mobile_device?
+
+= render partial: "purchase_orders/quick_new_purchase_order"

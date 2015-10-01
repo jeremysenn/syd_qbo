@@ -3,9 +3,10 @@
     .navbar-header
       %div{class: 'navbar-brand navbar-center'}
         .col-xs-4.col-sm-4
-          %a{href: "#search_form", "data-toggle" => "modal", :alt => "search_form"}
-            %i.fa.fa-search.fa-lg
-            = "Search" unless mobile_device?
+          -#
+            %a{href: "#search_form", "data-toggle" => "modal", :alt => "search_form"}
+              %i.fa.fa-search.fa-lg
+              = "Search" unless mobile_device?
         .col-xs-4.col-sm-4
           -#
             %a{href: "#upload_form", "data-toggle" => "modal", :alt => "new_image_file_form"}

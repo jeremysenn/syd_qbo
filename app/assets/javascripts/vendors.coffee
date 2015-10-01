@@ -47,5 +47,7 @@ jQuery ->
       return
     return
 
-  #$('#search').autocomplete 
-  #  source: "/vendors"
+  $('.new_ticket_from_vendor').on 'click', ->
+    $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
+    $('#purchase_order_form').submit()
+    return
