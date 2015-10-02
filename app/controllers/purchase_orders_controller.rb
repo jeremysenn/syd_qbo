@@ -16,7 +16,7 @@ class PurchaseOrdersController < ApplicationController
   def index
     @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
-    query = "Select * From PurchaseOrder Where TxnDate>'#{1.day.ago.strftime("%Y-%m-%d")}'"
+    query = "Select * From PurchaseOrder Where TxnDate>'#{1.week.ago.strftime("%Y-%m-%d")}'"
     @open_purchase_orders = @purchase_order_service.query(query).entries.find_all{ |e| e.po_status == 'Open' }
     if @open_purchase_orders.blank? # Get last 10 if none today
       @open_purchase_orders = @purchase_order_service.query(nil, :per_page => 10).entries.find_all{ |e| e.po_status == 'Open' }

@@ -24,6 +24,10 @@ module ApplicationHelper
     ["Photo ID", "Customer Photo", "Certificate", "Finger Print"]
   end
   
+  def units_of_measure
+    ["EA", "LB", "NT", "ST", "GT", "KG", "CW", "MT", "LD"]
+  end
+  
   def us_states
     [
       ['Alabama', 'AL'],

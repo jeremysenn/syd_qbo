@@ -1,0 +1,76 @@
+class TudDevicesController < ApplicationController
+  before_filter :authenticate_user!
+#  load_and_authorize_resource
+
+  # GET /tud_devices
+  # GET /tud_devices.json
+  def index
+#    @tud_devices = TudDevice.all
+    @tud_devices = current_user.tud_devices
+  end
+
+  # GET /tud_devices/1
+  # GET /tud_devices/1.json
+  def show
+  end
+
+  # GET /tud_devices/new
+  def new
+  end
+
+  # GET /tud_devices/1/edit
+  def edit
+  end
+
+  # POST /tud_devices
+  # POST /tud_devices.json
+  def create
+    @tud_device = TudDevice.new(tud_device_params)
+
+    respond_to do |format|
+      if @tud_device.save
+#        format.html { redirect_to images_path, notice: 'Tud device was successfully created.' }
+        format.html { redirect_to @tud_device, notice: 'Tud device was successfully created.' }
+        format.json { render :show, status: :created, location: @tud_device }
+      else
+        format.html { render :new }
+        format.json { render json: @tud_device.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /tud_devices/1
+  # PATCH/PUT /tud_devices/1.json
+  def update
+    respond_to do |format|
+      if @tud_device.update(tud_device_params)
+        format.html { redirect_to @tud_device, notice: 'Tud device was successfully updated.' }
+        format.json { render :show, status: :ok, location: @tud_device }
+      else
+        format.html { render :edit }
+        format.json { render json: @tud_device.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /tud_devices/1
+  # DELETE /tud_devices/1.json
+  def destroy
+    @tud_device.destroy
+    respond_to do |format|
+      format.html { redirect_to tud_devices_url, notice: 'Tud device was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_tud_device
+      @tud_device = TudDevice.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def tud_device_params
+      params.require(:tud_device).permit(:show_thumbnails, :table_name)
+    end
+end
