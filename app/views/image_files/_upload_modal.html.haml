@@ -2,10 +2,9 @@
   = form_for ImageFile.new do |f|
     .modal-dialog.modal-sm
       .modal-content
-        -#
-          .modal-header
-            = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
-            %strong Pictures
+        .modal-header
+          = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
+          %br
         .modal-body
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :location, value: current_company_id
