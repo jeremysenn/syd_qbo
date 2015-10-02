@@ -30,18 +30,21 @@
         .col-xs-12.col-sm-12.col-md-12
           %div.panel.panel-primary
             %div.panel-body{style: "padding: 0;"}
-              %a{href: edit_bill_path(bill.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Please wait..."}}
-                %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
+              %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
+                %a{href: edit_bill_path(bill.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}
                   - if Image.where(ticket_nbr: bill.doc_number, event_code: "Gross").count > 0
                     = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: bill.doc_number, event_code: "Gross").last.id), class: 'img-responsive')
                   - else
-                    = image_tag("no_photo320x240.jpeg", class: 'img-responsive')
-                %div.col-xs-3.col-sm-3.col-md-3.col-lg-3
-                  = bill.doc_number
-                  %br
-                  %small= bill.txn_date.strftime("%m/%d/%y")
-                %div.col-xs-3.col-sm-3.col-md-3.col-lg-3= bill.vendor_ref.name unless bill.vendor_ref.blank?
-                %div.col-xs-3.col-sm-3.col-md-3.col-lg-3= number_to_currency(bill.balance)
+                    %span.fa-stack.fa-3x
+                      %i.fa.fa-ban.fa-stack-2x
+                      %i.fa.fa-camera.fa-stack-1x
+                    =# image_tag("no_photo320x240.jpeg", class: 'img-responsive')
+              %div.col-xs-3.col-sm-3.col-md-3.col-lg-3
+                = bill.doc_number
+                %br
+                %small= bill.txn_date.strftime("%m/%d/%y")
+              %div.col-xs-3.col-sm-3.col-md-3.col-lg-3= bill.vendor_ref.name unless bill.vendor_ref.blank?
+              %div.col-xs-3.col-sm-3.col-md-3.col-lg-3= number_to_currency(bill.balance)
               .pull-right
                 =# link_to "Pay", new_bill_payment_path(bill_id: bill.id), class: 'btn btn-sm btn-primary pay_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay..."}
                 %a.btn.btn-sm.btn-primary{"data-content" => "#{render partial: 'more_bill_options', locals: {bill: bill}}", "data-placement" => 'left', "data-html" => "true", "data-toggle" => "popover", :role => "button", :tabindex => "0", title: "Print or Pay"}

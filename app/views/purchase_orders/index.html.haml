@@ -45,7 +45,6 @@
                 %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
                   %a{href: edit_purchase_order_path(purchase_order.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}
                     =# purchase_order.vendor_ref
-                  
                     - if Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").count > 0
                       = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").last.id), class: 'img-responsive')
                     - else
