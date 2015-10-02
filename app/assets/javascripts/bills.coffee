@@ -118,3 +118,8 @@ jQuery ->
   $ ->
     $('[data-toggle="popover"]').popover()
     return
+
+  $('html').on 'click', (e) ->
+    if typeof $(e.target).data('original-title') == 'undefined' and !$(e.target).parents().is('.popover.in')
+      $('[data-original-title]').popover 'hide'
+    return

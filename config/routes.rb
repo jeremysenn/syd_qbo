@@ -11,7 +11,11 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :items
+  resources :items do
+    member do
+      get :update_qb
+    end
+  end
   
   resources :purchase_orders do
     collection do
