@@ -1,0 +1,10 @@
+$('#vendors').append('<%= j render "vendor" %>');
+$('#spinner').hide();
+
+<% if @vendors.next_page %>
+  $('a.load-more-vendors').show();
+  $('a.load-more-vendors').attr('href', '<%= vendors_path page: @vendors.next_page %>');
+<% else %>
+  $(window).off('scroll');
+  $('a.load-more-vendors').remove();
+<% end %>

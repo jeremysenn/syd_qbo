@@ -47,6 +47,18 @@ jQuery ->
       return
     return
 
+  ### Start endless page stuff ###
+  loading_vendors = false
+  $('a.load-more-vendors').on 'inview', (e, visible) ->
+    return if loading_vendors or not visible
+    loading_vendors = true
+    $('#spinner').show()
+    $('a.load-more-vendors').hide()
+
+    $.getScript $(this).attr('href'), ->
+      loading_vendors = false
+  ### End endless page stuff ###
+
   $('.new_ticket_from_vendor').on 'click', ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()

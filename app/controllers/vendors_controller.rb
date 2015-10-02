@@ -9,19 +9,21 @@ class VendorsController < ApplicationController
   # GET /vendors
   # GET /vendors.json
   def index
+    unless params[:search].blank?
+      #query = "SELECT * FROM Vendor WHERE DisplayName LIKE #{params[:search]};"
+      query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
+      @vendors = @vendor_service.query(query, :per_page => 1000)
+    else
+      @vendors = @vendor_service.query(nil, :per_page => 1000)
+    end
     respond_to do |format|
       format.html {
-        unless params[:search].blank?
-#          query = "SELECT * FROM Vendor WHERE DisplayName LIKE #{params[:search]};"
-          query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
-          @vendors = @vendor_service.query(query, :per_page => 1000)
-        else
-          @vendors = @vendor_service.query(nil, :per_page => 1000)
-        end
+        @vendors = Kaminari.paginate_array(@vendors.entries).page(params[:page]).per(5)
+      }
+      format.js {
         @vendors = Kaminari.paginate_array(@vendors.entries).page(params[:page]).per(5)
       }
       format.json {
-        @vendors = @vendor_service.query(nil, :per_page => 1000)
         render json: @vendors.map{|v| v.display_name}
       }
     end

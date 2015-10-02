@@ -21,43 +21,42 @@
         %span.input-group-btn
           %button.btn.btn-default.btn-lg{:type => "submit", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"}} 
             %i.fa.fa-search
-      
-  - @vendors.each do |vendor|
-    %div.row
-      .col-xs-12.col-sm-12.col-md-12
-        %div.panel.panel-primary
-          %div.panel-body{style: "padding: 0;"}
-            %a{href: vendor_path(vendor.id), class: "vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}
-              - if CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").count > 0
-                %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
-                  = image_tag(show_preview_image_cust_pic_path(CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").last.id), class: 'img-responsive')
-              - else
-                %span.fa-stack.fa-3x
-                  %i.fa.fa-square-o.fa-stack-2x
-                  %i.fa.fa-user.fa-stack-1x
-            = vendor.display_name
-            -#
-              %br/
-              %small
-                - unless vendor.primary_phone.blank?
-                  = vendor.primary_phone.free_form_number 
-                  %br
-                = number_to_currency(vendor.balance)
-            .pull-right
-              %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, class: "new_ticket_from_vendor", onclick: "event.preventDefault();"}
-                %i.fa.fa-plus.fa-lg
-              &nbsp;
-  %div.row
-    -#
-      .col-xs-12.col-sm-12.col-md-12
-        = link_to "New Vendor", new_vendor_path, class: 'btn btn-primary btn-lg btn-block'
+  - if @vendors.blank?
+    .jumbotron
+      %p.text-center No vendors found
+  - else
+    %div{id: 'vendors'}    
+      - @vendors.each do |vendor|
+        %div.row
+          .col-xs-12.col-sm-12.col-md-12
+            %div.panel.panel-primary
+              %div.panel-body{style: "padding: 0;"}
+                %a{href: vendor_path(vendor.id), class: "vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}
+                  - if CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").count > 0
+                    %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
+                      = image_tag(show_preview_image_cust_pic_path(CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").last.id), class: 'img-responsive')
+                  - else
+                    %span.fa-stack.fa-3x
+                      %i.fa.fa-square-o.fa-stack-2x
+                      %i.fa.fa-user.fa-stack-1x
+                &nbsp;
+                = vendor.display_name
+                -#
+                  %br/
+                  %small
+                    - unless vendor.primary_phone.blank?
+                      = vendor.primary_phone.free_form_number 
+                      %br
+                    = number_to_currency(vendor.balance)
+                .pull-right
+                  %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, class: "new_ticket_from_vendor", onclick: "event.preventDefault();"}
+                    %i.fa.fa-plus.fa-lg
+                  &nbsp;
   %div.row
     .text-center
-      = paginate @vendors
-      -#
-        %div{id: 'endless_page'}
-          %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-          %p= link_to 'Load more ...', purchase_orders_path(:page => @open_purchase_orders.next_page), :class => 'load-more-purchase-orders btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @open_purchase_orders.next_page
+      %div{id: 'endless_page'}
+        %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+        %p= link_to 'Load more ...', vendors_path(:page => @vendors.next_page), :class => 'load-more-vendors btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @vendors.next_page
 
 
 = render partial: "shared/vendors_footer_navbar", locals: {title: "Vendors"}
