@@ -31,9 +31,10 @@ class TudDevice < ActiveRecord::Base
     client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
     response = client.call(:encode, xml: xml_string)
     data = response.to_hash
-    return response.body
+#    data = response.body
+#    data = response.to_xml
+    return Hash.from_xml(data[:read_id_response][:return])["response"] #response.body
 #    logger.debug data
-#    barcode_number_string = data[:ttud_result][:barcode]
 #    success = data[:ttud_result][:success]
   end
   

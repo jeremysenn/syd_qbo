@@ -63,3 +63,21 @@ jQuery ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
     return
+
+  $('#drivers_license_scan').on 'click', ->
+    $.ajax(url: "/tud_devices/drivers_license_scan", dataType: 'json').done (data) ->
+      firstname = data.firstname
+      lastname = data.lastname
+      streetaddress = data.streetaddress
+      city = data.city
+      state = data.state
+      zip = data.zip
+
+      $('#vendor_given_name').val firstname
+      $('#vendor_family_name').val lastname
+      $('#vendor_billing_address_line1').val streetaddress
+      $('#vendor_billing_address_city').val city
+      $('#vendor_billing_address_country_sub_division_code').val state
+      $('#vendor_billing_address_postal_code').val zip
+
+      $('#spinner').hide()

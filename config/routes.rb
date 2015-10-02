@@ -41,6 +41,12 @@ Rails.application.routes.draw do
   
   resources :user_settings
   
+  resources :tud_devices do
+    collection do
+      get :drivers_license_scan
+    end
+  end
+  
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   ### Start sidekiq stuff ###
