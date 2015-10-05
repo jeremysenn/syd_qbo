@@ -69,10 +69,15 @@ class TudDevicesController < ApplicationController
       format.html {}
 #      format.json { render json: @item.unit_price }
 #      format.json {render json: {"name" => @item.name, "description" => @item.description, "unit_price" => @item.unit_price} } 
-      format.json {render json: {
-          "firstname" => scan_result_hash["FIRSTNAME"], "lastname" => scan_result_hash["LASTNAME"],
-          "streetaddress" => scan_result_hash["ADDRESS1"], "city" => scan_result_hash["CITY"], "state" => scan_result_hash["STATE"], "zip" => scan_result_hash["ZIP"]
-          } 
+      format.json {
+        unless scan_result_hash.blank?
+          render json: {
+            "firstname" => scan_result_hash["FIRSTNAME"], "lastname" => scan_result_hash["LASTNAME"],
+            "streetaddress" => scan_result_hash["ADDRESS1"], "city" => scan_result_hash["CITY"], "state" => scan_result_hash["STATE"], "zip" => scan_result_hash["ZIP"]
+            } 
+        else
+          render json: {} 
+        end
         } 
     end
   end
