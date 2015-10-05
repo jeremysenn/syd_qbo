@@ -1,0 +1,12 @@
+- @items.each do |item|
+  %div.row
+    .col-xs-12.col-sm-12.col-md-12
+      %div.panel.panel-primary
+        %div.list_group
+          %a{href: edit_item_path(item.id), class: "list-group-item item_button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> #{item.name}"}}
+            = item.name
+            .pull-right
+              %i.fa.fa-chevron-right
+            %br/
+            %small
+              = "#{number_to_currency(item.purchase_cost)}" unless item.purchase_cost.blank?

@@ -25,9 +25,10 @@
           = select_tag "item[expense_account_ref]", options_from_collection_for_select(@accounts, "id", "name"), prompt: "Choose expense account", class: "form-control input-lg", required: true
       %br
       %br
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
+      -#
+        .row.form-group
+          %div{:class => "col-sm-12 col-md-12"}
+            = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Create"}) do

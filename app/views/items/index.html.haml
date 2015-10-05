@@ -1,32 +1,53 @@
 = render partial: "shared/navbars/items_navbar", locals: {title: "Items"}
+- @title="Items"
+ 
 .container
-  - @items.each do |item|
-    %div.row
-      .col-xs-12.col-sm-12.col-md-12
-        %div.panel.panel-primary
-          %div.list_group
-            %a{href: edit_item_path(item.id), class: "list-group-item"}
-              = item.name
-              .pull-right
-                %i.fa.fa-chevron-right
-              %br/
-              %small
-                = "#{number_to_currency(item.purchase_cost)}" unless item.purchase_cost.blank?
-              -#
-                = @vendor_service.fetch_by_id(purchase.entity_ref).display_name unless purchase.entity_ref.blank?
-                .pull-right
-                  %i.fa.fa-chevron-right
-                %br/
-                %small
-                  = purchase.txn_date.strftime("%m/%d/%y")
-                  %br
-                  = purchase.payment_type
-                  %br
-                  = number_to_currency(purchase.total)
+  %p
+    = form_tag items_path, id: 'item_search_form', method: 'get', :class => "form-inline", role: 'search' do |f|
+      .input-group
+        = search_field_tag :search, params[:search], :placeholder => "Search items", class: "form-control input-lg"
+        %span.input-group-btn
+          %button.btn.btn-default.btn-lg{:type => "submit", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>"}} 
+            %i.fa.fa-search
+  - if @items.blank?
+    .jumbotron
+      %p.text-center No items found
+  - else
+    %div{id: 'items'}
+      - @items.each do |item|
+        %div.row
+          .col-xs-12.col-sm-12.col-md-12
+            %div.panel.panel-primary
+              %div.list_group
+                %a{href: edit_item_path(item.id), class: "list-group-item item_button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> #{item.name}"}}
+                  = item.name
+                  .pull-right
+                    %i.fa.fa-chevron-right
+                  %br/
+                  %small
+                    = "#{number_to_currency(item.purchase_cost)}" unless item.purchase_cost.blank?
                   -#
-                    - unless vendor.primary_phone.blank?
-                      = vendor.primary_phone.free_form_number 
+                    = @vendor_service.fetch_by_id(purchase.entity_ref).display_name unless purchase.entity_ref.blank?
+                    .pull-right
+                      %i.fa.fa-chevron-right
+                    %br/
+                    %small
+                      = purchase.txn_date.strftime("%m/%d/%y")
                       %br
-                    = number_to_currency(vendor.balance)
+                      = purchase.payment_type
+                      %br
+                      = number_to_currency(purchase.total)
+                      -#
+                        - unless vendor.primary_phone.blank?
+                          = vendor.primary_phone.free_form_number 
+                          %br
+                        = number_to_currency(vendor.balance)
+
+  %div.row
+    .text-center
+      %div{id: 'endless_page'}
+        %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+        %p= link_to 'Load more ...', items_path(:page => @items.next_page), :class => 'load-more-items btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @items.next_page
+
 
 = render partial: "shared/footer_navbar", locals: {title: "Items"}

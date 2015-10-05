@@ -11,12 +11,26 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = @item_service.query(nil, :per_page => 1000)
-    
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
+    unless params[:search].blank?
+      query = "SELECT * FROM Item WHERE Name LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
+      @items = @item_service.query(query, :per_page => 1000)
+    else
+      @items = @item_service.query(nil, :per_page => 1000)
+    end
     
-    
+    respond_to do |format|
+      format.html {
+        @items = Kaminari.paginate_array(@items.entries).page(params[:page]).per(5)
+      }
+      format.js {
+        @items = Kaminari.paginate_array(@items.entries).page(params[:page]).per(5)
+      }
+      format.json {
+        render json: @items.map{|v| v.display_name}
+      }
+    end
   end
 
   # GET /items/1

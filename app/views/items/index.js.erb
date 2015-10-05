@@ -1,0 +1,10 @@
+$('#items').append('<%= j render "item" %>');
+$('#spinner').hide();
+
+<% if @items.next_page %>
+  $('a.load-more-items').show();
+  $('a.load-more-items').attr('href', '<%= items_path page: @items.next_page %>');
+<% else %>
+  $(window).off('scroll');
+  $('a.load-more-items').remove();
+<% end %>
