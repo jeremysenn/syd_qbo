@@ -53,7 +53,6 @@ class CustPicsController < ApplicationController
   end
 
   def show
-    @ticket_number = @cust_pic.ticket_nbr
     respond_with(@cust_pic)
   end
 
@@ -76,7 +75,7 @@ class CustPicsController < ApplicationController
   end
   
   def show_jpeg_image
-    send_data @cust_pic.jpeg_cust_pic, :type => 'image/jpeg',:disposition => 'inline'
+    send_data @cust_pic.jpeg_image, :type => 'image/jpeg',:disposition => 'inline'
   end
   
   def show_preview_image

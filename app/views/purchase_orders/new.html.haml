@@ -29,7 +29,8 @@
           %div.panel-collapse{id: "collapse_1", "aria-labelledby" => "headingitem", :role => "tabpanel", class: "collapse in"}
             .panel-body
               = label_tag "Item", nil, :class => 'control-label'
-              = select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"
+              =# select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"
+              = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true, onchange: "$('#next_button').show();"
               %div{id: "initial_input_fields", style: "display:none;"}
                 = label_tag "Gross", nil, :class => 'control-label'
                 %div.input-group

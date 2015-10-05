@@ -31,7 +31,8 @@
                   %i.fa.fa-trash
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@bill.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@bill.line_items.count > 1 ? false : true}"}
               .panel-body
-                = select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                = select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = hidden_field_tag "bill[line_items][][description]", line_item.description
                 = label_tag "Gross", nil, :class => 'control-label'
                 %div.input-group

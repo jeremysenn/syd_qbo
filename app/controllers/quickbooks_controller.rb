@@ -31,12 +31,12 @@ class QuickbooksController < ApplicationController
 #    Rails.cache.delete("all_vendors")
 #    Rails.cache.fetch("all_vendors") {Hash[vendors.map{ |v| [v.display_name,v.id] }]}
     
-    @item_service = Quickbooks::Service::Item.new
-    @item_service.access_token = oauth_client
-    @item_service.company_id = current_company_id
-    items = @item_service.query(nil, :per_page => 1000)
-    Rails.cache.delete("all_items")
-    Rails.cache.fetch("all_items") {Hash[items.map{ |i| ["#{i.name} (#{i.description})",i.id] }]}
+#    @item_service = Quickbooks::Service::Item.new
+#    @item_service.access_token = oauth_client
+#    @item_service.company_id = current_company_id
+#    items = @item_service.query(nil, :per_page => 1000)
+#    Rails.cache.delete("all_items")
+#    Rails.cache.fetch("all_items") {Hash[items.map{ |i| ["#{i.name} (#{i.description})",i.id] }]}
     
     redirect_to root_url, notice: "Your QuickBooks account has been successfully linked."
   end

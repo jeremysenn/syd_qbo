@@ -4,11 +4,13 @@ class VendorsController < ApplicationController
   
   before_action :set_oauth_client
   before_action :set_vendor_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
+  before_action :set_item_service, only: [:index, :show, :edit]
   before_action :set_vendor, only: [:show, :edit, :update, :update_qb, :destroy]
 
   # GET /vendors
   # GET /vendors.json
   def index
+    @items = @item_service.query(nil, :per_page => 1000)
     unless params[:search].blank?
       #query = "SELECT * FROM Vendor WHERE DisplayName LIKE #{params[:search]};"
       query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
@@ -33,6 +35,7 @@ class VendorsController < ApplicationController
   # GET /vendors/1.json
   def show
     @vendors = @vendor_service.query(nil, :per_page => 1000)
+    @items = @item_service.query(nil, :per_page => 1000)
     @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
 
@@ -43,6 +46,7 @@ class VendorsController < ApplicationController
   # GET /vendors/1/edit
   def edit
     @vendors = @vendor_service.query(nil, :per_page => 1000)
+    @items = @item_service.query(nil, :per_page => 1000)
     @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
   
@@ -164,6 +168,13 @@ class VendorsController < ApplicationController
       @vendor_service = Quickbooks::Service::Vendor.new
       @vendor_service.access_token = @oauth_client
       @vendor_service.company_id = current_company_id
+    end
+    
+    def set_item_service
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+      @item_service = Quickbooks::Service::Item.new
+      @item_service.access_token = @oauth_client
+      @item_service.company_id = current_company_id
     end
   
     # Use callbacks to share common setup or constraints between actions.

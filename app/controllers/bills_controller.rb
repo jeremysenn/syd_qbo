@@ -70,7 +70,7 @@ class BillsController < ApplicationController
     @contract = Contract.find(current_company_id) # Find contract for this company
     
 #    query = "Select * From Item Where Type = 'Inventory'"
-#    @items = @item_service.query(query, :per_page => 1000)
+    @items = @item_service.query(nil, :per_page => 1000)
     
     @items = @item_service.query(nil, :per_page => 1000)
     @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
