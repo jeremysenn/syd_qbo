@@ -25,7 +25,7 @@ module ApplicationHelper
   end
   
   def units_of_measure
-    ["EA", "LB", "NT", "ST", "GT", "KG", "CW", "MT", "LD"]
+    [['Each', 'EA'], ['Pound', 'LB'], ['Net Ton', 'NT'], ['Short Ton', 'ST'], ['Gross Ton', 'GT'], ['Kilogram', 'KG'], ['Hundred Weight', 'CW'], ['Metric Ton', 'MT'], ['Load', 'LD']]
   end
   
   def us_states

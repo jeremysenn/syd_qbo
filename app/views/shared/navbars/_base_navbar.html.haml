@@ -37,9 +37,15 @@
               %a{href: new_vendor_path} New Vendor
             %li
               %a{href: vendors_path} All Vendors
-        %li{:class => params[:controller] == "items" ? "active" : ""}
-          %a{href: items_path}
+        %li.dropdown{:class => (params[:controller] == "items") ? "active" : ""}
+          %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
             Items
+            %b.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: new_item_path} New Item
+            %li
+              %a{href: items_path} All Items
         %li{:class => params[:controller] == "images" ? "active" : ""}
           %a{href: images_path}
             Pictures

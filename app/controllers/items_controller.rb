@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   before_action :set_oauth_client
   before_action :set_item_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_vendor_service, only: [:index, :show, :create, :edit, :update]
+  before_action :set_account_service, only: [:new, :edit]
   before_action :set_item, only: [:show, :edit, :update, :update_qb, :destroy]
 
   # GET /items
@@ -31,45 +32,20 @@ class ItemsController < ApplicationController
 
   # GET /items/new
   def new
+    @accounts = @account_service.query(nil, :per_page => 1000)
   end
 
   # GET /items/1/edit
   def edit
+    @accounts = @account_service.query(nil, :per_page => 1000)
   end
   
-  def create_qb
-    @item = Quickbooks::Model::Item.new
-    @item.given_name = item_params[:name]
-    @item.email_address = item_params[:email]
-    unless item_params[:phone_number].blank?
-      phone = Quickbooks::Model::TelephoneNumber.new
-      phone.free_form_number = item_params[:phone_number]
-      @item.mobile_phone = phone
-    end
-    @item = @item_service.create(item)
-
-    respond_to do |format|
-      if @item.present?
-        format.html { redirect_to item_path(@item.id), notice: 'Item was successfully created.' }
-        format.json { render :show, status: :created, location: item_path(@item.id) }
-      else
-        format.html { render :new }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # POST /items
-  # POST /items.json
   def create
     @item = Quickbooks::Model::Item.new
-    @item.given_name = item_params[:name]
-    @item.email_address = item_params[:email]
-    unless item_params[:phone_number].blank?
-      phone = Quickbooks::Model::TelephoneNumber.new
-      phone.free_form_number = item_params[:phone_number]
-      @item.mobile_phone = phone
-    end
+    @item.name = item_params[:name]
+    @item.description = item_params[:description]
+    @item.purchase_cost = item_params[:purchase_cost]
+    @item.expense_account_id = item_params[:expense_account_ref]
     @item = @item_service.create(@item)
 
     respond_to do |format|
@@ -84,13 +60,10 @@ class ItemsController < ApplicationController
   end
 
   def update_qb
-    @item.display_name = item_params[:name]
-    @item.email_address = item_params[:email] unless item_params[:email].blank?
-    unless item_params[:phone_number].blank?
-      phone = Quickbooks::Model::TelephoneNumber.new
-      phone.free_form_number = item_params[:phone_number]
-      @item.mobile_phone = phone
-    end
+    @item.name = item_params[:name]
+    @item.description = item_params[:description]
+    @item.purchase_cost = item_params[:purchase_cost]
+    @item.expense_account_id = item_params[:expense_account_ref]
     @item = @item_service.update(@item)
     
     respond_to do |format|
@@ -146,6 +119,13 @@ class ItemsController < ApplicationController
       @vendor_service.access_token = @oauth_client
       @vendor_service.company_id = current_company_id
     end
+    
+    def set_account_service
+#      oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, session[:token], session[:secret])
+      @account_service = Quickbooks::Service::Account.new
+      @account_service.access_token = @oauth_client
+      @account_service.company_id = current_company_id
+    end
   
     # Use callbacks to share common setup or constraints between actions.
     def set_item
@@ -156,6 +136,6 @@ class ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:item).permit(:name, :email, :phone_number)
+      params.require(:item).permit(:name, :description, :purchase_cost, :expense_account_ref)
     end
 end

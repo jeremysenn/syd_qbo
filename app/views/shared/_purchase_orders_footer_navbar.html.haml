@@ -13,8 +13,9 @@
                 %i.fa.fa-camera.fa-lg
                 = "Picture" unless mobile_device?
         .col-xs-4.col-sm-4
-          %a{href: "#new_vendor_form", "data-toggle" => "modal", :alt => "new_vendor_form"}
-            %i.fa.fa-user-plus.fa-lg
-            = "Vendor" unless mobile_device?
+          -#
+            %a{href: "#new_vendor_form", "data-toggle" => "modal", :alt => "new_vendor_form"}
+              %i.fa.fa-user-plus.fa-lg
+              = "Vendor" unless mobile_device?
 
 = render partial: "vendors/new_modal"

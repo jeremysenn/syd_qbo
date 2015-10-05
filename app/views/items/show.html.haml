@@ -1,3 +1,6 @@
+= render partial: "shared/navbars/show_item_navbar", locals: {title: "#{@item.name}", item_id: @item.id}
+- @title="#{@item.name}"
+
 .container
   %div.panel.panel-default
     %div.list_group
@@ -6,15 +9,21 @@
         .pull-right
           = @item.name
       %div.list-group-item
-        %strong= "Unit Price:"
+        %strong= "Unit of Measure:"
         .pull-right
-          = number_to_currency(@item.unit_price) unless @item.unit_price.blank?
+          = @item.description
+      -#
+        %div.list-group-item
+          %strong= "Unit Price:"
+          .pull-right
+            = number_to_currency(@item.unit_price) unless @item.unit_price.blank?
       %div.list-group-item
         %strong= "Purchase Cost:"
         .pull-right
           = number_to_currency(@item.purchase_cost) unless @item.purchase_cost.blank?
-  %div.row
-    .col-xs-12.col-sm-12.col-md-12
-      = link_to "Edit Item", edit_item_path(@item.id), class: 'btn btn-primary btn-lg btn-block'
+      %div.list-group-item
+        %strong= "Expense Account:"
+        .pull-right
+          = @item.expense_account_ref.name
 
-= render partial: "shared/footer_navbar", locals: {title: "Vendor"}
+= render partial: "shared/footer_navbar", locals: {title: "Item"}

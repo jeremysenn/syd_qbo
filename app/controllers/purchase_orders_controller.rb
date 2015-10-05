@@ -61,7 +61,7 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders/new
   def new
-#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+    @vendors = @vendor_service.query(nil, :per_page => 1000)
     
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
