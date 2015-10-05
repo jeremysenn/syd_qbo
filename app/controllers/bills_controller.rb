@@ -5,7 +5,7 @@ class BillsController < ApplicationController
   before_action :set_oauth_client
   before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
-  before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
+  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_bill_payment_service, only: [:show]
   before_action :set_account_service, only: [:index]
@@ -17,6 +17,7 @@ class BillsController < ApplicationController
   # GET /bills.json
   def index
     @vendors = @vendor_service.query(nil, :per_page => 1000)
+    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From Bill Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     query = "Select * From Bill Where TxnDate>'#{1.week.ago.strftime("%Y-%m-%d")}'"
     @open_bills = @bill_service.query(query, :per_page => 30).entries.find_all{ |e| e.balance > 0 }
