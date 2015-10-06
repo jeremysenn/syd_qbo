@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   resources :tud_devices do
     collection do
       get :drivers_license_scan
+      get :scale_read
     end
   end
   

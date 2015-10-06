@@ -63,6 +63,10 @@ class TudDevicesController < ApplicationController
     end
   end
   
+  def show_jpeg_image
+    send_data @image.jpeg_image, :type => 'image/jpeg',:disposition => 'inline'
+  end
+  
   def drivers_license_scan
     scan_result_hash = TudDevice.drivers_license_scan
     respond_to do |format|
@@ -75,6 +79,20 @@ class TudDevicesController < ApplicationController
             "firstname" => scan_result_hash["FIRSTNAME"], "lastname" => scan_result_hash["LASTNAME"],
             "streetaddress" => scan_result_hash["ADDRESS1"], "city" => scan_result_hash["CITY"], "state" => scan_result_hash["STATE"], "zip" => scan_result_hash["ZIP"]
             } 
+        else
+          render json: {} 
+        end
+        } 
+    end
+  end
+  
+  def scale_read
+    scale_read_result = TudDevice.scale_read
+    respond_to do |format|
+      format.html {}
+      format.json {
+        unless scale_read_result.blank?
+          render json: { "weight" => scale_read_result } 
         else
           render json: {} 
         end

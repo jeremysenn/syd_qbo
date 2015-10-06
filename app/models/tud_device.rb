@@ -45,7 +45,7 @@ class TudDevice < ActiveRecord::Base
             <mns:ReadScale xmlns:mns="urn:TUDIntf-ITUD" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
                <WorkstationIP xsi:type="xs:string">192.168.111.150</WorkstationIP>
                <WorkstationPort xsi:type="xs:int">10000</WorkstationPort>
-               <ConsecReads xsi:type="xs:int">3</ConsecReads>
+               <ConsecReads xsi:type="xs:int">5</ConsecReads>
             </mns:ReadScale>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>'
@@ -57,6 +57,11 @@ class TudDevice < ActiveRecord::Base
     return data[:read_scale_response][:return]
 #    logger.debug data
 #    success = data[:ttud_result][:success]
+  end
+  
+  def self.drivers_license_scanned_image
+    require 'open-uri'
+    open('http://192.168.111.150:10001').read
   end
   
 end

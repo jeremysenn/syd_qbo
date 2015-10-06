@@ -207,4 +207,18 @@ jQuery ->
         return
       return
     return
-    
+
+  $('.scale_read').on 'click', (e) ->
+    e.preventDefault()
+    dashboard_icon = $(this).find( ".fa-dashboard" )
+    dashboard_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+    weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
+    $.ajax(url: "/tud_devices/scale_read", dataType: 'json').done (data) ->
+      dashboard_icon.show()
+      spinner_icon.hide()
+      weight = data.weight
+      weight_text_field.val weight
+      $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
+      false
