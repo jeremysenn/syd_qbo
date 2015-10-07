@@ -72,10 +72,19 @@ class VendorsController < ApplicationController
       phone.free_form_number = vendor_params[:phone_number]
       @vendor.primary_phone = phone
     end
-    @vendor = @vendor_service.create(@vendor)
+    begin
+      @vendor = @vendor_service.create(@vendor)
+    rescue Quickbooks::IntuitRequestException => e
+      flash.now[:error] = e
+      logger.error e
+    rescue => e
+      logger.error e
+    ensure
+#      logger.debug "ensure block"
+    end
 
     respond_to do |format|
-      if @vendor.present?
+      if @vendor.id.present?
         
         # Update the all_vendors rails cache
         vendors = @vendor_service.query(nil, :per_page => 1000)
@@ -121,11 +130,20 @@ class VendorsController < ApplicationController
       phone.free_form_number = vendor_params[:phone_number]
       @vendor.primary_phone = phone
     end
-    @vendor = @vendor_service.update(@vendor)
+    begin
+      @vendor = @vendor_service.update(@vendor)
+    rescue Quickbooks::IntuitRequestException => e
+      flash[:error] = e
+      logger.error e
+    rescue => e
+      logger.error e
+    ensure
+#      logger.debug "ensure block"
+    end
     
     respond_to do |format|
       if @vendor.present?
-        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully updated.' }
+        format.html { redirect_to vendor_path(@vendor.id) }
         format.json { render :show, status: :ok, location: vendor_path(@vendor.id) }
       else
         format.html { render :edit }
