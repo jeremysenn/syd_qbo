@@ -110,7 +110,8 @@ class BillsController < ApplicationController
           if params[:pay_ticket]
             redirect_to new_bill_payment_path(bill_id: @bill.id)
           else
-            redirect_to purchase_orders_path 
+#            redirect_to purchase_orders_path 
+            redirect_to root_path
           end
           }
         format.json { render :show, status: :created, location: bill_path(@bill.id) }
@@ -154,7 +155,8 @@ class BillsController < ApplicationController
           else
 #            redirect_to bill_path(@bill.id), notice: 'Bill was successfully updated.' 
 #            redirect_to purchase_orders_path
-            redirect_to bills_path
+#            redirect_to bills_path
+            redirect_to root_path
           end
           }
         format.json { render :show, status: :ok, location: bill_path(@bill.id) }

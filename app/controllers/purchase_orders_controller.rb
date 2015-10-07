@@ -157,7 +157,8 @@ class PurchaseOrdersController < ApplicationController
           elsif params[:close_and_pay]
             redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true), notice: 'Closing ticket, please wait ...'
           else
-            redirect_to purchase_orders_path
+#            redirect_to purchase_orders_path
+            redirect_to root_path
           end
           }
         format.json { render :show, status: :ok, location: purchase_order_path(@purchase_order.id) }
