@@ -208,7 +208,7 @@ jQuery ->
       return
     return
 
-  $('.scale_read').on 'click', (e) ->
+  $(document).on 'click', '.scale_read', (e) ->
     e.preventDefault()
     dashboard_icon = $(this).find( ".fa-dashboard" )
     dashboard_icon.hide()
