@@ -3,14 +3,16 @@
     .navbar-header
       %div{class: 'navbar-brand navbar-center'}
         .col-xs-4.col-sm-4
-          = link_to 'javascript:history.back()' do
-            %i.fa.fa-arrow-left.fa-lg
+          -#
+            = link_to 'javascript:history.back()' do
+              %i.fa.fa-arrow-left.fa-lg
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
-          %a{href: "#search_form", "data-toggle" => "modal", :alt => "search_form"}
-            %i.fa.fa-search.fa-lg
-            = "Search" unless mobile_device?
+          -#
+            %a{href: "#search_form", "data-toggle" => "modal", :alt => "search_form"}
+              %i.fa.fa-search.fa-lg
+              = "Search" unless mobile_device?
 
 - unless current_user.blank?
   = render partial: "#{current_user.user_setting.table_name}/search_modal"

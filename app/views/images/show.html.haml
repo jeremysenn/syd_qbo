@@ -1,9 +1,12 @@
 = render partial: "shared/search_navbar", locals: {title: "#{@image.ticket_nbr}"}
 .container
   %div.row
-    .col-xs-12.col-sm-6.col-md-offset-3
-      =# image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'thumbnail img-responsive')
+    .col-xs-12.col-sm-12.col-md-12
       = link_to image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'
+    -#
+      .col-xs-12.col-sm-6.col-md-offset-3
+        =# image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'thumbnail img-responsive')
+        = link_to image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'
   - unless mobile_device?
     %div{:id => "image_popup", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
       .modal-dialog.modal-lg

@@ -5,7 +5,7 @@ class BillPaymentsController < ApplicationController
   before_action :set_oauth_client
   before_action :set_bill_payment_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
-  before_action :set_item_service, only: [:show, :new, :create, :edit, :line_item_fields]
+  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_bill_service, only: [:show, :new, :create, :update_qb]
   before_action :set_account_service, only: [:new, :create]
@@ -17,6 +17,7 @@ class BillPaymentsController < ApplicationController
   # GET /bill_payments.json
   def index
     @vendors = @vendor_service.query(nil, :per_page => 1000)
+    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From BillPayment Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     @bill_payments = @bill_payment_service.query(nil, :per_page => 30).entries
     @bill_payments = Kaminari.paginate_array(@bill_payments).page(params[:page]).per(3)
