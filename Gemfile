@@ -101,6 +101,9 @@ gem 'wkhtmltopdf-binary'
 # SOAP calls (TUD devices web service calls)
 gem 'savon'
 
+# See the speed of a request on the page
+gem 'rack-mini-profiler'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
