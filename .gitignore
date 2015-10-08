@@ -25,3 +25,5 @@ public/uploads/*
 
 # Ignore public assets
 public/assets/
+
+dump.rdb
