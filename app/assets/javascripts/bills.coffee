@@ -101,6 +101,9 @@ jQuery ->
     $('.pay_button').each ->
       $.rails.enableElement $(this)
       return
+    $('.bill_button').each ->
+      $.rails.enableElement $(this)
+      return
     return
 
   ### Start endless page stuff ###

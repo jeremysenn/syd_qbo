@@ -21,7 +21,7 @@
               %h4.panel-title
                 %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
                   = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-                  = " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+                  =# " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
                 =# hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse", "aria-expanded" => false}
               .panel-body
@@ -38,7 +38,8 @@
                 =# label_tag "Amount", nil, :class => 'control-label'
                 =# text_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
             %div.panel-footer
-              = "(#{line_item.description}) ="
+              =# "(#{line_item.description}) ="
+              = "(#{line_item.description.split(' - ').first} - #{line_item.description.split(' - ').second}) ="
               = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description}"
               = " x #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
               = "= #{number_to_currency(line_item.amount)}"

@@ -15,7 +15,7 @@
                     %i.fa.fa-camera.fa-stack-1x
         %div.panel-body
           %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-            %a{href: edit_purchase_order_path(purchase_order.id), class: "", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{purchase_order.doc_number}"}}
+            %a{href: edit_purchase_order_path(purchase_order.id), class: "purchase_order_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{purchase_order.doc_number}"}}
               = purchase_order.doc_number
               %br
               %small= purchase_order.txn_date.strftime("%m/%d/%y")

@@ -5,7 +5,7 @@
     %strong= "Ticket: "
     = @bill_payment.doc_number
     %strong= "Vendor: "
-    = @vendor.display_name
+    = @bill_payment.vendor_ref.name
   %table.table
     %thead
       %tr

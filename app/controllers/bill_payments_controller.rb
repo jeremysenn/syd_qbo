@@ -16,8 +16,8 @@ class BillPaymentsController < ApplicationController
   # GET /bill_payments
   # GET /bill_payments.json
   def index
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From BillPayment Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     @bill_payments = @bill_payment_service.query(nil, :per_page => 30).entries
     @bill_payments = Kaminari.paginate_array(@bill_payments).page(params[:page]).per(3)

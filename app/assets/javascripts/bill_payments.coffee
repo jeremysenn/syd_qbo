@@ -20,4 +20,7 @@ jQuery ->
     $.rails.enableElement $('#payments_to_open')
     $.rails.enableElement $('#payments_to_closed')
     $.rails.enableElement $('#payments_to_vendors')
+    $('.bill_payment_button').each ->
+      $.rails.enableElement $(this)
+      return
     return

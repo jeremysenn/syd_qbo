@@ -12,7 +12,7 @@
         #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
           .panel-body
             =# select_tag "bill[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
-            = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+            = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             = hidden_field_tag "bill[doc_number]", @bill.doc_number
         %div.panel-footer
           %a{href: edit_vendor_path(@bill.vendor_ref), id: "edit_vendor_link", target: '_blank'}
@@ -24,7 +24,7 @@
             %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
               %h4.panel-title
                 %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@bill.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@bill.line_items.count > 1 ? 'collapsed' : ''}"}
-                  = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+                  = line_item.item_based_expense_line_detail.item_ref.name
                   =# " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
                 = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
                 %a{href: '#', class: 'remove_field pull-right'}
@@ -39,24 +39,24 @@
                   - unless line_item.description.blank?
                     = phone_field_tag "bill[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
                     %span.input-group-addon
-                      %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => line_item.description.split(' - ').first}
+                      %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').first}
                         %i.fa.fa-camera.fa-lg
                   - else
                     = phone_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
                     %span.input-group-addon
-                      %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => 0}
+                      %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => 0}
                         %i.fa.fa-camera.fa-lg
                 = label_tag "Tare", nil, :class => 'control-label'
                 %div.input-group
                   - unless line_item.description.blank?
                     = phone_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
                     %span.input-group-addon
-                      %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => line_item.description.split(' - ').second}
+                      %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').second}
                         %i.fa.fa-camera.fa-lg
                   - else
                     = phone_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
                     %span.input-group-addon
-                      %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name, 'data-weight' => 0}
+                      %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => 0}
                         %i.fa.fa-camera.fa-lg
                 = label_tag "Net", nil, :class => 'control-label'
                 = text_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
@@ -71,7 +71,8 @@
                     $
                   = text_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
             %div.panel-footer
-              = "(#{line_item.description}) ="
+              =# "(#{line_item.description}) ="
+              = "(#{line_item.description.split(' - ').first} - #{line_item.description.split(' - ').second}) ="
               = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description}"
               = " x #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
               = "= #{number_to_currency(line_item.amount)}"
@@ -91,14 +92,17 @@
           Pay ticket
 
     %div#images
-      - unless @images.blank?
-        - @images.each_slice(6) do |images|
-          %div.row
-            - images.each do |image|
-              .col-xs-12.col-sm-2.col-md-2.col-lg-2
-                %div.thumbnail
-                  - unless image.hidden?
-                    = image_tag(show_preview_image_image_path(image))
-                    =# link_to image_tag(show_preview_image_image_path(image)), image, target: '_blank'
+      %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @bill.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @bill.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
+        = "Ticket #{@bill.doc_number} Pictures"
+      -#
+        - unless @images.blank?
+          - @images.each_slice(6) do |images|
+            %div.row
+              - images.each do |image|
+                .col-xs-12.col-sm-2.col-md-2.col-lg-2
+                  %div.thumbnail
+                    - unless image.hidden?
+                      = image_tag(show_preview_image_image_path(image))
+                      =# link_to image_tag(show_preview_image_image_path(image)), image, target: '_blank'
 
 = render partial: "shared/bill_footer_navbar", locals: {title: "Bill"}

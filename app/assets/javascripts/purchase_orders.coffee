@@ -104,6 +104,9 @@ jQuery ->
     $.rails.enableElement $('#purchase_orders_to_paid')
     $.rails.enableElement $('#purchase_orders_to_vendors')
     $.rails.enableElement $('#new_ticket_link')
+    $('.purchase_order_button').each ->
+      $.rails.enableElement $(this)
+      return
     return
 
   ### Start endless page stuff ###

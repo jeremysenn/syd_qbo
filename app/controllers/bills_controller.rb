@@ -16,8 +16,8 @@ class BillsController < ApplicationController
   # GET /bills
   # GET /bills.json
   def index
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From Bill Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     query = "Select * From Bill Where TxnDate>'#{1.week.ago.strftime("%Y-%m-%d")}'"
     @open_bills = @bill_service.query(query, :per_page => 30).entries.find_all{ |e| e.balance > 0 }
@@ -66,15 +66,13 @@ class BillsController < ApplicationController
   # GET /bills/1/edit
   def edit
     @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
+#    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @doc_number = @bill.doc_number
     @contract = Contract.find(current_company_id) # Find contract for this company
     
 #    query = "Select * From Item Where Type = 'Inventory'"
     @items = @item_service.query(nil, :per_page => 1000)
-    
-    @items = @item_service.query(nil, :per_page => 1000)
-    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
+#    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
   end
   
   # POST /bills
