@@ -2,13 +2,13 @@
   %div.row
     .col-xs-12.col-sm-12.col-md-12
       %div.panel.panel-primary
-        %div.panel-body
-          %a{href: vendor_path(vendor.id), class: "vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{vendor.display_name}"}}
+        %div.list_group
+          %a{href: vendor_path(vendor.id), class: "list-group-item vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{vendor.display_name}"}}
             = vendor.display_name
             .pull-right
-              %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i>"}, class: "new_ticket_from_vendor", onclick: "event.preventDefault();"}
-                %i.fa.fa-plus.fa-lg
-              &nbsp;
+              %i.fa.fa-chevron-right
+            %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> <small>New ticket</small>"}, class: "list-group-item new_ticket_from_vendor", onclick: "event.preventDefault();"}
+              %small New ticket
         -#
           %div.panel-body{style: "padding: 0;"}
             %a{href: vendor_path(vendor.id), class: "vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}

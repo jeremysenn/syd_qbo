@@ -25,19 +25,20 @@
       %p.text-center No held tickets found
   - else
     %div{id: 'open_purchase_orders'}
-      %div.row
-        .col-xs-12.col-sm-12.col-md-12
-          %div.panel{style: 'border: 0;'}
-            %div.panel-body
-              -#
-                %div.col-xs-3.col-sm-3.col-md-3
-                  %strong Photo
-              %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                %strong Ticket
-              %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                %strong Vendor
-              %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                %strong Total
+      -#
+        %div.row
+          .col-xs-12.col-sm-12.col-md-12
+            %div.panel{style: 'border: 0;'}
+              %div.panel-body
+                -#
+                  %div.col-xs-3.col-sm-3.col-md-3
+                    %strong Photo
+                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
+                  %strong Ticket
+                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
+                  %strong Vendor
+                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
+                  %strong Total
       - @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
         %div.row
           .col-xs-12.col-sm-12.col-md-12
@@ -54,18 +55,31 @@
                           %i.fa.fa-ban.fa-stack-2x
                           %i.fa.fa-camera.fa-stack-1x
                         =# image_tag("no_photo320x240.jpeg", class: 'img-responsive')
-              %div.panel-body
-                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                  %a{href: edit_purchase_order_path(purchase_order.id), class: "purchase_order_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{purchase_order.doc_number}"}}
-                    = purchase_order.doc_number
-                    %br
-                    %small= purchase_order.txn_date.strftime("%m/%d/%y")
-                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4= purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
-                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4= number_to_currency(purchase_order.total)
-                .pull-right
-                  %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), target: '_blank'}
+              -#
+                %div.panel-body
+                  %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
+                    %a{href: edit_purchase_order_path(purchase_order.id), class: "purchase_order_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{purchase_order.doc_number}"}}
+                      = purchase_order.doc_number
+                      %br
+                      %small= purchase_order.txn_date.strftime("%m/%d/%y")
+                  %div.col-xs-4.col-sm-4.col-md-4.col-lg-4= purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
+                  %div.col-xs-4.col-sm-4.col-md-4.col-lg-4= number_to_currency(purchase_order.total)
+                  .pull-right
+                    %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), target: '_blank'}
+                      %i.fa.fa-file-pdf-o.fa-lg
+                    &nbsp;
+              %div.list_group
+                %a{href: edit_purchase_order_path(purchase_order.id), class: "list-group-item purchase_order_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{purchase_order.doc_number} #{purchase_order.vendor_ref.name}"}}
+                  = purchase_order.doc_number
+                  = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
+                  .pull-right
+                    = number_to_currency(purchase_order.total)
+                    %i.fa.fa-chevron-right
+                %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
+                  = purchase_order.txn_date.strftime("%m/%d/%y")
+                  .pull-right
                     %i.fa.fa-file-pdf-o.fa-lg
-                  &nbsp;
+                    Print
                 -#
                   %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
                     Close ticket
