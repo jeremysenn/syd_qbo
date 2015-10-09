@@ -28,13 +28,14 @@
         %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
           %h4.panel-title
             %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
-              = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-              = " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
+              =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+              = line_item.item_based_expense_line_detail.item_ref.name
+              =# " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
             =# hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
         %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse", "aria-expanded" => false}
           .panel-body
         %div.panel-footer
-          = "(#{line_item.description}) ="
+          = "(#{line_item.description.split(' - ').first} - #{line_item.description.split(' - ').second}) ="
           = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description}"
           = " x #{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
           = "= #{number_to_currency(line_item.amount)}"
@@ -52,71 +53,16 @@
         Print  
   
   %div#images
-    - unless @images.blank?
-      - @images.each_slice(6) do |images|
-        %div.row
-          - images.each do |image|
-            .col-xs-12.col-sm-2.col-md-2.col-lg-2
-              %div.thumbnail
-                - unless image.hidden?
-                  = link_to image_tag(show_preview_image_image_path(image)), image
-
--#
-  - @bill_payment.line_items.each do |line_item|
-    = line_item.amount
-    = line_item.detail_type
-    = line_item.linked_transactions
-
-  .col-sm-12.col-md-4.col-md-offset-4
-    %div.panel.panel-default
-      %div.panel-heading
-        = "Payment #{@bill_payment.doc_number}" unless @bill_payment.doc_number.blank?
-        - if @bill_payment.pay_type == 'Check'
-          .pull-right= link_to 'Print check', 'https://sandbox.qbo.intuit.com/app/expenses', target: '_blank'
-      %div.list_group
-        %div.list-group-item
-          %strong= "Vendor"
-          .pull-right
-            = truncate(@vendor.display_name, length: 30)
-        %div.list-group-item
-          %strong= "Date"
-          .pull-right
-            = @bill_payment.txn_date.strftime("%m/%d/%y")
-        -#
-          %div.list-group-item
-            %strong= "Type"
-            .pull-right
-              = @bill_payment.pay_type
-        %div.list-group-item
-          %strong= "Account"
-          .pull-right
-            = @bill_payment.check_payment.bank_account_ref.name
-        %div.list-group-item
-          %strong= "Total"
-          .pull-right
-            = number_to_currency(@bill_payment.total)
-        - unless @bill.blank?
-          %a{href: bill_path(@bill.id), class: "list-group-item"}
-            = "Bill # #{@bill.doc_number} (#{@bill.txn_date.strftime("%m/%d/%Y")})"
-            .pull-right
-              %i.fa.fa-chevron-right
-            %br
-            %br
--#
-  - unless @images.blank?
-    .col-sm-6.col-md-4.col-md-offset-4
-      - @images.each_slice(3) do |images|
-        %div.row
-          - images.each do |image|
-            .col-sm-3.col-md-3
-              %div.thumbnail
-                - unless image.hidden?
-                  = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
-                .text-center= image.event_code
-%div.row
-  -#
-    .col-xs-12.col-sm-12.col-md-12
-    .col-sm-12.col-md-4.col-md-offset-4
-      = link_to "Edit Bill Payment", edit_bill_payment_path(@bill_payment.id), class: 'btn btn-primary btn-lg btn-block'
-
+    %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @bill_payment.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
+      = "Ticket #{@bill_payment.doc_number} Pictures"
+    -#
+      - unless @images.blank?
+        - @images.each_slice(6) do |images|
+          %div.row
+            - images.each do |image|
+              .col-xs-12.col-sm-2.col-md-2.col-lg-2
+                %div.thumbnail
+                  - unless image.hidden?
+                    = link_to image_tag(show_preview_image_image_path(image)), image
+  
 = render partial: "shared/bill_payment_footer_navbar", locals: {title: "BillPayment"}

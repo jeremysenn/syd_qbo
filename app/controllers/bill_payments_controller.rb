@@ -26,9 +26,8 @@ class BillPaymentsController < ApplicationController
   # GET /bill_payments/1
   # GET /bill_payments/1.json
   def show
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @items = @item_service.query(nil, :per_page => 1000)
-    @vendor = @vendor_service.fetch_by_id(@bill_payment.vendor_ref)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
     @doc_number = @bill_payment.doc_number
     @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number }
     
@@ -43,7 +42,7 @@ class BillPaymentsController < ApplicationController
       end
     end
     
-    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
+#    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
   end
 
   # GET /bill_payments/new

@@ -6,7 +6,7 @@ class PurchaseOrdersController < ApplicationController
   before_action :set_purchase_order_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
-  before_action :set_bill_service, only: [:show]
+  before_action :set_bill_service, only: [:show, :update_qb]
   before_action :set_company_service, only: [:show]
   
   before_action :set_purchase_order, only: [:show, :edit, :update, :update_qb, :destroy]
@@ -153,9 +153,13 @@ class PurchaseOrdersController < ApplicationController
 #        format.html { redirect_to purchase_order_path(@purchase_order.id), notice: 'Ticket was successfully updated.' }
         format.html { 
           if params[:close_ticket]
-            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...'
+            Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
+            redirect_to root_path, notice: 'Ticket closed'
+#            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...'
           elsif params[:close_and_pay]
-            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true), notice: 'Closing ticket, please wait ...'
+            @bill = Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
+            redirect_to new_bill_payment_path(bill_id: @bill.id)
+#            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true), notice: 'Closing ticket, please wait ...'
           else
 #            redirect_to purchase_orders_path
             redirect_to root_path
