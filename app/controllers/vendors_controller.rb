@@ -10,7 +10,9 @@ class VendorsController < ApplicationController
   # GET /vendors
   # GET /vendors.json
   def index
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
+    first_item_query = "select * from Item maxresults 1"
+    @first_items = @item_service.query(first_item_query, :per_page => 1)
     unless params[:search].blank?
       #query = "SELECT * FROM Vendor WHERE DisplayName LIKE #{params[:search]};"
       query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
