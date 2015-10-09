@@ -30,7 +30,7 @@
                     %br/
                     %small.text-muted= shipment.sys_date_time.strftime("%-m/%-d/%y %l:%M %p")
                 - else
-                  %a{href: shipments_path("q[ticket_nbr_eq]" => shipment.ticket_nbr), class: "list-group-item"}
+                  %a{href: shipments_path("q[ticket_nbr_eq]" => shipment.ticket_nbr, "q[location_eq]" => current_user.location), class: "list-group-item"}
                     - unless shipment.hidden? or not current_user.show_thumbnails?
                       = image_tag(show_preview_image_shipment_path(shipment), alt: shipment.id, class: 'thumbnail img-responsive')
                     = shipment.ticket_nbr

@@ -9,7 +9,7 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
-          -#
+          - if (params[:controller]=='images' or params[:controller]=='shipments') and params[:action]=='index'
             %a{href: "#search_form", "data-toggle" => "modal", :alt => "search_form"}
               %i.fa.fa-search.fa-lg
               = "Search" unless mobile_device?

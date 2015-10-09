@@ -34,8 +34,10 @@ class VendorsController < ApplicationController
   # GET /vendors/1
   # GET /vendors/1.json
   def show
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
+    first_item_query = "select * from Item maxresults 1"
+    @first_items = @item_service.query(first_item_query, :per_page => 1)
     @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
 
@@ -45,7 +47,7 @@ class VendorsController < ApplicationController
 
   # GET /vendors/1/edit
   def edit
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @items = @item_service.query(nil, :per_page => 1000)
     @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end

@@ -4,8 +4,9 @@
     .container
       %h2.text-center
         -# if user_signed_in? && session[:token]
-        - if user_signed_in? and not @company_info.blank?
-          %p= @company_info.company_name
+        -#
+          - if user_signed_in? and not @company_info.blank?
+            %p= @company_info.company_name
         <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
 
         <script>

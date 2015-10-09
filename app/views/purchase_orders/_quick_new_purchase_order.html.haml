@@ -35,7 +35,8 @@
                     = hidden_field_tag "purchase_order[po_status]", "Open"
                     = label_tag "Item", nil, :class => 'control-label'
                     =# select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
-                    = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
+                    =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
+                    = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@first_items, "id", "name"), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
                     =# hidden_field_tag "purchase_order[line_items][][description]", nil
                     = hidden_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
                     = hidden_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"

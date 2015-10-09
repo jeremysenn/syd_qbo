@@ -32,8 +32,7 @@ class Ability
     # Images
     ############
     can :manage, Image do |image|
-#      image.user_id == user.id
-      true
+      image.location == user.location
     end
     can :create, Image
 
@@ -47,8 +46,7 @@ class Ability
     # Shipments
     ############
     can :manage, Shipment do |shipment|
-#      image.user_id == user.id
-      true
+      shipment.location == user.location
     end
     can :create, Shipment
 
