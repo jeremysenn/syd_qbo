@@ -103,6 +103,7 @@ jQuery ->
     $.rails.enableElement $('#purchase_orders_to_closed')
     $.rails.enableElement $('#purchase_orders_to_paid')
     $.rails.enableElement $('#purchase_orders_to_vendors')
+    $.rails.enableElement $('#new_ticket_link')
     return
 
   ### Start endless page stuff ###

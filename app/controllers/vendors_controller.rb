@@ -50,7 +50,7 @@ class VendorsController < ApplicationController
   # GET /vendors/1/edit
   def edit
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
     @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
   

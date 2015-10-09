@@ -14,8 +14,8 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders
   # GET /purchase_orders.json
   def index
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From PurchaseOrder Where TxnDate>'#{1.month.ago.strftime("%Y-%m-%d")}'"
     query = "Select * From PurchaseOrder Where TxnDate>'#{1.week.ago.strftime("%Y-%m-%d")}'"
     @open_purchase_orders = @purchase_order_service.query(query).entries.find_all{ |e| e.po_status == 'Open' }
@@ -63,11 +63,9 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/new
   def new
     @vendors = @vendor_service.query(nil, :per_page => 1000)
-    
+    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
-    
-    @items = @item_service.query(nil, :per_page => 1000)
   end
 
   # GET /purchase_orders/1/edit

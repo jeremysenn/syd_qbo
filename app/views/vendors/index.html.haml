@@ -35,7 +35,7 @@
                 %a{href: vendor_path(vendor.id), class: "vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{vendor.display_name}"}}
                   = vendor.display_name
                   .pull-right
-                    %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, class: "new_ticket_from_vendor", onclick: "event.preventDefault();"}
+                    %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i>"}, class: "new_ticket_from_vendor", onclick: "event.preventDefault();"}
                       %i.fa.fa-plus.fa-lg
                     &nbsp;
               -#
