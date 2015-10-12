@@ -46,8 +46,8 @@
               %a{href: new_item_path} New Item
             %li
               %a{href: items_path} All Items
-        %li{:class => params[:controller] == "images" ? "active" : ""}
-          %a{href: images_path}
+        %li{:class => (params[:controller] == "images" or params[:controller] == "shipments") ? "active" : ""}
+          %a{href: "#{current_user.images_table? ? images_path : shipments_path}"}
             Pictures
         %li
           %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}

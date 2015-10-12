@@ -32,13 +32,13 @@
               = label_tag :one_image_per_ticket, "One result per ticket", :class => 'control-label'
               =# hidden_field_tag :one_image_per_ticket, '0'
               =# check_box_tag :one_image_per_ticket, 1, params[:one_image_per_ticket] != '0', id: "one_image_check_box"
-              = check_box_tag :one_image_per_ticket, 1,  params[:one_image_per_ticket] != '0', id: "one_image_check_box", class: 'input-lg', "data-toggle" => "checkbox-x", "data-three-state" => "false", "data-size" => "xl", :value => "#{(params[:one_image_per_ticket] != '0') ? '1' : '0'}"
+              = check_box_tag :one_image_per_ticket, 1,  params[:one_image_per_ticket] != '0', id: "one_image_check_box", class: 'input-lg', "data-icon-checked" => "<i class='fa fa-check'></i>", "data-toggle" => "checkbox-x", "data-three-state" => "false", "data-size" => "xl", :value => "#{(params[:one_image_per_ticket] != '0') ? '1' : '0'}"
           - else
             .form-group
               %br/
               = label_tag :one_image_per_ticket, "One result per ticket", :class => 'control-label'
               =# check_box_tag :one_image_per_ticket, 1, false, id: "one_image_check_box"
-              = check_box_tag :one_image_per_ticket, 1, false, class: 'input-lg', "data-toggle" => "checkbox-x", "data-three-state" => "false", "data-size" => "xl", :value => "0"
+              = check_box_tag :one_image_per_ticket, 1, false, class: 'input-lg', "data-icon-checked" => "<i class='fa fa-check'></i>", "data-toggle" => "checkbox-x", "data-three-state" => "false", "data-size" => "xl", :value => "0"
           
         .modal-footer
           %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} x

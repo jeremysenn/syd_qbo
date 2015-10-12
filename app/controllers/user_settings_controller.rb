@@ -72,6 +72,6 @@ class UserSettingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_setting_params
-      params.require(:user_setting).permit(:show_thumbnails, :table_name)
+      params.require(:user_setting).permit(:show_thumbnails, :table_name, :show_vendor_thumbnails, :show_purchase_order_thumbnails, :show_bill_thumbnails, :show_bill_payment_thumbnails)
     end
 end
