@@ -4,9 +4,12 @@
       %div.panel.panel-primary
         %div.list_group
           %a{href: vendor_path(vendor.id), class: "list-group-item vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{vendor.display_name}"}}
-            = vendor.display_name
             .pull-right
+              &nbsp;
               %i.fa.fa-chevron-right
+            - if current_user.user_setting.show_vendor_thumbnails? and CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").count > 0
+              = image_tag(show_preview_image_cust_pic_path(CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").last.id), class: 'thumbnail img-responsive')
+            = vendor.display_name
             %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> <small>New ticket</small>"}, class: "list-group-item new_ticket_from_vendor", onclick: "event.preventDefault();"}
               %small New ticket
         -#

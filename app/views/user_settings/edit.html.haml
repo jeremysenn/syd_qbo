@@ -55,9 +55,11 @@
               =# f.check_box :show_thumbnails
               = f.text_field :show_thumbnails, :value => "#{@user_setting.show_thumbnails? ? '1' : '0'}", "data-icon-checked" => "<i class='fa fa-check'></i>", "data-toggle" => "checkbox-x", "data-three-state" => "false", "data-size" => "xl"
           .row.form-group
-            %div{:class => "col-sm-10"}
-              = f.label "Search table", :class => "control-label"
-              %br/
-              = f.select :table_name, ["images", "shipments"], {}, {:class => "form-control input-lg"}
+            = f.hidden_field :table_name, value: "images"
+            -#
+              %div{:class => "col-sm-10"}
+                = f.label "Search table", :class => "control-label"
+                %br/
+                = f.select :table_name, ["images", "shipments"], {}, {:class => "form-control input-lg"}
       = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Update"}, autocomplete: "off") do
         Update

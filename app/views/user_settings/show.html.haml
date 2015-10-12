@@ -47,10 +47,11 @@
             %strong= "Show thumbnails:"
             .pull-right
               = "#{@user_setting.show_thumbnails? ? 'Yes' : 'No'}"
-          %div.list-group-item
-            %strong= "Search table:"
-            .pull-right
-              = "#{@user_setting.table_name}"
+          -#
+            %div.list-group-item
+              %strong= "Search table:"
+              .pull-right
+                = "#{@user_setting.table_name}"
           
       = link_to "Edit", edit_user_setting_path(@user_setting), id: 'edit_user_setting_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
   -#
