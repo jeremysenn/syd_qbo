@@ -19,10 +19,10 @@
             =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
         %div.panel-footer
-          %a{href: edit_vendor_path(@purchase_order.vendor_ref), id: "edit_vendor_link", target: '_blank'}
-            = @purchase_order.vendor_ref.name
           -#
-            .vendor_name= @purchase_order.vendor_ref.name
+            %a{href: edit_vendor_path(@purchase_order.vendor_ref), id: "edit_vendor_link", target: '_blank'}
+              = @purchase_order.vendor_ref.name
+          #vendor_name= @purchase_order.vendor_ref.name
     %div.purchase_order_input_fields_wrap
       #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
         - @purchase_order.line_items.each do |line_item|

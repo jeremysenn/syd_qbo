@@ -46,8 +46,9 @@ jQuery ->
     #input_select.closest('.panel').find('.vendor_name').text name
     panel.closest('.collapse').collapse('toggle')
     $(this).closest('.panel-collapse').collapse('hide')
-    input_select.closest('.panel').find('#edit_vendor_link').attr('href', "/vendors/" + vendor_id + "/edit"); 
-    input_select.closest('.panel').find('#edit_vendor_link').text name
+    #input_select.closest('.panel').find('#edit_vendor_link').attr('href', "/vendors/" + vendor_id + "/edit"); 
+    #input_select.closest('.panel').find('#edit_vendor_link').text name
+    input_select.closest('.panel').find('#vendor_name').text name
 
   ### Line item changed ###
   $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
