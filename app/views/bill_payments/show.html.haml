@@ -53,8 +53,9 @@
         Print  
   
   %div#images
-    %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @bill_payment.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
-      = "Ticket #{@bill_payment.doc_number} Pictures"
+    -#
+      %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @bill_payment.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
+        = "Ticket #{@bill_payment.doc_number} Pictures"
     -#
       - unless @images.blank?
         - @images.each_slice(6) do |images|
@@ -64,5 +65,10 @@
                 %div.thumbnail
                   - unless image.hidden?
                     = link_to image_tag(show_preview_image_image_path(image)), image
+
+  %div{id: 'endless_page'}
+    %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
+    %p= link_to 'Load pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @bill_payment.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'load-more-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" #if @images.next_page
+
   
 = render partial: "shared/bill_payment_footer_navbar", locals: {title: "BillPayment"}
