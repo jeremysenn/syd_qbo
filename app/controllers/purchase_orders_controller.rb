@@ -79,6 +79,8 @@ class PurchaseOrdersController < ApplicationController
     @items = @item_service.query(nil, :per_page => 1000)
     
 #    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
+#    search = Image.ransack(ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location)
+#    @images = search.result.page(params[:page]).per(1)
   end
   
   # POST /purchase_orders

@@ -48,8 +48,8 @@
   .row
     .text-center
       %div{id: 'endless_page'}
-        %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-        %p= link_to 'Load more ...', shipments_path(:page => @shipments.next_page, :q => params[:q], :one_shipment_per_ticket => params[:one_shipment_per_ticket]), :class => 'load-more-shipments btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @shipments.next_page
+        %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
+        %p= link_to 'Load more ...', shipments_path(:page => @shipments.next_page, :q => params[:q], :one_shipment_per_ticket => params[:one_shipment_per_ticket]), :class => 'load-more-shipments btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" if @shipments.next_page
   =# paginate @shipments
   
 = render partial: "shared/footer_navbar", locals: {title: "Shipments"}

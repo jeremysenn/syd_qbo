@@ -1,5 +1,5 @@
 $('#images').append('<div class="row"><%= j render @images %></div>');
-$('#spinner').hide();
+$('#more_images_spinner').hide();
 
 <% if @images.next_page %>
   $('a.load-more-images').show();
