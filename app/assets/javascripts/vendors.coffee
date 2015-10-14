@@ -62,7 +62,7 @@ jQuery ->
   $(document).on 'click', '.new_ticket_from_vendor', ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
-    return
+    return false
 
   $('#drivers_license_scan').on 'click', ->
     $.ajax(url: "/tud_devices/drivers_license_scan", dataType: 'json').done (data) ->
