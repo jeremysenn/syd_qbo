@@ -197,7 +197,7 @@ jQuery ->
   
 
   ### Check if any tares are zero ###
-  $('#close_button').on 'click', (e) ->
+  $('#close_button, #close_and_pay_button').on 'click', (e) ->
     numZeroTare = 0
     $('.tare').each (index) ->
       if ($(this).val() == '0') || ($(this).val() == '')
