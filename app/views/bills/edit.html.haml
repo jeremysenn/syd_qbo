@@ -25,13 +25,13 @@
           .panel.panel-default
             %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
               %h4.panel-title
-                %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@bill.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@bill.line_items.count > 1 ? 'collapsed' : ''}"}
+                %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
                   = line_item.item_based_expense_line_detail.item_ref.name
                   =# " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
                 = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
                 %a{href: '#', class: 'remove_field pull-right'}
                   %i.fa.fa-trash
-            %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@bill.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@bill.line_items.count > 1 ? false : true}"}
+            %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse ", "aria-expanded" => false}
               .panel-body
                 =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
