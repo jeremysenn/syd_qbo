@@ -11,11 +11,13 @@
           = f.hidden_field :event_code, value: 'Signature'
           = f.hidden_field :customer_number, value: @vendor.id unless @vendor.blank?
           = f.hidden_field :customer_name, value: @vendor.display_name unless @vendor.blank?
-          - unless @contract.blank?
-            %p= @contract.text1
-            %p= @contract.text2
-            %p= @contract.text3
-            %p= @contract.text4
+          %h3= default_contract
+          -#
+            - unless @contract.blank?
+              %p= @contract.text1
+              %p= @contract.text2
+              %p= @contract.text3
+              %p= @contract.text4
           .form-group
             .sigPad
               %div.sigNav

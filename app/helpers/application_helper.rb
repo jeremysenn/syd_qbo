@@ -86,5 +86,9 @@ module ApplicationHelper
     ]
 end
 
+  def default_contract
+    "I agree that I am responsible for the material I am selling and that it is legal for me to sell."
+  end
+
     
     

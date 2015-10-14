@@ -25,6 +25,10 @@ class Image < ActiveRecord::Base
     Image.where(ticket_nbr: ticket_nbr, cust_name: customer_name).exists?
   end
   
+  def signature?
+    event_code == "Signature"
+  end
+  
   #############################
   #     Class Methods      #
   #############################

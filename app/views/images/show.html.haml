@@ -1,5 +1,7 @@
 = render partial: "shared/search_navbar", locals: {title: "#{@image.ticket_nbr}"}
 .container
+  - if @image.signature?
+    %h3= default_contract
   %div.row
     .col-xs-12.col-sm-12.col-md-12
       = link_to image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'

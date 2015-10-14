@@ -68,7 +68,7 @@ class BillsController < ApplicationController
     @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @doc_number = @bill.doc_number
-    @contract = Contract.find(current_company_id) # Find contract for this company
+#    @contract = Contract.find(current_company_id) # Find contract for this company
     
 #    query = "Select * From Item Where Type = 'Inventory'"
     @items = @item_service.query(nil, :per_page => 1000)
