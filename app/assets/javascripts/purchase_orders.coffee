@@ -33,9 +33,9 @@ jQuery ->
 
     return
 
-  #$('#new_ticket_navbar_link').on 'click', ->
-  #  $('#purchase_order_form').submit()
-  #  return
+  $('#new_ticket_navbar_link').on 'click', ->
+    $('#purchase_order_form').submit()
+    return
 
   ### Vendor value changed ###
   $('#purchase_order_vendor').on 'change', ->

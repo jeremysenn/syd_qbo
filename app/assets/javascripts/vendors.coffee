@@ -62,7 +62,6 @@ jQuery ->
   $(document).on 'click', '.new_ticket_from_vendor', (e) ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
-    e.preventDefault()
     return
 
   $('#drivers_license_scan').on 'click', ->
