@@ -59,10 +59,11 @@ jQuery ->
       loading_vendors = false
   ### End endless page stuff ###
 
-  $(document).on 'click', '.new_ticket_from_vendor', ->
+  $(document).on 'click', '.new_ticket_from_vendor', (e) ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
+    e.preventDefault()
     $('#purchase_order_form').submit()
-    event.preventDefault();
+    return
 
   $('#drivers_license_scan').on 'click', ->
     $.ajax(url: "/tud_devices/drivers_license_scan", dataType: 'json').done (data) ->
