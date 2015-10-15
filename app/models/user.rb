@@ -36,6 +36,15 @@ class User < ActiveRecord::Base
     Contract.where(company_id: location)
   end
   
+  def default_contract
+    contracts = Contract.where(company_id: location)
+    unless contracts.empty?
+      return contracts.last
+    else
+      nil
+    end
+  end
+  
   def default_contract_wording
     contracts = Contract.where(company_id: location)
     unless contracts.empty?
