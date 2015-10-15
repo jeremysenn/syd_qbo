@@ -32,6 +32,19 @@ class User < ActiveRecord::Base
     user_setting.table_name == "shipments"
   end
   
+  def contracts
+    Contract.where(company_id: location)
+  end
+  
+  def default_contract_wording
+    contracts = Contract.where(company_id: location)
+    unless contracts.empty?
+      return contracts.last.wording
+    else
+      nil
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################
@@ -45,21 +58,4 @@ class User < ActiveRecord::Base
     end
   end
   
-  def self.dog_licensing_ok?
-    require 'net/http'
-    
-    unless ENV["JPEGGER_SERVICE"].blank?
-      uri = URI("http://#{ENV['JPEGGER_SERVICE']}:3333/checkdoglicense.html?numusers=#{User.count + 1}")
-      response =  Net::HTTP.get(uri)
-      return response == "<html><body>OK</body></html>\r\n"
-    else
-      return true
-    end
-    
-#    unless ENV["JPEGGER_SERVICE"].blank?
-#      return system("curl http://#{ENV['JPEGGER_SERVICE']}:3333/checkdoglicense.html?numusers=#{User.count + 1}")
-#    else
-#      return true
-#    end
-  end
 end

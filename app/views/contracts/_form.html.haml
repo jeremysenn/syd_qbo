@@ -1,0 +1,26 @@
+= form_for @contract do |f|
+  - @contract.errors.each do |attr, msg|
+    .alert.alert-danger
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      = "#{attr} #{msg}" if @contract.errors[attr].first == msg
+  -#
+    - if @contract.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@contract.errors.count, "error")} prohibited this contract from being saved:"
+        %ul
+          - @contract.errors.full_messages.each do |msg|
+            %li= msg
+  = f.hidden_field :company_id, value: current_user.location
+  .well
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label "Name", :class => "control-label"
+        = f.text_field :name, :placeholder => "Name", class: "form-control input-lg"
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label "Wording", :class => "control-label"
+        = f.text_area :wording, :placeholder => "Contract wording goes here", rows: 10, class: "form-control input-lg"
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}) do
+          Save

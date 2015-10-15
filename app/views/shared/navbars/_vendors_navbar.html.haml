@@ -9,6 +9,9 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
+          %a{href: new_vendor_path}
+            %i.fa.fa-user-plus.fa-lg
+            = "Vendor" unless mobile_device?
           -#
             %a{href: '#', id: 'new_ticket_navbar_link'}
               %i.fa.fa-plus.fa-lg

@@ -52,6 +52,8 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :contracts
+  
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   ### Start sidekiq stuff ###

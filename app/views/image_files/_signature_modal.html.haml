@@ -11,7 +11,11 @@
           = f.hidden_field :event_code, value: 'Signature'
           = f.hidden_field :customer_number, value: @vendor.id unless @vendor.blank?
           = f.hidden_field :customer_name, value: @vendor.display_name unless @vendor.blank?
-          %h3= default_contract
+          %h3
+            - unless current_user.default_contract_wording.blank?
+              = current_user.default_contract_wording
+            - else
+              = default_contract
           -#
             - unless @contract.blank?
               %p= @contract.text1
@@ -22,7 +26,7 @@
             .sigPad
               %div.sigNav
                 .clearButton
-                  %a{href: "#clear", class: 'pull-right'} Clear
+                  %a{href: "#clear", class: 'pull-right'} Clear signature
               .sig.sigWrapper
                 .typed
                 %canvas.pad{height: "85", width: "498"}

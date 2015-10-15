@@ -85,5 +85,12 @@ class Ability
     end
     can :create, LookupDef
     
+    # Contracts
+    ############
+    can :manage, Contract do |contract|
+      contract.company_id == user.location
+    end
+    can :create, Contract
+    
   end
 end

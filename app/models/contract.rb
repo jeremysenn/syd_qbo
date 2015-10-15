@@ -1,10 +1,17 @@
 class Contract < ActiveRecord::Base
-#  new columns need to be added here to be writable through mass assignment
-#  attr_accessible :tableName, :FieldName, :LookupDisplay, :LookupValue, :IsRequired, :lookupID, :MobileFlag
+  
+  validates :name, presence: true
+  validates :wording, presence: true
+  validates :company_id, presence: true
 
-  establish_connection :jpegger
-
-  self.primary_key = 'contract_id'
-
+  #############################
+  #     Instance Methods      #
+  ############################
+  
+  
+  #############################
+  #     Class Methods      #
+  #############################
+  
 end
 
