@@ -15,4 +15,8 @@ class WelcomeController < ApplicationController
 #      @company_info = @company_info_service.fetch_by_id(session[:realm_id])
     end
   end
+  
+  def privacy
+    
+  end
 end
