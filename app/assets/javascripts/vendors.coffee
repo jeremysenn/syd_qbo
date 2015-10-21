@@ -60,7 +60,6 @@ jQuery ->
   ### End endless page stuff ###
 
   $(document).on 'click', '.new_ticket_from_vendor', (e) ->
-    alert 'here'
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
     return
