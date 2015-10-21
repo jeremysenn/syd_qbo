@@ -64,5 +64,9 @@ class TudDevice < ActiveRecord::Base
     open('http://192.168.111.150:10001').read
   end
   
+  def self.scale_camera_trigger
+    
+  end
+  
 end
 
