@@ -12,7 +12,8 @@ class VendorsController < ApplicationController
   def index
 #    @items = @item_service.query(nil, :per_page => 1000)
     first_item_query = "select * from Item maxresults 1"
-    @first_items = @item_service.query(first_item_query, :per_page => 1)
+    @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
+    @first_item = @first_items.first
     unless params[:search].blank?
       #query = "SELECT * FROM Vendor WHERE DisplayName LIKE #{params[:search]};"
       query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
@@ -39,7 +40,8 @@ class VendorsController < ApplicationController
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
     first_item_query = "select * from Item maxresults 1"
-    @first_items = @item_service.query(first_item_query, :per_page => 1)
+    @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
+    @first_item = @first_items.first
     @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
 

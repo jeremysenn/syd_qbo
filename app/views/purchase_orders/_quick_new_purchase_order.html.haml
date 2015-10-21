@@ -36,13 +36,13 @@
                     = label_tag "Item", nil, :class => 'control-label'
                     =# select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
                     =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
-                    = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@first_items, "id", "name"), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
+                    = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@first_items, "id", "name", @first_item.id), class: "form-control input-lg item_select", required: true, onchange: "$('.modal-footer').show();"
                     =# hidden_field_tag "purchase_order[line_items][][description]", nil
-                    = hidden_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
-                    = hidden_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
-                    = hidden_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", readonly: true
-                    = hidden_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field"
-                    = hidden_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true
+                    = hidden_field_tag "purchase_order[line_items][][gross]", 0, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                    = hidden_field_tag "purchase_order[line_items][][tare]", 0, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
+                    = hidden_field_tag "purchase_order[line_items][][quantity]", 0, :placeholder => "Load", class: "form-control input-lg amount-calculation-field", readonly: true
+                    = hidden_field_tag "purchase_order[line_items][][rate]", @first_item.purchase_cost, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field"
+                    = hidden_field_tag "purchase_order[line_items][][amount]", 0, :placeholder => "Amount", class: "form-control input-lg", required: true
 
         .modal-footer{style: 'display:block;'}
           -#
@@ -52,4 +52,5 @@
             %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} Done
 
 :javascript
-  $(function(){ $('.item_select').trigger('change'); });
+  // auto trigger the change so that it pulls the correct rate pricing for the item
+  //$(function(){ $('.item_select').trigger('change'); alert('here!');});
