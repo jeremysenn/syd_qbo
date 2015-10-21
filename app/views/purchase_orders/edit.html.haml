@@ -44,22 +44,20 @@
                 = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
                 = label_tag "Gross", nil, :class => 'control-label'
                 %div.input-group
-                  -#
-                    %span.input-group-addon
-                      %a{href: '#', class: 'scale_read', 'data-event-code' => "Tare"}
-                        %i.fa.fa-dashboard.fa-lg
-                        %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                  %span.input-group-addon
+                    %a{href: '#', class: 'scale_read', 'data-event-code' => "Gross"}
+                      %i.fa.fa-dashboard.fa-lg
+                      %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   = phone_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').first}
                       %i.fa.fa-camera.fa-lg
                 = label_tag "Tare", nil, :class => 'control-label'
                 %div.input-group
-                  -#
-                    %span.input-group-addon
-                      %a{href: '#', class: 'scale_read', 'data-event-code' => "Tare"}
-                        %i.fa.fa-dashboard.fa-lg
-                        %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                  %span.input-group-addon
+                    %a{href: '#', class: 'scale_read', 'data-event-code' => "Tare"}
+                      %i.fa.fa-dashboard.fa-lg
+                      %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   = phone_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').second}
