@@ -8,9 +8,9 @@ module ApplicationHelper
     flash.each do |msg_type, message|
       concat(content_tag(:div, message, class: "alert #{bootstrap_class_for(msg_type)} fade in") do 
             concat content_tag(:button, 'x', class: "close", data: { dismiss: 'alert' })
-              concat message unless msg_type == 'timedout'
+              concat message
 #              concat sanitize(message) unless msg_type == 'timedout'
-            end)
+            end) unless msg_type == 'timedout'
         end
       nil
     end

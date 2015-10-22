@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     collection do
       get :drivers_license_scan
       get :scale_read
+      get :show_scanned_jpeg_image
     end
   end
   
