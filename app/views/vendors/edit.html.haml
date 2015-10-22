@@ -2,10 +2,20 @@
 .container
   %p
     = link_to "License Scan", '#', id: 'drivers_license_scan', onclick: "$('#spinner').show();"
-    =# image_tag(TudDevice.drivers_license_scanned_image)
     = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-    %div{id: "scanned_license_picture"}
-  .well.col-sm-12.col-md-12
+  %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license"}
+    = image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+    =# image_tag('http://media.twiliocdn.com.s3-external-1.amazonaws.com/AC27c4bc7245c64b76ac92bac10c1cf9b0/7f7f1e2f70fd9e2fc5432b138f730097', style: 'display:none;', id: "scanned_license_picture", class: 'thumbnail img-responsive')
+    .caption
+      = form_for CustPicFile.new do |f|
+        = f.hidden_field :remote_file_url, value: 'http://media.twiliocdn.com.s3-external-1.amazonaws.com/AC27c4bc7245c64b76ac92bac10c1cf9b0/7f7f1e2f70fd9e2fc5432b138f730097'
+        = f.hidden_field :user_id, value: current_user.id
+        = f.hidden_field :customer_number, value: @vendor.id
+        = f.hidden_field :location, value: current_company_id
+        = f.submit 'Save', class: 'btn btn-default'
+        -#
+          .pull-right= link_to "Save", '#', class: 'btn btn-default'
+  .well.col-xs-12.col-sm-12.col-md-12
     = form_tag update_qb_vendor_path, method: 'get', :class => "form-horizontal" do
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}

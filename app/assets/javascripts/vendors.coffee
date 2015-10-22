@@ -80,4 +80,7 @@ jQuery ->
       $('#vendor_billing_address_country_sub_division_code').val state
       $('#vendor_billing_address_postal_code').val zip
 
+      $('#scanned_license_picture').attr('src', 'https://api.twilio.com/2010-04-01/Accounts/AC27c4bc7245c64b76ac92bac10c1cf9b0/Messages/MMe882fce1947ce6bb10e90ec0d3e5de3c/Media/ME2be55db848b4a1b43ec90bcd3dbbbd35');
+      $('#scanned_license').show()
+
       $('#spinner').hide()
