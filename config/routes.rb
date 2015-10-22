@@ -50,7 +50,6 @@ Rails.application.routes.draw do
       get :drivers_license_scan
       get :scale_read
       get :show_scanned_jpeg_image
-      get :send_scanned_jpeg_image
     end
   end
   

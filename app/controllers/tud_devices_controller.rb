@@ -1,5 +1,5 @@
 class TudDevicesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image, :send_scanned_jpeg_image]
+  before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image]
 #  load_and_authorize_resource
 
   # GET /tud_devices
@@ -65,10 +65,6 @@ class TudDevicesController < ApplicationController
   
   def show_scanned_jpeg_image
     send_data TudDevice.drivers_license_scanned_image, :type => 'image/jpeg',:disposition => 'inline'
-  end
-  
-  def send_scanned_jpeg_image
-    send_data TudDevice.drivers_license_scanned_image, :type => 'image/jpeg',:disposition => 'attachment'
   end
   
   def drivers_license_scan
