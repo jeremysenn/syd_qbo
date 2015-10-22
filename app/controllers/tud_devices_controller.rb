@@ -1,5 +1,5 @@
 class TudDevicesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image]
+  before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image, :send_scanned_jpeg_image]
 #  load_and_authorize_resource
 
   # GET /tud_devices
