@@ -37,7 +37,8 @@ class CustPicFilesController < ApplicationController
         end
         }
       format.json { 
-        @cust_pic_file = CustPicFile.new(cust_pic_file_params, remote_file_url: "http://192.168.111.150:10001")
+#        @cust_pic_file = CustPicFile.new(cust_pic_file_params)
+        @cust_pic_file = CustPicFile.new(user_id: 1, customer_number: "77", location: "404168351", event_code: "Photo ID", remote_file_url: "http://192.168.111.150:10001")
         if @cust_pic_file.save
           render :show, status: :created, location: @cust_pic_file 
         else
