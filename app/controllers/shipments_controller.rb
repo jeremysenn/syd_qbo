@@ -41,7 +41,7 @@ class ShipmentsController < ApplicationController
       # Default search to today's shipments
       @today = true
 #      search = Shipment.ransack(:sys_date_time_gteq => Date.today, :sys_date_time_lteq => Date.today.tomorrow)
-      search = Shipment.ransack(:sys_date_time_gteq => Date.today.beginning_of_day, :sys_date_time_lteq => Date.today.end_of_day)
+      search = Shipment.ransack(:sys_date_time_gteq => Date.today.beginning_of_day, :sys_date_time_lteq => Date.today.end_of_day, :location_eq => current_user.location)
       params[:q] = {}
       @start_date = Date.today.to_s
 #      @end_date = Date.today.tomorrow.to_s
