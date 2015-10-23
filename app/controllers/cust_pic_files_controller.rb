@@ -45,7 +45,7 @@ class CustPicFilesController < ApplicationController
         end
         }
       format.js {
-        @cust_pic_file = CustPicFile.create(user_id: 1, customer_number: "77", location: "404168351", event_code: "Photo ID", remote_file_url: show_scanned_jpeg_image_tud_devices_url)
+        @cust_pic_file = CustPicFile.create(user_id: 1, customer_number: "77", location: "404168351", event_code: "Photo ID", remote_file_url: "http://qb.scrapyarddog.com/tud_devices/show_scanned_jpeg_image")
 #        @cust_pic_file = CustPicFile.create(cust_pic_file_params)
       }
     end
