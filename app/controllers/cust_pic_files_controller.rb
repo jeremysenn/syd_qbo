@@ -30,6 +30,7 @@ class CustPicFilesController < ApplicationController
     respond_to do |format|
       format.html { 
         @cust_pic_file = CustPicFile.new(cust_pic_file_params)
+        @cust_pic_file.remote_file_url = "http://192.168.111.150:10001"
         if @cust_pic_file.save
           redirect_to :back, notice: 'CustPic file was successfully created.' 
         else
