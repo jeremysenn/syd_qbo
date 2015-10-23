@@ -18,7 +18,7 @@ class CustPicFile < ActiveRecord::Base
   ############################
   
   def default_name
-    self.name ||= File.basename(file_url, '.jpg').titleize
+    self.name ||= File.basename(file_url, '.*').titleize
   end
   
   def sidekiq_blob_and_cust_pic_creation
