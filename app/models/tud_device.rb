@@ -61,8 +61,7 @@ class TudDevice < ActiveRecord::Base
   
   def self.drivers_license_scanned_image
     require 'open-uri'
-    open('http://192.168.111.150:10001')
-#    open('http://192.168.111.150:10001').read
+    open('http://192.168.111.150:10001').read
 #    open('http://media.twiliocdn.com.s3-external-1.amazonaws.com/AC27c4bc7245c64b76ac92bac10c1cf9b0/7f7f1e2f70fd9e2fc5432b138f730097')
   end
   

@@ -64,7 +64,7 @@ class TudDevicesController < ApplicationController
   end
   
   def show_scanned_jpeg_image
-    send_data TudDevice.drivers_license_scanned_image, :type => 'image/jpeg', :filename => 'drivers_license.jpg', :disposition => 'attachment'
+    send_data TudDevice.drivers_license_scanned_image, :type => 'image/jpeg', :filename => 'drivers_license.jpg', :disposition => 'inline'
   end
   
   def drivers_license_scan
