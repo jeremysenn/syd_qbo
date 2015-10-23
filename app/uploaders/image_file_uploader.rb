@@ -113,7 +113,7 @@ class ImageFileUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
     def extension_white_list
-      %w(jpg jpeg gif png pdf)
+#      %w(jpg jpeg gif png pdf)
     end
     
     ### When the move_to_cache and/or move_to_store methods return true, files will be moved (instead of copied) to the cache and store respectively. ###
