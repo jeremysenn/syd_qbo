@@ -65,8 +65,23 @@ class TudDevice < ActiveRecord::Base
 #    open('http://media.twiliocdn.com.s3-external-1.amazonaws.com/AC27c4bc7245c64b76ac92bac10c1cf9b0/7f7f1e2f70fd9e2fc5432b138f730097')
   end
   
-  def self.scale_camera_trigger
-    
+  def self.scale_camera_trigger(ticket_number, location, camera_name, weight)
+    xml_string = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <SOAP-ENV:Body>
+         <mns:JpeggerTrigger xmlns:mns="urn:JpeggerTriggerIntf-IJpeggerTrigger" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <Host xsi:type="xs:string">127.0.0.1</Host>
+            <Port xsi:type="xs:int">3333</Port>
+            <Trigger xsi:type="xs:string">
+               <CAPTURE>
+                  <TICKET_NBR>123</TICKET_NBR>
+                  <CAMERA_NAME>NFSCALE</CAMERA_NAME>
+                  <WEIGHT>1450</WEIGHT>
+               </CAPTURE>
+            </Trigger>
+         </mns:JpeggerTrigger>
+      </SOAP-ENV:Body>
+    </SOAP-ENV:Envelope>'
+    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
   end
   
 end
