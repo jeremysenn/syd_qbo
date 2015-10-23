@@ -38,7 +38,7 @@ class CustPicFilesController < ApplicationController
         }
       format.json { 
 #        @cust_pic_file = CustPicFile.new(cust_pic_file_params)
-        @cust_pic_file = CustPicFile.new(user_id: 1, customer_number: "77", location: "404168351", event_code: "Photo ID", remote_file_url: show_scanned_jpeg_image_tud_devices_path)
+        @cust_pic_file = CustPicFile.new(user_id: 1, customer_number: "77", location: "404168351", event_code: "Photo ID", remote_file_url: show_scanned_jpeg_image_tud_devices_url)
         if @cust_pic_file.save
           render :show, status: :created, location: @cust_pic_file 
         else
