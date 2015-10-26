@@ -54,8 +54,6 @@ Rails.application.routes.draw do
   
   resources :contracts
   
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
   ### Start sidekiq stuff ###
   require 'sidekiq/web'
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
@@ -102,6 +100,9 @@ Rails.application.routes.draw do
   
   get 'welcome/privacy' => 'welcome#privacy'
   get 'welcome/tos' => 'welcome#tos'
+  
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
