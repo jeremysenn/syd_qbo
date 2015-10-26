@@ -82,6 +82,7 @@ class TudDevice < ActiveRecord::Base
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>'
     client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client.call(:jpegger_trigger, xml: xml_string)
   end
   
 end

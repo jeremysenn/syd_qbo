@@ -49,6 +49,23 @@
           %li.list-group-item= link_to "Edit", edit_contract_path(current_user.default_contract.id), id: 'edit_contract_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
         - else
           %li.list-group-item= link_to "Create", new_contract_path, id: 'new_contract_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Create"}
+
+    .panel.panel-default
+      .panel-heading
+        Devices
+      %ul.list-group
+        - current_user.devices.each do |device|
+          %li.list-group-item
+            %strong= device.DeviceName
+            %p
+              = "Workstation ID:"
+              = device.WorkstationID
+            %p
+              = "Device Type:"
+              = device.DeviceType
+            %p
+              = "TUD Port:"
+              = device.TUDPort
   -#
     %div.row
       .col-xs-12.col-sm-6.col-md-offset-3

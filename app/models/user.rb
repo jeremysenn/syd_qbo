@@ -54,6 +54,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def devices
+    Device.where(CompanyID: location)
+  end
+  
   #############################
   #     Class Methods      #
   #############################
