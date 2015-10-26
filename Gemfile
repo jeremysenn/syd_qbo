@@ -83,7 +83,7 @@ gem 'cancancan'
 gem 'sinatra', :require => nil
 
 # Administration interface
-#gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'activeadmin', github: 'gregbell/active_admin'
 
 # Provide a clear syntax for writing and deploying cron jobs.
 gem 'whenever', :require => false
