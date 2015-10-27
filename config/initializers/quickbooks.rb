@@ -9,4 +9,4 @@ $qb_oauth_consumer = OAuth::Consumer.new(QB_KEY, QB_SECRET, {
 })
 
 # add to the end of file
-Quickbooks.sandbox_mode = false
+Quickbooks.sandbox_mode = true

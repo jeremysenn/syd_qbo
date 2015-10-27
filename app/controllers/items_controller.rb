@@ -40,7 +40,7 @@ class ItemsController < ApplicationController
       format.html {}
 #      format.json { render json: @item.unit_price }
 #      format.json {render json: {"name" => @item.name, "description" => @item.description, "unit_price" => @item.unit_price} } 
-      format.json {render json: {"name" => @item.name, "description" => @item.description, "purchase_cost" => @item.purchase_cost, "unit_price" => @item.unit_price} } 
+      format.json {render json: {"name" => @item.name, "purchase_desc" => @item.purchase_desc, "purchase_cost" => @item.purchase_cost, "unit_price" => @item.unit_price} } 
     end
   end
 
@@ -57,7 +57,7 @@ class ItemsController < ApplicationController
   def create
     @item = Quickbooks::Model::Item.new
     @item.name = item_params[:name]
-    @item.description = item_params[:description]
+    @item.purchase_desc = item_params[:purchase_desc]
     @item.purchase_cost = item_params[:purchase_cost]
     @item.expense_account_id = item_params[:expense_account_ref]
     @item = @item_service.create(@item)
@@ -75,7 +75,7 @@ class ItemsController < ApplicationController
 
   def update_qb
     @item.name = item_params[:name]
-    @item.description = item_params[:description]
+    @item.purchase_desc = item_params[:purchase_desc]
     @item.purchase_cost = item_params[:purchase_cost]
     @item.expense_account_id = item_params[:expense_account_ref]
     @item = @item_service.update(@item)
@@ -150,6 +150,6 @@ class ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:item).permit(:name, :description, :purchase_cost, :expense_account_ref)
+      params.require(:item).permit(:name, :purchase_desc, :purchase_cost, :expense_account_ref)
     end
 end

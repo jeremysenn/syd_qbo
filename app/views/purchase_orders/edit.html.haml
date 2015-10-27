@@ -33,7 +33,7 @@
                   =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
                   =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
                   = line_item.item_based_expense_line_detail.item_ref.name
-                = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
+                = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc
                 %a{href: '#', class: 'remove_field pull-right'}
                   %i.fa.fa-trash
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@purchase_order.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}"}

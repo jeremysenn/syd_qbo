@@ -11,7 +11,7 @@
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Unit of Measure", nil, :class => 'control-label'
-          = select_tag "item[description]", options_for_select(units_of_measure), prompt: 'Select unit of measure', class: "form-control input-lg"
+          = select_tag "item[purchase_desc]", options_for_select(units_of_measure), prompt: 'Select unit of measure', class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Purchase Cost", nil, :class => 'control-label'

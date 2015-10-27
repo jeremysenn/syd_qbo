@@ -28,7 +28,7 @@
                 %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
                   = line_item.item_based_expense_line_detail.item_ref.name
                   =# " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
-                = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description
+                = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc
                 %a{href: '#', class: 'remove_field pull-right'}
                   %i.fa.fa-trash
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse ", "aria-expanded" => false}
