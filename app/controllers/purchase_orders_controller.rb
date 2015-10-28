@@ -187,6 +187,7 @@ class PurchaseOrdersController < ApplicationController
   end
   
   def line_item_fields
+    @doc_number = params[:doc_number]
     @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
