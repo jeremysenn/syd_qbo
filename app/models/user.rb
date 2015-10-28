@@ -58,6 +58,10 @@ class User < ActiveRecord::Base
     Device.where(CompanyID: location)
   end
   
+  def scale_devices
+    Device.where(CompanyID: location, DeviceType: 21)
+  end
+  
   #############################
   #     Class Methods      #
   #############################

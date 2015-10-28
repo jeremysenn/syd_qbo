@@ -216,12 +216,29 @@ jQuery ->
 
   $(document).on 'click', '.scale_read', (e) ->
     e.preventDefault()
+    device_id = $(this).data( "device-id" )
     dashboard_icon = $(this).find( ".fa-dashboard" )
     dashboard_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
     weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
-    $.ajax(url: "/tud_devices/scale_read", dataType: 'json').done (data) ->
+
+    $.ajax
+      url: 'url'
+      type: 'GET'
+      data:
+        field1: 'hello'
+        field2: 'hello2'
+      contentType: 'application/json; charset=utf-8'
+      success: (response) ->
+        #your success code
+        return
+      error: ->
+        #your error code
+        return
+
+    #$.ajax(url: "/tud_devices/scale_read", dataType: 'json').done (data) ->
+    $.ajax(url: "/devices/" + device_id + "/scale_read", dataType: 'json').done (data) ->
       dashboard_icon.show()
       spinner_icon.hide()
       weight = data.weight

@@ -2,6 +2,8 @@ class DevicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image]
 #  load_and_authorize_resource
 
+  before_action :set_device, only: [:show, :scale_read, :scale_camera_trigger]
+
   # GET /devices
   # GET /devices.json
   def index
@@ -88,6 +90,20 @@ class DevicesController < ApplicationController
   
   def scale_read
     scale_read_result = @device.scale_read
+    respond_to do |format|
+      format.html {}
+      format.json {
+        unless scale_read_result.blank?
+          render json: { "weight" => scale_read_result } 
+        else
+          render json: {} 
+        end
+        } 
+    end
+  end
+  
+  def scale_camera_trigger
+    @device.scale_camera_trigger
     respond_to do |format|
       format.html {}
       format.json {

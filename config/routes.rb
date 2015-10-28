@@ -53,6 +53,14 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :devices do
+    member do
+      get :drivers_license_scan
+      get :scale_read
+      get :scale_camera_trigger
+    end
+  end
+  
   resources :contracts
   
   devise_for :admin_users, ActiveAdmin::Devise.config
