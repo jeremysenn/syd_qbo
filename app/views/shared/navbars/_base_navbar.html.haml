@@ -50,7 +50,7 @@
           %a{href: "#{current_user.images_table? ? images_path : shipments_path}"}
             Pictures
         %li
-          %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
+          %a{href: "https://qbo.intuit.com/app/homepage", target: '_blank'}
             Quickbooks
       %ul.nav.navbar-nav.navbar-right
         %li= link_to "<strong>#{current_user.email}</strong>".html_safe, edit_user_registration_path(current_user)
