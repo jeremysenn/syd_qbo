@@ -12,7 +12,7 @@
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Unit of Measure", nil, :class => 'control-label'
           =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-          = select_tag "item[description]", options_for_select(units_of_measure, @item.description), class: "form-control input-lg"
+          = select_tag "item[purchase_desc]", options_for_select(units_of_measure, @item.purchase_desc), class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Purchase Cost", nil, :class => 'control-label'
