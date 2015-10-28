@@ -26,7 +26,7 @@ class Device < ActiveRecord::Base
     return data[:read_scale_response][:return]
   end
   
-  def scale_camera_trigger(ticket_number, weight, location)
+  def scale_camera_trigger(ticket_number, event_code, location, weight)
     xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
       <SOAP-ENV:Body>
          <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
@@ -35,7 +35,8 @@ class Device < ActiveRecord::Base
             <Trigger xsi:type='xs:string'>
                <CAPTURE>
                   <TICKET_NBR>#{ticket_number}</TICKET_NBR>
-                  <CAMERA_NAME>NFSCALE</CAMERA_NAME>
+                  <EVENT_CODE>#{event_code}</EVENT_CODE>
+                  <CAMERA_NAME>#{self.CameraGroup}</CAMERA_NAME>
                   <WEIGHT>#{weight}</WEIGHT>
                   <LOCATION>#{location}</LOCATION>
                </CAPTURE>

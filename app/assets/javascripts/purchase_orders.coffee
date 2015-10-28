@@ -216,32 +216,50 @@ jQuery ->
 
   $(document).on 'click', '.scale_read', (e) ->
     e.preventDefault()
+
+    # Get data from scale button
     device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    event_code = $(this).data( "event-code" )
+    location = $(this).data( "location" )
+
     dashboard_icon = $(this).find( ".fa-dashboard" )
     dashboard_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
     weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
+    weight = weight_text_field.val()
 
-    $.ajax
-      url: 'url'
-      type: 'GET'
-      data:
-        field1: 'hello'
-        field2: 'hello2'
-      contentType: 'application/json; charset=utf-8'
-      success: (response) ->
-        #your success code
-        return
-      error: ->
-        #your error code
-        return
-
+    # Make call to get the weight off the scale
     #$.ajax(url: "/tud_devices/scale_read", dataType: 'json').done (data) ->
-    $.ajax(url: "/devices/" + device_id + "/scale_read", dataType: 'json').done (data) ->
-      dashboard_icon.show()
-      spinner_icon.hide()
-      weight = data.weight
-      weight_text_field.val weight
-      $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
-      false
+    $.ajax
+      url: "/devices/" + device_id + "/scale_read"
+      dataType: 'json'
+      success: (data) ->
+        weight = data.weight
+        weight_text_field.val weight
+        $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
+        dashboard_icon.show()
+        spinner_icon.hide()
+        # Make call to trigger scale camera
+        $.ajax
+          url: "/devices/" + device_id + "/scale_camera_trigger"
+          dataType: 'json'
+          data:
+            ticket_number: ticket_number
+            event_code: event_code
+            location: location
+            weight: weight
+          success: (response) ->
+            alert 'Scale camera trigger successful.'
+            return
+          error: ->
+            alert 'Scale camera trigger failed'
+            return
+      error: ->
+        dashboard_icon.show()
+        spinner_icon.hide()
+        alert 'Error reading weight scale.'
+        return
+
+    

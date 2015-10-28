@@ -94,25 +94,19 @@ class DevicesController < ApplicationController
       format.html {}
       format.json {
         unless scale_read_result.blank?
-          render json: { "weight" => scale_read_result } 
+          render json: { "weight" => scale_read_result }, :status => :ok 
         else
-          render json: {} 
+          render :status => :unprocessable_entity
         end
         } 
     end
   end
   
   def scale_camera_trigger
-    @device.scale_camera_trigger
+    @device.scale_camera_trigger(params[:ticket_number], params[:event_code], params[:location], params[:weight])
     respond_to do |format|
       format.html {}
-      format.json {
-        unless scale_read_result.blank?
-          render json: { "weight" => scale_read_result } 
-        else
-          render json: {} 
-        end
-        } 
+      format.json { render json: {}, :status => :ok}
     end
   end
 
