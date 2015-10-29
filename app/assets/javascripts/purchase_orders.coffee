@@ -74,6 +74,8 @@ jQuery ->
       input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-name', name
       input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-id', item_id 
       input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-id', item_id
+      input_select.closest('.panel').find('#gross_scale_button:first').attr 'data-item-name', name 
+      input_select.closest('.panel').find('#tare_scale_button:first').attr 'data-item-name', name
 
       return
 
@@ -216,12 +218,12 @@ jQuery ->
 
   $(document).on 'click', '.scale_read', (e) ->
     e.preventDefault()
-
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
     event_code = $(this).data( "event-code" )
     location = $(this).data( "location" )
+    commodity_name = $(this).data( "item-name" )
 
     dashboard_icon = $(this).find( ".fa-dashboard" )
     dashboard_icon.hide()
@@ -248,6 +250,7 @@ jQuery ->
           data:
             ticket_number: ticket_number
             event_code: event_code
+            commodity_name: commodity_name
             location: location
             weight: weight
           success: (response) ->
