@@ -65,7 +65,9 @@ jQuery ->
     return
 
   $('#drivers_license_scan').on 'click', ->
-    $.ajax(url: "/tud_devices/drivers_license_scan", dataType: 'json').done (data) ->
+    device_id = $(this).data( "device-id" )
+    #$.ajax(url: "/tud_devices/drivers_license_scan", dataType: 'json').done (data) ->
+    $.ajax(url: "/devices/" + device_id + "/drivers_license_scan", dataType: 'json').done (data) ->
       firstname = data.firstname
       lastname = data.lastname
       streetaddress = data.streetaddress
@@ -83,7 +85,8 @@ jQuery ->
       #$('#scanned_license_picture').attr('src', 'https://api.twilio.com/2010-04-01/Accounts/AC27c4bc7245c64b76ac92bac10c1cf9b0/Messages/MMe882fce1947ce6bb10e90ec0d3e5de3c/Media/ME2be55db848b4a1b43ec90bcd3dbbbd35');
       #$('#scanned_license_picture').attr('src', 'http://media.twiliocdn.com.s3-external-1.amazonaws.com/AC27c4bc7245c64b76ac92bac10c1cf9b0/c4afd7722eb694891bc02ec0013a6bb8');
       #$('#scanned_license_picture').attr('src', 'http://192.168.111.150:10001')
-      $('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/tud_devices/show_scanned_jpeg_image')
+      #$('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/tud_devices/show_scanned_jpeg_image')
+      $('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
       $('#scanned_license').show()
 
       $('#spinner').hide()
