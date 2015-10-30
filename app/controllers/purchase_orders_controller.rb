@@ -208,7 +208,7 @@ class PurchaseOrdersController < ApplicationController
   
   private
     def set_oauth_client
-      @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret)
+      @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, current_company.qbo_access_credential.access_token, current_company.qbo_access_credential.access_secret)
     end
   
     def set_purchase_order_service

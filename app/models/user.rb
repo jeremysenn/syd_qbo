@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   has_many :image_files
   has_many :shipment_files
   has_one :user_setting
-  has_one :qbo_access_credential
+#  has_one :qbo_access_credential
+  belongs_to :company, foreign_key: "location"
   
   after_commit :create_user_settings, :on => :create
   
@@ -60,6 +61,10 @@ class User < ActiveRecord::Base
   
   def scale_devices
     Device.where(CompanyID: location, DeviceType: 21)
+  end
+  
+  def qbo_access_credential
+    QboAccessCredential.find_by_company_id(location)
   end
   
   #############################
