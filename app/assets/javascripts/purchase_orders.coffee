@@ -244,6 +244,7 @@ jQuery ->
           $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
           dashboard_icon.show()
           spinner_icon.hide()
+          return
         error: ->
           dashboard_icon.show()
           spinner_icon.hide()
