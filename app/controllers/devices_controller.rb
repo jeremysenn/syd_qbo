@@ -2,7 +2,7 @@ class DevicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image]
 #  load_and_authorize_resource
 
-  before_action :set_device, only: [:show, :scale_read, :scale_camera_trigger, :drivers_license_scan]
+  before_action :set_device, only: [:show, :show_scanned_jpeg_image, :scale_read, :scale_camera_trigger, :drivers_license_scan]
 
   # GET /devices
   # GET /devices.json
@@ -66,7 +66,7 @@ class DevicesController < ApplicationController
   end
   
   def show_scanned_jpeg_image
-    send_data Device.drivers_license_scanned_image, :type => 'image/jpeg', :filename => 'drivers_license.jpg', :disposition => 'inline'
+    send_data @device.drivers_license_scanned_image, :type => 'image/jpeg', :filename => 'drivers_license.jpg', :disposition => 'inline'
   end
   
   def drivers_license_scan
