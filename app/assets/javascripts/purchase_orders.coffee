@@ -234,36 +234,44 @@ jQuery ->
     weight = weight_text_field.val()
 
     # Make call to get the weight off the scale
-    #$.ajax(url: "/tud_devices/scale_read", dataType: 'json').done (data) ->
-    $.ajax
-      url: "/devices/" + device_id + "/scale_read"
-      dataType: 'json'
-      success: (data) ->
-        weight = data.weight
-        weight_text_field.val weight
-        $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
-        dashboard_icon.show()
-        spinner_icon.hide()
-        # Make call to trigger scale camera
-        $.ajax
-          url: "/devices/" + device_id + "/scale_camera_trigger"
-          dataType: 'json'
-          data:
-            ticket_number: ticket_number
-            event_code: event_code
-            commodity_name: commodity_name
-            location: location
-            weight: weight
-          success: (response) ->
-            alert 'Scale camera trigger successful.'
-            return
-          error: ->
-            alert 'Scale camera trigger failed'
-            return
-      error: ->
-        dashboard_icon.show()
-        spinner_icon.hide()
-        alert 'Error reading weight scale.'
-        return
+    scale_read_ajax = ->
+      $.ajax
+        url: "/devices/" + device_id + "/scale_read"
+        dataType: 'json'
+        success: (data) ->
+          weight = data.weight
+          weight_text_field.val weight
+          $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
+          dashboard_icon.show()
+          spinner_icon.hide()
+        error: ->
+          dashboard_icon.show()
+          spinner_icon.hide()
+          alert 'Error reading weight scale.'
+          return
+
+    # Make call to trigger scale camera
+    camera_trigger_ajax = ->
+      $.ajax
+        url: "/devices/" + device_id + "/scale_camera_trigger"
+        dataType: 'json'
+        data:
+          ticket_number: ticket_number
+          event_code: event_code
+          commodity_name: commodity_name
+          location: location
+          #weight: weight  
+          weight: weight_text_field.val()
+        success: (response) ->
+          alert 'Scale camera trigger successful.'
+          return
+        error: ->
+          alert 'Scale camera trigger failed'
+          return
+
+    # Kick off the scale read and camera trigger ajax calls
+    scale_read_ajax().success camera_trigger_ajax
+
+    
 
     

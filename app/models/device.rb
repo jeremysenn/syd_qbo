@@ -111,11 +111,29 @@ class Device < ActiveRecord::Base
     self.DeviceType == 5
   end
   
+  def signature_pad?
+    self.DeviceType == 11
+  end
+  
+  def printer?
+    self.DeviceType == 20
+  end
+  
+  def crossmatch? # Fingerprint scanner
+    self.DeviceType == 12
+  end
+  
   def type
     if scale? 
       "Scale"
     elsif camera?
       "Camera"
+    elsif signature_pad?
+      "Signature Pad"
+    elsif printer?
+      "Printer"
+    elsif crossmatch?
+      "Crossmatch"
     else
       "Unknown"
     end
