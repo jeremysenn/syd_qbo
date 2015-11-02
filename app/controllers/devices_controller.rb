@@ -70,7 +70,7 @@ class DevicesController < ApplicationController
   end
   
   def drivers_license_scan
-    scan_result_hash = Device.drivers_license_scan
+    scan_result_hash = @device.drivers_license_scan
     respond_to do |format|
       format.html {}
 #      format.json { render json: @item.unit_price }
