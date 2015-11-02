@@ -111,6 +111,16 @@ class Device < ActiveRecord::Base
     self.DeviceType == 5
   end
   
+  def type
+    if scale? 
+      "Scale"
+    elsif camera?
+      "Camera"
+    else
+      "Unknown"
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################
