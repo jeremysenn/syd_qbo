@@ -82,8 +82,8 @@ jQuery ->
         $('#vendor_billing_address_country_sub_division_code').val state
         $('#vendor_billing_address_postal_code').val zip
 
-        $('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
-        $('#scanned_license').show()
+        #$('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
+        #$('#scanned_license').show()
         $('#spinner').hide()
         return
       error: ->
