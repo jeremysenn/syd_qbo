@@ -109,6 +109,14 @@ class DevicesController < ApplicationController
       format.json { render json: {}, :status => :ok}
     end
   end
+  
+  def drivers_license_camera_trigger
+    @device.drivers_license_camera_trigger
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

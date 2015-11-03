@@ -87,8 +87,9 @@ class Device < ActiveRecord::Base
             <Trigger xsi:type='xs:string'>
                <CAPTURE>
                   <TABLE>cust_pics</TABLE>
-                  <CAMERA_NAME>DemoSS</CAMERA_NAME>
+                  <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
                   <LAST_NAME>Rooster</LAST_NAME>
+                  <LAST_NAME>Riot</LAST_NAME>
                </CAPTURE>
             </Trigger>
          </mns:JpeggerTrigger>
