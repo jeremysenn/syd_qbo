@@ -111,6 +111,10 @@ jQuery ->
           customer_number: vendor_id
           event_code: "Photo ID"
           location: location
+          address1: $('#vendor_billing_address_line1').val()
+          city: $('#vendor_billing_address_city').val()
+          state: $('#vendor_billing_address_country_sub_division_code').val()
+          zip: $('#vendor_billing_address_postal_code').val()
         success: (data) ->
           alert 'Saved to Jpegger.'
           return

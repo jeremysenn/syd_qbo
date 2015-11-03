@@ -111,7 +111,7 @@ class DevicesController < ApplicationController
   end
   
   def drivers_license_camera_trigger
-    @device.drivers_license_camera_trigger(params[:customer_first_name], params[:customer_last_name], params[:customer_number], params[:event_code], params[:location])
+    @device.drivers_license_camera_trigger(params[:customer_first_name], params[:customer_last_name], params[:customer_number], params[:event_code], params[:location], params[:address1], params[:city], params[:state], params[:zip])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}
