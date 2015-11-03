@@ -99,10 +99,18 @@ jQuery ->
 
   $('#save_license_scan_to_jpegger').on 'click', ->
     device_id = $(this).data( "device-id" )
+    vendor_id = $(this).data( "vendor-id" )
+    location = $(this).data( "company-id" )
     save_license_scan_to_jpegger_ajax = ->
       $.ajax
         url: "/devices/" + device_id + "/drivers_license_camera_trigger"
         dataType: 'json'
+        data:
+          customer_first_name: $('#vendor_given_name').val()
+          customer_last_name: $('#vendor_family_name').val()
+          customer_number: vendor_id
+          event_code: "Photo ID"
+          location: location
         success: (data) ->
           alert 'Saved to Jpegger.'
           return
