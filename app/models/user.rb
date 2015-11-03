@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
     if user = User.where(:email => data["email"]).first
       user
     else
-      User.create!(:email => data["email"], :password => Devise.friendly_token[0,20])
+      User.create!(:email => data["email"], :password => Devise.friendly_token[0,20], :location => data["realmId"])
     end
   end
   
