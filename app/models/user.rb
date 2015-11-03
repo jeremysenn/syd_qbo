@@ -55,6 +55,22 @@ class User < ActiveRecord::Base
     end
   end
   
+  def devices
+    Device.where(CompanyID: location)
+  end
+  
+  def scale_devices
+    Device.where(CompanyID: location, DeviceType: 21)
+  end
+  
+  def camera_devices
+    Device.where(CompanyID: location, DeviceType: 5)
+  end
+  
+  def qbo_access_credential
+    QboAccessCredential.find_by_company_id(location)
+  end
+  
   #############################
   #     Class Methods      #
   #############################
