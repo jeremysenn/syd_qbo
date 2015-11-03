@@ -90,7 +90,7 @@ class Device < ActiveRecord::Base
                   <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
                   <FIRST_NAME>#{customer_first_name}</FIRST_NAME>
                   <LAST_NAME>#{customer_last_name}</LAST_NAME>
-                  <CUST_NBR>#{customer_number}</CUST_NB>
+                  <CUST_NBR>#{customer_number}</CUST_NBR>
                   <EVENT_CODE>#{event_code}</EVENT_CODE>
                   <LOCATION>#{location}</LOCATION>
                   <ADDRESS1>#{address1}</ADDRESS1>
