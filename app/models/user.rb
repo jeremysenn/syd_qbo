@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   has_many :image_files
   has_many :shipment_files
   has_one :user_setting
-  has_one :qbo_access_credential
+  #  has_one :qbo_access_credential
+  belongs_to :company, foreign_key: "location"
   
   after_commit :create_user_settings, :on => :create
   
