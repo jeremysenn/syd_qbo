@@ -6,7 +6,8 @@
       = link_to "#{camera_device.DeviceName} License Scan", '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#spinner').show();"
       = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
     %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license"}
-      = image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+      = image_tag(show_scanned_jpeg_image_device_url(camera_device.id), :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+      =# image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
       .caption
         %p= link_to "Save image to Jpegger", '#', class: 'btn btn-default'
   .well.col-xs-12.col-sm-12.col-md-12
