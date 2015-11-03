@@ -66,6 +66,38 @@ jQuery ->
 
   $('#drivers_license_scan').on 'click', ->
     device_id = $(this).data( "device-id" )
+
+    drivers_license_scan_ajax = ->
+      $.ajax
+        url: "/devices/" + device_id + "/drivers_license_scan"
+        dataType: 'json'
+        success: (data) ->
+          firstname = data.firstname
+          lastname = data.lastname
+          streetaddress = data.streetaddress
+          city = data.city
+          state = data.state
+          zip = data.zip
+
+          $('#vendor_given_name').val firstname
+          $('#vendor_family_name').val lastname
+          $('#vendor_billing_address_line1').val streetaddress
+          $('#vendor_billing_address_city').val city
+          $('#vendor_billing_address_country_sub_division_code').val state
+          $('#vendor_billing_address_postal_code').val zip
+          $('#spinner').hide()
+          
+          $('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
+          $('#scanned_license').show()
+
+          return
+        error: ->
+          $('#spinner').hide()
+          alert 'Error reading license.'
+          return
+    
+    drivers_license_scan_ajax()
+
     $.ajax(url: "/devices/" + device_id + "/drivers_license_scan", dataType: 'json').done (data) ->
       success: (data) ->
         firstname = data.firstname
