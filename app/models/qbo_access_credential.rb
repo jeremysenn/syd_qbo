@@ -2,7 +2,8 @@ class QboAccessCredential < ActiveRecord::Base
   
   after_initialize :add_expiration_and_reconnect_dates, :if => :new_record?
   
-  belongs_to :user
+#  belongs_to :user
+  belongs_to :company
   
   #############################
   #     Instance Methods      #
