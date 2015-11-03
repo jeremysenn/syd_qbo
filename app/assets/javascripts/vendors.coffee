@@ -73,13 +73,14 @@ jQuery ->
         success: (data) ->
           firstname = data.firstname
           lastname = data.lastname
+          licensenumber = data.licensenumber
           streetaddress = data.streetaddress
           city = data.city
           state = data.state
           zip = data.zip
-
           $('#vendor_given_name').val firstname
           $('#vendor_family_name').val lastname
+          $('#vendor_license_number').val licensenumber
           $('#vendor_billing_address_line1').val streetaddress
           $('#vendor_billing_address_city').val city
           $('#vendor_billing_address_country_sub_division_code').val state
@@ -108,6 +109,7 @@ jQuery ->
         data:
           customer_first_name: $('#vendor_given_name').val()
           customer_last_name: $('#vendor_family_name').val()
+          license_number: $('#vendor_license_number').val()
           customer_number: vendor_id
           event_code: "Photo ID"
           location: location
