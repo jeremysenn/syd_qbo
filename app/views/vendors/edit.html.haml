@@ -2,6 +2,7 @@
 .container
   - current_user.camera_devices.each do |camera_device|
     %p
+      = image_tag(show_scanned_jpeg_image_device_url(camera_device.id), :id => "spinner", :alt => "Loading ...", style: "display:none;")
       = link_to "#{camera_device.DeviceName} License Scan", '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#spinner').show();"
       = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
     %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license"}
