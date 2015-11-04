@@ -18,21 +18,7 @@ class CustPicsController < ApplicationController
       search = CustPic.ransack(params[:q])
 #      search.sorts = "#{sort} #{direction}"
       
-      ### Only show one cust_pic per ticket by default, unless there is a ticket number being searched ###
-      unless @ticket_number.blank?
-        params[:one_cust_pic_per_ticket] == '0'
-        @one_cust_pic_per_ticket = '0'
-        search.sorts = "sys_date_time desc"
-        @cust_pics = search.result.page(params[:page]).per(6)
-      else
-        search.sorts = "ticket_nbr desc"
-        if params[:one_cust_pic_per_ticket] == '1' or not params[:one_cust_pic_per_ticket] == '0'
-          @cust_pics = search.result
-          @cust_pics = Kaminari.paginate_array(@cust_pics.to_a.uniq { |cust_pic| cust_pic.ticket_nbr }).page(params[:page]).per(6)
-        else
-          @cust_pics = search.result.page(params[:page]).per(6)
-        end
-      end
+      @cust_pics = search.result.page(params[:page]).per(6)
       
     else # Show today's tickets
       # Default search to today's cust_pics
