@@ -5,13 +5,20 @@ class DeviceGroup < ActiveRecord::Base
   self.primary_key = 'DeviceGroupID'
   self.table_name = 'DeviceGroups'
   
-#  belongs_to :company, foreign_key: "CompanyID"
-#  belongs_to :workstation, foreign_key: "WorkstationID"
+  belongs_to :company, foreign_key: "CompanyID"
+#  has_many :device_group_members
   
   #############################
   #     Instance Methods      #
   ############################
   
+  def device_group_members
+    DeviceGroupMember.where(DeviceGroupID: id)
+  end
+  
+  def devices
+    device_group_members.map{|dgm| dgm.device }
+  end
   
   #############################
   #     Class Methods      #

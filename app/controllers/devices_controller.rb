@@ -78,7 +78,8 @@ class DevicesController < ApplicationController
       format.json {
         unless scan_result_hash.blank?
           render json: {
-            "firstname" => scan_result_hash["FIRSTNAME"], "lastname" => scan_result_hash["LASTNAME"], "licensenumber" => scan_result_hash["LICENSENUMBER"],
+            "firstname" => scan_result_hash["FIRSTNAME"], "lastname" => scan_result_hash["LASTNAME"], "licensenumber" => scan_result_hash["LICENSENUMBER"], "dob" => scan_result_hash["DOB"],
+            "issue_date" => scan_result_hash["ISSDATE"], "expiration_date" => scan_result_hash["EXPDATE"],
             "streetaddress" => scan_result_hash["ADDRESS1"], "city" => scan_result_hash["CITY"], "state" => scan_result_hash["STATE"], "zip" => scan_result_hash["ZIP"]
             } 
         else
@@ -111,7 +112,9 @@ class DevicesController < ApplicationController
   end
   
   def drivers_license_camera_trigger
-    @device.drivers_license_camera_trigger(params[:customer_first_name], params[:customer_last_name], params[:customer_number], params[:license_number], params[:event_code], params[:location], params[:address1], params[:city], params[:state], params[:zip])
+    @device.drivers_license_camera_trigger(params[:customer_first_name], params[:customer_last_name], params[:customer_number], params[:license_number], 
+      params[:license_issue_date], params[:license_expiration_date],
+      params[:dob], params[:event_code], params[:location], params[:address1], params[:city], params[:state], params[:zip])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

@@ -2,13 +2,13 @@
 .container
   - current_user.camera_devices.each do |camera_device|
     %p
-      =# image_tag(show_scanned_jpeg_image_device_url(camera_device.id), :id => "scanned_image", :alt => "Loading ...", style: "display:block;")
       = link_to "#{camera_device.DeviceName} License Scan", '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#spinner').show();"
       = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
     %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license"}
-      = image_tag(show_scanned_jpeg_image_device_url(camera_device.id), :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+      = image_tag("http://qb.scrapyarddog.com/devices/#{camera_device.id}/show_scanned_jpeg_image", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+      =# image_tag(show_scanned_jpeg_image_device_url(camera_device.id), :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
       =# image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
-      .caption
+      .caption{style: 'display:none'}
         %p= link_to "Save image to Jpegger", '#', id: 'save_license_scan_to_jpegger', class: 'btn btn-default', 'data-device-id' => camera_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id
   .well.col-xs-12.col-sm-12.col-md-12
     = form_tag update_qb_vendor_path, method: 'get', :class => "form-horizontal" do
@@ -23,6 +23,16 @@
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "License Number", nil, :class => 'control-label'
           = text_field_tag "vendor[license_number]", nil, :placeholder => "License Number", class: "form-control input-lg"
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "Date of Birth", nil, :class => 'control-label'
+          = text_field_tag "vendor[dob]", nil, :placeholder => "Date of Birth", class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "License Issue Date", nil, :class => 'control-label'
+          = text_field_tag "vendor[license_issue_date]", nil, :placeholder => "License Issue Date", class: "form-control input-lg"
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "License Expiration Date", nil, :class => 'control-label'
+          = text_field_tag "vendor[license_expiration_date]", nil, :placeholder => "License Expiration Date", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "Company Name", nil, :class => 'control-label'
@@ -68,18 +78,14 @@
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           =# link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
-          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Updating..."}) do
+          = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'vendor_update_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Updating..."}) do
             Update
 
   %div#cust_pics
-    - unless @cust_pics.blank?
-      - @cust_pics.each_slice(6) do |cust_pics|
-        %div.row
-          - cust_pics.each do |cust_pic|
-            .col-xs-12.col-sm-2.col-md-2.col-lg-2
-              %div.thumbnail
-                - unless cust_pic.hidden?
-                  = image_tag(show_preview_image_cust_pic_path(cust_pic))
+    %div{id: 'endless_page'}
+      %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
+      %p= link_to 'Load pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'load-more-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();"
+
 
 = render partial: "shared/vendor_footer_navbar", locals: {title: "Vendor"}
 

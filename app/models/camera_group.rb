@@ -1,11 +1,12 @@
-class DeviceGroupMember < ActiveRecord::Base
+class CameraGroup < ActiveRecord::Base
   
   establish_connection :tud_config
   
-  self.table_name = 'DeviceGroupMembers'
+  self.primary_key = 'CameraGroupID'
+  self.table_name = 'CameraGroups'
   
-  belongs_to :device_group, foreign_key: "DeviceGroupID"
-  belongs_to :device, foreign_key: "DevID"
+  belongs_to :company, foreign_key: "CompanyID"
+  belongs_to :workstation, foreign_key: "WorkstationID"
   
   #############################
   #     Instance Methods      #

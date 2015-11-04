@@ -8,7 +8,6 @@ class CustPicsController < ApplicationController
 
   def index
     unless params[:q].blank? or params[:today] == true
-      @ticket_number = params[:q][:ticket_nbr_eq]
       @start_date = params[:q][:sys_date_time_gteq]
       @end_date = params[:q][:sys_date_time_lteq]
       
@@ -45,10 +44,9 @@ class CustPicsController < ApplicationController
 #      @end_date = Date.today.tomorrow.to_s
       @end_date = Date.today.to_s
 #      search.sorts = "sys_date_time desc"
-      search.sorts = "ticket_nbr desc"
+#      search.sorts = "ticket_nbr desc"
       @cust_pics = search.result
-      @cust_pics = Kaminari.paginate_array(@cust_pics.to_a.uniq { |cust_pic| cust_pic.ticket_nbr }).page(params[:page]).per(6)
-#      @cust_pics = search.result.page(params[:page]).per(8).to_a.uniq { |cust_pic| cust_pic.ticket_nbr }.reverse # Get only one of each ticket number
+      @cust_pics = Kaminari.paginate_array(@cust_pics).page(params[:page]).per(6)
     end
   end
 

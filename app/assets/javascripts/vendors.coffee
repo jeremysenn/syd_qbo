@@ -74,6 +74,9 @@ jQuery ->
           firstname = data.firstname
           lastname = data.lastname
           licensenumber = data.licensenumber
+          dob = data.dob
+          issue_date = data.issue_date
+          expiration_date = data.expiration_date
           streetaddress = data.streetaddress
           city = data.city
           state = data.state
@@ -81,6 +84,9 @@ jQuery ->
           $('#vendor_given_name').val firstname
           $('#vendor_family_name').val lastname
           $('#vendor_license_number').val licensenumber
+          $('#vendor_dob').val dob
+          $('#vendor_license_issue_date').val issue_date
+          $('#vendor_license_expiration_date').val expiration_date
           $('#vendor_billing_address_line1').val streetaddress
           $('#vendor_billing_address_city').val city
           $('#vendor_billing_address_country_sub_division_code').val state
@@ -97,6 +103,12 @@ jQuery ->
           return
     
     drivers_license_scan_ajax()
+  
+  # Save scanned image to jpegger automatically if it's visible when update vendor
+  $('#vendor_update_button').on 'click', ->
+    if $('#scanned_license').is(':visible')
+      $('#save_license_scan_to_jpegger').trigger 'click'
+    return
 
   $('#save_license_scan_to_jpegger').on 'click', ->
     device_id = $(this).data( "device-id" )
@@ -110,6 +122,9 @@ jQuery ->
           customer_first_name: $('#vendor_given_name').val()
           customer_last_name: $('#vendor_family_name').val()
           license_number: $('#vendor_license_number').val()
+          dob: $('#vendor_dob').val()
+          license_issue_date: $('#vendor_license_issue_date').val()
+          license_expiration_date: $('#vendor_license_expiration_date').val()
           customer_number: vendor_id
           event_code: "Photo ID"
           location: location
@@ -118,11 +133,11 @@ jQuery ->
           state: $('#vendor_billing_address_country_sub_division_code').val()
           zip: $('#vendor_billing_address_postal_code').val()
         success: (data) ->
-          alert 'Saved to Jpegger.'
+          # alert 'Saved scanned image to Jpegger.'
           return
         error: ->
           $('#spinner').hide()
-          alert 'Error saving to Jpegger.'
+          alert 'Error saving scanned image to Jpegger.'
           return
     
     save_license_scan_to_jpegger_ajax()
