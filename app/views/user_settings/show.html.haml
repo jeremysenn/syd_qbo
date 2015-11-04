@@ -58,14 +58,18 @@
           %li.list-group-item
             %strong= device.DeviceName
             %p
-              = "Workstation ID:"
-              = device.WorkstationID
+              = "Workstation:"
+              = device.workstation.WorkstationName
             %p
               = "Device Type:"
               = device.type
+            - unless device.CameraGroup.blank?
+              %p
+                = "Camera Group:"
+                = device.CameraGroup
             %p
               = "TUD Port:"
-              = device.TUDPort
+              = device.LocalListenPort
   -#
     %div.row
       .col-xs-12.col-sm-6.col-md-offset-3
