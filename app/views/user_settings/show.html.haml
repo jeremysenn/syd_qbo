@@ -42,22 +42,23 @@
         - else
           No Device Group for this User
       %ul.list-group
-        - current_user.device_group.devices.each do |device|
-          %li.list-group-item
-            %strong= device.DeviceName
-            %p
-              = "Workstation:"
-              = device.workstation.WorkstationName
-            %p
-              = "Device Type:"
-              = device.type
-            - unless device.CameraGroup.blank?
+        - unless current_user.device_group.blank?
+          - current_user.device_group.devices.each do |device|
+            %li.list-group-item
+              %strong= device.DeviceName
               %p
-                = "Camera Group:"
-                = device.CameraGroup
-            %p
-              = "Listen Port:"
-              = device.LocalListenPort
+                = "Workstation:"
+                = device.workstation.WorkstationName
+              %p
+                = "Device Type:"
+                = device.type
+              - unless device.CameraGroup.blank?
+                %p
+                  = "Camera Group:"
+                  = device.CameraGroup
+              %p
+                = "Listen Port:"
+                = device.LocalListenPort
 
         %li.list-group-item= link_to "Edit", edit_user_setting_path(@user_setting), id: 'edit_user_setting_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
 
