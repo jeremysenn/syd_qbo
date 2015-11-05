@@ -75,6 +75,7 @@ jQuery ->
           lastname = data.lastname
           licensenumber = data.licensenumber
           dob = data.dob
+          sex = data.sex
           issue_date = data.issue_date
           expiration_date = data.expiration_date
           streetaddress = data.streetaddress
@@ -85,6 +86,7 @@ jQuery ->
           $('#vendor_family_name').val lastname
           $('#vendor_license_number').val licensenumber
           $('#vendor_dob').val dob
+          $('#vendor_sex').val sex
           $('#vendor_license_issue_date').val issue_date
           $('#vendor_license_expiration_date').val expiration_date
           $('#vendor_billing_address_line1').val streetaddress
@@ -123,6 +125,7 @@ jQuery ->
           customer_last_name: $('#vendor_family_name').val()
           license_number: $('#vendor_license_number').val()
           dob: $('#vendor_dob').val()
+          sex: $('#vendor_sex').val()
           license_issue_date: $('#vendor_license_issue_date').val()
           license_expiration_date: $('#vendor_license_expiration_date').val()
           customer_number: vendor_id

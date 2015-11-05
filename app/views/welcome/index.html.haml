@@ -12,12 +12,15 @@
         <script>
         - if current_user and current_user.qbo_access_credential.blank?
           intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
-          intuit.ipp.anywhere.directConnectToIntuit();
+          -# intuit.ipp.anywhere.directConnectToIntuit();
         -#
           - if user_signed_in? && !session[:token]
             intuit.ipp.anywhere.directConnectToIntuit();
         </script>
-        
+        -#
+          - if user_signed_in? && current_user.qbo_access_credential.blank?
+            <ipp:connectToIntuit></ipp:connectToIntuit>
+          
         -#
           <script>
           intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '#{authenticate_quickbooks_url}'});
@@ -35,8 +38,9 @@
         
         -# unless session[:token]
         - if user_signed_in? && current_user.qbo_access_credential.blank?
-          %i.fa.fa-spinner.fa-spin
-          = "Connecting to Quickbooks ..."
+          -#
+            %i.fa.fa-spinner.fa-spin
+            = "Connecting to Quickbooks ..."
           -#
             <!-- this will display a button that the user clicks to start the flow -->
             <ipp:connectToIntuit></ipp:connectToIntuit>

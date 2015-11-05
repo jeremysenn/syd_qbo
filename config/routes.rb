@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   
   resources :user_settings
   
+  resources :users
+  
   resources :tud_devices do
     collection do
       get :drivers_license_scan

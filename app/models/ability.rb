@@ -77,6 +77,12 @@ class Ability
       user_setting.user_id == user.id
     end
     can :create, UserSetting
+    
+    # User
+    ############
+    can :manage, User do |user_record|
+      user_record.id == user.id
+    end
 
     # LookupDefs
     ############

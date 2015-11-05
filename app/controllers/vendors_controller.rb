@@ -210,6 +210,6 @@ class VendorsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vendor_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:vendor).permit(:given_name, :family_name, :license_number, :dob, :issue_date, :expiration_date, :company_name, :display_name, :email, :phone_number, billing_address: [:line1, :city, :country_sub_division_code, :postal_code])
+      params.require(:vendor).permit(:given_name, :family_name, :license_number, :dob, :sex, :license_issue_date, :license_expiration_date, :company_name, :display_name, :email, :phone_number, billing_address: [:line1, :city, :country_sub_division_code, :postal_code])
     end
 end

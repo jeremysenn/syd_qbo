@@ -1,4 +1,5 @@
 class QuickbooksController < ApplicationController
+  ### Quickbooks Online API Access ###
   
   def authenticate
     callback = oauth_callback_quickbooks_url
