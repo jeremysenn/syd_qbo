@@ -63,6 +63,24 @@ class UserSettingsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def set_user_location
+    respond_to do |format|
+      @user = User.find(current_user.id)
+      admin_user = User.find_by_email(user_setting_params[:admin_email])
+      @qbo_access_credential = QboAccessCredential.find_by_user_id(admin_user.id) unless admin_user.blank?
+      if admin_user.present? and @qbo_access_credential.present?
+        @user.update_attribute(:location, admin_user.location)
+        format.html { redirect_to root_path, notice: "#{@user.email} was successfully added to Quickbooks Online company." }
+      else
+        format.html { 
+          flash[:notice] = "Company is not yet connected to SYD"
+          @connecting_to_quickbooks = true
+          render :set_user_location
+          }
+      end
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -73,6 +91,6 @@ class UserSettingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_setting_params
       params.require(:user_setting).permit(:show_thumbnails, :table_name, :show_vendor_thumbnails, :show_purchase_order_thumbnails,
-          :show_bill_thumbnails, :show_bill_payment_thumbnails, :device_group_id)
+          :show_bill_thumbnails, :show_bill_payment_thumbnails, :device_group_id, :admin_email)
     end
 end

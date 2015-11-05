@@ -1,5 +1,5 @@
 - unless current_user.blank?
-  = render partial: "shared/navbars/base_navbar", locals: {title: "Home"}
+  = render partial: "shared/navbars/base_navbar", locals: {title: "Home"} unless current_user.qbo_access_credential.blank?
   .jumbotron{style: 'background-color: #FFFFFF;'}
     .container
       %h2.text-center
@@ -8,6 +8,25 @@
           - if user_signed_in? and not @company_info.blank?
             %p= @company_info.company_name
         <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+
+      - if current_user.qbo_access_credential.blank?
+        .well.col-sm-6.col-md-4.col-md-offset-4
+          = form_tag set_user_location_user_settings_path, :class => "form-horizontal" do |f|
+            .row.form-group
+              %div{:class => "col-sm-12 col-md-12"}
+                = label_tag "Admin Email", nil, :class => 'control-label'
+                %br/
+                = email_field_tag "user_setting[admin_email]", nil, placeholder: "admin@mail.com", :class => "form-control input-lg"
+            .row.form-group
+              %div{:class => "col-sm-12 col-md-12"}
+                = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Submit"}, autocomplete: "off") do
+                  Submit
+      - else
+        %p
+          %a.btn.btn-primary.btn-lg.btn-block{:href => vendors_path,  id: 'welcome_to_vendors', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}} Vendors
+        %p= link_to "Open", purchase_orders_path, :class => "btn btn-warning btn-lg btn-block", id: 'welcome_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
+        %p= link_to "Closed", bills_path, :class => "btn btn-success btn-lg btn-block", id: 'welcome_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
+
 
         <script>
         - if current_user and current_user.qbo_access_credential.blank?
@@ -44,24 +63,8 @@
           -#
             <!-- this will display a button that the user clicks to start the flow -->
             <ipp:connectToIntuit></ipp:connectToIntuit>
-        - else
-          %p
-            %a.btn.btn-primary.btn-lg.btn-block{:href => vendors_path,  id: 'welcome_to_vendors', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}} Vendors
-          %p= link_to "Open", purchase_orders_path, :class => "btn btn-warning btn-lg btn-block", id: 'welcome_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
-          %p= link_to "Closed", bills_path, :class => "btn btn-success btn-lg btn-block", id: 'welcome_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
-          -#
-            %p
-              =# link_to "New Ticket", new_purchase_order_path, :class => "btn btn-primary btn-lg btn-block", id: 'welcome_to_new_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> New Ticket..."}
-              %a{href: '#', id: 'new_ticket_navbar_link', :class => "btn btn-primary btn-lg btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> New Ticket"}}
-                New Ticket
-            
-            %p= link_to "Payments", bill_payments_path, :class => "btn btn-info btn-lg btn-block", id: 'welcome_to_paid', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Payments..."}
-            %p
-              %a{href: "https://sandbox.qbo.intuit.com/app/homepage", :class => "btn btn-primary btn-lg btn-block", target: '_blank'}
-                = image_tag('qb_logo_small.png', class: 'img-responsive center-block')
-
+        
   = render partial: "shared/home_footer_navbar", locals: {title: "Welcome"} if current_user.active? and License.valid?
-  =# render partial: "purchase_orders/new_modal"
 
 - else
   .jumbotron

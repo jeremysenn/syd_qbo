@@ -49,6 +49,15 @@
         %li{:class => (params[:controller] == "images" or params[:controller] == "shipments") ? "active" : ""}
           %a{href: "#{current_user.images_table? ? images_path : shipments_path}"}
             Pictures
+        - unless current_company.device_groups.blank?
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+              Device Group
+              %b.caret
+            %ul.dropdown-menu
+              - current_company.device_groups.each do |device_group|
+                %li{:class => (current_user.device_group == device_group) ? "active" : ""}
+                  %a{href: '#'}= device_group.DeviceGroupName
         %li
           %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
             Quickbooks

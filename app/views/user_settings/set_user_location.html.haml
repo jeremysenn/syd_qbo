@@ -2,16 +2,16 @@
   - unless @connecting_to_quickbooks.present?
     .container
       .well.col-sm-6.col-md-4.col-md-offset-4
-        = form_for current_user, :class => "form-inline" do |f|
+        = form_tag set_user_location_user_settings_path, :class => "form-horizontal" do |f|
           .row.form-group
             %div{:class => "col-sm-12 col-md-12"}
-              = f.label "Admin email", :class => "control-label"
+              = label_tag "Admin Email", nil, :class => 'control-label'
               %br/
-              = email_field_tag "user[admin_email]", nil, placeholder: "admin@mail.com", :class => "form-control input-lg"
+              = email_field_tag "user_setting[admin_email]", nil, placeholder: "admin@mail.com", :class => "form-control input-lg"
           .row.form-group
             %div{:class => "col-sm-12 col-md-12"}
               = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Update"}, autocomplete: "off") do
-                Update
+                Submit
   - else
     .jumbotron
       .container
