@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151015150554) do
+ActiveRecord::Schema.define(version: 20151105171428) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 20151015150554) do
     t.boolean  "show_purchase_order_thumbnails", default: false
     t.boolean  "show_bill_thumbnails",           default: false
     t.boolean  "show_bill_payment_thumbnails",   default: false
+    t.integer  "device_group_id"
   end
 
   create_table "users", force: true do |t|

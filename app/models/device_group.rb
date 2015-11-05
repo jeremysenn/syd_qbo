@@ -7,6 +7,7 @@ class DeviceGroup < ActiveRecord::Base
   
   belongs_to :company, foreign_key: "CompanyID"
 #  has_many :device_group_members
+  has_many :user_settings
   
   #############################
   #     Instance Methods      #

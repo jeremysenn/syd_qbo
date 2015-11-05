@@ -3,8 +3,6 @@
 .container
   .col-xs-12.col-sm-6.col-md-offset-3
 
-    %h4 Thumbnails
-    
     .panel.panel-default
       .panel-heading
         Show Thumbnails
@@ -38,7 +36,26 @@
             %strong= "Search table:"
             .pull-right
               = "#{@user_setting.table_name}"
-          
+      .panel-heading
+        = "#{current_user.device_group.DeviceGroupName} Device Group"
+      %ul.list-group
+        - current_user.device_group.devices.each do |device|
+          %li.list-group-item
+            %strong= device.DeviceName
+            %p
+              = "Workstation:"
+              = device.workstation.WorkstationName
+            %p
+              = "Device Type:"
+              = device.type
+            - unless device.CameraGroup.blank?
+              %p
+                = "Camera Group:"
+                = device.CameraGroup
+            %p
+              = "Listen Port:"
+              = device.LocalListenPort
+
         %li.list-group-item= link_to "Edit", edit_user_setting_path(@user_setting), id: 'edit_user_setting_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
 
     %hr
@@ -79,31 +96,29 @@
                 = "Listen Port:"
                 = device.LocalListenPort
 
-    %hr
-
-    %h4 Device Groups
-    
-    - current_company.device_groups.each do |device_group|
-      .panel.panel-default
-        .panel-heading
-          = "#{device_group.DeviceGroupName} Device Group"
-        %ul.list-group
-          - device_group.devices.each do |device|
-            %li.list-group-item
-              %strong= device.DeviceName
-              %p
-                = "Workstation:"
-                = device.workstation.WorkstationName
-              %p
-                = "Device Type:"
-                = device.type
-              - unless device.CameraGroup.blank?
+   
+    -#
+      - current_company.device_groups.each do |device_group|
+        .panel.panel-default
+          .panel-heading
+            = "#{device_group.DeviceGroupName} Device Group"
+          %ul.list-group
+            - device_group.devices.each do |device|
+              %li.list-group-item
+                %strong= device.DeviceName
                 %p
-                  = "Camera Group:"
-                  = device.CameraGroup
-              %p
-                = "Listen Port:"
-                = device.LocalListenPort
+                  = "Workstation:"
+                  = device.workstation.WorkstationName
+                %p
+                  = "Device Type:"
+                  = device.type
+                - unless device.CameraGroup.blank?
+                  %p
+                    = "Camera Group:"
+                    = device.CameraGroup
+                %p
+                  = "Listen Port:"
+                  = device.LocalListenPort
             
   -#
     %div.row

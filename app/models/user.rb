@@ -76,6 +76,10 @@ class User < ActiveRecord::Base
     QboAccessCredential.find_by_company_id(location)
   end
   
+  def device_group
+    user_setting.device_group
+  end
+  
   #############################
   #     Class Methods      #
   #############################
