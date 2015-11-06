@@ -56,8 +56,10 @@
               %b.caret
             %ul.dropdown-menu
               - current_company.device_groups.each do |device_group|
-                %li{:class => (current_user.device_group == device_group) ? "active" : ""}
-                  %a{href: '#'}= device_group.DeviceGroupName
+                %li{:class => (current_user.device_group == device_group) ? "active" : ""}= link_to device_group.DeviceGroupName, user_setting_path(current_user.user_setting, "user_setting[device_group_id]" => device_group.id), :method => :put
+                -#
+                  %li{:class => (current_user.device_group == device_group) ? "active" : ""}
+                    %a{href: '#'}= device_group.DeviceGroupName
         %li
           %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
             Quickbooks
