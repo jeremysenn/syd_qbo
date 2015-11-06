@@ -11,7 +11,7 @@
       .caption{style: 'display:none'}
         %p= link_to "Save image to Jpegger", '#', id: 'save_license_scan_to_jpegger', class: 'btn btn-default', 'data-device-id' => camera_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id
   .well.col-xs-12.col-sm-12.col-md-12
-    = form_tag update_qb_vendor_path, method: 'get', :class => "form-horizontal" do
+    = form_tag update_qb_vendor_path, method: 'get', id: 'vendor_form', :class => "form-horizontal" do
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "First Name", nil, :class => 'control-label'

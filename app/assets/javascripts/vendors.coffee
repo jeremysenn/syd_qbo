@@ -107,7 +107,12 @@ jQuery ->
     drivers_license_scan_ajax()
   
   # Save scanned image to jpegger automatically if it's visible when update vendor
-  $('#vendor_update_button').on 'click', ->
+  #$('#vendor_update_button').on 'click', ->
+  #  if $('#scanned_license').is(':visible')
+  #    $('#save_license_scan_to_jpegger').trigger 'click'
+  #  return
+
+  $('#vendor_form').submit (e) ->
     if $('#scanned_license').is(':visible')
       $('#save_license_scan_to_jpegger').trigger 'click'
     return
