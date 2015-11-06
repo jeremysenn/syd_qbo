@@ -21,6 +21,14 @@ class DeviceGroup < ActiveRecord::Base
     device_group_members.map{|dgm| dgm.device }
   end
   
+  def scale_devices
+    devices.select {|device| device.DeviceType == 21}
+  end
+  
+  def camera_devices
+    devices.select {|device| device.DeviceType == 5}
+  end
+  
   #############################
   #     Class Methods      #
   #############################

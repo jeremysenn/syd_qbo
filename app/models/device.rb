@@ -18,7 +18,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
             <mns:ReadScale xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>127.0.0.1</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <ConsecReads xsi:type='xs:int'>5</ConsecReads>
             </mns:ReadScale>
@@ -41,7 +41,7 @@ class Device < ActiveRecord::Base
                   <TICKET_NBR>#{ticket_number}</TICKET_NBR>
                   <EVENT_CODE>#{event_code}</EVENT_CODE>
                   <CMDY_NAME>#{commodity_name}</CMDY_NAME>
-                  <CAMERA_NAME>#{self.CameraGroup}</CAMERA_NAME>
+                  <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
                   <WEIGHT>#{weight}</WEIGHT>
                   <LOCATION>#{location}</LOCATION>
                </CAPTURE>
@@ -58,7 +58,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
             <mns:ReadID xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>127.0.0.1</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <Fields xsi:type='soapenc:Array' soapenc:arrayType='ns1:TTUDField[2]'>
                   <item xsi:type='ns1:TTUDField'>
@@ -119,6 +119,10 @@ class Device < ActiveRecord::Base
   
   def scale?
     self.DeviceType == 21
+  end
+  
+  def scale_camera_only?
+    scale? and self.NoHardware == 1
   end
   
   def camera?

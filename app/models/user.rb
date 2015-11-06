@@ -61,15 +61,18 @@ class User < ActiveRecord::Base
   end
   
   def devices
-    Device.where(CompanyID: location)
+#    Device.where(CompanyID: location)
+    user_setting.devices
   end
   
   def scale_devices
-    Device.where(CompanyID: location, DeviceType: 21)
+#    Device.where(CompanyID: location, DeviceType: 21)
+    user_setting.scale_devices
   end
   
   def camera_devices
-    Device.where(CompanyID: location, DeviceType: 5)
+#    Device.where(CompanyID: location, DeviceType: 5)
+    user_setting.camera_devices
   end
   
   def qbo_access_credential

@@ -26,6 +26,10 @@ class Company < ActiveRecord::Base
     Device.where("CompanyID" => self.CompanyID)
   end
   
+  def scale_devices
+    Device.where(CompanyID: self.CompanyID, DeviceType: 21)
+  end
+  
   def device_groups
     DeviceGroup.where("CompanyID" => self.CompanyID)
   end

@@ -217,7 +217,7 @@ jQuery ->
       return
     return
 
-  $(document).on 'click', '.scale_read', (e) ->
+  $(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
     e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
@@ -273,6 +273,38 @@ jQuery ->
     # Kick off the scale read and camera trigger ajax calls
     scale_read_ajax().success camera_trigger_ajax
 
-    
+  $(document).on 'click', '.scale_camera_trigger', (e) ->
+    e.preventDefault()
+    # Get data from scale button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    event_code = $(this).data( "event-code" )
+    location = $(this).data( "location" )
+    commodity_name = $(this).data( "item-name" )
 
-    
+    dashboard_icon = $(this).find( ".fa-dashboard" )
+    dashboard_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+    weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
+
+    # Make call to trigger scale camera
+    $.ajax
+      url: "/devices/" + device_id + "/scale_camera_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        event_code: event_code
+        commodity_name: commodity_name
+        location: location
+        weight: weight_text_field.val()
+      success: (response) ->
+        dashboard_icon.show()
+        spinner_icon.hide()
+        alert 'Scale camera trigger successful.'
+        return
+      error: ->
+        dashboard_icon.show()
+        spinner_icon.hide()
+        alert 'Scale camera trigger failed'
+        return

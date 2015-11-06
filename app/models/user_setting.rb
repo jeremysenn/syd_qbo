@@ -16,6 +16,18 @@ class UserSetting < ActiveRecord::Base
     table_name == "shipments"
   end
   
+  def devices
+    device_group.devices
+  end
+  
+  def scale_devices
+    device_group.scale_devices
+  end
+  
+  def camera_devices
+    device_group.camera_devices
+  end
+  
   #############################
   #     Class Methods      #
   #############################
