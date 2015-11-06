@@ -38,19 +38,19 @@
           = label_tag "Sex", nil, :class => 'control-label'
           = select_tag "vendor[sex]", options_for_select(["M", "F"], "#{@customer.blank? ? nil : @customer.sex}"), class: "form-control input-lg"
         %div{:class => "col-xs-6 col-sm-3 col-md-3"}
-          = label_tag "vendor[dob]", "DOB (YYYY-MM-DD)", :class => 'control-label'
-          = text_field_tag "vendor[dob]", "#{@customer.blank? ? nil : @customer.dob}", :placeholder => "Date of Birth", class: "form-control input-lg"
+          = label_tag "vendor[dob]", "Date of Birth", :class => 'control-label'
+          = date_field_tag  "vendor[dob]", "#{@customer.blank? ? nil : @customer.dob}", :placeholder => "Date of Birth", class: "form-control input-lg"
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "License Number", nil, :class => 'control-label'
           = text_field_tag "vendor[license_number]", nil, :placeholder => "License Number", class: "form-control input-lg"
         
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-          = label_tag "vendor[license_issue_date]", "License Issue Date (YYYY-MM-DD)", :class => 'control-label'
-          = text_field_tag "vendor[license_issue_date]", "#{@customer.blank? ? nil : @customer.issue_date}", :placeholder => "License Issue Date", class: "form-control input-lg"
+          = label_tag "vendor[license_issue_date]", "License Issue Date", :class => 'control-label'
+          = date_field_tag   "vendor[license_issue_date]", "#{@customer.blank? ? nil : @customer.issue_date}", :placeholder => "License Issue Date", class: "form-control input-lg"
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-          = label_tag "vendor[license_expiration_date]", "License Expiration Date (YYYY-MM-DD)", :class => 'control-label'
-          = text_field_tag "vendor[license_expiration_date]", "#{@customer.blank? ? nil : @customer.expiration_date}", :placeholder => "License Expiration Date", class: "form-control input-lg"
+          = label_tag "vendor[license_expiration_date]", "License Expiration Date", :class => 'control-label'
+          = date_field_tag   "vendor[license_expiration_date]", "#{@customer.blank? ? nil : @customer.expiration_date}", :placeholder => "License Expiration Date", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "Company Name", nil, :class => 'control-label'
@@ -92,10 +92,10 @@
           = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", class: "form-control input-lg"
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Phone", nil, :class => 'control-label'
-          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.primary_phone.present? ? @vendor.primary_phone.free_form_number : ''}", class: "form-control input-lg", required: true
+          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.primary_phone.present? ? @vendor.primary_phone.free_form_number : ''}", class: "vendor_phone_field form-control input-lg", required: true
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Employer Phone", nil, :class => 'control-label'
-          = phone_field_tag "vendor[employer_phone]", "#{@customer.blank? ? nil : @customer.employer_phone}", :placeholder => "Employer Phone", class: "form-control input-lg"
+          = phone_field_tag "vendor[employer_phone]", "#{@customer.blank? ? nil : @customer.employer_phone}", :placeholder => "Employer Phone", class: "vendor_phone_field form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           =# link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"

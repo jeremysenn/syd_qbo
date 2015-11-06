@@ -156,7 +156,7 @@ class VendorsController < ApplicationController
           @customer.update_attributes(first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
             company_name: @vendor.company_name, display_name: @vendor.display_name, primary_phone: @vendor.primary_phone.free_form_number, primary_email_address: @vendor.email_address.address,
             height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
-            dob: vendor_params[:dob], sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date], expiration_date: vendor_params[:license_expiration_date], 
+            dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
             employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone])
           redirect_to vendor_path(@vendor.id) 
           }

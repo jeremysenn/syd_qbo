@@ -144,3 +144,6 @@ jQuery ->
           return
     
     save_license_scan_to_jpegger_ajax()
+
+  # Force phone format
+  $(".vendor_phone_field").mask("(999) 999-9999")
