@@ -50,12 +50,12 @@
                 %p
                   = "Workstation:"
                   = device.workstation.WorkstationName
-                %p
+                %p{style: "color: #{device.scale_camera_only? ? 'hotpink;' : ''} "}
                   = "Device Type:"
+                  = device.device_type_icon.html_safe
                   = device.type
-                - if device.scale_camera_only?
-                  %p{style: "color: hotpink;"}
-                    *Scale camera only - no indicator
+                  - if device.scale_camera_only?
+                    %small= "(Scale camera only - no indicator)"
                 %p 
                   = "Device Order:"
                   = "#{device.device_group_member_order(current_user.device_group).blank? ? 'N/A' : device.device_group_member_order(current_user.device_group)}"
