@@ -29,6 +29,10 @@ class DeviceGroup < ActiveRecord::Base
     devices.select {|device| device.DeviceType == 5}
   end
   
+  def printer_devices
+    devices.select {|device| device.DeviceType == 20}
+  end
+  
   #############################
   #     Class Methods      #
   #############################
