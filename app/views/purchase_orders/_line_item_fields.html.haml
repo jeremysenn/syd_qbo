@@ -16,9 +16,14 @@
       %div.input-group
         - current_user.scale_devices.each do |scale_device|
           %span.input-group-addon
-            %a{href: '#', style: "color: #{scale_device.scale_camera_only? ? 'hotpink' : ''};", class: "#{scale_device.scale_camera_only? ? 'scale_camera_trigger' : 'scale_read_and_camera_trigger'}", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
-              %i.fa.fa-dashboard.fa-lg
-              %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+            - if scale_device.scale_camera_only?
+              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-camera.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+            - else
+              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-dashboard.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
         = phone_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
         %span.input-group-addon
           %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-weight' => 0}
@@ -27,9 +32,14 @@
       %div.input-group
         - current_user.scale_devices.each do |scale_device|
           %span.input-group-addon
-            %a{href: '#', style: "color: #{scale_device.scale_camera_only? ? 'hotpink' : ''};", class: "#{scale_device.scale_camera_only? ? 'scale_camera_trigger' : 'scale_read_and_camera_trigger'}", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
-              %i.fa.fa-dashboard.fa-lg
-              %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+            - if scale_device.scale_camera_only?
+              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-camera.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+            - else
+              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-dashboard.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
         = phone_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
         %span.input-group-addon
           %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-weight' => 0}
