@@ -18,7 +18,7 @@ class DeviceGroup < ActiveRecord::Base
   end
   
   def devices
-    device_group_members.map{|dgm| dgm.device }
+    device_group_members.sort_by{|dgm| dgm.DevOrder}.map{|dgm| dgm.device }
   end
   
   def scale_devices

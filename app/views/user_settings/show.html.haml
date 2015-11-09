@@ -53,6 +53,12 @@
                 %p
                   = "Device Type:"
                   = device.type
+                - if device.scale_camera_only?
+                  %p{style: "color: hotpink;"}
+                    *Scale camera only - no indicator
+                %p 
+                  = "Device Order:"
+                  = "#{device.device_group_member_order(current_user.device_group).blank? ? 'N/A' : device.device_group_member_order(current_user.device_group)}"
                 - unless device.CameraGroup.blank?
                   %p
                     = "Camera Group:"

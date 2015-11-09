@@ -165,6 +165,15 @@ class Device < ActiveRecord::Base
     device_group_members.map{|dgm| dgm.device_group }
   end
   
+  def device_group_member_order(device_group_id)
+    device_group_member = DeviceGroupMember.find_by_DeviceGroupID_and_DevID(device_group_id, id)
+    unless device_group_member.blank?
+      device_group_member.DevOrder
+    else
+      nil
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################

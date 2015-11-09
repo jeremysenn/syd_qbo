@@ -1,8 +1,13 @@
 = render partial: "shared/navbars/new_and_edit_vendor_navbar", locals: {title: "Vendor"}
 .container
-  %p
-    = link_to "License Scan", '#', id: 'drivers_license_scan', onclick: "$('#spinner').show();"
-    = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+  - current_user.camera_devices.each do |camera_device|
+    %p
+      = link_to "#{camera_device.DeviceName} License Scan", '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#spinner').show();"
+      = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+    %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license"}
+      = image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+      .caption{style: 'display:none'}
+        %p= link_to "Save image to Jpegger", '#', id: 'save_license_scan_to_jpegger', class: 'btn btn-default', 'data-device-id' => camera_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id
   .well.col-sm-12.col-md-12
     = form_tag vendors_path, :class => "form-horizontal" do
       .row.form-group
