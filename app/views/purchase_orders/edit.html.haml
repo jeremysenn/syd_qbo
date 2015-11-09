@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "Open #{@purchase_order.doc_number}", total: number_to_currency(@purchase_order.total)}
+= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "#{@purchase_order.doc_number}", total: number_to_currency(@purchase_order.total)}
 - @title="Open #{@purchase_order.doc_number}" 
 
 .container
