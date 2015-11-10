@@ -2,6 +2,24 @@
   .container-fluid
     .navbar-header
       %div{class: 'navbar-brand navbar-center'}
+        -#
+          %ul{class: 'list-inline'}
+            %li
+              %a{href: root_path}
+                %i.fa.fa-home.fa-lg
+                = "Home" unless mobile_device?
+            %li
+              %a{href: '#'}
+                %i.fa.fa-hand-pointer-o.fa-lg
+                = "Scanner" unless mobile_device?
+            %li
+              %a{href: "#upload_form", "data-toggle" => "modal", :alt => "new_image_file_form"}
+                %i.fa.fa-camera.fa-lg
+                = "Pictures" unless mobile_device?
+            %li
+              %a{href: "#signature_form", "data-toggle" => "modal", :alt => "new_signature_form"}
+                %i.fa.fa-pencil.fa-lg
+                = "Sign" unless mobile_device?
         .col-xs-3.col-sm-3
           %a{href: root_path}
             %i.fa.fa-home.fa-lg
