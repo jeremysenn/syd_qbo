@@ -114,7 +114,8 @@ class Device < ActiveRecord::Base
   
   def drivers_license_scanned_image
     require 'open-uri'
-    open('http://192.168.111.150:10001').read
+#    open('http://192.168.111.150:10001').read
+    open("http://#{workstation.Host}:#{self.LocalListenPort}").read
   end
   
   def scale?
@@ -155,7 +156,7 @@ class Device < ActiveRecord::Base
     elsif printer?
       "<i class='fa fa-print fa-lg'></i>"
     elsif crossmatch?
-      "<i class='fa fa-pointer-o fa-lg'></i>"
+      "<i class='fa fa-hand-pointer-o fa-lg'></i>"
     else
       ""
     end

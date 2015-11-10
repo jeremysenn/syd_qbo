@@ -50,6 +50,9 @@
                 %p
                   = "Workstation:"
                   = device.workstation.WorkstationName
+                %p
+                  = "Workstation IP:"
+                  = device.workstation.Host
                 %p{style: "color: #{device.scale_camera_only? ? 'hotpink;' : ''} "}
                   = "Device Type:"
                   = device.device_type_icon.html_safe
