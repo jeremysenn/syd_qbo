@@ -2,9 +2,20 @@
 .container
   - current_user.camera_devices.each do |camera_device|
     %p
-      = link_to "#{camera_device.DeviceName} License Scan", '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#spinner').show();"
-      = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-    %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license"}
+      %a{href: '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#data_scan_spinner').show();", class: 'btn btn-default'}
+        %i.fa.fa-list-alt
+        = "#{camera_device.DeviceName} License Data Scan"
+        = image_tag("ajax-loader.gif", :id => "data_scan_spinner", :alt => "Loading ...", style: "display:none;")
+      %a{href: '#', id: 'drivers_license_image_scan', 'data-device-id' => camera_device.id, onclick: "$('#scanned_license_image').show();", class: 'btn btn-default'}
+        %i.fa.fa-image
+        = "#{camera_device.DeviceName} License Image Scan"
+        = image_tag("ajax-loader.gif", :id => "image_scan_spinner", :alt => "Loading ...", style: "display:none;")
+
+      =# link_to "#{camera_device.DeviceName} License Data Scan", '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#spinner').show();", class: 'btn btn-default'
+      =# link_to "#{camera_device.DeviceName} License Image Scan", '#', id: 'drivers_license_image_scan', 'data-device-id' => camera_device.id, onclick: "$('#scanned_license').show();", class: 'btn btn-default'
+      =# image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+
+    %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license_image"}
       =# image_tag("http://qb.scrapyarddog.com/devices/#{camera_device.id}/show_scanned_jpeg_image", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
       =# image_tag(show_scanned_jpeg_image_device_url(camera_device.id), :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
       = image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
