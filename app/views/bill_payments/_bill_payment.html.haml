@@ -31,8 +31,8 @@
             .pull-right
               &nbsp;
               %i.fa.fa-chevron-right
-            - if current_user.user_setting.show_bill_payment_thumbnails? and Image.where(ticket_nbr: bill_payment.doc_number, event_code: "Gross").count > 0
-              = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: bill_payment.doc_number, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
+            - if current_user.user_setting.show_bill_payment_thumbnails? and Image.where(ticket_nbr: bill_payment.doc_number, location: current_company_id, event_code: "Gross").count > 0
+              = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: bill_payment.doc_number, location: current_company_id, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
             = bill_payment.doc_number
             = bill_payment.vendor_ref.name unless bill_payment.vendor_ref.blank?
             .pull-right
