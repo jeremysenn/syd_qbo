@@ -115,7 +115,8 @@ class Device < ActiveRecord::Base
   def drivers_license_scanned_image
     require 'open-uri'
 #    open('http://192.168.111.150:10001').read
-    open("http://#{workstation.Host}:#{self.LocalListenPort}").read
+#    open("http://#{workstation.Host}:#{self.LocalListenPort}").read
+    open("http://127.0.0.1:#{self.LocalListenPort}").read
   end
   
   def scale?
