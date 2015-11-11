@@ -115,8 +115,8 @@ class Device < ActiveRecord::Base
   def drivers_license_scanned_image
     require 'open-uri'
 #    open('http://192.168.111.150:10001').read
-    open("http://#{workstation.Host}:#{self.TUDPort}/jpeg.jpg").read
-#    open('http://192.168.111.149:10018').read # Eseek via proxy
+#    open("http://#{workstation.Host}:#{self.TUDPort}/jpeg.jpg").read
+    open('http://192.168.111.149:10018}/jpeg.jpg').read # Eseek via proxy
   end
   
   def scale?
