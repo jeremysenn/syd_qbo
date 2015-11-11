@@ -28,6 +28,10 @@ class UserSetting < ActiveRecord::Base
     device_group.camera_devices
   end
   
+  def license_reader_devices
+    device_group.license_reader_devices
+  end
+  
   def printer_devices
     device_group.printer_devices
   end

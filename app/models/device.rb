@@ -18,7 +18,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
             <mns:ReadScale xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <ConsecReads xsi:type='xs:int'>5</ConsecReads>
             </mns:ReadScale>
@@ -58,7 +58,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
             <mns:ReadID xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <Fields xsi:type='soapenc:Array' soapenc:arrayType='ns1:TTUDField[2]'>
                   <item xsi:type='ns1:TTUDField'>
@@ -116,7 +116,13 @@ class Device < ActiveRecord::Base
     require 'open-uri'
 #    open('http://192.168.111.150:10001').read
 #    open("http://#{workstation.Host}:#{self.TUDPort}/jpeg.jpg").read
-    open('http://192.168.111.149:10018/jpeg.jpg').read # Eseek via proxy
+#    
+    # Show image via proxy
+    if eseek_imager?
+      open("http://192.168.111.149:#{self.LocalListenPort}/jpeg.jpg").read
+    elsif scanshell?
+      open("http://192.168.111.149:#{self.LocalListenPort}").read 
+    end
   end
   
   def scale?
@@ -139,9 +145,31 @@ class Device < ActiveRecord::Base
     self.DeviceType == 20
   end
   
-  def crossmatch? # Fingerprint scanner
+  # Fingerprint scanner
+  def crossmatch? 
     self.DeviceType == 12
   end
+  
+  # Scanshell license/OCR capture
+  def scanshell? 
+    self.DeviceType == 6
+  end
+  
+  # E-Seek Magstripe/2D Barcode reader
+  def eseek_reader? 
+    self.DeviceType == 7
+  end
+  
+  def license_reader?
+    scanshell? or eseek_reader?
+  end
+  
+  # ESeek M280 Imager
+  def eseek_imager?
+    self.DeviceType == 18
+  end
+  
+  
   
   def device_type_icon
     if scale?
@@ -150,6 +178,8 @@ class Device < ActiveRecord::Base
       else
         "<i class='fa fa-camera fa-lg'></i>"
       end
+    elsif license_reader?
+      "<i class='fa fa-list-alt fa-lg'></i>"
     elsif camera?
       "<i class='fa fa-camera fa-lg'></i>"
     elsif signature_pad?
@@ -166,6 +196,12 @@ class Device < ActiveRecord::Base
   def type
     if scale? 
       "Scale"
+    elsif scanshell? 
+      "Scanshell license/OCR capture"
+    elsif eseek_reader? 
+      "E-Seek Magstripe/2D Barcode reader"
+    elsif eseek_imager?
+      "ESeek M280 Imager"
     elsif camera?
       "Camera"
     elsif signature_pad?

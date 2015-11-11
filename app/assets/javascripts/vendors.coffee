@@ -64,7 +64,7 @@ jQuery ->
     $('#purchase_order_form').submit()
     return
 
-  $('#drivers_license_scan').on 'click', ->
+  $('.drivers_license_scan').on 'click', ->
     device_id = $(this).data( "device-id" )
     drivers_license_scan_ajax = ->
       $.ajax
@@ -106,7 +106,7 @@ jQuery ->
     
     drivers_license_scan_ajax()
 
-  $('#drivers_license_image_scan').on 'click', ->
+  $('.drivers_license_image_scan').on 'click', ->
     device_id = $(this).data( "device-id" )
     $('#image_scan_spinner').hide()
     $('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')

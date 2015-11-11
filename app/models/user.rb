@@ -75,6 +75,10 @@ class User < ActiveRecord::Base
     user_setting.camera_devices
   end
   
+  def license_reader_devices
+    user_setting.license_reader_devices
+  end
+  
   def printer_devices
     user_setting.printer_devices
   end
