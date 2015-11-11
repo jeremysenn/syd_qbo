@@ -25,7 +25,7 @@
                     %i.fa.fa-chevron-right
                   %br/
                   %small
-                    = "#{number_to_currency(item.purchase_cost)}" unless item.purchase_cost.blank?
+                    = "$#{number_with_precision(item.purchase_cost, :precision => 5)}" unless item.purchase_cost.blank?
                   -#
                     = @vendor_service.fetch_by_id(purchase.entity_ref).display_name unless purchase.entity_ref.blank?
                     .pull-right
