@@ -116,7 +116,7 @@ class Device < ActiveRecord::Base
     require 'open-uri'
 #    open('http://192.168.111.150:10001').read
 #    open("http://#{workstation.Host}:#{self.TUDPort}/jpeg.jpg").read
-    open('http://127.0.0.1:10018').read
+    open('http://192.168.111.149:10018').read # Eseek via proxy
   end
   
   def scale?
