@@ -20,7 +20,7 @@
       %div.list-group-item
         %strong= "Purchase Cost:"
         .pull-right
-          = "$#{@item.purchase_cost}" unless @item.purchase_cost.blank?
+          = "$#{number_with_precision(@item.purchase_cost, :precision => 5)}" unless @item.purchase_cost.blank?
       %div.list-group-item
         %strong= "Expense Account:"
         .pull-right

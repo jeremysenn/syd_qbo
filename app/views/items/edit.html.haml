@@ -23,7 +23,7 @@
           %div.input-group
             %span.input-group-addon
               $
-            = text_field_tag "item[purchase_cost]", nil, :placeholder => "Purchase Cost", value: @item.purchase_cost, class: "form-control input-lg"
+            = text_field_tag "item[purchase_cost]", nil, :placeholder => "Purchase Cost", value: number_with_precision(@item.purchase_cost, :precision => 5), class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Expense Account", nil, :class => 'control-label'
