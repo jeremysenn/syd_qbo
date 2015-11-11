@@ -72,7 +72,7 @@
     .text-center
       %div{id: 'endless_page'}
         %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-        %p= link_to 'Load more ...', vendors_path(:page => @vendors.next_page), :class => 'load-more-vendors btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @vendors.next_page
+        %p= link_to 'Load more ...', vendors_path(:page => @vendors.next_page, :search => params[:search]), :class => 'load-more-vendors btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#spinner').show();" if @vendors.next_page
 
 
 = render partial: "shared/vendors_footer_navbar", locals: {title: "Vendors"}

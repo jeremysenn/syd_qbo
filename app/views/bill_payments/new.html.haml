@@ -67,7 +67,7 @@
           =# hidden_field_tag "bill_payment[total]", @bill.total
           .input-group.col-xs-12.col-sm-6.col-md-3
             .input-group-addon $
-            = number_field_tag "bill_payment[total]", number_with_precision(@bill.balance, :precision => 2), max: "#{@bill.balance}", min: 1, step: "0.01", :placeholder => "Amount", class: "form-control input-lg", required: true
+            = number_field_tag "bill_payment[total]", number_with_precision(@bill.balance, :precision => 2), max: "#{@bill.balance}", min: 0, step: "0.01", :placeholder => "Amount", class: "form-control input-lg", required: true
           = hidden_field_tag "bill_payment[doc_number]", @bill.doc_number
           = hidden_field_tag :bill_id, @bill.id
     -#
