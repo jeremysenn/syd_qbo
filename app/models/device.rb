@@ -126,7 +126,7 @@ class Device < ActiveRecord::Base
   end
   
   def scale?
-    self.DeviceType == 21
+    self.DeviceType == 22
   end
   
   def scale_camera_only?
@@ -138,16 +138,40 @@ class Device < ActiveRecord::Base
   end
   
   def signature_pad?
-    self.DeviceType == 11
+    self.DeviceType == 12 or self.DeviceType == 17 or self.DeviceType == 23
+  end
+  
+  # Signature pad
+  def topaz_signature_pad?
+    self.DeviceType == 12
+  end
+  
+  # Signature pad
+  def equinox_direct?
+    self.DeviceType == 17
+  end
+  
+  # Signature pad
+  def wacom_signature_pad?
+    self.DeviceType == 23
   end
   
   def printer?
-    self.DeviceType == 20
+    self.DeviceType == 21
+  end
+  
+  def finger_print_reader?
+    self.DeviceType == 13 or self.DeviceType == 24
   end
   
   # Fingerprint scanner
   def crossmatch? 
-    self.DeviceType == 12
+    self.DeviceType == 13
+  end
+  
+  # Fingerprint scanner
+  def hamster? 
+    self.DeviceType == 24
   end
   
   # Scanshell license/OCR capture
@@ -173,8 +197,6 @@ class Device < ActiveRecord::Base
     self.DeviceType == 18
   end
   
-  
-  
   def device_type_icon
     if scale?
       unless scale_camera_only?
@@ -192,7 +214,7 @@ class Device < ActiveRecord::Base
       "<i class='fa fa-pencil fa-lg'></i>"
     elsif printer?
       "<i class='fa fa-print fa-lg'></i>"
-    elsif crossmatch?
+    elsif finger_print_reader?
       "<i class='fa fa-hand-pointer-o fa-lg'></i>"
     else
       ""
@@ -211,11 +233,25 @@ class Device < ActiveRecord::Base
     elsif camera?
       "Camera"
     elsif signature_pad?
-      "Signature Pad"
+      if topaz_signature_pad?
+        "Topaz Signature Pad"
+      elsif equinox_direct?
+        "Equinox (direct)"
+      elsif wacom_signature_pad?
+        "Wacom Signature Pad"
+      else
+        "Signature Pad"
+      end
     elsif printer?
-      "Printer"
-    elsif crossmatch?
-      "Crossmatch"
+      "PDF Printer"
+    elsif finger_print_reader?
+      if crossmatch?
+        "Crossmatch USB"
+      elsif hamster?
+        "Hamster Fingerprint Reader"
+      else
+        "Fingerprint Reader"
+      end
     else
       "Unknown"
     end

@@ -9,6 +9,7 @@ class Company < ActiveRecord::Base
   has_many :workstations
   has_many :devices
   has_one :qbo_access_credential
+  has_one :jpegger_contract, foreign_key: "contract_id"
   
   #############################
   #     Instance Methods      #

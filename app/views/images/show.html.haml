@@ -2,10 +2,13 @@
 .container
   - if @image.signature?
     %h3
-      - unless current_user.default_contract_wording.blank?
-        = current_user.default_contract_wording
-      - else
-        = default_contract
+      - unless current_company.jpegger_contract.blank?
+        = current_company.jpegger_contract.verbage.html_safe
+      -#
+        - unless current_user.default_contract_wording.blank?
+          = current_user.default_contract_wording
+        - else
+          = default_contract
   %div.row
     .col-xs-12.col-sm-12.col-md-12
       = link_to image_tag(show_jpeg_image_image_path(@image), alt: @image.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'

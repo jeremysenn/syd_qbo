@@ -36,6 +36,14 @@ class UserSetting < ActiveRecord::Base
     device_group.license_imager_devices
   end
   
+  def finger_print_reader_devices
+    device_group.finger_print_reader_devices
+  end
+  
+  def signature_pad_devices
+    device_group.signature_pad_devices
+  end
+  
   def printer_devices
     device_group.printer_devices
   end

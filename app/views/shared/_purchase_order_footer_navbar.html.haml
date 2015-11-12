@@ -25,18 +25,25 @@
             %i.fa.fa-home.fa-lg
             = "Home" unless mobile_device?
         .col-xs-3.col-sm-3
-          %a{href: '#'}
-            %i.fa.fa-hand-pointer-o.fa-lg
-            = "Scanner" unless mobile_device?
+          - current_user.finger_print_reader_devices.each do |finger_print_reader_device|
+            %a{href: '#'}
+              %i.fa.fa-hand-pointer-o.fa-lg
+              = "Reader" unless mobile_device?
         .col-xs-3.col-sm-3
           -# if params[:controller] == "images" or params[:controller] == "shipments"
           %a{href: "#upload_form", "data-toggle" => "modal", :alt => "new_image_file_form"}
             %i.fa.fa-camera.fa-lg
             = "Pictures" unless mobile_device?
         .col-xs-3.col-sm-3
-          %a{href: "#signature_form", "data-toggle" => "modal", :alt => "new_signature_form"}
-            %i.fa.fa-pencil.fa-lg
-            = "Sign" unless mobile_device?
+          - unless current_user.signature_pad_devices.blank?
+            - current_user.signature_pad_devices.each do |signature_pad_device|
+              %a{href: '#'}
+                %i.fa.fa-pencil.fa-lg
+                = "Sign" unless mobile_device?
+          - else
+            %a{href: "#signature_form", "data-toggle" => "modal", :alt => "new_signature_form"}
+              %i.fa.fa-pencil.fa-lg
+              = "Sign" unless mobile_device?
           -#
             %a{href: "#{current_user.images_table? ? images_path(today: true) : shipments_path(today: true)}"}
               %i.fa.fa-calendar-o.fa-lg

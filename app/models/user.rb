@@ -83,6 +83,14 @@ class User < ActiveRecord::Base
     user_setting.license_imager_devices
   end
   
+  def finger_print_reader_devices
+    user_setting.finger_print_reader_devices
+  end
+  
+  def signature_pad_devices
+    user_setting.signature_pad_devices
+  end
+  
   def printer_devices
     user_setting.printer_devices
   end

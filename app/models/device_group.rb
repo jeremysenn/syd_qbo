@@ -22,7 +22,7 @@ class DeviceGroup < ActiveRecord::Base
   end
   
   def scale_devices
-    devices.select {|device| device.DeviceType == 21}
+    devices.select {|device| device.DeviceType == 22}
   end
   
   def camera_devices
@@ -37,8 +37,16 @@ class DeviceGroup < ActiveRecord::Base
     devices.select {|device| device.DeviceType == 6 or device.DeviceType == 18}
   end
   
+  def finger_print_reader_devices
+    devices.select {|device| device.DeviceType == 13 or device.DeviceType == 24}
+  end
+  
+  def signature_pad_devices
+    devices.select {|device| device.DeviceType == 12 or device.DeviceType == 17 or device.DeviceType == 23}
+  end
+  
   def printer_devices
-    devices.select {|device| device.DeviceType == 20}
+    devices.select {|device| device.DeviceType == 21}
   end
   
   #############################
