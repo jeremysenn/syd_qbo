@@ -125,8 +125,9 @@ class Device < ActiveRecord::Base
     end
   end
   
+  # Serial scale
   def scale?
-    self.DeviceType == 22
+    self.DeviceType == 21
   end
   
   def scale_camera_only?
@@ -138,54 +139,54 @@ class Device < ActiveRecord::Base
   end
   
   def signature_pad?
-    self.DeviceType == 12 or self.DeviceType == 17 or self.DeviceType == 23
+    topaz_signature_pad? or equinox_direct? or wacom_signature_pad?
   end
   
-  # Signature pad
+  # Topaz signature pad
   def topaz_signature_pad?
-    self.DeviceType == 12
+    self.DeviceType == 11
   end
   
-  # Signature pad
+  # Equinox signature pad
   def equinox_direct?
-    self.DeviceType == 17
+    self.DeviceType == 16
   end
   
-  # Signature pad
+  # Wacom signature pad
   def wacom_signature_pad?
-    self.DeviceType == 23
+    self.DeviceType == 22
   end
   
   def printer?
-    self.DeviceType == 21
+    self.DeviceType == 20
   end
   
   def finger_print_reader?
-    self.DeviceType == 13 or self.DeviceType == 24
+    crossmatch? or hamster?
   end
   
   # Fingerprint scanner
   def crossmatch? 
-    self.DeviceType == 13
+    self.DeviceType == 12
   end
   
   # Fingerprint scanner
   def hamster? 
-    self.DeviceType == 24
-  end
-  
-  # Scanshell license/OCR capture
-  def scanshell? 
-    self.DeviceType == 6
-  end
-  
-  # E-Seek Magstripe/2D Barcode reader
-  def eseek_reader? 
-    self.DeviceType == 7
+    self.DeviceType == 23
   end
   
   def license_reader?
     scanshell? or eseek_reader?
+  end
+  
+  # Scanshell license/OCR capture
+  def scanshell? 
+    self.DeviceType == 5
+  end
+  
+  # E-Seek Magstripe/2D Barcode reader
+  def eseek_reader? 
+    self.DeviceType == 6
   end
   
   def license_imager?
@@ -194,7 +195,7 @@ class Device < ActiveRecord::Base
   
   # ESeek M280 Imager
   def eseek_imager?
-    self.DeviceType == 18
+    self.DeviceType == 17
   end
   
   def device_type_icon
