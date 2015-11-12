@@ -205,13 +205,14 @@ jQuery ->
         return
       return
     if numZeroTare > 0
-      confirm1 = confirm('You have empty or zero tare(s). Are you sure you want to close this ticket?')
-      if confirm1
-        return
-      else
-        e.preventDefault()
-        return
-      return
+      alert 'You have empty or zero tare(s)'
+      #confirm1 = confirm('You have empty or zero tare(s). Are you sure you want to close this ticket?')
+      #if confirm1
+      #  return
+      #else
+      #  e.preventDefault()
+      #  return
+      #return
     return
 
   $('.scale_read').on 'click', (e) ->
