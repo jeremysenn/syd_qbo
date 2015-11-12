@@ -145,10 +145,11 @@ jQuery ->
           state: $('#vendor_billing_address_country_sub_division_code').val()
           zip: $('#vendor_billing_address_postal_code').val()
         success: (data) ->
-          # alert 'Saved scanned image to Jpegger.'
+          $('.save_to_jpegger_spinner').hide()
+          alert 'Saved scanned image to Jpegger.'
           return
         error: ->
-          $('#spinner').hide()
+          $('.save_to_jpegger_spinner').hide()
           alert 'Error saving scanned image to Jpegger.'
           return
     
