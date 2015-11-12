@@ -212,7 +212,7 @@ jQuery ->
       #else
       #  e.preventDefault()
       #  return
-      #return
+      return
     return
 
   $('.scale_read').on 'click', (e) ->
