@@ -34,6 +34,7 @@ jQuery ->
     return
 
   $('#new_ticket_navbar_link').on 'click', ->
+    $(this).unbind('click')
     $('#purchase_order_form').submit()
     return
 
