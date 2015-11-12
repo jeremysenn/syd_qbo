@@ -93,7 +93,7 @@ jQuery ->
           $('#vendor_billing_address_city').val city
           $('#vendor_billing_address_country_sub_division_code').val state
           $('#vendor_billing_address_postal_code').val zip
-          $('#data_scan_spinner').hide()
+          $('.data_scan_spinner').hide()
           
           #$('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
           #$('#scanned_license').show()
@@ -108,7 +108,6 @@ jQuery ->
 
   $('.drivers_license_image_scan').on 'click', ->
     device_id = $(this).data( "device-id" )
-    $('#image_scan_spinner').hide()
     $('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
   
   # Save scanned image to jpegger automatically if it's visible when update vendor

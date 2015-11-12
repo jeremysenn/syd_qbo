@@ -33,6 +33,10 @@ class DeviceGroup < ActiveRecord::Base
     devices.select {|device| device.DeviceType == 6 or device.DeviceType == 7}
   end
   
+  def license_imager_devices
+    devices.select {|device| device.DeviceType == 6 or device.DeviceType == 18}
+  end
+  
   def printer_devices
     devices.select {|device| device.DeviceType == 20}
   end

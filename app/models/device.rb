@@ -164,6 +164,10 @@ class Device < ActiveRecord::Base
     scanshell? or eseek_reader?
   end
   
+  def license_imager?
+    scanshell? or eseek_imager?
+  end
+  
   # ESeek M280 Imager
   def eseek_imager?
     self.DeviceType == 18
@@ -180,6 +184,8 @@ class Device < ActiveRecord::Base
       end
     elsif license_reader?
       "<i class='fa fa-list-alt fa-lg'></i>"
+    elsif license_imager?
+      "<i class='fa fa-image fa-lg'></i>"
     elsif camera?
       "<i class='fa fa-camera fa-lg'></i>"
     elsif signature_pad?

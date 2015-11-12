@@ -32,6 +32,10 @@ class UserSetting < ActiveRecord::Base
     device_group.license_reader_devices
   end
   
+  def license_imager_devices
+    device_group.license_imager_devices
+  end
+  
   def printer_devices
     device_group.printer_devices
   end

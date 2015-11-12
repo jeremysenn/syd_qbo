@@ -1,26 +1,25 @@
 = render partial: "shared/navbars/new_and_edit_vendor_navbar", locals: {title: truncate(@vendor.display_name, length: 12)}
 .container
-  - current_user.license_reader_devices.each do |license_reader_device|
-    %p
-      %a{href: '#', id: 'drivers_license_scan', 'data-device-id' => license_reader_device.id, onclick: "$('#data_scan_spinner').show();", class: 'drivers_license_scan btn btn-default'}
-        %i.fa.fa-list-alt
-        = "#{license_reader_device.DeviceName} License Data Scan"
-        = image_tag("ajax-loader.gif", :id => "data_scan_spinner", :alt => "Loading ...", style: "display:none;")
-      %a{href: '#', id: 'drivers_license_image_scan', 'data-device-id' => license_reader_device.id, onclick: "$('#scanned_license_image').show();", class: 'drivers_license_image_scan btn btn-default'}
-        %i.fa.fa-image
-        = "#{license_reader_device.DeviceName} License Image Scan"
-        = image_tag("ajax-loader.gif", :id => "image_scan_spinner", :alt => "Loading ...", style: "display:none;")
+  %ul{class: 'list-inline'}
+    - current_user.license_reader_devices.each do |license_reader_device|
+      %li
+        %a{href: '#', id: 'drivers_license_scan', 'data-device-id' => license_reader_device.id, onclick: "$(this).find('.data_scan_spinner:first').show();", class: 'drivers_license_scan btn btn-default'}
+          %i.fa.fa-list-alt
+          = "#{license_reader_device.DeviceName} Data Scan"
+          = image_tag("ajax-loader.gif", :id => "data_scan_spinner", :class => "data_scan_spinner", :alt => "Loading ...", style: "display:none;")
+  %ul{class: 'list-inline'}
+    - current_user.license_imager_devices.each do |license_imager_device|
+      %li
+        %a{href: '#', id: 'drivers_license_image_scan', 'data-device-id' => license_imager_device.id, onclick: "$('#scanned_license_image').show();", class: 'drivers_license_image_scan btn btn-default'}
+          %i.fa.fa-image
+          = "#{license_imager_device.DeviceName} Image Scan"
+          = image_tag("ajax-loader.gif", :id => "image_scan_spinner", :class => "image_scan_spinner", :alt => "Loading ...", style: "display:none;")
+      %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail pull-right", style: "display:none;", id: "scanned_license_image"}
+        %p
+          = image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+          .caption{style: 'display:none'}
+            %p= link_to "Save image to Jpegger", '#', id: 'save_license_scan_to_jpegger', class: 'btn btn-default', 'data-device-id' => license_imager_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id
 
-      =# link_to "#{camera_device.DeviceName} License Data Scan", '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#spinner').show();", class: 'btn btn-default'
-      =# link_to "#{camera_device.DeviceName} License Image Scan", '#', id: 'drivers_license_image_scan', 'data-device-id' => camera_device.id, onclick: "$('#scanned_license').show();", class: 'btn btn-default'
-      =# image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-
-    %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license_image"}
-      =# image_tag("http://qb.scrapyarddog.com/devices/#{camera_device.id}/show_scanned_jpeg_image", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
-      =# image_tag(show_scanned_jpeg_image_device_url(camera_device.id), :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
-      = image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
-      .caption{style: 'display:none'}
-        %p= link_to "Save image to Jpegger", '#', id: 'save_license_scan_to_jpegger', class: 'btn btn-default', 'data-device-id' => license_reader_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id
   .well.col-xs-12.col-sm-12.col-md-12
     = form_tag update_qb_vendor_path, method: 'get', id: 'vendor_form', :class => "form-horizontal" do
       .row.form-group
