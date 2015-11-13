@@ -14,7 +14,7 @@
           = form_tag set_user_location_user_settings_path, :class => "form-horizontal" do |f|
             .row.form-group
               %div{:class => "col-sm-12 col-md-12"}
-                = label_tag "Admin Email", nil, :class => 'control-label'
+                = label_tag "Quickbooks Admin Email", nil, :class => 'control-label'
                 %br/
                 = email_field_tag "user_setting[admin_email]", nil, placeholder: "admin@mail.com", :class => "form-control input-lg"
             .row.form-group
