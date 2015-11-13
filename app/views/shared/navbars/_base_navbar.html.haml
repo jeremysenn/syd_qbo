@@ -60,9 +60,14 @@
                 -#
                   %li{:class => (current_user.device_group == device_group) ? "active" : ""}
                     %a{href: '#'}= device_group.DeviceGroupName
-        %li{:class => (params[:controller] == "jpegger_contracts") ? "active" : ""}
-          %a{href: contract_path(current_company.jpegger_contract.id)}
-            Contract
+        - unless current_company.jpegger_contract.blank?
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+              Contract
+              %b.caret
+            %ul.dropdown-menu
+              %li
+                %a{href: '#'}= current_company.jpegger_contract.verbage.html_safe
         %li
           %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
             Quickbooks

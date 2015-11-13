@@ -283,7 +283,7 @@ jQuery ->
     location = $(this).data( "location" )
     commodity_name = $(this).data( "item-name" )
 
-    dashboard_icon = $(this).find( ".fa-dashboard" )
+    dashboard_icon = $(this).find( ".fa-camera" )
     dashboard_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
