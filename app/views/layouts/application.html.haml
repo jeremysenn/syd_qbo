@@ -29,7 +29,8 @@
 
     -# if user_signed_in? && !session[:token]
     - if user_signed_in? && current_user.qbo_access_credential.blank?
-      intuit.ipp.anywhere.directConnectToIntuit();
+      - unless current_page? set_user_location_user_settings_path
+        intuit.ipp.anywhere.directConnectToIntuit();
     </script>
 
     -#
