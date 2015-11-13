@@ -1,0 +1,67 @@
+= render partial: "shared/search_navbar", locals: {title: "Settings"}
+
+.container
+  .col-xs-12.col-sm-6.col-md-offset-3
+    .panel.panel-default
+      .panel-heading
+        Show Thumbnails
+      %ul.list-group
+        %li.list-group-item
+          %strong= "Vendors:"
+          .pull-right
+            = "#{@user_setting.show_vendor_thumbnails? ? 'Yes' : 'No'}"
+
+        %li.list-group-item
+          %strong= "Open Tickets:"
+          .pull-right
+            = "#{@user_setting.show_purchase_order_thumbnails? ? 'Yes' : 'No'}"
+
+        %li.list-group-item
+          %strong= "Closed Tickets:"
+          .pull-right
+            = "#{@user_setting.show_bill_thumbnails? ? 'Yes' : 'No'}"
+
+        %li.list-group-item
+          %strong= "Paid Tickets:"
+          .pull-right
+            = "#{@user_setting.show_bill_payment_thumbnails? ? 'Yes' : 'No'}"
+
+        %li.list-group-item
+          %strong= "Pictures:"
+          .pull-right
+            = "#{@user_setting.show_thumbnails? ? 'Yes' : 'No'}"
+        -#
+          %div.list-group-item
+            %strong= "Search table:"
+            .pull-right
+              = "#{@user_setting.table_name}"
+          
+        %li.list-group-item= link_to "Edit", edit_user_setting_path(@user_setting), id: 'edit_user_setting_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
+
+    .panel.panel-default
+      .panel-heading
+        Contract
+      %ul.list-group
+        - unless current_user.default_contract.blank?
+          %li.list-group-item
+            %strong= current_user.default_contract.name
+          %li.list-group-item= current_user.default_contract_wording
+          %li.list-group-item= link_to "Edit", edit_contract_path(current_user.default_contract.id), id: 'edit_contract_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
+        - else
+          %li.list-group-item= link_to "Create", new_contract_path, id: 'new_contract_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Create"}
+  -#
+    %div.row
+      .col-xs-12.col-sm-6.col-md-offset-3
+        %div.panel.panel-default
+          %div.panel-heading
+            Event Codes
+          %div.list_group
+            - @lookup_defs.each do |lookup_def|
+              %div.list-group-item
+                %strong= lookup_def.LookupValue
+                .pull-right
+                  = lookup_def.tableName
+            %div.list-group-item
+              = link_to "New", new_lookup_def_path, class: 'btn btn-primary btn-lg btn-block'
+
+= render partial: "shared/footer_navbar", locals: {title: "Settings"}
