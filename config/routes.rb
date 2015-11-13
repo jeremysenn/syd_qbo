@@ -43,7 +43,11 @@ Rails.application.routes.draw do
   
   resources :lookup_defs
   
-  resources :user_settings
+  resources :user_settings do
+    collection do
+      get :set_user_location
+    end
+  end
   
   resources :tud_devices do
     collection do
