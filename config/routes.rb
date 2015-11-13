@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   
   resources :user_settings do
     collection do
-      get :set_user_location
+      post :set_user_location
     end
   end
   
