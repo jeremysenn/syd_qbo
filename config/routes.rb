@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       get :scale_camera_trigger
       get :show_scanned_jpeg_image
       get :drivers_license_camera_trigger
+      get :get_signature
     end
   end
   

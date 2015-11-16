@@ -274,6 +274,7 @@ jQuery ->
     # Kick off the scale read and camera trigger ajax calls
     scale_read_ajax().success camera_trigger_ajax
 
+  # Just call the scale camera trigger
   $(document).on 'click', '.scale_camera_trigger', (e) ->
     e.preventDefault()
     # Get data from scale button
@@ -308,4 +309,35 @@ jQuery ->
         dashboard_icon.show()
         spinner_icon.hide()
         alert 'Scale camera trigger failed'
+        return
+
+  # Call TUD signature pad
+  $(document).on 'click', '.tud_signature_pad', (e) ->
+    e.preventDefault()
+    # Get data from scale button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    company_id = $(this).data( "company-id" )
+
+    pencil_icon = $(this).find( ".fa-pencil" )
+    pencil_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger TUD signature pad
+    $.ajax
+      url: "/devices/" + device_id + "/get_signature"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        company_id: company_id
+      success: (response) ->
+        pencil_icon.show()
+        spinner_icon.hide()
+        alert 'Signature pad call successful.'
+        return
+      error: ->
+        pencil_icon.show()
+        spinner_icon.hide()
+        alert 'Signature pad call failed'
         return

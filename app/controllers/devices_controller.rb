@@ -2,7 +2,7 @@ class DevicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image]
 #  load_and_authorize_resource
 
-  before_action :set_device, only: [:show, :show_scanned_jpeg_image, :scale_read, :scale_camera_trigger, :drivers_license_scan, :drivers_license_camera_trigger]
+  before_action :set_device, only: [:show, :show_scanned_jpeg_image, :scale_read, :scale_camera_trigger, :drivers_license_scan, :drivers_license_camera_trigger, :get_signature]
 
   # GET /devices
   # GET /devices.json
@@ -115,6 +115,14 @@ class DevicesController < ApplicationController
     @device.drivers_license_camera_trigger(params[:customer_first_name], params[:customer_last_name], params[:customer_number], params[:license_number], 
       params[:license_issue_date], params[:license_expiration_date],
       params[:dob], params[:sex], params[:event_code], params[:location], params[:address1], params[:city], params[:state], params[:zip])
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
+  end
+  
+  def get_signature
+    @device.get_signature(params[:ticket_number], params[:company_id])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

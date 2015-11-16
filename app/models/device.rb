@@ -125,6 +125,59 @@ class Device < ActiveRecord::Base
     end
   end
   
+  def get_signature(ticket_nbr, company_id)
+    xml_string = "<?xml version='1.0' encoding='UTF-8'?>
+      <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+         <SOAP-ENV:Body>
+            <mns:GetSignature xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
+               <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
+               <Fields xsi:type='soapenc:Array' soapenc:arrayType='ns1:TTUDField[4]'>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>ticket_nbr</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{ticket_nbr}</FieldValue>
+                  </item>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>location</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{company_id}</FieldValue>
+                  </item>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>sig_id</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{company_id}</FieldValue>
+                  </item>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>contract_id</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{company_id}</FieldValue>
+                  </item>
+               </Fields>
+            </mns:GetSignature>
+         </SOAP-ENV:Body>
+      </SOAP-ENV:Envelope>"
+    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client.call(:encode, xml: xml_string)
+  end
+  
+  def finger_print_trigger(ticket_number, location)
+    xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+      <SOAP-ENV:Body>
+         <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+            <Host xsi:type='xs:string'>127.0.0.1</Host>
+            <Port xsi:type='xs:int'>3333</Port>
+            <Trigger xsi:type='xs:string'>
+               <CAPTURE>
+                  <TICKET_NBR>#{ticket_number}</TICKET_NBR>
+                  <EVENT_CODE>Finger Print</EVENT_CODE>
+                  <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
+                  <LOCATION>#{location}</LOCATION>
+               </CAPTURE>
+            </Trigger>
+         </mns:JpeggerTrigger>
+      </SOAP-ENV:Body>
+    </SOAP-ENV:Envelope>"
+    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client.call(:jpegger_trigger, xml: xml_string)
+  end
+  
   # Serial scale
   def scale?
     self.DeviceType == 21
