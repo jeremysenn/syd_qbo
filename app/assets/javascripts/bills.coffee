@@ -130,7 +130,6 @@ jQuery ->
 
   ### Picture Uploads ###
   $(document).on 'click', '.gross_or_tare_picture_button', ->
-    alert 'here!'
     event_code = $(this).data( "event-code" )
     item_id = $(this).data( "item-id" )
     item_name = $(this).data( "item-name" )
