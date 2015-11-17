@@ -127,3 +127,54 @@ jQuery ->
     if typeof $(e.target).data('original-title') == 'undefined' and !$(e.target).parents().is('.popover.in')
       $('[data-original-title]').popover 'hide'
     return
+
+  ### Picture Uploads ###
+  $(document).on 'click', '.gross_or_tare_picture_button', ->
+    event_code = $(this).data( "event-code" )
+    item_id = $(this).data( "item-id" )
+    item_name = $(this).data( "item-name" )
+    weight = $(this).data( "weight" )
+
+    $('#image_file_event_code').val event_code
+    $('#image_file_tare_seq_nbr').val item_id
+    $('#image_file_commodity_name').val item_name
+    $('#image_file_weight').val weight
+
+    $('input[type=file]').trigger 'click'
+    false
+
+  $("#new_image_file").fileupload
+    dataType: "script"
+    disableImageResize: false
+    imageMaxWidth: 1024
+    imageMaxHeight: 768
+    imageMinWidth: 800
+    imageMinHeight: 600
+    imageCrop: false
+
+    add: (e, data) ->
+      file = undefined
+      types = undefined
+      types = /(\.|\/)(gif|jpe?g|png|pdf)$/i
+      file = data.files[0]
+      if types.test(file.type) or types.test(file.name)
+        data.context = $(tmpl("template-upload", file))
+        current_data = $(this)
+        data.process(->
+          current_data.fileupload 'process', data
+        ).done ->
+          data.submit()
+        #$("#new_image_file").prepend data.context
+        #$('#new_image_file').append('<img src="' + URL.createObjectURL(data.files[0]) + '"/>')
+        $('#pictures').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
+        $('#images').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
+        #data.submit()
+        $(".picture_loading_spinner").show()
+        #$("#uploads").hide()
+      else
+        alert "" + file.name + " is not a gif, jpeg, or png picture file"
+
+    progress: (e, data) ->
+      if data.context
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        data.context.find('.progress-bar').css('width', progress + '%')
