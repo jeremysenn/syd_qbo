@@ -49,6 +49,15 @@ class DeviceGroup < ActiveRecord::Base
     devices.select {|device| device.DeviceType == 5 or device.DeviceType == 17}
   end
   
+  def customer_camera_device
+    camera_devices = devices.select {|device| device.DeviceName == self.CustomerCamera}
+    unless camera_devices.blank?
+      return camera_devices.first
+    else
+      nil
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################

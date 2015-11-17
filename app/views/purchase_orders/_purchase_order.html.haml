@@ -51,8 +51,15 @@
             = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
             .pull-right
               = number_to_currency(purchase_order.total)
-          %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
-            = purchase_order.txn_date.strftime("%m/%d/%y")
-            .pull-right
-              %i.fa.fa-file-pdf-o.fa-lg
-              Print
+          - unless current_user.printer_devices.blank?
+            %a{href: '#', class: "list-group-item"}
+              = purchase_order.txn_date.strftime("%m/%d/%y")
+              .pull-right
+                %i.fa.fa-print.fa-lg
+                Print
+          - else
+            %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
+              = purchase_order.txn_date.strftime("%m/%d/%y")
+              .pull-right
+                %i.fa.fa-file-pdf-o.fa-lg
+                Print

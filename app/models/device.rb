@@ -178,6 +178,21 @@ class Device < ActiveRecord::Base
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
+  def call_printer_for_purchase_order_pdf(pdf_binary)
+    xml_string = "<?xml version='1.0' encoding='UTF-8'?>
+      <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+         <SOAP-ENV:Body xmlns:NS1='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+            <NS1:PrintPDF>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
+               <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
+               <PDFFile xsi:type='xsd:base64Binary'>#{Base64.encode64(File.binread('/Users/jeremysenn/Desktop/Scrap Stuff/ticket.pdf'))}</PDFFile>
+            </NS1:PrintPDF>
+         </SOAP-ENV:Body>
+      </SOAP-ENV:Envelope>"
+    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client.call(:encode, xml: xml_string)
+  end
+  
   # Serial scale
   def scale?
     self.DeviceType == 21

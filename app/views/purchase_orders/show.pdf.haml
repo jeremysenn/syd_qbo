@@ -75,7 +75,8 @@
                     = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
                   .text-center= image.event_code
   %h2.text-center PURCHASE TICKET
-  %h4.text-center= @company_info.company_name
+  -#
+    %h4.text-center= @company_info.company_name
   %p
     %strong= "Ticket: "
     = @purchase_order.doc_number

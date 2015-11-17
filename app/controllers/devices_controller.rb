@@ -128,6 +128,19 @@ class DevicesController < ApplicationController
       format.json { render json: {}, :status => :ok}
     end
   end
+  
+  def call_printer_for_purchase_order_pdf
+    @device.call_printer_for_purchase_order_pdf(Base64.encode64(open(purchase_order_url(params[:purchase_order_id], format: 'pdf'))))
+  end
+  
+  def call_printer_for_bill_pdf
+    @device.call_printer_for_bill_pdf(params[:bill_id])
+  end
+  
+  def call_printer_for_bill_payment_pdf
+    
+    @device.call_printer_for_bill_payment_pdf(Base64.encode64(open(URI.parse('http://localhost:3000/purchase_orders/934.pdf'))))
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -45,7 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1.json
   def show
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @doc_number = @purchase_order.doc_number
+    @doc_number = @purchase_order.doc_number # Ticket number
     
     respond_to do |format|
       format.html do
@@ -54,12 +54,15 @@ class PurchaseOrdersController < ApplicationController
       end
       format.pdf do
         @signature = Image.where(ticket_nbr: @doc_number, event_code: "SIG").last
-        render pdf: "file_name",
-        :layout => 'pdf.html.haml'
+        render pdf: "PO#{@doc_number}",
+        :page_width => 4,
+        :layout => 'pdf.html.haml',
+        :save_to_file => Rails.root.join('pdfs', "PO#{@doc_number}.pdf")
+        Device.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "PO#{@doc_number}.pdf"))))
       end
     end
   end
-
+  
   # GET /purchase_orders/new
   def new
     @vendors = @vendor_service.query(nil, :per_page => 1000)
@@ -72,7 +75,7 @@ class PurchaseOrdersController < ApplicationController
   def edit
     @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @doc_number = @purchase_order.doc_number
+    @doc_number = @purchase_order.doc_number # Ticket number
 #    @contract = Contract.find(current_company_id) # Find contract for this company
     
 #    query = "Select * From Item Where Type = 'Inventory'"

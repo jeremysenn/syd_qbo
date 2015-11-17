@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
     member do
       get :update_qb
+      get :download
     end
   end
   
@@ -66,6 +67,7 @@ Rails.application.routes.draw do
       get :show_scanned_jpeg_image
       get :drivers_license_camera_trigger
       get :get_signature
+      get :call_printer_for_purchase_order_pdf
     end
   end
   

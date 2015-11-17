@@ -47,6 +47,7 @@
             - current_user.device_group.devices.each do |device|
               %li.list-group-item
                 %strong= device.DeviceName
+                = "(Customer Camera)" if device == current_user.device_group.customer_camera_device
                 %p
                   = "Workstation:"
                   = device.workstation.WorkstationName
@@ -59,6 +60,8 @@
                   = device.type
                   - if device.scale_camera_only?
                     %small= "(Scale camera only - no indicator)"
+                  - if device.printer?
+                    %small= "(Printer Width: #{device.PrinterWidth})"
                 %p 
                   = "Device Order:"
                   = "#{device.device_group_member_order(current_user.device_group).blank? ? 'N/A' : device.device_group_member_order(current_user.device_group)}"
