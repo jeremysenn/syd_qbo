@@ -18,7 +18,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
             <mns:ReadScale xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <ConsecReads xsi:type='xs:int'>5</ConsecReads>
             </mns:ReadScale>
