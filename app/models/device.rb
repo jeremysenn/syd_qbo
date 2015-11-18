@@ -185,7 +185,7 @@ class Device < ActiveRecord::Base
             <NS1:PrintPDF>
                <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
-               <PDFFile xsi:type='xsd:base64Binary'>#{Base64.encode64(File.binread('/Users/jeremysenn/Desktop/Scrap Stuff/ticket.pdf'))}</PDFFile>
+               <PDFFile xsi:type='xsd:base64Binary'>#{pdf_binary}</PDFFile>
             </NS1:PrintPDF>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"

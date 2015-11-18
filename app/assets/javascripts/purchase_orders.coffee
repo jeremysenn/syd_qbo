@@ -348,7 +348,7 @@ jQuery ->
     # Get data from button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
-    location = $(this).data( "location" )
+    location = $(this).data( "company-id" )
 
     dashboard_icon = $(this).find( ".fa-camera" )
     dashboard_icon.hide()
@@ -365,7 +365,7 @@ jQuery ->
       success: (response) ->
         dashboard_icon.show()
         spinner_icon.hide()
-        alert 'Finger print trigger successful.'
+        #alert 'Finger print trigger successful.'
         return
       error: ->
         dashboard_icon.show()

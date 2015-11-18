@@ -2,7 +2,8 @@ class DevicesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show_scanned_jpeg_image]
 #  load_and_authorize_resource
 
-  before_action :set_device, only: [:show, :show_scanned_jpeg_image, :scale_read, :scale_camera_trigger, :drivers_license_scan, :drivers_license_camera_trigger, :get_signature]
+  before_action :set_device, only: [:show, :show_scanned_jpeg_image, :scale_read, :scale_camera_trigger, 
+      :drivers_license_scan, :drivers_license_camera_trigger, :get_signature, :finger_print_trigger]
 
   # GET /devices
   # GET /devices.json
