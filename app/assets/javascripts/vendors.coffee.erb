@@ -115,15 +115,10 @@ jQuery ->
     $('#scanned_license_picture_' + device_id).attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
   
   # Save scanned image to jpegger automatically if it's visible when update vendor
-  #$('#vendor_update_button').on 'click', ->
-  #  if $('#scanned_license').is(':visible')
+  #$('#vendor_form').submit (e) ->
+  #  if $('#scanned_license_picture').is(':visible')
   #    $('#save_license_scan_to_jpegger').trigger 'click'
   #  return
-
-  $('#vendor_form').submit (e) ->
-    if $('#scanned_license_picture').is(':visible')
-      $('#save_license_scan_to_jpegger').trigger 'click'
-    return
 
   $('.save_license_scan_to_jpegger').on 'click', ->
     device_id = $(this).data( "device-id" )
