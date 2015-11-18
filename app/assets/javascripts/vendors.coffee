@@ -101,6 +101,7 @@ jQuery ->
           return
         error: ->
           $('#spinner').hide()
+          $('.data_scan_spinner').hide()
           alert 'Error reading license.'
           return
     
