@@ -109,7 +109,10 @@ jQuery ->
 
   $('.drivers_license_image_scan').on 'click', ->
     device_id = $(this).data( "device-id" )
-    $('#scanned_license_picture').attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
+    $('.scanned_license_image').hide()
+    $('#scanned_license_image_' + device_id).show()
+    $('#scanned_license_picture_' + device_id).attr('src', "<%= asset_path('ajax-loader.gif') %>")
+    $('#scanned_license_picture_' + device_id).attr('src', 'http://qb.scrapyarddog.com/devices/' + device_id + '/show_scanned_jpeg_image')
   
   # Save scanned image to jpegger automatically if it's visible when update vendor
   #$('#vendor_update_button').on 'click', ->
@@ -122,7 +125,7 @@ jQuery ->
       $('#save_license_scan_to_jpegger').trigger 'click'
     return
 
-  $('#save_license_scan_to_jpegger').on 'click', ->
+  $('.save_license_scan_to_jpegger').on 'click', ->
     device_id = $(this).data( "device-id" )
     vendor_id = $(this).data( "vendor-id" )
     location = $(this).data( "company-id" )
