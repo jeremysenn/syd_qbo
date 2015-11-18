@@ -11,17 +11,19 @@
       =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
       = select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
       = label_tag "Gross", nil, :class => 'control-label'
-      %div.input-group
+      %div
         = phone_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
-        %span.input-group-addon
-          %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-weight' => 0}
-            %i.fa.fa-camera.fa-lg
+        -#
+          %span.input-group-addon
+            %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-weight' => 0}
+              %i.fa.fa-camera.fa-lg
       = label_tag "Tare", nil, :class => 'control-label'
-      %div.input-group
+      %div
         = phone_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
-        %span.input-group-addon
-          %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-weight' => 0}
-            %i.fa.fa-camera.fa-lg
+        -#
+          %span.input-group-addon
+            %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-weight' => 0}
+              %i.fa.fa-camera.fa-lg
       = label_tag "Net", nil, :class => 'control-label'
       = text_field_tag "bill[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
       = label_tag "Rate", nil, :class => 'control-label'
