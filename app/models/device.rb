@@ -116,13 +116,20 @@ class Device < ActiveRecord::Base
     require 'open-uri'
 #    open('http://192.168.111.150:10001').read
 #    open("http://#{workstation.Host}:#{self.TUDPort}/jpeg.jpg").read
+    
+    # Show image by going direct to device
+    if eseek_imager?
+      open("http://192.168.111.150:#{self.TUDPort}/jpeg.jpg").read
+    elsif scanshell?
+      open("http://192.168.111.150:#{self.TUDPort}").read 
+    end
 #    
     # Show image via proxy
-    if eseek_imager?
-      open("http://192.168.111.150:#{self.LocalListenPort}/jpeg.jpg").read
-    elsif scanshell?
-      open("http://192.168.111.150:#{self.LocalListenPort}").read 
-    end
+#    if eseek_imager?
+#      open("http://192.168.111.149:#{self.LocalListenPort}/jpeg.jpg").read
+#    elsif scanshell?
+#      open("http://192.168.111.149:#{self.LocalListenPort}").read 
+#    end
   end
   
   def get_signature(ticket_nbr, company_id)
