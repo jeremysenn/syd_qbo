@@ -79,20 +79,11 @@
                   = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
                   .pull-right
                     = number_to_currency(purchase_order.total)
-                - unless current_user.printer_devices.blank?
-                  -#
-                    %a{href: '#', class: "list-group-item"}
-                  %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
-                    = purchase_order.txn_date.strftime("%m/%d/%y")
-                    .pull-right
-                      %i.fa.fa-print.fa-lg
-                      Print
-                - else
-                  %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
-                    = purchase_order.txn_date.strftime("%m/%d/%y")
-                    .pull-right
-                      %i.fa.fa-file-pdf-o.fa-lg
-                      Print
+                %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
+                  = purchase_order.txn_date.strftime("%m/%d/%y")
+                  .pull-right
+                    %i.fa.fa-file-pdf-o.fa-lg
+                    Print
                 -#
                   %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
                     Close ticket

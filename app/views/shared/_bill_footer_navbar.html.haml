@@ -7,9 +7,10 @@
             %i.fa.fa-home.fa-lg
             = "Home" unless mobile_device?
         .col-xs-3.col-sm-3
-          %a{href: bill_path(@bill.id, format: 'pdf'), target: '_blank'}
-            %i.fa.fa-file-pdf-o.fa-lg
-            = "Print" unless mobile_device?
+          - current_user.finger_print_reader_devices.each do |finger_print_reader_device|
+            %a{href: '#', class: 'finger_print_trigger', 'data-device-id' => finger_print_reader_device.id, 'data-ticket-number' => @doc_number, 'data-company-id' => current_company.id}
+              %i.fa.fa-hand-pointer-o.fa-lg
+              = "Reader" unless mobile_device?
         .col-xs-3.col-sm-3
           -# 
             if params[:controller] == "images" or params[:controller] == "shipments"
