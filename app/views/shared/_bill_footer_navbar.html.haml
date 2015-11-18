@@ -2,17 +2,21 @@
   .container-fluid
     .navbar-header
       %div{class: 'navbar-brand navbar-center'}
-        .col-xs-4.col-sm-4
+        .col-xs-3.col-sm-3
           %a{href: root_path}
             %i.fa.fa-home.fa-lg
             = "Home" unless mobile_device?
-        .col-xs-4.col-sm-4
+        .col-xs-3.col-sm-3
+          %a{href: bill_path(@bill.id, format: 'pdf'), target: '_blank'}
+            %i.fa.fa-file-pdf-o.fa-lg
+            = "Print" unless mobile_device?
+        .col-xs-3.col-sm-3
           -# 
             if params[:controller] == "images" or params[:controller] == "shipments"
           %a{href: "#upload_form", "data-toggle" => "modal", :alt => "new_image_file_form"}
             %i.fa.fa-camera.fa-lg
             = "Picture" unless mobile_device?
-        .col-xs-4.col-sm-4
+        .col-xs-3.col-sm-3
           %a{href: "#signature_form", "data-toggle" => "modal", :alt => "new_signature_form"}
             %i.fa.fa-pencil.fa-lg
             = "Sign" unless mobile_device?

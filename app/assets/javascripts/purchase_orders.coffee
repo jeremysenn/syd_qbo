@@ -341,3 +341,34 @@ jQuery ->
         spinner_icon.hide()
         alert 'Signature pad call failed'
         return
+
+  # Call finger print reader
+  $(document).on 'click', '.finger_print_trigger', (e) ->
+    e.preventDefault()
+    # Get data from button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    location = $(this).data( "location" )
+
+    dashboard_icon = $(this).find( ".fa-camera" )
+    dashboard_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger scale camera
+    $.ajax
+      url: "/devices/" + device_id + "/finger_print_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        location: location
+      success: (response) ->
+        dashboard_icon.show()
+        spinner_icon.hide()
+        alert 'Finger print trigger successful.'
+        return
+      error: ->
+        dashboard_icon.show()
+        spinner_icon.hide()
+        alert 'Finger print trigger failed'
+        return

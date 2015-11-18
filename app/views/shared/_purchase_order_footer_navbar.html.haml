@@ -26,7 +26,7 @@
             = "Home" unless mobile_device?
         .col-xs-3.col-sm-3
           - current_user.finger_print_reader_devices.each do |finger_print_reader_device|
-            %a{href: '#'}
+            %a{href: '#', class: 'finger_print_trigger'}
               %i.fa.fa-hand-pointer-o.fa-lg
               = "Reader" unless mobile_device?
         .col-xs-3.col-sm-3

@@ -129,6 +129,14 @@ class DevicesController < ApplicationController
     end
   end
   
+  def finger_print_trigger
+    @device.finger_print_trigger(params[:ticket_number], params[:location])
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
+  end
+  
   def call_printer_for_purchase_order_pdf
     @device.call_printer_for_purchase_order_pdf(Base64.encode64(open(purchase_order_url(params[:purchase_order_id], format: 'pdf'))))
   end

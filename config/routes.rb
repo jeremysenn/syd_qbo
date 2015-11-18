@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       get :drivers_license_camera_trigger
       get :get_signature
       get :call_printer_for_purchase_order_pdf
+#      get :finger_print_trigger
     end
   end
   
