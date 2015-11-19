@@ -57,9 +57,10 @@
                 %p{style: "color: #{device.scale_camera_only? ? 'hotpink;' : ''} "}
                   = "Device Type:"
                   = device.device_type_icon.html_safe
-                  = device.type
                   - if device.scale_camera_only?
-                    %small= "(Scale camera only - no indicator)"
+                    Scale camera only - no indicator
+                  - else
+                    = device.type
                   - if device.printer?
                     %small= "(Printer Width: #{device.PrinterWidth})"
                 %p 
