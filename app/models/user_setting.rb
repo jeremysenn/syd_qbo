@@ -80,6 +80,14 @@ class UserSetting < ActiveRecord::Base
     end
   end
   
+  def customer_camera_device
+    unless device_group.blank?
+      device_group.customer_camera_device
+    else
+      nil
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################

@@ -284,8 +284,8 @@ jQuery ->
     location = $(this).data( "location" )
     commodity_name = $(this).data( "item-name" )
 
-    dashboard_icon = $(this).find( ".fa-camera" )
-    dashboard_icon.hide()
+    camera_icon = $(this).find( ".fa-camera" )
+    camera_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
     weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
@@ -301,12 +301,12 @@ jQuery ->
         location: location
         weight: weight_text_field.val()
       success: (response) ->
-        dashboard_icon.show()
+        camera_icon.show()
         spinner_icon.hide()
         alert 'Scale camera trigger successful.'
         return
       error: ->
-        dashboard_icon.show()
+        camera_icon.show()
         spinner_icon.hide()
         alert 'Scale camera trigger failed'
         return

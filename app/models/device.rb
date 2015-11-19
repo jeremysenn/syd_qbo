@@ -18,7 +18,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
             <mns:ReadScale xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <ConsecReads xsi:type='xs:int'>5</ConsecReads>
             </mns:ReadScale>
@@ -58,7 +58,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
             <mns:ReadID xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <Fields xsi:type='soapenc:Array' soapenc:arrayType='ns1:TTUDField[2]'>
                   <item xsi:type='ns1:TTUDField'>
@@ -112,24 +112,46 @@ class Device < ActiveRecord::Base
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
+  def customer_camera_trigger(customer_number, event_code, location)
+    xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+      <SOAP-ENV:Body>
+         <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+            <Host xsi:type='xs:string'>127.0.0.1</Host>
+            <Port xsi:type='xs:int'>3333</Port>
+            <Trigger xsi:type='xs:string'>
+               <CAPTURE>
+                  <TABLE>cust_pics</TABLE>
+                  <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
+                  <CUST_NBR>#{customer_number}</CUST_NBR>
+                  <EVENT_CODE>#{event_code}</EVENT_CODE>
+                  <LOCATION>#{location}</LOCATION>
+               </CAPTURE>
+            </Trigger>
+         </mns:JpeggerTrigger>
+      </SOAP-ENV:Body>
+    </SOAP-ENV:Envelope>"
+    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client.call(:jpegger_trigger, xml: xml_string)
+  end
+  
   def drivers_license_scanned_image
     require 'open-uri'
 #    open('http://192.168.111.150:10001').read
 #    open("http://#{workstation.Host}:#{self.TUDPort}/jpeg.jpg").read
     
     # Show image by going direct to device
-    if eseek_imager?
-      open("http://192.168.111.150:#{self.TUDPort}/jpeg.jpg").read
-    elsif scanshell?
-      open("http://192.168.111.150:#{self.TUDPort}").read 
-    end
+#    if eseek_imager?
+#      open("http://192.168.111.150:#{self.TUDPort}/jpeg.jpg").read
+#    elsif scanshell?
+#      open("http://192.168.111.150:#{self.TUDPort}").read 
+#    end
 #    
     # Show image via proxy
-#    if eseek_imager?
-#      open("http://192.168.111.149:#{self.LocalListenPort}/jpeg.jpg").read
-#    elsif scanshell?
-#      open("http://192.168.111.149:#{self.LocalListenPort}").read 
-#    end
+    if eseek_imager?
+      open("http://192.168.111.149:#{self.LocalListenPort}/jpeg.jpg").read
+    elsif scanshell?
+      open("http://192.168.111.149:#{self.LocalListenPort}").read 
+    end
   end
   
   def get_signature(ticket_nbr, company_id)
@@ -190,8 +212,8 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body xmlns:NS1='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
             <NS1:PrintPDF>
-               <WorkstationIP xsi:type='xs:string'>192.168.111.150</WorkstationIP>
-               <WorkstationPort xsi:type='xs:int'>10004</WorkstationPort>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
+               <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <PDFFile xsi:type='xsd:base64Binary'>#{pdf_binary}</PDFFile>
             </NS1:PrintPDF>
          </SOAP-ENV:Body>

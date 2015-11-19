@@ -156,3 +156,37 @@ jQuery ->
 
   # Force phone format
   $(".vendor_phone_field").mask("(999) 999-9999")
+  
+  # Just call the customer camera trigger
+  $(document).on 'click', '.customer_camera_trigger', (e) ->
+    e.preventDefault()
+    # Get data from button
+    device_id = $(this).data( "device-id" )
+    vendor_id = $(this).data( "vendor-id" )
+    event_code = $(this).data( "event-code" )
+    location = $(this).data( "location" )
+
+    camera_icon = $(this).find( ".fa-camera" )
+    camera_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+    weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
+
+    # Make call to trigger customer camera
+    $.ajax
+      url: "/devices/" + device_id + "/customer_camera_trigger"
+      dataType: 'json'
+      data:
+        customer_number: vendor_id
+        event_code: event_code
+        location: location
+      success: (response) ->
+        camera_icon.show()
+        spinner_icon.hide()
+        alert 'Customer camera trigger successful.'
+        return
+      error: ->
+        camera_icon.show()
+        spinner_icon.hide()
+        alert 'Customer camera trigger failed'
+        return
