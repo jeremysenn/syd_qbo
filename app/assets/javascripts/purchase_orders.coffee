@@ -174,7 +174,6 @@ jQuery ->
       types = /(\.|\/)(gif|jpe?g|png|pdf)$/i
       file = data.files[0]
       if types.test(file.type) or types.test(file.name)
-        alert 'here'
         data.context = $(tmpl("template-upload", file))
         current_data = $(this)
         data.process(->
