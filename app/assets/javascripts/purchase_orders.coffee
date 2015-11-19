@@ -159,6 +159,14 @@ jQuery ->
     $('input[type=file]').trigger 'click'
     false
 
+  # Clear the commodity picture upload fields for generic picture uploads
+  $(document).on 'click', '#picture_upload_modal_link', ->
+    $('#image_file_event_code').val ''
+    $('#image_file_tare_seq_nbr').val ''
+    $('#image_file_commodity_name').val ''
+    $('#image_file_weight').val ''
+    return
+
   $("#new_image_file").fileupload
     dataType: "script"
     disableImageResize: false
