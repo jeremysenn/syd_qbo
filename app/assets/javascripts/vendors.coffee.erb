@@ -166,8 +166,6 @@ jQuery ->
     event_code = $(this).data( "event-code" )
     location = $(this).data( "location" )
 
-    camera_icon = $(this).find( ".fa-camera" )
-    camera_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
     weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
@@ -181,12 +179,10 @@ jQuery ->
         event_code: event_code
         location: location
       success: (response) ->
-        camera_icon.show()
         spinner_icon.hide()
         alert 'Customer camera trigger successful.'
         return
       error: ->
-        camera_icon.show()
         spinner_icon.hide()
         alert 'Customer camera trigger failed'
         return
