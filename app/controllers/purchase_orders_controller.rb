@@ -55,7 +55,7 @@ class PurchaseOrdersController < ApplicationController
       format.pdf do
         @signature = Image.where(ticket_nbr: @doc_number, event_code: "SIG").last
         render pdf: "PO#{@doc_number}",
-        :page_width => 4,
+        #:page_width => 4,
         :layout => 'pdf.html.haml',
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
         unless current_user.printer_devices.blank?

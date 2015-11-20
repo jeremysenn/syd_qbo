@@ -115,5 +115,6 @@
     %div{id: 'endless_page'}
       %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
       %p= link_to 'Load pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @bill.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'load-more-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" #if @images.next_page
+      %p= link_to 'Re-load pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @bill.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'reload-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show(); $('#images').empty();", style: "display:none;" #if @images.next_page
 
 = render partial: "shared/bill_footer_navbar", locals: {title: "Bill"}
