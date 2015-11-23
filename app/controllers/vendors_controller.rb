@@ -105,7 +105,11 @@ class VendorsController < ApplicationController
           elsif params[:vendor_quick_create_from_ticket]
             redirect_to new_purchase_order_path(vendor_id: @vendor.id), notice: 'Vendor was successfully created.'
           else
-            redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
+            unless current_user.license_imager_devices.blank?
+              redirect_to edit_vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
+            else
+              redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
+            end
           end
           }
 #        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.' }
