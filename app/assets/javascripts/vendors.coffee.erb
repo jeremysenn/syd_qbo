@@ -176,6 +176,8 @@ jQuery ->
       dataType: 'json'
       data:
         customer_number: vendor_id
+        customer_first_name: $('#vendor_given_name').val()
+        customer_last_name: $('#vendor_family_name').val()
         event_code: event_code
         location: location
       success: (response) ->
