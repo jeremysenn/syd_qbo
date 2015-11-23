@@ -55,13 +55,13 @@ class PurchaseOrdersController < ApplicationController
       format.pdf do
         @signature = Image.where(ticket_nbr: @doc_number, event_code: "SIG").last
         render pdf: "PO#{@doc_number}",
-        :page_width => 4,
+#        :page_width => 4,
         :layout => 'pdf.html.haml',
-        :zoom => 1.5,
+        :zoom => 1.75,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
-        unless current_user.printer_devices.blank?
-          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
-        end
+#        unless current_user.printer_devices.blank?
+#          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
+#        end
         # Remove the temporary pdf file that was created above
         FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
       end

@@ -1,80 +1,5 @@
 .container
-  -#
-    .col-sm-12.col-md-4.col-md-offset-4
-      .well
-        %div
-          %p
-            %strong= "Vendor"
-            %br
-            = truncate(@vendor.display_name, length: 30)
-        %div
-          %p
-            %strong= "Date"
-            %br
-            = @purchase_order.txn_date.strftime("%m/%d/%y")
-        - unless @purchase_order.linked_transactions.blank?
-          - @purchase_order.linked_transactions.each do |linked_transaction|
-            %div.list-group-item
-              %strong= "Linked transaction"
-              .pull-right
-                - if linked_transaction.txn_type == 'Bill'
-                  = link_to linked_transaction.txn_type, bill_path(linked_transaction.txn_id)
-                - else
-                  = linked_transaction.txn_type
-        %div
-          %p
-            %strong= "Total"
-            %br
-            = number_to_currency(@purchase_order.total)
-
-    - @purchase_order.line_items.each_with_index do |line_item, index|
-      .col-sm-12.col-md-4.col-md-offset-4
-        .well
-          %div
-            =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-            =# "#{index + 1}."
-            %p
-              = line_item.item_based_expense_line_detail.item_ref.name
-              = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
-          %div
-            %p
-              %strong Description
-              %br
-              = line_item.description
-          %div
-            %p
-              %strong Net
-              %br
-              = line_item.item_based_expense_line_detail.quantity
-          %div
-            %p
-              %strong Rate
-              %br
-              = number_to_currency(line_item.item_based_expense_line_detail.unit_price)
-          %div
-            %p
-              %strong Amount
-              %br
-              = number_to_currency(line_item.amount)
-
-    - unless @images.blank?
-      .col-sm-12.col-md-4.col-md-offset-4
-        -#
-          .list-group
-            - @images.each do |image|
-              %a.list-group-item.clearfix{:href => "#"}
-                %strong= image.event_code
-                %span.pull-right
-                  = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive col-sm-1 col-md-1')
-        - @images.each_slice(3) do |images|
-          %div.row
-            - images.each do |image|
-              .col-sm-3.col-md-3
-                %div.thumbnail
-                  - unless image.hidden?
-                    = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
-                  .text-center= image.event_code
-  
+  = wicked_pdf_image_tag 'syd_logo_57x57.png'
   %h4.text-center= @company_info.company_name
   %p.text-center
     - unless @company_info.company_address.blank?
@@ -84,8 +9,6 @@
       %br
     = @company_info.primary_phone.free_form_number unless @company_info.primary_phone.blank?
         
-
-
   %p
     %strong= "Ticket: "
     = @purchase_order.doc_number
@@ -131,5 +54,5 @@
         %td
           %strong= "Total: #{number_to_currency(@purchase_order.total)}"
 
-  - unless @signature.blank?
+  -# unless @signature.blank?
     =# show_jpeg_image_image_url(@signature)

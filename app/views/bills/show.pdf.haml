@@ -1,30 +1,48 @@
 .container
-  %h2.text-center PURCHASE TICKET
+  = wicked_pdf_image_tag 'syd_logo_57x57.png'
   %h4.text-center= @company_info.company_name
+  %p.text-center
+    - unless @company_info.company_address.blank?
+      = @company_info.company_address.line1
+      %br
+      = "#{@company_info.company_address.city}, #{@company_info.company_address.country_sub_division_code} #{@company_info.company_address.postal_code}"
+      %br
+    = @company_info.primary_phone.free_form_number unless @company_info.primary_phone.blank?
+        
   %p
     %strong= "Ticket: "
     = @bill.doc_number
+    %br
     %strong= "Vendor: "
     = @vendor.display_name
-  %table.table
+  %hr
+
+  %table
     %thead
       %tr
-        %td Item
-        %td Gross
-        %td Tare
-        %td Net
-        %td Rate
-        %td Amount
+        %td 
+          %u Item
+        %td 
+          %u Gross
+        %td 
+          %u Tare
+        %td 
+          %u Net
+        %td 
+          %u Unit
+        %td 
+          %u Rate
+        %td 
+          %u Amount
     %tbody
       - @bill.line_items.each do |line_item|
         %tr
-          %td
-            = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-            = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
-          %td= line_item.description.split(' - ').first unless line_item.description.blank?
-          %td= line_item.description.split(' - ').second unless line_item.description.blank?
+          %td= "#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name}:"
+          %td= "#{line_item.description.split(' - ').first}"
+          %td= "#{line_item.description.split(' - ').second}"
           %td= line_item.item_based_expense_line_detail.quantity
-          %td= number_to_currency(line_item.item_based_expense_line_detail.unit_price)
+          %td= "#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc}"
+          %td= "#{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
           %td= number_to_currency(line_item.amount)
       %tr
         %td
@@ -33,7 +51,8 @@
         %td
         %td
         %td
-          %strong= "Total: #{number_to_currency(@bill.balance)}"
+        %td
+          %strong= "Total: #{number_to_currency(@bill.total)}"
 
-  - unless @signature.blank?
+  -# unless @signature.blank?
     =# show_jpeg_image_image_url(@signature)
