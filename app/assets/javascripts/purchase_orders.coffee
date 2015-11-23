@@ -358,8 +358,8 @@ jQuery ->
     ticket_number = $(this).data( "ticket-number" )
     location = $(this).data( "company-id" )
 
-    dashboard_icon = $(this).find( ".fa-camera" )
-    dashboard_icon.hide()
+    pointer_icon = $(this).find( ".fa-hand-pointer-o" )
+    pointer_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
 
@@ -371,12 +371,12 @@ jQuery ->
         ticket_number: ticket_number
         location: location
       success: (response) ->
-        dashboard_icon.show()
+        pointer_icon.show()
         spinner_icon.hide()
         #alert 'Finger print trigger successful.'
         return
       error: ->
-        dashboard_icon.show()
+        pointer_icon.show()
         spinner_icon.hide()
         alert 'Finger print trigger failed'
         return
