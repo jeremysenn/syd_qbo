@@ -42,7 +42,7 @@
           %td= "#{line_item.description.split(' - ').second}"
           %td= line_item.item_based_expense_line_detail.quantity
           %td= "#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc}"
-          %td= "#{number_to_currency(line_item.item_based_expense_line_detail.unit_price)}"
+          %td= "$#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 3)}"
           %td= number_to_currency(line_item.amount)
       %tr
         %td
