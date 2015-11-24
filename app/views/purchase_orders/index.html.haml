@@ -8,18 +8,7 @@
       %button{class: 'btn btn-default btn-lg active'}
         Open
       = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'purchase_orders_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
-  -#
-    %div.row
-      .col-xs-12.col-sm-12.col-md-12
-        .btn-group{"data-toggle" => "buttons"}
-          %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').show(); $('#closed_purchase_orders').hide();", class: "#{(params[:status] == 'Open' or params[:status].blank?) ? 'active' : ''}"}
-            %input#open{:autocomplete => "off", :name => "options", :type => "radio", }/
-            Open
-          %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').hide(); $('#closed_purchase_orders').show();", class: "#{params[:status] == 'Closed' ? 'active' : ''}"}
-            %input#closed{:autocomplete => "off", :name => "options", :type => "radio"}/
-            Closed
-        %br
-        %br
+  
   - if @open_purchase_orders.blank?
     .jumbotron
       %p.text-center No held tickets found
@@ -37,6 +26,8 @@
                   - if current_user.user_setting.show_purchase_order_thumbnails? and Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").count > 0
                     = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
                   = purchase_order.doc_number
+                  - if Vendor.customer_photo_id_warning?(purchase_order.vendor_ref.value)
+                    %i.fa.fa-warning
                   = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
                   .pull-right
                     = number_to_currency(purchase_order.total)
@@ -45,37 +36,6 @@
                   .pull-right
                     %i.fa.fa-file-pdf-o.fa-lg
                     Print
-                -#
-                  %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
-                    Close ticket
-                    .pull-right
-                      %i.fa.fa-chevron-right
-                    %br
-                    %br
-                  .pull-right
-                    %i.fa.fa-chevron-right
-    -#
-      %div{id: 'closed_purchase_orders', style: 'display: none;'}
-        - @closed_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
-          %div.row
-            .col-xs-12.col-sm-12.col-md-12
-              %div.panel.panel-primary
-                %div.list_group
-                  %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
-                    =# purchase_order.vendor_ref
-                    = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
-                    .pull-right
-                      %i.fa.fa-chevron-right
-                    %br
-                    = purchase_order.doc_number
-                    %br
-                    -#
-                      = purchase_order.po_status
-                      %br/
-                    %small
-                      = purchase_order.txn_date.strftime("%m/%d/%Y")
-                      %br
-                      = number_to_currency(purchase_order.total)
 
   %div.row
     .text-center
