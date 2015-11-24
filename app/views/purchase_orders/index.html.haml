@@ -27,7 +27,7 @@
                     = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
                   = purchase_order.doc_number
                   - if Vendor.customer_photo_id_warning?(purchase_order.vendor_ref.value)
-                    %i.fa.fa-warning
+                    %i.fa.fa-warning.text-warning
                   = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
                   .pull-right
                     = number_to_currency(purchase_order.total)
