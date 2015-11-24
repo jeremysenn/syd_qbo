@@ -7,25 +7,10 @@
             .pull-right
               &nbsp;
               %i.fa.fa-chevron-right
-            - if current_user.user_setting.show_vendor_thumbnails? and CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").count > 0
-              = image_tag(show_preview_image_cust_pic_path(CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").last.id), class: 'thumbnail img-responsive')
+            - if current_user.user_setting.show_vendor_thumbnails? and not Vendor.default_cust_pic_id(vendor.id, current_company_id).blank?
+              = image_tag(show_preview_image_cust_pic_path(Vendor.default_cust_pic_id(vendor.id, current_company_id)), class: 'thumbnail img-responsive')
+            - if Vendor.customer_photo_id_warning?(vendor.id)
+              %i.fa.fa-warning
             = vendor.display_name
             %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> <small>New ticket</small>"}, class: "list-group-item new_ticket_from_vendor", onclick: "event.preventDefault();"}
               %small New ticket
-        -#
-          %div.panel-body{style: "padding: 0;"}
-            %a{href: vendor_path(vendor.id), class: "vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}
-              - if CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").count > 0
-                %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
-                  = image_tag(show_preview_image_cust_pic_path(CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").last.id), class: 'img-responsive')
-              - else
-                %span.fa-stack.fa-3x
-                  %i.fa.fa-square-o.fa-stack-2x
-                  %i.fa.fa-user.fa-stack-1x
-            &nbsp;
-            = vendor.display_name
-            .pull-right
-              %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, class: "new_ticket_from_vendor", onclick: "event.preventDefault();"}
-                %i.fa.fa-plus.fa-lg
-              &nbsp;
-  

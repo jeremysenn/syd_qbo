@@ -2,6 +2,10 @@
 - @title="#{@vendor.display_name}" 
 
 .container
+  - if @customer.photo_id_warning?
+    .alert.alert-warning
+      %i.fa.fa-warning.fa-lg
+      Vendor Photo ID is missing or expired.
   -#
     %ul{class: 'list-inline'}
       - current_user.license_imager_devices.each do |license_imager_device|

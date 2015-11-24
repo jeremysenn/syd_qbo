@@ -39,6 +39,7 @@ class VendorsController < ApplicationController
   def show
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
+    @customer = Customer.find(@vendor.id)
     first_item_query = "select * from Item maxresults 1"
     @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
     @first_item = @first_items.first

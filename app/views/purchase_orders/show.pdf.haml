@@ -54,5 +54,6 @@
         %td
           %strong= "Total: #{number_to_currency(@purchase_order.total)}"
 
-  -# unless @signature.blank?
-    =# show_jpeg_image_image_url(@signature)
+  - unless @signature.blank?
+    = image_tag("http://qb.scrapyarddog.com/images/47679/show_jpeg_image")
+    =# wicked_pdf_image_tag(show_jpeg_image_image_path(@signature.id))
