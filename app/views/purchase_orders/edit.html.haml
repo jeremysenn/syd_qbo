@@ -6,6 +6,7 @@
     .alert.alert-warning
       %i.fa.fa-warning.fa-lg
       Vendor Photo ID is missing or expired.
+      = link_to 'Update', edit_vendor_path(@customer.id), class: 'btn btn-default', target: '_blank'
   = form_tag update_qb_purchase_order_path, method: 'get', id: 'purchase_order_form', :class => "form-horizontal" do
     -#
       .well.col-sm-6.col-md-4.col-md-offset-4
