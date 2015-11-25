@@ -1,20 +1,32 @@
 .container
-  = wicked_pdf_image_tag 'syd_logo_57x57.png'
-  %h4.text-center= @company_info.company_name
-  %p.text-center
-    - unless @company_info.company_address.blank?
-      = @company_info.company_address.line1
-      %br
-      = "#{@company_info.company_address.city}, #{@company_info.company_address.country_sub_division_code} #{@company_info.company_address.postal_code}"
-      %br
-    = @company_info.primary_phone.free_form_number unless @company_info.primary_phone.blank?
-        
-  %p
-    %strong= "Ticket: "
-    = @bill_payment.doc_number
+  - unless @current_user.company.logo_url.blank?
+    = image_tag(@current_user.company.logo_url, size: '50x50')
+  - else
+    = wicked_pdf_image_tag 'syd_logo_57x57.png'
+  %br
+  %strong= @company_info.company_name
+  %br
+  - unless @company_info.company_address.blank?
+    = @company_info.company_address.line1
     %br
-    %strong= "Vendor: "
-    = @bill_payment.vendor_ref.name
+    = "#{@company_info.company_address.city}, #{@company_info.company_address.country_sub_division_code} #{@company_info.company_address.postal_code}"
+    %br
+  = @company_info.primary_phone.free_form_number unless @company_info.primary_phone.blank?
+  %br
+
+  - unless @current_user.company.custom_field_1.blank?
+    %strong= "#{@current_user.company.custom_field_1}: "
+    = @current_user.company.custom_field_1_value
+    %br
+  - unless @current_user.company.custom_field_2.blank?
+    %strong= "#{@current_user.company.custom_field_2}: "
+    = @current_user.company.custom_field_2_value
+    %br
+        
+  %strong= "Ticket: "
+  = @bill_payment.doc_number
+  %strong= "Vendor: "
+  = @bill_payment.vendor_ref.name
   %hr
 
   %table
@@ -54,5 +66,12 @@
         %td
           %strong= "Total: #{number_to_currency(@bill_payment.total)}"
 
-  -# unless @signature.blank?
-    =# show_jpeg_image_image_url(@signature)
+  %table
+    %tbody
+      %tr
+        %td
+          - unless @signature_image.blank?
+            %p= image_tag(@signature_image.jpeg_image_data_uri, style: 'width: 100%')
+        %td
+          - unless @finger_print_image.blank?
+            %p= image_tag(@finger_print_image.jpeg_image_data_uri, style: 'width: 100%')
