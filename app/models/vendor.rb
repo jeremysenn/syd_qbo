@@ -35,5 +35,19 @@ class Vendor < ActiveRecord::Base
     end
   end
   
+  def self.default_cust_pic(vendor_id, company_id)
+    customer_photos = CustPic.where(cust_nbr: vendor_id, location: company_id, event_code: "Customer Photo")
+    unless customer_photos.blank?
+      return customer_photos.last
+    else
+      photo_ids = CustPic.where(cust_nbr: vendor_id, location: company_id, event_code: "Photo ID")
+      unless photo_ids.blank?
+        return photo_ids.last
+      else
+        return nil
+      end
+    end
+  end
+  
 end
 

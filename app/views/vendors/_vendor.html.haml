@@ -8,7 +8,8 @@
               &nbsp;
               %i.fa.fa-chevron-right
             - if current_user.user_setting.show_vendor_thumbnails? and not Vendor.default_cust_pic_id(vendor.id, current_company_id).blank?
-              = image_tag(show_preview_image_cust_pic_path(Vendor.default_cust_pic_id(vendor.id, current_company_id)), class: 'thumbnail img-responsive')
+              =# image_tag(show_preview_image_cust_pic_path(Vendor.default_cust_pic_id(vendor.id, current_company_id)), class: 'thumbnail img-responsive')
+              = image_tag(Vendor.default_cust_pic(vendor.id, current_company_id).preview_data_uri, class: 'thumbnail img-responsive')
             - if Vendor.customer_photo_id_warning?(vendor.id)
               %i.fa.fa-warning.text-warning
             = vendor.display_name

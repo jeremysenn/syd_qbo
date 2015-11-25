@@ -26,5 +26,13 @@ class CustPic < ActiveRecord::Base
   def preview
     blob.preview
   end
+  
+  def jpeg_image_data_uri
+    "data:image/jpg;base64, #{Base64.encode64(jpeg_image)}"
+  end
+  
+  def preview_data_uri
+    "data:image/jpg;base64, #{Base64.encode64(preview)}"
+  end
 
 end
