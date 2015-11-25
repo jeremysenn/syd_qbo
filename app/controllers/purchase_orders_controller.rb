@@ -60,9 +60,9 @@ class PurchaseOrdersController < ApplicationController
         :layout => 'pdf.html.haml',
         :zoom => 1.50,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
-#        unless current_user.printer_devices.blank?
-#          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
-#        end
+        unless current_user.printer_devices.blank?
+          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
+        end
         # Remove the temporary pdf file that was created above
         FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
       end
