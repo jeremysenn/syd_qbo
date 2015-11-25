@@ -69,8 +69,8 @@
     %tbody
       %tr
         %td
-          - unless @signature.blank?
-            %p= image_tag("http://qb.scrapyarddog.com/images/#{@signature.id}/show_jpeg_image", style: 'width: 100%')
+          - unless @signature_image.blank?
+            %p= image_tag(@signature_image.jpeg_image_data_uri, style: 'width: 100%')
         %td
-          - unless @finger_print.blank?
-            %p= image_tag("http://qb.scrapyarddog.com/images/#{@finger_print.id}/show_jpeg_image", style: 'width: 100%')
+          - unless @finger_print_image.blank?
+            %p= image_tag(@finger_print_image.jpeg_image_data_uri, style: 'width: 100%')
