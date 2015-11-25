@@ -13,7 +13,7 @@ class JpeggerContract < ActiveRecord::Base
     Company.find_by_CompanyID(contract_id)
   end
   
-  def verbage
+  def verbiage
     "#{text1} #{text2} #{text3} #{text4}"
   end
   

@@ -1,0 +1,52 @@
+= render partial: "shared/navbars/show_company_navbar", locals: {title: truncate(@company.CompanyName, length: 25)}
+- @title="#{@company.CompanyName}" 
+
+.container
+  %div.row
+    .col-xs-12.col-sm-6.col-md-offset-3
+      .panel.panel-default
+        .panel-heading
+          = "#{@company.CompanyName}" 
+        %ul.list-group
+          %li.list-group-item
+            %strong= "Company ID:"
+            .pull-right
+              = "#{@company.CompanyID}" 
+        %ul.list-group
+          %li.list-group-item
+            %strong= "Custom Field 1:"
+            .pull-right
+              = "#{@company.custom_field_1}"
+          %li.list-group-item
+            %strong= "Custom Field 1 Value:"
+            .pull-right
+              = "#{@company.custom_field_1_value}"
+        %ul.list-group
+          %li.list-group-item
+            %strong= "Custom Field 2:"
+            .pull-right
+              = "#{@company.custom_field_2}"
+          %li.list-group-item
+            %strong= "Custom Field 2 Value:"
+            .pull-right
+              = "#{@company.custom_field_2_value}"
+        %ul.list-group
+          %li.list-group-item
+            %strong= "Logo URL:"
+            .pull-right
+              = "#{@company.logo_url}"
+            - unless @company.logo_url.blank?
+              = image_tag(@company.logo_url, class: 'img-responsive')
+      
+      - unless @company.jpegger_contract.blank?
+        .panel.panel-default
+          .panel-heading
+            Contract
+          %ul.list-group
+            %li.list-group-item
+              %strong= @company.jpegger_contract.contract_name
+            %li.list-group-item= @company.jpegger_contract.verbiage.html_safe
+            -#
+              %li.list-group-item= link_to "Edit", edit_contract_path(current_user.default_contract.id), id: 'edit_contract_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
+
+= render partial: "shared/company_footer_navbar", locals: {title: "Company"}

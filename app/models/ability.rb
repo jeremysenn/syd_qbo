@@ -98,5 +98,12 @@ class Ability
     end
     can :create, Contract
     
+    # Companies
+    ############
+    can :manage, Company do |company|
+      company.CompanyID == user.location
+    end
+    #can :create, Company
+    
   end
 end
