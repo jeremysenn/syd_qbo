@@ -1,20 +1,32 @@
 .container
-  = wicked_pdf_image_tag 'syd_logo_57x57.png'
-  %h4.text-center= @company_info.company_name
-  %p.text-center
-    - unless @company_info.company_address.blank?
-      = @company_info.company_address.line1
-      %br
-      = "#{@company_info.company_address.city}, #{@company_info.company_address.country_sub_division_code} #{@company_info.company_address.postal_code}"
-      %br
-    = @company_info.primary_phone.free_form_number unless @company_info.primary_phone.blank?
-        
-  %p
-    %strong= "Ticket: "
-    = @purchase_order.doc_number
+  - unless @current_user.company.logo_url.blank?
+    = image_tag(@current_user.company.logo_url, size: '50x50')
+  - else
+    = wicked_pdf_image_tag 'syd_logo_57x57.png'
+  %br
+  %strong= @company_info.company_name
+  %br
+  - unless @company_info.company_address.blank?
+    = @company_info.company_address.line1
     %br
-    %strong= "Vendor: "
-    = @vendor.display_name
+    = "#{@company_info.company_address.city}, #{@company_info.company_address.country_sub_division_code} #{@company_info.company_address.postal_code}"
+    %br
+  = @company_info.primary_phone.free_form_number unless @company_info.primary_phone.blank?
+  %br
+
+  - unless @current_user.company.custom_field_1.blank?
+    %strong= "#{@current_user.company.custom_field_1}: "
+    = @current_user.company.custom_field_1_value
+    %br
+  - unless @current_user.company.custom_field_2.blank?
+    %strong= "#{@current_user.company.custom_field_2}: "
+    = @current_user.company.custom_field_2_value
+    %br
+        
+  %strong= "Ticket: "
+  = @purchase_order.doc_number
+  %strong= "Vendor: "
+  = @vendor.display_name
   %hr
 
   %table
@@ -53,7 +65,12 @@
         %td
         %td
           %strong= "Total: #{number_to_currency(@purchase_order.total)}"
-
-  - unless @signature.blank?
-    = image_tag("http://qb.scrapyarddog.com/images/47679/show_jpeg_image")
-    =# wicked_pdf_image_tag(show_jpeg_image_image_path(@signature.id))
+  %table
+    %tbody
+      %tr
+        %td
+          - unless @signature.blank?
+            %p= image_tag("http://qb.scrapyarddog.com/images/#{@signature.id}/show_jpeg_image", style: 'width: 100%')
+        %td
+          - unless @finger_print.blank?
+            %p= image_tag("http://qb.scrapyarddog.com/images/#{@finger_print.id}/show_jpeg_image", style: 'width: 100%')

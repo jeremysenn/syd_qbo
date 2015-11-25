@@ -2,7 +2,7 @@
 - @title="Open #{@purchase_order.doc_number}" 
 
 .container
-  - if @customer.photo_id_warning?
+  - if not @customer.blank? and @customer.photo_id_warning?
     .alert.alert-warning
       %i.fa.fa-warning.fa-lg
       Vendor Photo ID is missing or expired.

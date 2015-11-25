@@ -54,10 +54,11 @@ class PurchaseOrdersController < ApplicationController
       end
       format.pdf do
         @signature = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
+        @finger_print = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
         render pdf: "PO#{@doc_number}",
-#        :page_width => 4,
+        :page_width => 4,
         :layout => 'pdf.html.haml',
-        :zoom => 1.75,
+        :zoom => 1.50,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
 #        unless current_user.printer_devices.blank?
 #          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
