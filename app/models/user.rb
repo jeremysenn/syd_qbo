@@ -103,8 +103,8 @@ class User < ActiveRecord::Base
     user_setting.device_group
   end
   
-  def customer_camera_device
-    user_setting.customer_camera_device
+  def customer_camera
+    user_setting.customer_camera
   end
   
   #############################

@@ -2,34 +2,21 @@
 - @title="#{@vendor.display_name}" 
 
 .container
-  - if @customer.photo_id_warning?
+  - if not @customer.blank? and @customer.photo_id_warning?
     .alert.alert-warning
       %i.fa.fa-warning.fa-lg
       Vendor Photo ID is missing or expired.
-  -#
-    %ul{class: 'list-inline'}
-      - current_user.license_imager_devices.each do |license_imager_device|
-        %li
-          %a{href: '#', id: 'drivers_license_image_scan', 'data-device-id' => license_imager_device.id, class: 'drivers_license_image_scan btn btn-default'}
-            %i.fa.fa-image
-            %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
-            = "#{license_imager_device.DeviceName} Image Scan"
-            = image_tag("ajax-loader.gif", :id => "image_scan_spinner", :class => "image_scan_spinner", :alt => "Loading ...", style: "display:none;")
-        %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail pull-right scanned_license_image", style: "display:none;", id: "scanned_license_image_#{license_imager_device.id}"}
-          %p
-            = image_tag("ajax-loader.gif", :id => "scanned_license_picture_#{license_imager_device.id}", :alt => "Loading ...", class: 'img-responsive')
-            .caption{style: 'display:block'}
-              %a{href: '#', onclick: "$(this).find('.save_to_jpegger_spinner:first').show();", class: 'save_license_scan_to_jpegger btn btn-default', 'data-device-id' => license_imager_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id}
-                Save to JPEGger
-                = image_tag("ajax-loader.gif", :id => "image_scan_spinner", :class => "save_to_jpegger_spinner", :alt => "Loading ...", style: "display:none;")
-              -#
-                %p= link_to "Save image to Jpegger", '#', id: 'save_license_scan_to_jpegger', class: 'btn btn-default', 'data-device-id' => license_imager_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id
+  
   %div.panel.panel-primary
     %div.list_group
       %div.list-group-item
-        %strong= "Name:"
+        %strong= "First Name:"
         .pull-right
-          = "#{@vendor.given_name} #{@vendor.family_name}"
+          = "#{@vendor.given_name}"
+      %div.list-group-item
+        %strong= "Last Name:"
+        .pull-right
+          = "#{@vendor.family_name}"
       %div.list-group-item
         %strong= "Company:"
         .pull-right

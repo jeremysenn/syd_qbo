@@ -44,10 +44,16 @@
             No Device Group for this User
         %ul.list-group
           - unless current_user.device_group.blank?
+            - unless current_user.device_group.CustomerCamera.blank?
+              %li.list-group-item
+                %strong= current_user.device_group.CustomerCamera
+                %p 
+                  Device Type:
+                  %i.fa.fa-camera.fa-lg
+                  Customer Camera
             - current_user.device_group.devices.each do |device|
               %li.list-group-item
                 %strong= device.DeviceName
-                = "(Customer Camera)" if device == current_user.device_group.customer_camera_device
                 %p
                   = "Workstation:"
                   = device.workstation.WorkstationName

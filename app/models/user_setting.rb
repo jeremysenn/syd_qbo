@@ -80,9 +80,9 @@ class UserSetting < ActiveRecord::Base
     end
   end
   
-  def customer_camera_device
+  def customer_camera
     unless device_group.blank?
-      device_group.customer_camera_device
+      device_group.customer_camera
     else
       nil
     end
