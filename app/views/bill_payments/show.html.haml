@@ -48,7 +48,7 @@
         = "#{number_to_currency(@bill_payment.total)} (#{@bill_payment.check_payment.bank_account_ref.name})"
   .row.form-group
     %div{:class => "col-sm-12 col-md-12"}
-      %a{href: bill_payment_path(@bill_payment.id, format: 'pdf'), class: 'btn btn-primary btn-lg btn-block', target: '_blank'}
+      %a{href: bill_payment_path(@bill_payment.id, now: DateTime.now, format: 'pdf'), class: 'btn btn-primary btn-lg btn-block', target: '_blank'}
         %i.fa.fa-file-pdf-o.fa-lg
         Print  
   
