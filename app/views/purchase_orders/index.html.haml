@@ -32,7 +32,7 @@
                   = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
                   .pull-right
                     = number_to_currency(purchase_order.total)
-                %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
+                %a{href: purchase_order_path(purchase_order.id, date: purchase_order.txn_date.strftime("%m/%d/%y"), format: 'pdf'), class: "list-group-item", target: '_blank'}
                   = purchase_order.txn_date.strftime("%m/%d/%y")
                   .pull-right
                     %i.fa.fa-file-pdf-o.fa-lg
