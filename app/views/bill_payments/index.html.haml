@@ -6,20 +6,6 @@
     .jumbotron
       %p.text-center No payments found
   - else
-    -#
-      %div.row
-        .col-xs-12.col-sm-12.col-md-12
-          %div.panel{style: 'border: 0;'}
-            %div.panel-body
-              -#
-                %div.col-xs-3.col-sm-3.col-md-3
-                  %strong Photo
-              %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                %strong Ticket
-              %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                %strong Vendor
-              %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                %strong Amount
     %div{id: 'bill_payments'}
       - @bill_payments.sort_by(&:txn_date).reverse.each do |bill_payment|
         %div.row

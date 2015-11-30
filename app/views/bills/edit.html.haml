@@ -98,19 +98,6 @@
           Pay ticket
 
     %div#images
-      -#
-        %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @bill.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @bill.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
-          = "Ticket #{@bill.doc_number} Pictures"
-      -#
-        - unless @images.blank?
-          - @images.each_slice(6) do |images|
-            %div.row
-              - images.each do |image|
-                .col-xs-12.col-sm-2.col-md-2.col-lg-2
-                  %div.thumbnail
-                    - unless image.hidden?
-                      = image_tag(show_preview_image_image_path(image))
-                      =# link_to image_tag(show_preview_image_image_path(image)), image, target: '_blank'
 
     %div{id: 'endless_page'}
       %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")

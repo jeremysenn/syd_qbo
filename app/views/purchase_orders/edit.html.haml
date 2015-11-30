@@ -117,25 +117,7 @@
         = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-success btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close & Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#close_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
           Close & Pay
     %div#images
-      -#
-        - @images.each_slice(6) do |images|
-          %div.row
-            - images.each do |image|
-              .col-xs-12.col-sm-2.col-md-2
-                - unless image.hidden? or not current_user.show_thumbnails?
-                  = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
-      -#
-        %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
-          = "Ticket #{@purchase_order.doc_number} Pictures"
-      -#
-        - unless @images.blank?
-          - @images.each_slice(6) do |images|
-            %div.row
-              - images.each do |image|
-                .col-xs-12.col-sm-2.col-md-2.col-lg-2
-                  %div.thumbnail
-                    - unless image.hidden?
-                      = image_tag(show_preview_image_image_path(image))
+      
     %div{id: 'endless_page'}
       %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
       %p= link_to 'Load pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'load-more-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" #if @images.next_page
