@@ -41,7 +41,7 @@ class BillPaymentsController < ApplicationController
         render pdf: "BillPayment#{@doc_number}",
         :page_width => 4,
         :layout => 'pdf.html.haml',
-        :zoom => 1.50,
+        :zoom => 1.75,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}BillPayment#{@doc_number}.pdf")
         unless current_user.printer_devices.blank?
           current_user.printer_devices.last.call_printer_for_bill_payment_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}BillPayment#{@doc_number}.pdf"))))

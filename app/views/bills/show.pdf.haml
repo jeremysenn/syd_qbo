@@ -1,4 +1,5 @@
 .container
+  %center= @bill_order.doc_number
   - unless @current_user.company.logo_url.blank?
     = image_tag(@current_user.company.logo_url, size: '50x50')
   - else
@@ -22,9 +23,9 @@
     %strong= "#{@current_user.company.custom_field_2}: "
     = @current_user.company.custom_field_2_value
     %br
-        
-  %strong= "Ticket: "
-  = @bill.doc_number
+  -#     
+    %strong= "Ticket: "
+    = @bill.doc_number
   %strong= "Vendor: "
   = @vendor.display_name
   %hr
@@ -71,7 +72,7 @@
       %tr
         %td
           - unless @signature_image.blank?
-            %p= image_tag(@signature_image.jpeg_image_data_uri, style: 'width: 100%')
+            %p= image_tag(@signature_image.jpeg_image_data_uri, style: 'width: 150%')
         %td
           - unless @finger_print_image.blank?
-            %p= image_tag(@finger_print_image.jpeg_image_data_uri, style: 'width: 100%')
+            %p= image_tag(@finger_print_image.jpeg_image_data_uri, style: 'width: 75%')
