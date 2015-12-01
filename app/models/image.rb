@@ -22,11 +22,19 @@ class Image < ActiveRecord::Base
   end
   
   def jpeg_image_data_uri
-    "data:image/jpg;base64, #{Base64.encode64(jpeg_image)}"
+    unless jpeg_image.blank?
+      "data:image/jpg;base64, #{Base64.encode64(jpeg_image)}"
+    else
+      nil
+    end
   end
   
   def preview_data_uri
-    "data:image/jpg;base64, #{Base64.encode64(preview)}"
+    unless preview.blank?
+      "data:image/jpg;base64, #{Base64.encode64(preview)}"
+    else
+      nil
+    end
   end
   
   def is_customer_image(customer_name)
