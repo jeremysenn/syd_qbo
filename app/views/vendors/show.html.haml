@@ -25,6 +25,49 @@
         %strong= "Display:"
         .pull-right
           = @vendor.display_name
+
+  %div.panel.panel-primary
+    %div.list_group
+      %div.list-group-item
+        %strong= "Height:"
+        .pull-right
+          = "#{@customer.height}"
+      %div.list-group-item
+        %strong= "Weight:"
+        .pull-right
+          = "#{@customer.weight}"
+      %div.list-group-item
+        %strong= "Eye Color:"
+        .pull-right
+          = @customer.eye_color
+      %div.list-group-item
+        %strong= "Hair Color:"
+        .pull-right
+          =  @customer.hair_color
+      %div.list-group-item
+        %strong= "Sex:"
+        .pull-right
+          =  @customer.sex
+      %div.list-group-item
+        %strong= "Date of Birth:"
+        .pull-right
+          =  @customer.dob
+
+  %div.panel.panel-primary
+    %div.list_group
+      %div.list-group-item
+        %strong= "License Number:"
+        .pull-right
+          = "#{@customer.license_number}"
+      %div.list-group-item
+        %strong= "License Issue:"
+        .pull-right
+          = "#{@customer.issue_date}"
+      %div.list-group-item
+        %strong= "License Expiration:"
+        .pull-right
+          = @customer.expiration_date
+
   %div.panel.panel-primary
     %div.panel-body
       %strong= "Address:"
@@ -50,6 +93,10 @@
         %strong= "Phone:"
         .pull-right
           = @vendor.primary_phone.free_form_number unless @vendor.primary_phone.blank?
+      %div.list-group-item
+        %strong= "Employer Phone:"
+        .pull-right
+          = @customer.employer_phone
       %div.list-group-item
         %strong= "Balance:"
         .pull-right
