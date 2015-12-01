@@ -98,7 +98,7 @@ class VendorsController < ApplicationController
             company_name: @vendor.company_name, display_name: @vendor.display_name, primary_phone: @vendor.primary_phone.free_form_number, primary_email_address: @vendor.email_address.address,
             height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
             dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
-            employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone])
+            employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone], license_number: vendor_params[:license_number])
           # Create customer in jpegger
           @customer.save
           if params[:vendor_quick_create]
@@ -163,7 +163,7 @@ class VendorsController < ApplicationController
             company_name: @vendor.company_name, display_name: @vendor.display_name, primary_phone: @vendor.primary_phone.free_form_number, primary_email_address: @vendor.email_address.address,
             height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
             dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
-            employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone])
+            employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone], license_number: vendor_params[:license_number])
           redirect_to vendor_path(@vendor.id) 
           }
         format.json { render :show, status: :ok, location: vendor_path(@vendor.id) }

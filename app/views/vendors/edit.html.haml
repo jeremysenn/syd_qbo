@@ -59,7 +59,7 @@
           = date_field_tag  "vendor[dob]", "#{@customer.blank? ? nil : @customer.dob}", :placeholder => "Date of Birth", class: "form-control input-lg"
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "License Number", nil, :class => 'control-label'
-          = text_field_tag "vendor[license_number]", nil, :placeholder => "License Number", class: "form-control input-lg"
+          = text_field_tag "vendor[license_number]", "#{@customer.blank? ? nil : @customer.license_number}", :placeholder => "License Number", class: "form-control input-lg"
         
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
