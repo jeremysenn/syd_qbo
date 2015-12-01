@@ -32,7 +32,11 @@ class CustPic < ActiveRecord::Base
   end
   
   def preview_data_uri
-    "data:image/jpg;base64, #{Base64.encode64(preview)}"
+    unless preview.blank?
+      "data:image/jpg;base64, #{Base64.encode64(preview)}"
+    else
+      nil
+    end
   end
 
 end
