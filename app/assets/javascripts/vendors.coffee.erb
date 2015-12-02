@@ -101,7 +101,7 @@ jQuery ->
         error: ->
           $('#spinner').hide()
           $('.data_scan_spinner').hide()
-          alert 'Error reading license.'
+          #alert 'Error reading license.'
           return
     
     drivers_license_scan_ajax()
@@ -144,11 +144,11 @@ jQuery ->
           zip: $('#vendor_billing_address_postal_code').val()
         success: (data) ->
           $('.save_to_jpegger_spinner').hide()
-          alert 'Saved scanned image to Jpegger.'
+          #alert 'Saved scanned image to Jpegger.'
           return
         error: ->
           $('.save_to_jpegger_spinner').hide()
-          alert 'Error saving scanned image to Jpegger.'
+          #alert 'Error saving scanned image to Jpegger.'
           return
     
     save_license_scan_to_jpegger_ajax()
@@ -191,9 +191,9 @@ jQuery ->
         camera_name: this_camera_name
       success: (response) ->
         spinner_icon.hide()
-        alert 'Customer camera trigger successful.'
+        #alert 'Customer camera trigger successful.'
         return
       error: ->
         spinner_icon.hide()
-        alert 'Customer camera trigger failed'
+        #alert 'Customer camera trigger failed'
         return

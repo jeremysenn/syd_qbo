@@ -257,7 +257,7 @@ jQuery ->
         error: ->
           dashboard_icon.show()
           spinner_icon.hide()
-          alert 'Error reading weight scale.'
+          #alert 'Error reading weight scale.'
           return
 
     # Make call to trigger scale camera
@@ -273,10 +273,10 @@ jQuery ->
           #weight: weight  
           weight: weight_text_field.val()
         success: (response) ->
-          alert 'Scale camera trigger successful.'
+          #alert 'Scale camera trigger successful.'
           return
         error: ->
-          alert 'Scale camera trigger failed'
+          #alert 'Scale camera trigger failed'
           return
 
     # Kick off the scale read and camera trigger ajax calls
@@ -311,12 +311,12 @@ jQuery ->
       success: (response) ->
         camera_icon.show()
         spinner_icon.hide()
-        alert 'Scale camera trigger successful.'
+        #alert 'Scale camera trigger successful.'
         return
       error: ->
         camera_icon.show()
         spinner_icon.hide()
-        alert 'Scale camera trigger failed'
+        #alert 'Scale camera trigger failed'
         return
 
   # Call TUD signature pad
@@ -342,12 +342,12 @@ jQuery ->
       success: (response) ->
         pencil_icon.show()
         spinner_icon.hide()
-        alert 'Signature pad call successful.'
+        #alert 'Signature pad call successful.'
         return
       error: ->
         pencil_icon.show()
         spinner_icon.hide()
-        alert 'Signature pad call failed'
+        #alert 'Signature pad call failed'
         return
 
   # Call finger print reader
@@ -378,5 +378,5 @@ jQuery ->
       error: ->
         pointer_icon.show()
         spinner_icon.hide()
-        alert 'Finger print trigger failed'
+        #alert 'Finger print trigger failed'
         return
