@@ -29,9 +29,9 @@ class ShipmentBlobWorker
 
     # Remove the newly uploaded file and versions once copied over to jpegger
 #    sleep 2 # pause 2 seconds to allow for image_file to display before deleting
-    pn = Pathname.new(shipment_file.file_url) # Get the path to the file
-    shipment_file.remove_file!
-    FileUtils.remove_dir "#{Rails.root}/public#{pn.dirname}" # Remove the now empty directory
+#    pn = Pathname.new(shipment_file.file_url) # Get the path to the file
+#    shipment_file.remove_file!
+#    FileUtils.remove_dir "#{Rails.root}/public#{pn.dirname}" # Remove the now empty directory
 
     shipment_file.save
   end

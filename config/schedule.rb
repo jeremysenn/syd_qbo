@@ -38,6 +38,14 @@ end
 #  runner "License.dog_license_check"
 #end
 
+# Clear out public/uploads/tmp directory
+every 1.day, :at => '4:30 am' do
+  runner "CarrierWave.clean_cached_files!"
+  runner "ImageFile.delete_files"
+  runner "ShipmentFile.delete_files"
+  runner "CustPicFile.delete_files"
+end
+
 every 1.day, :at => '4:30 am' do
   runner "QboAccessCredential.remove_expired_token_credentials"
 end
