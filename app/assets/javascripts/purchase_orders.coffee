@@ -79,7 +79,6 @@ jQuery ->
 
   ### Line item calculation field value changed ###
   $('.purchase_order_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
-    alert 'here'
     gross = $(this).closest('.panel').find('#purchase_order_line_items__gross').val()
     tare = $(this).closest('.panel').find('#purchase_order_line_items__tare').val()
     net = (parseFloat(gross) - parseFloat(tare)).toFixed(0)
@@ -145,7 +144,8 @@ jQuery ->
     return
 
   ### Picture Uploads ###
-  $(document).on 'click', '.gross_or_tare_picture_button', ->
+  #$(document).on 'click', '.gross_or_tare_picture_button', ->
+  $('.purchase_order_input_fields_wrap').on 'click', '.gross_or_tare_picture_button', ->
     event_code = $(this).data( "event-code" )
     item_id = $(this).data( "item-id" )
     item_name = $(this).data( "item-name" )
