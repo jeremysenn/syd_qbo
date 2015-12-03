@@ -26,7 +26,7 @@
     %div.purchase_order_input_fields_wrap
       #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
         - @purchase_order.line_items.each do |line_item|
-          .panel.panel-default
+          .panel.panel-default.line-item
             %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
               %h4.panel-title
                 %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
