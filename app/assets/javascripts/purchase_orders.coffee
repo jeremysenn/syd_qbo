@@ -3,28 +3,28 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
-  $(document).ready ->
-    wrapper = $('.purchase_order_input_fields_wrap')
-    $(wrapper).on 'click', '.remove_field', (e) ->
-      #user click on item trash button
-      if $('.panel').length > 2
-        confirm1 = confirm('Are you sure you want to delete this?')
-        if confirm1
-          e.preventDefault()
-          $(this).closest('.panel').remove()
-          sum = 0;
-          $('.amount').each ->
-            sum += Number($(this).val())
-            return
-          $('#total').text '$' + sum.toFixed(2)
+  #$(document).ready ->
+  wrapper = $('.purchase_order_input_fields_wrap')
+  $(wrapper).on 'click', '.remove_field', (e) ->
+    #user click on item trash button
+    if $('.line-item').length > 1
+      confirm1 = confirm('Are you sure you want to delete this?')
+      if confirm1
+        e.preventDefault()
+        $(this).closest('.panel').remove()
+        sum = 0;
+        $('.amount').each ->
+          sum += Number($(this).val())
           return
-        else
-          e.preventDefault()
-          return
+        $('#total').text '$' + sum.toFixed(2)
+        return
       else
-        alert 'You cannot delete this because you must have at least one item.'
         e.preventDefault()
         return
+    else
+      alert 'You cannot delete this because you must have at least one item.'
+      e.preventDefault()
+      return
   
     # Automatically highlight field value when focused
     $(wrapper).on 'click', '.amount-calculation-field', (e) ->
