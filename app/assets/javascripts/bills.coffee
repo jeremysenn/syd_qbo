@@ -3,7 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
-  #$(document).ready ->
   wrapper = $('.bill_input_fields_wrap')
   $(wrapper).on 'click', '.remove_field', (e) ->
     #user click on item trash button
@@ -30,8 +29,6 @@ jQuery ->
   $(wrapper).on 'click', '.amount-calculation-field', (e) ->
     $(this).select()
     return
-
-  return
 
   ### Vendor value changed ###
   $('#bill_vendor').on 'change', ->

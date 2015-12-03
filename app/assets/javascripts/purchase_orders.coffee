@@ -3,7 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
-  #$(document).ready ->
   wrapper = $('.purchase_order_input_fields_wrap')
   $(wrapper).on 'click', '.remove_field', (e) ->
     #user click on item trash button
@@ -26,11 +25,9 @@ jQuery ->
       e.preventDefault()
       return
   
-    # Automatically highlight field value when focused
-    $(wrapper).on 'click', '.amount-calculation-field', (e) ->
-      $(this).select()
-      return
-
+  # Automatically highlight field value when focused
+  $(wrapper).on 'click', '.amount-calculation-field', (e) ->
+    $(this).select()
     return
 
   $('#new_ticket_navbar_link').on 'click', ->
@@ -82,6 +79,7 @@ jQuery ->
 
   ### Line item calculation field value changed ###
   $('.purchase_order_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
+    alert 'here'
     gross = $(this).closest('.panel').find('#purchase_order_line_items__gross').val()
     tare = $(this).closest('.panel').find('#purchase_order_line_items__tare').val()
     net = (parseFloat(gross) - parseFloat(tare)).toFixed(0)
