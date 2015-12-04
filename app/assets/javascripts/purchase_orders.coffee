@@ -3,6 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
+
+  ### Delete of Commodity Items ###
   wrapper = $('.purchase_order_input_fields_wrap')
   $(wrapper).on 'click', '.remove_field', (e) ->
     #user click on item trash button
@@ -24,6 +26,7 @@ jQuery ->
       alert 'You cannot delete this because you must have at least one item.'
       e.preventDefault()
       return
+  ### End Delete of Commodity Items ###
   
   # Automatically highlight field value when focused
   $(wrapper).on 'click', '.amount-calculation-field', (e) ->
@@ -47,6 +50,7 @@ jQuery ->
     #input_select.closest('.panel').find('#edit_vendor_link').attr('href', "/vendors/" + vendor_id + "/edit"); 
     #input_select.closest('.panel').find('#edit_vendor_link').text name
     input_select.closest('.panel').find('#vendor_name').text name
+  ### End vendor value changed ###
 
   ### Line item changed ###
   $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
@@ -77,6 +81,7 @@ jQuery ->
       input_select.closest('.panel').find('#tare_scale_button:first').attr 'data-item-name', name
 
       return
+  ### End line item changed ###
 
   ### Line item calculation field value changed ###
   $('.purchase_order_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
@@ -100,6 +105,7 @@ jQuery ->
       return
     $('#total').text '$' + sum.toFixed(2)
     return
+  ### End line item calculation field value changed ###
 
   ### Re-enable disabled_with buttons for back button ###
   $(document).on 'page:change', ->
@@ -107,8 +113,9 @@ jQuery ->
       $.rails.enableElement $(this)
       return
     return
+  ### End re-enable disabled_with buttons for back button ###
 
-  ### Start endless page stuff ###
+  ### Endless page stuff ###
   loading_purchase_orders = false
   $('a.load-more-purchase-orders').on 'inview', (e, visible) ->
     return if loading_purchase_orders or not visible
@@ -140,8 +147,9 @@ jQuery ->
       $('#vin_form_group').hide()
       $('#image_file_vin_number').val ''
     return
+  ### End event code changed - clear data; check if License Plate or VIN ###
 
-  ### Picture Uploads ###
+  ### Gross/Tare Picture Uploads ###
   #$(document).on 'click', '.gross_or_tare_picture_button', ->
   $('.purchase_order_input_fields_wrap').on 'click', '.gross_or_tare_picture_button', ->
     event_code = $(this).data( "event-code" )
@@ -156,15 +164,18 @@ jQuery ->
 
     $('input[type=file]').trigger 'click'
     false
+  ### End Gross/Tare Picture Uploads ###
 
-  # Clear the commodity picture upload fields for generic picture uploads
+  ### Clear the commodity picture upload fields for generic picture uploads ###
   $(document).on 'click', '#picture_upload_modal_link', ->
     $('#image_file_event_code').val ''
     $('#image_file_tare_seq_nbr').val ''
     $('#image_file_commodity_name').val ''
     $('#image_file_weight').val ''
     return
+  ### End clear the commodity picture upload fields for generic picture uploads ###
 
+  ### File upload ###
   $("#new_image_file").fileupload
     dataType: "script"
     disableImageResize: false
@@ -200,8 +211,7 @@ jQuery ->
       if data.context
         progress = parseInt(data.loaded / data.total * 100, 10)
         data.context.find('.progress-bar').css('width', progress + '%')
-
-  
+  ### End file upload ###
 
   ### Check if any tares are zero ###
   $('#close_button, #close_and_pay_button').on 'click', (e) ->
@@ -221,7 +231,9 @@ jQuery ->
       #  return
       return
     return
+  ### End check if any tares are zero ###
 
+  ### Scale read and camera trigger ###
   $(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
     e.preventDefault()
     # Get data from scale button
@@ -277,8 +289,9 @@ jQuery ->
 
     # Kick off the scale read and camera trigger ajax calls
     scale_read_ajax().success camera_trigger_ajax
+  ### End scale read and camera trigger ###
 
-  # Just call the scale camera trigger
+  ### Scale camera trigger ###
   $(document).on 'click', '.scale_camera_trigger', (e) ->
     e.preventDefault()
     # Get data from scale button
@@ -314,8 +327,9 @@ jQuery ->
         spinner_icon.hide()
         #alert 'Scale camera trigger failed'
         return
+  ### End scale camera trigger ###
 
-  # Call TUD signature pad
+  ### TUD signature pad ###
   $(document).on 'click', '.tud_signature_pad', (e) ->
     e.preventDefault()
     # Get data from scale button
@@ -345,8 +359,9 @@ jQuery ->
         spinner_icon.hide()
         #alert 'Signature pad call failed'
         return
+  ### End TUD signature pad ###
 
-  # Call finger print reader
+  ### Finger print reader ###
   $(document).on 'click', '.finger_print_trigger', (e) ->
     e.preventDefault()
     # Get data from button
@@ -376,3 +391,32 @@ jQuery ->
         spinner_icon.hide()
         #alert 'Finger print trigger failed'
         return
+  ### End finger print reader ###
+
+  ### Scanner Trigger ###
+  $(document).on 'click', '.scanner_trigger', (e) ->
+    e.preventDefault()
+    # Get data from button
+    this_ticket_number = $(this).data( "ticket-number" )
+    device_id = $(this).data( "device-id" )
+    this_event_code = $('#image_file_event_code').val()
+    this_location = $(this).data( "location" )
+      
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger scanner
+    $.ajax
+      url: "/devices/" + device_id + "/scanner_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: this_ticket_number
+        event_code: this_event_code
+        location: this_location
+      success: (response) ->
+        spinner_icon.hide()
+        return
+      error: ->
+        spinner_icon.hide()
+        return
+  ### End Scanner Trigger ###
