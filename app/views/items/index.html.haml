@@ -3,6 +3,17 @@
  
 .container
   %p
+    .btn-group
+      = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
+      = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
+      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
+  %p
+    .btn-group
+      = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
+      %button{class: 'btn btn-default btn-lg active'}
+        Items
+
+  %p
     = form_tag items_path, id: 'item_search_form', method: 'get', :class => "form-inline", role: 'search' do |f|
       .input-group
         = search_field_tag :search, params[:search], :placeholder => "Search items", class: "form-control input-lg"

@@ -103,10 +103,6 @@ jQuery ->
 
   ### Re-enable disabled_with buttons for back button ###
   $(document).on 'page:change', ->
-    $.rails.enableElement $('#purchase_orders_to_closed')
-    $.rails.enableElement $('#purchase_orders_to_paid')
-    $.rails.enableElement $('#purchase_orders_to_vendors')
-    $.rails.enableElement $('#new_ticket_link')
     $('.purchase_order_button').each ->
       $.rails.enableElement $(this)
       return

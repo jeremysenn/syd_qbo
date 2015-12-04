@@ -38,9 +38,6 @@ jQuery ->
 
   ### Re-enable disabled_with buttons for back button ###
   $(document).on 'page:change', ->
-    $.rails.enableElement $('#vendors_to_open')
-    $.rails.enableElement $('#vendors_to_closed')
-    $.rails.enableElement $('#vendors_to_paid')
     $('.vendor_button').each ->
       $.rails.enableElement $(this)
       return
