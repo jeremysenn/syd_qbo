@@ -254,6 +254,34 @@ class Device < ActiveRecord::Base
     client.call(:encode, xml: xml_string)
   end
   
+  def call_scanner(ticket_nbr, company_id, event_code)
+    xml_string = "<?xml version='1.0' encoding='UTF-8'?>
+      <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+         <SOAP-ENV:Body>
+            <mns:GetSignature xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+               <WorkstationIP xsi:type='xs:string'>192.168.111.149</WorkstationIP>
+               <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
+               <Fields xsi:type='soapenc:Array' soapenc:arrayType='ns1:TTUDField[4]'>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>ticket_nbr</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{ticket_nbr}</FieldValue>
+                  </item>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>location</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{company_id}</FieldValue>
+                  </item>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>event_code</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{event_code}</FieldValue>
+                  </item>
+               </Fields>
+            </mns:GetSignature>
+         </SOAP-ENV:Body>
+      </SOAP-ENV:Envelope>"
+    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client.call(:encode, xml: xml_string)
+  end
+  
   # Serial scale
   def scale?
     self.DeviceType == 21
