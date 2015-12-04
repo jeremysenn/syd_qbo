@@ -146,7 +146,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.detail_type = "ItemBasedExpenseLineDetail"
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
-#      purchase_line_item.description = line_item[:description]
+      purchase_line_item.description = line_item[:description]
       unless (line_item[:gross].blank? and line_item[:tare].blank?)
         purchase_line_item.description = "#{line_item[:gross]} - #{line_item[:tare]} - #{params[:item_description]}"
       else

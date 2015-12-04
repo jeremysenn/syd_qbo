@@ -57,7 +57,8 @@ jQuery ->
       purchase_desc = data.purchase_desc
       rate = parseFloat(data.purchase_cost).toFixed(5)
       quantity = 0
-      input_select.closest('.panel').find('.panel-footer').text ''
+      input_select.closest('.panel').find('.calculation_details').text ''
+      #input_select.closest('.panel').find('.panel-footer').text ''
       #input_select.closest('.panel').find('.line_item_name').text name + ' (' + purchase_desc + ')'
       input_select.closest('.panel').find('.line_item_name').text name
       input_select.closest('.panel').find('#item_description').val purchase_desc
@@ -91,7 +92,8 @@ jQuery ->
     amount = (parseFloat(rate) * parseFloat(net)).toFixed(2)
     $(this).closest('.panel').find('#purchase_order_line_items__amount').val amount
 
-    $(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + net + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
+    #$(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + net + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
+    $(this).closest('.panel').find('.calculation_details').text '(' + gross + ' - ' + tare + ') ' + '= ' + net + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
     sum = 0;
     $('.amount').each ->
       sum += Number($(this).val())
