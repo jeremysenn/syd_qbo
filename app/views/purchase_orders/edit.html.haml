@@ -12,8 +12,9 @@
       .panel.panel-default
         %div.panel-heading{:role => "tab", id: "vendor_heading"}
           %h4.panel-title
-            %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
-              Vendor
+            -#
+              %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
+            Vendor
         -#
           #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel", class: " #{@purchase_order.line_items.count > 1 ? '' : 'in'} "}
         #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel", class: " "}
@@ -23,7 +24,12 @@
             =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
         %div.panel-footer
-          #vendor_name= @purchase_order.vendor_ref.name
+          %ul{class: 'list-inline'}
+            %li
+              #vendor_name= @purchase_order.vendor_ref.name
+            %li.pull-right
+              %a.text-success{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "collapsed", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+                %i.fa.fa-chevron-down.fa-lg
     %div.purchase_order_input_fields_wrap
       #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
         - @purchase_order.line_items.each do |line_item|
@@ -32,14 +38,16 @@
               %h4.panel-title
                 %ul{class: 'list-inline'}
                   %li
-                    %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
+                    -#
+                      %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
+                    .line_item_name
                       =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
                       =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
                       = line_item.item_based_expense_line_detail.item_ref.name
-                  = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc
                   %li.pull-right
                     %a{href: '#', class: 'remove_field'}
                       %i.fa.fa-trash.fa-lg.text-danger
+                = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@purchase_order.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}"}
               .panel-body
                 = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true

@@ -146,7 +146,7 @@ class PurchaseOrdersController < ApplicationController
       purchase_line_item.detail_type = "ItemBasedExpenseLineDetail"
       purchase_line_item.item_based_expense_line_detail = item_based_expense_line_detail
       purchase_line_item.amount = line_item[:amount]
-      purchase_line_item.description = line_item[:description]
+#      purchase_line_item.description = line_item[:description]
       unless (line_item[:gross].blank? and line_item[:tare].blank?)
         purchase_line_item.description = "#{line_item[:gross]} - #{line_item[:tare]} - #{params[:item_description]}"
       else
@@ -266,7 +266,7 @@ class PurchaseOrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_order_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:purchase_order).permit(:vendor, :po_status, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount])
+      params.require(:purchase_order).permit(:vendor, :po_status, :item_description, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount])
     end
     
 #    def line_params
