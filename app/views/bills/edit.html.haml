@@ -94,10 +94,7 @@
                   = "= #{number_to_currency(line_item.amount)}"
                 %li.pull-right
                   %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
-                    - if @bill.line_items.count > 1
-                      %i.fa.fa-chevron-down.fa-lg
-                    - else
-                      %i.fa.fa-check-square.fa-lg
+                    %i.fa.fa-chevron-down.fa-lg
               
     %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
     %p= link_to 'Add items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning btn-lg add_field", onclick: "$(this).hide(); $('#spinner').show();"
