@@ -16,15 +16,15 @@ class Company < ActiveRecord::Base
   ############################
   
   def users
-    User.where(location: self.CompanyID)
+    User.where(location: self.CompanyID.to_i)
   end
   
   def workstations
-    Workstation.where("CompanyID" => self.CompanyID)
+    Workstation.where("CompanyID" => self.CompanyID.to_i)
   end
   
   def devices
-    Device.where("CompanyID" => self.CompanyID)
+    Device.where("CompanyID" => self.CompanyID.to_i)
   end
   
   def scale_devices
@@ -32,7 +32,7 @@ class Company < ActiveRecord::Base
   end
   
   def device_groups
-    DeviceGroup.where("CompanyID" => self.CompanyID)
+    DeviceGroup.where("CompanyID" => self.CompanyID.to_i)
   end
   
   #############################
