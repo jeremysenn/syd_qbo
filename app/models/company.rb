@@ -32,7 +32,7 @@ class Company < ActiveRecord::Base
   end
   
   def device_groups
-    DeviceGroup.where("CompanyID" => self.CompanyID)
+    DeviceGroup.where("CompanyID" => self.CompanyID.to_i)
   end
   
   #############################
