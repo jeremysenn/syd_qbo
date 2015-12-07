@@ -51,7 +51,7 @@
       %div.list-group-item
         %strong= "Date of Birth:"
         .pull-right
-          =  @customer.dob
+          =  @customer.dob unless @customer.blank?
 
   %div.panel.panel-primary
     %div.list_group
