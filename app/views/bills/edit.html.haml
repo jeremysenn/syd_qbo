@@ -111,7 +111,7 @@
           %i.fa.fa-check.fa-lg
           Save
         %br
-        = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+        = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
           %i.fa.fa-dollar.fa-lg
           Pay
 
