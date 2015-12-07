@@ -8,10 +8,11 @@
         Vendors
       = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
       = link_to "Closed", bills_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
-  %p
-    .btn-group
-      = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
-      = link_to "Items", items_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_items', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}
+  -#
+    %p
+      .btn-group
+        = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
+        = link_to "Items", items_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_items', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}
       
   %p
     = form_tag vendors_path, id: 'vendor_search_form', method: 'get', :class => "form-inline", role: 'search' do |f|

@@ -8,10 +8,11 @@
       %button{class: 'btn btn-default btn-lg active'}
         Open
       = link_to "Closed", bills_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
-  %p
-    .btn-group
-      = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
-      = link_to "Items", items_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_items', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}
+  -#
+    %p
+      .btn-group
+        = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
+        = link_to "Items", items_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_items', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}
   
   - if @open_purchase_orders.blank?
     .jumbotron
