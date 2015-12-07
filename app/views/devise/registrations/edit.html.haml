@@ -16,6 +16,19 @@
       -#
         .row.form-group
           %div{:class => "col-sm-12 col-md-12"}
+            = f.label :company_id, :class => "control-label"
+            %br/
+            = f.text_field :location, :class => "form-control input-lg"
+
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
+          %strong Status:
+          = "#{current_user.active? ? 'Active' : 'Inactive'}"
+          %br/
+          %p.help-block This is set by your administrator.
+      -#
+        .row.form-group
+          %div{:class => "col-sm-12 col-md-12"}
             = f.label :password, :class => "control-label"
             %br/
             = f.password_field :password, :autocomplete => "off", :class => "form-control input-lg"
@@ -31,19 +44,8 @@
             %br/
             = f.password_field :current_password, :class => "form-control input-lg"
             %p.help-block We need your current password to confirm your changes.
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          %strong Status:
-          = "#{current_user.active? ? 'Active' : 'Inactive'}"
-          %br/
-          %p.help-block This is set by your administrator.
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          %strong Location:
-          = "#{(not current_user.location.blank?) ? current_user.location : 'None specified'}"
-          %br/
-          %p.help-block This is set by your administrator.
+      
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = link_to "Back", :back, :class => "btn btn-lg btn-default"
-          =# f.submit "Update", :class => "btn btn-lg btn-primary"
+          =# f.submit "Update", :class => "btn btn-lg btn-block btn-primary"

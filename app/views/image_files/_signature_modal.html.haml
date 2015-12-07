@@ -8,20 +8,17 @@
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :location, value: current_company_id
           = f.hidden_field :ticket_number, value: @doc_number
-          = f.hidden_field :event_code, value: 'Signature'
+          = f.hidden_field :event_code, value: 'SIGNATURE CAPTURE'
           = f.hidden_field :customer_number, value: @vendor.id unless @vendor.blank?
           = f.hidden_field :customer_name, value: @vendor.display_name unless @vendor.blank?
           %h3
-            - unless current_user.default_contract_wording.blank?
-              = current_user.default_contract_wording
-            - else
-              = default_contract
-          -#
-            - unless @contract.blank?
-              %p= @contract.text1
-              %p= @contract.text2
-              %p= @contract.text3
-              %p= @contract.text4
+            - unless current_company.jpegger_contract.blank?
+              = current_company.jpegger_contract.verbiage.html_safe
+            -#
+              - unless current_user.default_contract_wording.blank?
+                = current_user.default_contract_wording
+              - else
+                = default_contract
           .form-group
             .sigPad
               %div.sigNav

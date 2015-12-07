@@ -77,6 +77,12 @@ class Ability
       user_setting.user_id == user.id
     end
     can :create, UserSetting
+    
+    # User
+    ############
+    can :manage, User do |user_record|
+      user_record.id == user.id
+    end
 
     # LookupDefs
     ############
@@ -91,6 +97,13 @@ class Ability
       contract.company_id == user.location
     end
     can :create, Contract
+    
+    # Companies
+    ############
+    can :manage, Company do |company|
+      company.CompanyID == user.location
+    end
+    #can :create, Company
     
   end
 end

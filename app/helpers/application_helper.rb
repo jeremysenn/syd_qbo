@@ -10,7 +10,7 @@ module ApplicationHelper
             concat content_tag(:button, 'x', class: "close", data: { dismiss: 'alert' })
               concat message
 #              concat sanitize(message) unless msg_type == 'timedout'
-            end)  unless msg_type == 'timedout'
+            end) unless msg_type == 'timedout'
         end
       nil
     end

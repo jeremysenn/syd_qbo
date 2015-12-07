@@ -1,9 +1,29 @@
 = render partial: "shared/navbars/new_and_edit_vendor_navbar", locals: {title: "Vendor"}
 .container
+  %ul{class: 'list-inline'}
+    - current_user.license_reader_devices.each do |license_reader_device|
+      %li
+        %a{href: '#', id: 'drivers_license_scan', 'data-device-id' => license_reader_device.id, onclick: "$(this).find('.data_scan_spinner:first').show();", class: 'drivers_license_scan btn btn-default'}
+          %i.fa.fa-list-alt
+          = "#{license_reader_device.DeviceName} Data Scan"
+          = image_tag("ajax-loader.gif", :id => "data_scan_spinner", :class => "data_scan_spinner", :alt => "Loading ...", style: "display:none;")
   -#
-    %p
-      = link_to "License Scan", '#', id: 'drivers_license_scan', onclick: "$('#spinner').show();"
-      = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+    - current_user.camera_devices.each do |camera_device|
+      %p
+        %a{href: '#', id: 'drivers_license_scan', 'data-device-id' => camera_device.id, onclick: "$('#data_scan_spinner').show();", class: 'btn btn-default'}
+          %i.fa.fa-list-alt
+          = "#{camera_device.DeviceName} License Data Scan"
+          = image_tag("ajax-loader.gif", :id => "data_scan_spinner", :alt => "Loading ...", style: "display:none;")
+        -#
+          %a{href: '#', id: 'drivers_license_image_scan', 'data-device-id' => camera_device.id, onclick: "$('#scanned_license_image').show();", class: 'btn btn-default'}
+            %i.fa.fa-image
+            = "#{camera_device.DeviceName} License Image Scan"
+            = image_tag("ajax-loader.gif", :id => "image_scan_spinner", :alt => "Loading ...", style: "display:none;")
+      %div{class: "col-xs-12 col-sm-12 col-md-4 thumbnail", style: "display:none;", id: "scanned_license"}
+        = image_tag("ajax-loader.gif", :id => "scanned_license_picture", :alt => "Loading ...", class: 'img-responsive')
+        -#
+          .caption{style: 'display:none'}
+            %p= link_to "Save image to Jpegger", '#', id: 'save_license_scan_to_jpegger', class: 'btn btn-default', 'data-device-id' => camera_device.id, 'data-vendor-id' => @vendor.id, 'data-company-id' => current_company.id
   .well.col-sm-12.col-md-12
     = form_tag vendors_path, :class => "form-horizontal" do
       .row.form-group
@@ -13,6 +33,37 @@
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "Last Name", nil, :class => 'control-label'
           = text_field_tag "vendor[family_name]", nil, :placeholder => "Last Name", class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-xs-6 col-sm-6 col-md-6"}
+          = label_tag "Height", nil, :class => 'control-label'
+          = text_field_tag "vendor[height]", "#{@customer.blank? ? nil : @customer.height}", :placeholder => "Height", class: "form-control input-lg"
+        %div{:class => "col-xs-6 col-sm-6 col-md-6"}
+          = label_tag "Weight", nil, :class => 'control-label'
+          = text_field_tag "vendor[weight]", "#{@customer.blank? ? nil : @customer.weight}", :placeholder => "Weight", class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-xs-6 col-sm-6 col-md-6"}
+          = label_tag "Eye Color", nil, :class => 'control-label'
+          = text_field_tag "vendor[eye_color]", "#{@customer.blank? ? nil : @customer.eye_color}", :placeholder => "Eye Color", class: "form-control input-lg"
+        %div{:class => "col-xs-6 col-sm-6 col-md-6"}
+          = label_tag "Hair Color", nil, :class => 'control-label'
+          = text_field_tag "vendor[hair_color]", "#{@customer.blank? ? nil : @customer.hair_color}", :placeholder => "Hair Color", class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-xs-6 col-sm-3 col-md-3"}
+          = label_tag "Sex", nil, :class => 'control-label'
+          = select_tag "vendor[sex]", options_for_select(["M", "F"], "#{@customer.blank? ? nil : @customer.sex}"), class: "form-control input-lg"
+        %div{:class => "col-xs-6 col-sm-3 col-md-3"}
+          = label_tag "vendor[dob]", "Date of Birth", :class => 'control-label'
+          = date_field_tag  "vendor[dob]", "#{@customer.blank? ? nil : @customer.dob}", :placeholder => "Date of Birth", class: "form-control input-lg"
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "License Number", nil, :class => 'control-label'
+          = text_field_tag "vendor[license_number]", nil, :placeholder => "License Number", class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "vendor[license_issue_date]", "License Issue Date", :class => 'control-label'
+          = date_field_tag   "vendor[license_issue_date]", "#{@customer.blank? ? nil : @customer.issue_date}", :placeholder => "License Issue Date", class: "form-control input-lg"
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "vendor[license_expiration_date]", "License Expiration Date", :class => 'control-label'
+          = date_field_tag   "vendor[license_expiration_date]", "#{@customer.blank? ? nil : @customer.expiration_date}", :placeholder => "License Expiration Date", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "Company Name", nil, :class => 'control-label'
@@ -36,12 +87,15 @@
           = label_tag "Zipcode", nil, :class => 'control-label'
           = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg" #, required: true
       .row.form-group
-        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-          = label_tag "Email", nil, :class => 'control-label'
-          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", class: "form-control input-lg"
-        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-          = label_tag "Phone", nil, :class => 'control-label'
-          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", class: "form-control input-lg"
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "Email", "Email*", :class => 'control-label'
+          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", class: "form-control input-lg", required: true
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "Phone", "Phone*", :class => 'control-label'
+          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", class: "vendor_phone_field form-control input-lg", required: true
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "Employer Phone", nil, :class => 'control-label'
+          = phone_field_tag "vendor[employer_phone]", "#{@customer.blank? ? nil : @customer.employer_phone}", :placeholder => "Employer Phone", class: "vendor_phone_field form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating..."}) do

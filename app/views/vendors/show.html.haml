@@ -1,21 +1,73 @@
-= render partial: "shared/navbars/show_vendor_navbar", locals: {title: truncate(@vendor.display_name, length: 12)}
+= render partial: "shared/navbars/show_vendor_navbar", locals: {title: truncate(@vendor.display_name, length: 20)}
 - @title="#{@vendor.display_name}" 
 
 .container
+  - if not @customer.blank? and @customer.photo_id_warning?
+    .alert.alert-warning
+      %i.fa.fa-warning.fa-lg
+      Vendor Photo ID is missing or expired.
+  
   %div.panel.panel-primary
     %div.list_group
       %div.list-group-item
-        %strong= "Name:"
+        %strong= "First Name:"
         .pull-right
-          = "#{@vendor.given_name} #{@vendor.family_name}"
+          = "#{@vendor.given_name}"
       %div.list-group-item
-        %strong= "Company Name:"
+        %strong= "Last Name:"
+        .pull-right
+          = "#{@vendor.family_name}"
+      %div.list-group-item
+        %strong= "Company:"
         .pull-right
           = @vendor.company_name
       %div.list-group-item
-        %strong= "Display Name:"
+        %strong= "Display:"
         .pull-right
           = @vendor.display_name
+
+  %div.panel.panel-primary
+    %div.list_group
+      %div.list-group-item
+        %strong= "Height:"
+        .pull-right
+          = "#{@customer.height}"
+      %div.list-group-item
+        %strong= "Weight:"
+        .pull-right
+          = "#{@customer.weight}"
+      %div.list-group-item
+        %strong= "Eye Color:"
+        .pull-right
+          = @customer.eye_color
+      %div.list-group-item
+        %strong= "Hair Color:"
+        .pull-right
+          =  @customer.hair_color
+      %div.list-group-item
+        %strong= "Sex:"
+        .pull-right
+          =  @customer.sex
+      %div.list-group-item
+        %strong= "Date of Birth:"
+        .pull-right
+          =  @customer.dob
+
+  %div.panel.panel-primary
+    %div.list_group
+      %div.list-group-item
+        %strong= "License Number:"
+        .pull-right
+          = "#{@customer.license_number}"
+      %div.list-group-item
+        %strong= "License Issue:"
+        .pull-right
+          = "#{@customer.issue_date}"
+      %div.list-group-item
+        %strong= "License Expiration:"
+        .pull-right
+          = @customer.expiration_date
+
   %div.panel.panel-primary
     %div.panel-body
       %strong= "Address:"
@@ -42,21 +94,17 @@
         .pull-right
           = @vendor.primary_phone.free_form_number unless @vendor.primary_phone.blank?
       %div.list-group-item
+        %strong= "Employer Phone:"
+        .pull-right
+          = @customer.employer_phone
+      %div.list-group-item
         %strong= "Balance:"
         .pull-right
           = number_to_currency(@vendor.balance)
-  %div.row
-    -#
-      .col-xs-12.col-sm-12.col-md-12
-        = link_to "Edit Vendor", edit_vendor_path(@vendor.id), class: 'btn btn-primary btn-lg btn-block'
+    
   %div#cust_pics
-    - unless @cust_pics.blank?
-      - @cust_pics.each_slice(6) do |cust_pics|
-        %div.row
-          - cust_pics.each do |cust_pic|
-            .col-xs-12.col-sm-2.col-md-2.col-lg-2
-              %div.thumbnail
-                - unless cust_pic.hidden?
-                  = link_to image_tag(show_preview_image_cust_pic_path(cust_pic)), cust_pic_path(cust_pic.id)
+    %div{id: 'endless_page'}
+      %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
+      %p= link_to 'Load pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'load-more-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();"
 
 = render partial: "shared/vendor_footer_navbar", locals: {title: "Vendor"}

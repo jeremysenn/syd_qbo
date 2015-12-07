@@ -1,5 +1,5 @@
 %p
-  %a{href: bill_path(bill.id, format: 'pdf'), class: 'btn btn-default btn-lg btn-block', target: '_blank'}
+  %a{href: bill_path(bill.id, now: DateTime.now, format: 'pdf'), class: 'btn btn-default btn-lg btn-block', target: '_blank'}
     %i.fa.fa-file-pdf-o.fa-lg
     Print
 

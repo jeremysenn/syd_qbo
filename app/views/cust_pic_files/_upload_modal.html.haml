@@ -15,10 +15,18 @@
 
           %div{:id => 'uploads', :style => 'display:block;'}
             %p{id: "upload_button", style: "display:none;"}
-              = f.file_field :file, name: "cust_pic_file[file]", :type => 'file', :class => 'btn-primary btn-block btn-lg', title: "<i class='fa fa-camera'/> Picture".html_safe
+              = f.file_field :file, name: "cust_pic_file[file]", :type => 'file', :class => 'btn-primary btn-block btn-lg', title: "<i class='fa fa-camera'/> Mobile Picture".html_safe
+              - unless current_user.customer_camera.blank?
+                -#
+                  %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger btn btn-lg btn-block btn-default", 'data-event-code' => "Customer Photo", 'data-location' => current_user.location, 'data-vendor-id' => @vendor.id, 'data-device-id' => current_user.customer_camera_device.id}
+                %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger btn btn-lg btn-block btn-default", 'data-event-code' => "Customer Photo", 'data-location' => current_user.location, 'data-given-name' => @vendor.given_name, 'data-family-name' => @vendor.family_name, 'data-vendor-id' => @vendor.id, 'data-camera-name' => current_user.customer_camera}
+                  %i.fa.fa-camera
+                  Customer Camera
+                  %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
           .picture_loading_spinner{:style => "display:none;", :id => "spinner"}
             = image_tag("ajax-loader.gif", :id => "loading_spinner", :alt => "Loading")
             Uploading ...
+          
           #pictures
 
           .clear

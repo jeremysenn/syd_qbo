@@ -1,41 +1,53 @@
-= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "Open #{@purchase_order.doc_number}", total: number_to_currency(@purchase_order.total)}
+= render partial: "shared/navbars/new_and_edit_purchase_order_navbar", locals: {title: "#{@purchase_order.doc_number}", total: number_to_currency(@purchase_order.total)}
 - @title="Open #{@purchase_order.doc_number}" 
 
 .container
+  - if not @customer.blank? and @customer.photo_id_warning?
+    .alert.alert-warning
+      %i.fa.fa-warning.fa-lg
+      Vendor Photo ID is missing or expired.
+      = link_to 'Update', edit_vendor_path(@customer.id), class: 'btn btn-default', target: '_blank'
   = form_tag update_qb_purchase_order_path, method: 'get', id: 'purchase_order_form', :class => "form-horizontal" do
-    -#
-      .well.col-sm-6.col-md-4.col-md-offset-4
-      .well
     #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
       .panel.panel-default
         %div.panel-heading{:role => "tab", id: "vendor_heading"}
           %h4.panel-title
-            %a{"aria-controls" => "collapseVendor", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
-              Vendor
-        #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel", class: " #{@purchase_order.line_items.count > 1 ? '' : 'in'} "}
+            -#
+              %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
+            Vendor
+        -#
+          #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel", class: " #{@purchase_order.line_items.count > 1 ? '' : 'in'} "}
+        #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel", class: " "}
           .panel-body
             =# label_tag "Vendor", nil, :class => 'control-label'
             =# select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
         %div.panel-footer
-          -#
-            %a{href: edit_vendor_path(@purchase_order.vendor_ref), id: "edit_vendor_link", target: '_blank'}
-              = @purchase_order.vendor_ref.name
-          #vendor_name= @purchase_order.vendor_ref.name
+          %ul{class: 'list-inline'}
+            %li
+              #vendor_name= @purchase_order.vendor_ref.name
+            %li.pull-right
+              %a.text-success{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "collapsed", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+                %i.fa.fa-chevron-down.fa-lg
     %div.purchase_order_input_fields_wrap
       #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
         - @purchase_order.line_items.each do |line_item|
           .panel.panel-default.line-item
             %div.panel-heading{:role => "tab", id: "heading#{line_item.id}"}
               %h4.panel-title
-                %a.line_item_name{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
-                  =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
-                  =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-                  = line_item.item_based_expense_line_detail.item_ref.name
+                %ul{class: 'list-inline'}
+                  %li
+                    -#
+                      %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
+                    .line_item_name
+                      =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
+                      =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+                      = line_item.item_based_expense_line_detail.item_ref.name
+                  %li.pull-right
+                    %a{href: '#', class: 'remove_field'}
+                      %i.fa.fa-trash.fa-lg.text-danger
                 = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc
-                %a{href: '#', class: 'remove_field pull-right'}
-                  %i.fa.fa-trash
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse #{@purchase_order.line_items.count > 1 ? '' : 'in'}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}"}
               .panel-body
                 = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
@@ -44,22 +56,32 @@
                 = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
                 = label_tag "Gross", nil, :class => 'control-label'
                 %div.input-group
-                  -#
+                  - current_user.scale_devices.each do |scale_device|
                     %span.input-group-addon
-                      %a{href: '#', class: 'scale_read', 'data-event-code' => "Tare"}
-                        %i.fa.fa-dashboard.fa-lg
-                        %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                      - if scale_device.scale_camera_only?
+                        %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                          %i.fa.fa-camera.fa-lg
+                          %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                      - else
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                          %i.fa.fa-dashboard.fa-lg
+                          %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   = phone_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').first}
                       %i.fa.fa-camera.fa-lg
                 = label_tag "Tare", nil, :class => 'control-label'
                 %div.input-group
-                  -#
+                  - current_user.scale_devices.each do |scale_device|
                     %span.input-group-addon
-                      %a{href: '#', class: 'scale_read', 'data-event-code' => "Tare"}
-                        %i.fa.fa-dashboard.fa-lg
-                        %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                      - if scale_device.scale_camera_only?
+                        %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                          %i.fa.fa-camera.fa-lg
+                          %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                      - else
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                          %i.fa.fa-dashboard.fa-lg
+                          %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   = phone_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').second}
@@ -77,53 +99,48 @@
                     $
                   = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true 
             %div.panel-footer
-              =# "(#{line_item.description}) ="
-              = "(#{line_item.description.split(' - ').first} - #{line_item.description.split(' - ').second}) ="
-              = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description}"
-              = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5)}"
-              = "= #{number_to_currency(line_item.amount)}"
+              %ul{class: 'list-inline'}
+                %li.calculation_details
+                  =# "(#{line_item.description}) ="
+                  = "(#{line_item.description.split(' - ').first} - #{line_item.description.split(' - ').second}) ="
+                  = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc}"
+                  = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5)}"
+                  = "= #{number_to_currency(line_item.amount)}"
+                %li.pull-right
+                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+                    - if @purchase_order.line_items.count > 1
+                      %i.fa.fa-chevron-down.fa-lg
+                    - else
+                      %i.fa.fa-check-square.fa-lg
           
-    %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-    %p= link_to 'Add items', line_item_fields_purchase_orders_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right", onclick: "$(this).hide(); $('#spinner').show();"
-    %br
+    %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+    %p
+      %a{ href: line_item_fields_purchase_orders_path(doc_number: @doc_number), 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg", onclick: "$(this).hide(); $('#spinner').show();" }
+        %i.fa.fa-plus
+        Item
+      =# link_to 'Add items', line_item_fields_purchase_orders_path(doc_number: @doc_number), remote: true, id: "add_item_button", class: "btn btn-warning btn-lg", onclick: "$(this).hide(); $('#spinner').show();"
     %br
     %br
     %br
     .row.form-group
       %div{:class => "col-sm-12 col-md-12"}
-        -#
-          = link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default btn-block"
-        = button_tag(:type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Hold"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Hold"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
+          %i.fa.fa-folder-open-o.fa-lg
           Hold
         %br
         = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
-          Close ticket
+          %i.fa.fa-folder.fa-lg
+          Close
         %br
-        = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-success btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close & Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#close_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
-          Close & Pay
+        = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#close_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+          %i.fa.fa-dollar.fa-lg
+          Pay
     %div#images
-      -#
-        - @images.each_slice(6) do |images|
-          %div.row
-            - images.each do |image|
-              .col-xs-12.col-sm-2.col-md-2
-                - unless image.hidden? or not current_user.show_thumbnails?
-                  = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
-      -#
-        %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
-          = "Ticket #{@purchase_order.doc_number} Pictures"
-      -#
-        - unless @images.blank?
-          - @images.each_slice(6) do |images|
-            %div.row
-              - images.each do |image|
-                .col-xs-12.col-sm-2.col-md-2.col-lg-2
-                  %div.thumbnail
-                    - unless image.hidden?
-                      = image_tag(show_preview_image_image_path(image))
+      
     %div{id: 'endless_page'}
       %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
       %p= link_to 'Load pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'load-more-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" #if @images.next_page
+      %p= link_to 'Re-load pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'reload-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show(); $('#images').empty();", style: "display:none;" #if @images.next_page
 
 =# render partial: "image_files/upload_form", locals: {event_code: "Gross"}
 = render partial: "shared/purchase_order_footer_navbar", locals: {title: "Purchase Order"}

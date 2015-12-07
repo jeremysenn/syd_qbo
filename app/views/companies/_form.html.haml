@@ -1,0 +1,38 @@
+= form_for @company do |f|
+  - @company.errors.each do |attr, msg|
+    .alert.alert-danger
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      = "#{attr} #{msg}" if @company.errors[attr].first == msg
+  .well
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label "CompanyName", "Company Name", :class => "control-label"
+        = f.text_field "CompanyName", :placeholder => "Company Name", class: "form-control input-lg", readonly: true
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label "CompanyId", "Company ID", :class => "control-label"
+        = f.text_field "CompanyID", :placeholder => "Company ID", class: "form-control input-lg", readonly: true
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label :custom_field_1, "Custom Field 1", :class => "control-label"
+        = f.text_field :custom_field_1, :placeholder => "Custom Field 1", class: "form-control input-lg"
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label :custom_field_1_value, "Custom Field 1 Value", :class => "control-label"
+        = f.text_field :custom_field_1_value, :placeholder => "Custom Field 1 Value", class: "form-control input-lg"
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label :custom_field_2, "Custom Field 2", :class => "control-label"
+        = f.text_field :custom_field_2, :placeholder => "Custom Field 2", class: "form-control input-lg"
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label :custom_field_2_value, "Custom Field 2 Value", :class => "control-label"
+        = f.text_field :custom_field_2_value, :placeholder => "Custom Field 2 Value", class: "form-control input-lg"
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = f.label :logo_url, "Logo URL", :class => "control-label"
+        = f.text_field :logo_url, :placeholder => "Logo URL", class: "form-control input-lg"
+    .row.form-group
+      %div{:class => "col-sm-12"}
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}) do
+          Save

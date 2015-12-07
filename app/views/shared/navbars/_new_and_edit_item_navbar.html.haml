@@ -3,7 +3,9 @@
     .navbar-header
       %div{class: 'navbar-brand navbar-center'}
         .col-xs-4.col-sm-4
-          = link_to "Cancel", items_path
+          %a{href: items_path}
+            %i.fa.fa-close
+          =# link_to "Cancel", items_path
           -#
             = link_to 'javascript:history.back()' do
               %i.fa.fa-arrow-left.fa-lg

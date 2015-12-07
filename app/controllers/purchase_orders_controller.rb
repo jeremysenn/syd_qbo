@@ -45,7 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1.json
   def show
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @doc_number = @purchase_order.doc_number
+    @doc_number = @purchase_order.doc_number # Ticket number
     
     respond_to do |format|
       format.html do
@@ -53,13 +53,22 @@ class PurchaseOrdersController < ApplicationController
         @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
       end
       format.pdf do
-        @signature = Image.where(ticket_nbr: @doc_number, event_code: "SIG").last
-        render pdf: "file_name",
-        :layout => 'pdf.html.haml'
+        @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
+        @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
+        render pdf: "PO#{@doc_number}",
+        :page_width => 4,
+        :layout => 'pdf.html.haml',
+        :zoom => 1.75,
+        :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
+        unless current_user.printer_devices.blank?
+          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
+        end
+        # Remove the temporary pdf file that was created above
+        FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
       end
     end
   end
-
+  
   # GET /purchase_orders/new
   def new
     @vendors = @vendor_service.query(nil, :per_page => 1000)
@@ -71,10 +80,11 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1/edit
   def edit
     @vendors = @vendor_service.query(nil, :per_page => 1000)
+    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
 #    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @doc_number = @purchase_order.doc_number
+    @doc_number = @purchase_order.doc_number # Ticket number
 #    @contract = Contract.find(current_company_id) # Find contract for this company
-    
+
 #    query = "Select * From Item Where Type = 'Inventory'"
     @items = @item_service.query(nil, :per_page => 1000)
     
@@ -187,6 +197,7 @@ class PurchaseOrdersController < ApplicationController
   end
   
   def line_item_fields
+    @doc_number = params[:doc_number]
     @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
@@ -207,7 +218,7 @@ class PurchaseOrdersController < ApplicationController
   
   private
     def set_oauth_client
-      @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret)
+      @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, current_company.qbo_access_credential.access_token, current_company.qbo_access_credential.access_secret)
     end
   
     def set_purchase_order_service
@@ -255,7 +266,7 @@ class PurchaseOrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_order_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:purchase_order).permit(:vendor, :po_status, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount])
+      params.require(:purchase_order).permit(:vendor, :po_status, :item_description, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount])
     end
     
 #    def line_params

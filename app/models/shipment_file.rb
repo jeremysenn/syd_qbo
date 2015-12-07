@@ -27,6 +27,20 @@ class ShipmentFile < ActiveRecord::Base
   end
   
   #############################
-  #     Class Methods      #
+  #     Class Methods         #
   #############################
+  
+  def self.delete_files
+    require 'pathname'
+    require 'fileutils'
+    
+    ShipmentFile.where('created_at < ? and created_at > ?', 7.days.ago, 14.days.ago).each do |shipment_file|
+      if shipment_file.file.file and shipment_file.file.file.exists?
+        pn = Pathname.new(shipment_file.file_url) # Get the path to the file
+        shipment_file.remove_file! # Remove the file and its versions
+        FileUtils.remove_dir "#{Rails.root}/public#{pn.dirname}" # Remove the now empty directory
+      end
+    end
+  end
+  
 end

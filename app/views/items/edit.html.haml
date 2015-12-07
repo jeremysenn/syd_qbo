@@ -10,6 +10,10 @@
           = text_field_tag "item[name]", nil, :placeholder => "Name", value: @item.name, class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
+          = label_tag "Type", nil, :class => 'control-label'
+          = text_field_tag "item[type]", nil, :placeholder => "Type", value: @item.type, class: "form-control input-lg"
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Unit of Measure", nil, :class => 'control-label'
           =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
           = select_tag "item[purchase_desc]", options_for_select(units_of_measure, @item.purchase_desc), class: "form-control input-lg"

@@ -13,6 +13,8 @@ class WelcomeController < ApplicationController
 #      @company_info_service.access_token = oauth_client
 #      @company_info_service.company_id = session[:realm_id]
 #      @company_info = @company_info_service.fetch_by_id(session[:realm_id])
+    elsif user_signed_in? and current_user.qbo_access_credential.blank?
+#      redirect_to set_user_location_user_settings_path, notice: "Please enter your Quickbook administrator's email address"
     end
   end
   

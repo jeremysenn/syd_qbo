@@ -4,117 +4,44 @@
 .container
   %p
     .btn-group
-      = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg", id: 'purchase_orders_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
+      = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
       %button{class: 'btn btn-default btn-lg active'}
         Open
-      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'purchase_orders_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
+      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
   -#
-    %div.row
-      .col-xs-12.col-sm-12.col-md-12
-        .btn-group{"data-toggle" => "buttons"}
-          %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').show(); $('#closed_purchase_orders').hide();", class: "#{(params[:status] == 'Open' or params[:status].blank?) ? 'active' : ''}"}
-            %input#open{:autocomplete => "off", :name => "options", :type => "radio", }/
-            Open
-          %label.btn.btn-lg.btn-default{onclick: "$('#open_purchase_orders').hide(); $('#closed_purchase_orders').show();", class: "#{params[:status] == 'Closed' ? 'active' : ''}"}
-            %input#closed{:autocomplete => "off", :name => "options", :type => "radio"}/
-            Closed
-        %br
-        %br
+    %p
+      .btn-group
+        = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
+        = link_to "Items", items_path, :class => "btn btn-default btn-lg purchase_order_button", id: 'purchase_orders_to_items', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}
+  
   - if @open_purchase_orders.blank?
     .jumbotron
       %p.text-center No held tickets found
   - else
     %div{id: 'open_purchase_orders'}
-      -#
-        %div.row
-          .col-xs-12.col-sm-12.col-md-12
-            %div.panel{style: 'border: 0;'}
-              %div.panel-body
-                -#
-                  %div.col-xs-3.col-sm-3.col-md-3
-                    %strong Photo
-                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                  %strong Ticket
-                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                  %strong Vendor
-                %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                  %strong Total
       - @open_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
         %div.row
           .col-xs-12.col-sm-12.col-md-12
             %div.panel.panel-primary
-              -#
-                %div.panel-body{style: "padding: 0;"}
-                  %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
-                    %a{href: edit_purchase_order_path(purchase_order.id), class: "purchase_order_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}
-                      =# purchase_order.vendor_ref
-                      - if Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").count > 0
-                        = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").last.id), class: 'img-responsive')
-                      - else
-                        %span.fa-stack.fa-3x
-                          %i.fa.fa-ban.fa-stack-2x
-                          %i.fa.fa-camera.fa-stack-1x
-                        =# image_tag("no_photo320x240.jpeg", class: 'img-responsive')
-              -#
-                %div.panel-body
-                  %div.col-xs-4.col-sm-4.col-md-4.col-lg-4
-                    %a{href: edit_purchase_order_path(purchase_order.id), class: "purchase_order_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{purchase_order.doc_number}"}}
-                      = purchase_order.doc_number
-                      %br
-                      %small= purchase_order.txn_date.strftime("%m/%d/%y")
-                  %div.col-xs-4.col-sm-4.col-md-4.col-lg-4= purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
-                  %div.col-xs-4.col-sm-4.col-md-4.col-lg-4= number_to_currency(purchase_order.total)
-                  .pull-right
-                    %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), target: '_blank'}
-                      %i.fa.fa-file-pdf-o.fa-lg
-                    &nbsp;
               %div.list_group
                 %a{href: edit_purchase_order_path(purchase_order.id), class: "list-group-item purchase_order_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{purchase_order.doc_number} #{purchase_order.vendor_ref.name}"}}
                   .pull-right
                     &nbsp;
                     %i.fa.fa-chevron-right
                   - if current_user.user_setting.show_purchase_order_thumbnails? and Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").count > 0
-                    = image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
+                    =# image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
+                    = image_tag(Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").last.preview_data_uri, class: 'thumbnail img-responsive')
                   = purchase_order.doc_number
+                  - if Vendor.customer_photo_id_warning?(purchase_order.vendor_ref.value)
+                    %i.fa.fa-warning.text-warning
                   = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
                   .pull-right
                     = number_to_currency(purchase_order.total)
-                %a{href: purchase_order_path(purchase_order.id, format: 'pdf'), class: "list-group-item", target: '_blank'}
+                %a{href: purchase_order_path(purchase_order.id, now: DateTime.now, format: 'pdf'), class: "list-group-item", target: '_blank'}
                   = purchase_order.txn_date.strftime("%m/%d/%y")
                   .pull-right
                     %i.fa.fa-file-pdf-o.fa-lg
                     Print
-                -#
-                  %a{href: new_bill_path(purchase_order_id: purchase_order.id), class: "list-group-item"}
-                    Close ticket
-                    .pull-right
-                      %i.fa.fa-chevron-right
-                    %br
-                    %br
-                  .pull-right
-                    %i.fa.fa-chevron-right
-    -#
-      %div{id: 'closed_purchase_orders', style: 'display: none;'}
-        - @closed_purchase_orders.sort_by(&:txn_date).reverse.each do |purchase_order|
-          %div.row
-            .col-xs-12.col-sm-12.col-md-12
-              %div.panel.panel-primary
-                %div.list_group
-                  %a{href: purchase_order_path(purchase_order.id), class: "list-group-item"}
-                    =# purchase_order.vendor_ref
-                    = @vendor_service.fetch_by_id(purchase_order.vendor_ref).display_name unless purchase_order.vendor_ref.blank?
-                    .pull-right
-                      %i.fa.fa-chevron-right
-                    %br
-                    = purchase_order.doc_number
-                    %br
-                    -#
-                      = purchase_order.po_status
-                      %br/
-                    %small
-                      = purchase_order.txn_date.strftime("%m/%d/%Y")
-                      %br
-                      = number_to_currency(purchase_order.total)
 
   %div.row
     .text-center

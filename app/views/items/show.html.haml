@@ -24,6 +24,6 @@
       %div.list-group-item
         %strong= "Expense Account:"
         .pull-right
-          = @item.expense_account_ref.name
+          = @item.expense_account_ref.name unless @item.expense_account_ref.blank?
 
 = render partial: "shared/footer_navbar", locals: {title: "Item"}

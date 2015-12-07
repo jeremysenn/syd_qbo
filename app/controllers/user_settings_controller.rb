@@ -1,6 +1,7 @@
 class UserSettingsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  before_action :set_user_setting, only: [:update, :set_device_group]
 
   # GET /user_settings
   # GET /user_settings.json
@@ -12,7 +13,7 @@ class UserSettingsController < ApplicationController
   # GET /user_settings/1
   # GET /user_settings/1.json
   def show
-    @lookup_defs = @user_setting.images? ? LookupDef.image_event_codes : LookupDef.shipment_event_codes
+#    @lookup_defs = @user_setting.images? ? LookupDef.image_event_codes : LookupDef.shipment_event_codes
   end
 
   # GET /user_settings/new
@@ -43,6 +44,21 @@ class UserSettingsController < ApplicationController
   # PATCH/PUT /user_settings/1
   # PATCH/PUT /user_settings/1.json
   def update
+    respond_to do |format|
+      if @user_setting.update(user_setting_params)
+        format.html { redirect_to root_path, notice: 'User setting was successfully updated.' }
+#        format.html { redirect_to @user_setting, notice: 'User setting was successfully updated.' }
+        format.json { render :show, status: :ok, location: @user_setting }
+#        format.js { render js: "alert('User setting was successfully updated.')" }
+      else
+        format.html { render :edit }
+        format.json { render json: @user_setting.errors, status: :unprocessable_entity }
+#        format.js { render js: "alert('User setting update failed.')" }
+      end
+    end
+  end
+  
+  def set_device_group
     respond_to do |format|
       if @user_setting.update(user_setting_params)
         format.html { redirect_to @user_setting, notice: 'User setting was successfully updated.' }
@@ -90,6 +106,7 @@ class UserSettingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_setting_params
-      params.require(:user_setting).permit(:show_thumbnails, :table_name, :show_vendor_thumbnails, :show_purchase_order_thumbnails, :show_bill_thumbnails, :show_bill_payment_thumbnails)
+      params.require(:user_setting).permit(:show_thumbnails, :table_name, :show_vendor_thumbnails, :show_purchase_order_thumbnails,
+          :show_bill_thumbnails, :show_bill_payment_thumbnails, :device_group_id, :admin_email)
     end
 end

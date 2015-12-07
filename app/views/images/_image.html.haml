@@ -4,7 +4,8 @@
       - unless @today == true or params[:q].blank? or @ticket_number.blank?
         %a{href: image_path(image), class: "list-group-item"}
           - unless image.hidden? or not current_user.show_thumbnails?
-            = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
+            =# image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
+            = image_tag(image.preview_data_uri, alt: image.id, class: 'thumbnail img-responsive')
           = image.ticket_nbr
           .pull-right
             %i.fa.fa-chevron-right
@@ -19,7 +20,8 @@
       - else
         %a{href: images_path("q[ticket_nbr_eq]" => image.ticket_nbr, "q[location_eq]" => current_user.location), class: "list-group-item"}
           - unless image.hidden? or not current_user.show_thumbnails?
-            = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
+            =# image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
+            = image_tag(image.preview_data_uri, alt: image.id, class: 'thumbnail img-responsive')
           = image.ticket_nbr
           .pull-right
             %i.fa.fa-chevron-right

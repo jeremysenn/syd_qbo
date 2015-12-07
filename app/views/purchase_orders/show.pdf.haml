@@ -1,105 +1,61 @@
 .container
-  -#
-    .col-sm-12.col-md-4.col-md-offset-4
-      .well
-        %div
-          %p
-            %strong= "Vendor"
-            %br
-            = truncate(@vendor.display_name, length: 30)
-        %div
-          %p
-            %strong= "Date"
-            %br
-            = @purchase_order.txn_date.strftime("%m/%d/%y")
-        - unless @purchase_order.linked_transactions.blank?
-          - @purchase_order.linked_transactions.each do |linked_transaction|
-            %div.list-group-item
-              %strong= "Linked transaction"
-              .pull-right
-                - if linked_transaction.txn_type == 'Bill'
-                  = link_to linked_transaction.txn_type, bill_path(linked_transaction.txn_id)
-                - else
-                  = linked_transaction.txn_type
-        %div
-          %p
-            %strong= "Total"
-            %br
-            = number_to_currency(@purchase_order.total)
+  %center= @purchase_order.doc_number
+  - unless @current_user.company.logo_url.blank?
+    = image_tag(@current_user.company.logo_url, size: '50x50')
+  - else
+    = wicked_pdf_image_tag 'syd_logo_57x57.png'
+  %br
+  %strong= @company_info.company_name
+  %br
+  - unless @company_info.company_address.blank?
+    = @company_info.company_address.line1
+    %br
+    = "#{@company_info.company_address.city}, #{@company_info.company_address.country_sub_division_code} #{@company_info.company_address.postal_code}"
+    %br
+  = @company_info.primary_phone.free_form_number unless @company_info.primary_phone.blank?
+  %br
 
-    - @purchase_order.line_items.each_with_index do |line_item, index|
-      .col-sm-12.col-md-4.col-md-offset-4
-        .well
-          %div
-            =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-            =# "#{index + 1}."
-            %p
-              = line_item.item_based_expense_line_detail.item_ref.name
-              = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
-          %div
-            %p
-              %strong Description
-              %br
-              = line_item.description
-          %div
-            %p
-              %strong Net
-              %br
-              = line_item.item_based_expense_line_detail.quantity
-          %div
-            %p
-              %strong Rate
-              %br
-              = number_to_currency(line_item.item_based_expense_line_detail.unit_price)
-          %div
-            %p
-              %strong Amount
-              %br
-              = number_to_currency(line_item.amount)
-
-    - unless @images.blank?
-      .col-sm-12.col-md-4.col-md-offset-4
-        -#
-          .list-group
-            - @images.each do |image|
-              %a.list-group-item.clearfix{:href => "#"}
-                %strong= image.event_code
-                %span.pull-right
-                  = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive col-sm-1 col-md-1')
-        - @images.each_slice(3) do |images|
-          %div.row
-            - images.each do |image|
-              .col-sm-3.col-md-3
-                %div.thumbnail
-                  - unless image.hidden?
-                    = link_to image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive'), image
-                  .text-center= image.event_code
-  %h2.text-center PURCHASE TICKET
-  %h4.text-center= @company_info.company_name
-  %p
+  - unless @current_user.company.custom_field_1.blank?
+    %strong= "#{@current_user.company.custom_field_1}: "
+    = @current_user.company.custom_field_1_value
+    %br
+  - unless @current_user.company.custom_field_2.blank?
+    %strong= "#{@current_user.company.custom_field_2}: "
+    = @current_user.company.custom_field_2_value
+    %br
+  -#      
     %strong= "Ticket: "
     = @purchase_order.doc_number
-    %strong= "Vendor: "
-    = @vendor.display_name
-  %table.table
+  %strong= "Vendor: "
+  = @vendor.display_name
+  %hr
+
+  %table
     %thead
       %tr
-        %td Item
-        %td Gross
-        %td Tare
-        %td Net
-        %td Rate
-        %td Amount
+        %td 
+          %u Item
+        %td 
+          %u Gross
+        %td 
+          %u Tare
+        %td 
+          %u Net
+        %td 
+          %u Unit
+        %td 
+          %u Rate
+        %td 
+          %u Amount
     %tbody
       - @purchase_order.line_items.each do |line_item|
         %tr
-          %td
-            = @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
-            = "(#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
-          %td= line_item.description.split(' - ').first
-          %td= line_item.description.split(' - ').second
+          %td= "#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name}:"
+          %td= "#{line_item.description.split(' - ').first}"
+          %td= "#{line_item.description.split(' - ').second}"
           %td= line_item.item_based_expense_line_detail.quantity
-          %td= number_to_currency(line_item.item_based_expense_line_detail.unit_price)
+          %td= "#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc}"
+          %td= "$#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 3)}"
           %td= number_to_currency(line_item.amount)
       %tr
         %td
@@ -108,7 +64,14 @@
         %td
         %td
         %td
+        %td
           %strong= "Total: #{number_to_currency(@purchase_order.total)}"
-
-  - unless @signature.blank?
-    =# show_jpeg_image_image_url(@signature)
+  %table
+    %tbody
+      %tr
+        %td
+          - unless @signature_image.blank?
+            %p= image_tag(@signature_image.jpeg_image_data_uri, style: 'width: 150%')
+        %td
+          - unless @finger_print_image.blank?
+            %p= image_tag(@finger_print_image.jpeg_image_data_uri, style: 'width: 75%')

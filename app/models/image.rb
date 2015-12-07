@@ -21,6 +21,22 @@ class Image < ActiveRecord::Base
     blob.preview
   end
   
+  def jpeg_image_data_uri
+    unless jpeg_image.blank?
+      "data:image/jpg;base64, #{Base64.encode64(jpeg_image)}"
+    else
+      nil
+    end
+  end
+  
+  def preview_data_uri
+    unless preview.blank?
+      "data:image/jpg;base64, #{Base64.encode64(preview)}"
+    else
+      nil
+    end
+  end
+  
   def is_customer_image(customer_name)
     Image.where(ticket_nbr: ticket_nbr, cust_name: customer_name).exists?
   end

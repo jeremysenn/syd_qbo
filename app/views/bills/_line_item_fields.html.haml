@@ -1,11 +1,16 @@
 .panel.panel-default.line-item
   %div.panel-heading{:role => "tab", id: "heading#{index}"}
     %h4.panel-title
-      %a.line_item_name{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button"}
-        Choose an item*
+      %ul{class: 'list-inline'}
+        %li
+          -#
+            %a.line_item_name.text-success{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button"}
+          .line_item
+            Choose an item*
+        %li.pull-right
+          %a{href: '#', class: 'remove_field'}
+            %i.fa.fa-trash.fa-lg.text-danger
       = hidden_field_tag :item_description, nil
-      %a{href: '#', class: 'remove_field pull-right'}
-        %i.fa.fa-trash
   %div.panel-collapse{id: "collapse_#{index}", "aria-labelledby" => "headingitem", :role => "tabpanel", class: "collapse in"}
     .panel-body
       =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items")), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
@@ -37,26 +42,8 @@
           $
         = text_field_tag "bill[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
   %div.panel-footer
-
--#
-  .well
-    %a{href: '#', class: 'remove_field pull-right'}
-      %i.fa.fa-trash
-    = link_to "Show", '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", style: "display:none;", class: "toggle_link"
-    .row.form-group.calculation_fields
-      %div{:class => "col-sm-12 col-md-12"}
-        = label_tag "Item", nil, :class => 'control-label'
-        = select_tag "bill[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-        =# select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-        = label_tag "Gross", nil, :class => 'control-label'
-        = text_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Tare", nil, :class => 'control-label'
-        = text_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Net", nil, :class => 'control-label'
-        = text_field_tag "bill[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Rate", nil, :class => 'control-label'
-        = text_field_tag "bill[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Amount", nil, :class => 'control-label'
-        = text_field_tag "bill[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
-    %div{id: 'quantity_preview', class: 'preview', :style => "display:none;"}
-    %div{id: 'unit_price_preview', class: 'preview', :style => "display:none;"}
+    %ul{class: 'list-inline'}
+      %li.calculation_details
+      %li.pull-right
+        %a.text-success{"aria-controls" => "collapse#{index}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", class: 'pull-right', onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+          %i.fa.fa-check-square.fa-lg

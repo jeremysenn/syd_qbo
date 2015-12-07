@@ -45,6 +45,7 @@ class CustPicFilesController < ApplicationController
         end
         }
       format.js {
+#        @cust_pic_file = CustPicFile.create(user_id: 1, customer_number: "77", location: "404168351", event_code: "Photo ID", remote_file_url: "http://qb.scrapyarddog.com/tud_devices/show_scanned_jpeg_image")
         @cust_pic_file = CustPicFile.create(cust_pic_file_params)
       }
     end
@@ -83,6 +84,6 @@ class CustPicFilesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def cust_pic_file_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:cust_pic_file).permit(:name, :file, :user_id, :vendor_id, :customer_number, :location, :event_code, :cust_pic_id, :hidden, :blob_id)
+      params.require(:cust_pic_file).permit(:name, :file, :remote_file_url, :user_id, :vendor_id, :customer_number, :location, :event_code, :cust_pic_id, :hidden, :blob_id)
     end
 end

@@ -150,6 +150,6 @@ class ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:item).permit(:name, :purchase_desc, :purchase_cost, :purchase_desc, :expense_account_ref)
+      params.require(:item).permit(:name, :description, :purchase_cost, :purchase_desc, :expense_account_ref)
     end
 end

@@ -1,55 +1,32 @@
 - if @today == true
   = render partial: "shared/search_navbar", locals: {title: Date.today.strftime("%-m/%-d/%y")}
 - else
-  = render partial: "shared/search_navbar", locals: {title: "#{@ticket_number.blank? ? 'Search' : @ticket_number}"}
+  =# render partial: "shared/search_navbar", locals: {title: "#{@ticket_number.blank? ? 'Search' : @ticket_number}"}
 
 .container
-  - if @images.blank?
+  - if @cust_pics.blank?
     .jumbotron
       %p.text-center No results found
-  %div{id: "images"}
-    - @images.each_slice(6) do |images|
+  %div{id: "cust_pics"}
+    - @cust_pics.each_slice(6) do |cust_pics|
       %div.row
-        - images.each do |image|
+        - cust_pics.each do |cust_pic|
           .col-xs-12.col-sm-2.col-md-2
             %div.panel.panel-primary
               %div.list_group
-                - unless @today == true or params[:q].blank? or @ticket_number.blank?
-                  %a{href: image_path(image), class: "list-group-item"}
-                    - unless image.hidden? or not current_user.show_thumbnails?
-                      = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
-                    = image.ticket_nbr
-                    .pull-right
-                      %i.fa.fa-chevron-right
-                    - unless image.event_code.blank?
-                      %br/
-                      %small= image.event_code
-                    - unless image.camera_name.blank?
-                      %br/
-                      %small= image.camera_name
+                %a{href: cust_pic_path(cust_pic), class: "list-group-item"}
+                  - unless cust_pic.hidden? or not current_user.show_vendor_thumbnails?
+                    =# image_tag(show_preview_image_cust_pic_path(cust_pic), alt: cust_pic.id, class: 'thumbnail img-responsive')
+                    = image_tag(cust_pic.preview_data_uri, alt: cust_pic.id, class: 'thumbnail img-responsive')
+                  = "#{cust_pic.first_name}  #{cust_pic.last_name}"
+                  - unless cust_pic.event_code.blank?
                     %br/
-                    %small.text-muted= image.sys_date_time.strftime("%-m/%-d/%y %l:%M %p")
-                - else
-                  %a{href: images_path("q[ticket_nbr_eq]" => image.ticket_nbr), class: "list-group-item"}
-                    - unless image.hidden? or not current_user.show_thumbnails?
-                      = image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
-                    = image.ticket_nbr
-                    .pull-right
-                      %i.fa.fa-chevron-right
-                    -#
-                      - unless image.event_code.blank?
-                        %br/
-                        %small= image.event_code
-                      - unless image.camera_name.blank?
-                        %br/
-                        %small= image.camera_name
-                    %br/
-                    %small.text-muted= image.sys_date_time.strftime("%-m/%-d/%y %l:%M %p")
+                    %small= cust_pic.event_code
+                  
   .row
     .text-center
       %div{id: 'endless_page'}
         %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
-        %p= link_to 'Load more ...', images_path(:page => @images.next_page, :q => params[:q], :one_image_per_ticket => params[:one_image_per_ticket]), :class => 'load-more-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" if @images.next_page
-  =# paginate @images
+        %p= link_to 'Load more ...', cust_pics_path(:page => @cust_pics.next_page, :q => params[:q]), :class => 'load-more-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" if @cust_pics.next_page
   
 = render partial: "shared/footer_navbar", locals: {title: "Images"}

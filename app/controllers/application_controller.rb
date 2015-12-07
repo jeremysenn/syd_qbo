@@ -22,4 +22,9 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_company_id
   
+  def current_company
+    current_user.company
+  end
+  helper_method :current_company
+  
 end

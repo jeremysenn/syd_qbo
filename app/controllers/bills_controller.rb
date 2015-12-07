@@ -47,9 +47,18 @@ class BillsController < ApplicationController
         @bill_payment = @bill_payment_service.query.entries.find{ |b| b.doc_number == @doc_number } if @bill.balance == 0
       end
       format.pdf do
-        @signature = Image.where(ticket_nbr: @doc_number, event_code: "SIG").last
-        render pdf: "file_name",
-        :layout => 'pdf.html.haml'
+        @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
+        @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
+        render pdf: "Bill#{@doc_number}",
+        :page_width => 4,
+        :layout => 'pdf.html.haml',
+        :zoom => 1.75,
+        :save_to_file => Rails.root.join('pdfs', "#{current_company_id}Bill#{@doc_number}.pdf")
+        unless current_user.printer_devices.blank?
+          current_user.printer_devices.last.call_printer_for_bill_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}Bill#{@doc_number}.pdf"))))
+        end
+        # Remove the temporary pdf file that was created above
+        FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}Bill#{@doc_number}.pdf"))
       end
     end
   end

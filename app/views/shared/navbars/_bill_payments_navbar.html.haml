@@ -12,7 +12,7 @@
           -#
             %a{href: "#new_purchase_order_form", "data-toggle" => "modal", :alt => "new_purchase_order_form"}
             %a{href: '#', id: 'new_ticket_navbar_link', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Ticket"}}
-          %a{href: vendors_path, id: "new_ticket_link", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Ticket"}}
+          %a{href: vendors_path, id: "new_ticket_link", class: 'bill_payment_button', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i>"}}
             %i.fa.fa-plus.fa-lg
             = "Ticket" unless mobile_device?
           -#

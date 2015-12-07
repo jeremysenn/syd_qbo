@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     end
     member do
       get :update_qb
+      get :download
     end
   end
   
@@ -53,6 +54,24 @@ Rails.application.routes.draw do
     collection do
       get :drivers_license_scan
       get :scale_read
+      get :show_scanned_jpeg_image
+    end
+  end
+  
+  resources :devices do
+    member do
+      get :drivers_license_scan
+      get :scale_read
+      get :scale_camera_trigger
+      get :show_scanned_jpeg_image
+      get :drivers_license_camera_trigger
+      get :get_signature
+      get :call_printer_for_purchase_order_pdf
+      get :finger_print_trigger
+      
+    end
+    collection do
+      get :customer_camera_trigger
     end
   end
   
@@ -98,6 +117,8 @@ Rails.application.routes.draw do
       get 'show_preview_image'
     end
   end
+  
+  resources :companies
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'

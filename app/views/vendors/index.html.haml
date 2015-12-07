@@ -1,17 +1,18 @@
 = render partial: "shared/navbars/vendors_navbar", locals: {title: "Vendors"}
 - @title="Vendors" 
 
--#
-  .container
--#
-  .col-xs-12.col-sm-6.col-md-offset-3
 .container
-  %p
-    .btn-group
-      %button{class: 'btn btn-default btn-lg active'}
-        Vendors
-      = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg", id: 'vendors_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
-      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'vendors_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
+  -#
+    %p
+      .btn-group
+        %button{class: 'btn btn-default btn-lg active'}
+          Vendors
+        = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
+        = link_to "Closed", bills_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
+    %p
+      .btn-group
+        = link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
+        = link_to "Items", items_path, :class => "btn btn-default btn-lg vendor_button", id: 'vendors_to_items', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}
       
   %p
     = form_tag vendors_path, id: 'vendor_search_form', method: 'get', :class => "form-inline", role: 'search' do |f|
@@ -31,43 +32,20 @@
         %div.row
           .col-xs-12.col-sm-12.col-md-12
             %div.panel.panel-primary
-              -#
-                %div.panel-body
               %div.list_group
                 %a{href: vendor_path(vendor.id), class: "list-group-item vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> #{vendor.display_name}"}}
                   .pull-right
                     &nbsp;
                     %i.fa.fa-chevron-right
-                  - if current_user.user_setting.show_vendor_thumbnails? and CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").count > 0
-                    = image_tag(show_preview_image_cust_pic_path(CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").last.id), class: 'thumbnail img-responsive')
+                  - if current_user.user_setting.show_vendor_thumbnails? and not Vendor.default_cust_pic_id(vendor.id, current_company_id).blank?
+                    =# image_tag(show_preview_image_cust_pic_path(Vendor.default_cust_pic_id(vendor.id, current_company_id)), class: 'thumbnail img-responsive')
+                    = image_tag(Vendor.default_cust_pic(vendor.id, current_company_id).preview_data_uri, class: 'thumbnail img-responsive')
+                  - if Vendor.customer_photo_id_warning?(vendor.id)
+                    %i.fa.fa-warning.text-warning
                   = vendor.display_name
                 %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> <small>New ticket</small>"}, class: "list-group-item new_ticket_from_vendor", onclick: "event.preventDefault();"}
-                  -#
-                    %i.fa.fa-plus.fa-lg
                   %small New ticket
-              -#
-                %div.panel-body{style: "padding: 0;"}
-                  %a{href: vendor_path(vendor.id), class: "vendor_button", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-5x'></i>"}}
-                    - if CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").count > 0
-                      %div.col-xs-3.col-sm-3.col-md-3.col-lg-3{style: "padding: 0;"}
-                        = image_tag(show_preview_image_cust_pic_path(CustPic.where(cust_nbr: vendor.id, location: current_company_id, event_code: "Customer Photo").last.id), class: 'img-responsive')
-                    - else
-                      %span.fa-stack.fa-3x
-                        %i.fa.fa-square-o.fa-stack-2x
-                        %i.fa.fa-user.fa-stack-1x
-                  &nbsp;
-                  = vendor.display_name
-                  -#
-                    %br/
-                    %small
-                      - unless vendor.primary_phone.blank?
-                        = vendor.primary_phone.free_form_number 
-                        %br
-                      = number_to_currency(vendor.balance)
-                  .pull-right
-                    %a{href: '#', data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, class: "new_ticket_from_vendor", onclick: "event.preventDefault();"}
-                      %i.fa.fa-plus.fa-lg
-                    &nbsp;
+              
   %div.row
     .text-center
       %div{id: 'endless_page'}

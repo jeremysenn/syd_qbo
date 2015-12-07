@@ -1,11 +1,16 @@
 .panel.panel-default.line-item
   %div.panel-heading{:role => "tab", id: "heading#{index}"}
     %h4.panel-title
-      %a.line_item_name{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button"}
-        Choose an item*
+      %ul{class: 'list-inline'}
+        %li
+          -#
+            %a.text-success.line_item_name{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button"}
+          .line_item_name
+            Choose an item*
+        %li.pull-right
+          %a{href: '#', class: 'remove_field'}
+            %i.fa.fa-trash.fa-lg.text-danger
       = hidden_field_tag :item_description, nil
-      %a{href: '#', class: 'remove_field pull-right'}
-        %i.fa.fa-trash
   %div.panel-collapse{id: "collapse_#{index}", "aria-labelledby" => "headingitem", :role => "tabpanel", class: "collapse in"}
     .panel-body
       = label_tag "Item", nil, :class => 'control-label'
@@ -14,12 +19,32 @@
       =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
       = label_tag "Gross", nil, :class => 'control-label'
       %div.input-group
+        - current_user.scale_devices.each do |scale_device|
+          %span.input-group-addon
+            - if scale_device.scale_camera_only?
+              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-camera.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+            - else
+              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-dashboard.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
         = phone_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
         %span.input-group-addon
           %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-weight' => 0}
             %i.fa.fa-camera.fa-lg
       = label_tag "Tare", nil, :class => 'control-label'
       %div.input-group
+        - current_user.scale_devices.each do |scale_device|
+          %span.input-group-addon
+            - if scale_device.scale_camera_only?
+              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-camera.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+            - else
+              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                %i.fa.fa-dashboard.fa-lg
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
         = phone_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
         %span.input-group-addon
           %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-weight' => 0}
@@ -37,30 +62,8 @@
           $
         = text_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
   %div.panel-footer
-
--#
-  .well
-    %a{href: '#', class: 'remove_field pull-right'}
-      %i.fa.fa-trash
-    %a{href: '#', onclick: "$(this).next().fadeToggle(); $(this).nextAll('.preview').toggle();", style: "display:none;", class: "toggle_link"}
-      Show
-    .row.form-group.calculation_fields
-      %div{:class => "col-sm-12 col-md-12"}
-        = label_tag "Item", nil, :class => 'control-label'
-        = select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-        =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-        =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| [item.name, item.id, { data: {description: "#{@item_service.fetch_by_id(item.id).description}", rate: "#{@item_service.fetch_by_id(item.id).purchase_cost}"} }] }), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-        =# label_tag "Description", nil, :class => 'control-label'
-        =# text_field_tag "purchase_order[line_items][][description]", nil, :placeholder => "Description", class: "form-control input-lg"
-        = label_tag "Gross", nil, :class => 'control-label'
-        = text_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Tare", nil, :class => 'control-label'
-        = text_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Net", nil, :class => 'control-label'
-        = text_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Rate", nil, :class => 'control-label'
-        = text_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
-        = label_tag "Amount", nil, :class => 'control-label'
-        = text_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg", required: true, readonly: true
-    %div{id: 'quantity_preview', class: 'preview', :style => "display:none;"}
-    %div{id: 'unit_price_preview', class: 'preview', :style => "display:none;"}
+    %ul{class: 'list-inline'}
+      %li.calculation_details
+      %li.pull-right
+        %a.text-success{"aria-controls" => "collapse#{index}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", class: 'pull-right', onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+          %i.fa.fa-check-square.fa-lg

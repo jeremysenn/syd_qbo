@@ -3,6 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
+
+  ### Delete of Commodity Items ###
   wrapper = $('.purchase_order_input_fields_wrap')
   $(wrapper).on 'click', '.remove_field', (e) ->
     #user click on item trash button
@@ -24,7 +26,8 @@ jQuery ->
       alert 'You cannot delete this because you must have at least one item.'
       e.preventDefault()
       return
-
+  ### End Delete of Commodity Items ###
+  
   # Automatically highlight field value when focused
   $(wrapper).on 'click', '.amount-calculation-field', (e) ->
     $(this).select()
@@ -47,6 +50,7 @@ jQuery ->
     #input_select.closest('.panel').find('#edit_vendor_link').attr('href', "/vendors/" + vendor_id + "/edit"); 
     #input_select.closest('.panel').find('#edit_vendor_link').text name
     input_select.closest('.panel').find('#vendor_name').text name
+  ### End vendor value changed ###
 
   ### Line item changed ###
   $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
@@ -57,7 +61,8 @@ jQuery ->
       purchase_desc = data.purchase_desc
       rate = parseFloat(data.purchase_cost).toFixed(5)
       quantity = 0
-      input_select.closest('.panel').find('.panel-footer').text ''
+      input_select.closest('.panel').find('.calculation_details').text ''
+      #input_select.closest('.panel').find('.panel-footer').text ''
       #input_select.closest('.panel').find('.line_item_name').text name + ' (' + purchase_desc + ')'
       input_select.closest('.panel').find('.line_item_name').text name
       input_select.closest('.panel').find('#item_description').val purchase_desc
@@ -72,8 +77,11 @@ jQuery ->
       input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-name', name
       input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-id', item_id 
       input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-id', item_id
+      input_select.closest('.panel').find('#gross_scale_button:first').attr 'data-item-name', name 
+      input_select.closest('.panel').find('#tare_scale_button:first').attr 'data-item-name', name
 
       return
+  ### End line item changed ###
 
   ### Line item calculation field value changed ###
   $('.purchase_order_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
@@ -89,26 +97,25 @@ jQuery ->
     amount = (parseFloat(rate) * parseFloat(net)).toFixed(2)
     $(this).closest('.panel').find('#purchase_order_line_items__amount').val amount
 
-    $(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + net + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
+    #$(this).closest('.panel').find('.panel-footer').text '(' + gross + ' - ' + tare + ') ' + '= ' + net + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
+    $(this).closest('.panel').find('.calculation_details').text '(' + gross + ' - ' + tare + ') ' + '= ' + net + description + ' x '  + '$' + rate + ' = ' +  '$' + amount
     sum = 0;
     $('.amount').each ->
       sum += Number($(this).val())
       return
     $('#total').text '$' + sum.toFixed(2)
     return
+  ### End line item calculation field value changed ###
 
   ### Re-enable disabled_with buttons for back button ###
   $(document).on 'page:change', ->
-    $.rails.enableElement $('#purchase_orders_to_closed')
-    $.rails.enableElement $('#purchase_orders_to_paid')
-    $.rails.enableElement $('#purchase_orders_to_vendors')
-    $.rails.enableElement $('#new_ticket_link')
     $('.purchase_order_button').each ->
       $.rails.enableElement $(this)
       return
     return
+  ### End re-enable disabled_with buttons for back button ###
 
-  ### Start endless page stuff ###
+  ### Endless page stuff ###
   loading_purchase_orders = false
   $('a.load-more-purchase-orders').on 'inview', (e, visible) ->
     return if loading_purchase_orders or not visible
@@ -140,8 +147,9 @@ jQuery ->
       $('#vin_form_group').hide()
       $('#image_file_vin_number').val ''
     return
+  ### End event code changed - clear data; check if License Plate or VIN ###
 
-  ### Picture Uploads ###
+  ### Gross/Tare Picture Uploads ###
   #$(document).on 'click', '.gross_or_tare_picture_button', ->
   $('.purchase_order_input_fields_wrap').on 'click', '.gross_or_tare_picture_button', ->
     event_code = $(this).data( "event-code" )
@@ -156,15 +164,18 @@ jQuery ->
 
     $('input[type=file]').trigger 'click'
     false
+  ### End Gross/Tare Picture Uploads ###
 
-  # Clear the commodity picture upload fields for generic picture uploads
+  ### Clear the commodity picture upload fields for generic picture uploads ###
   $(document).on 'click', '#picture_upload_modal_link', ->
     $('#image_file_event_code').val ''
     $('#image_file_tare_seq_nbr').val ''
     $('#image_file_commodity_name').val ''
     $('#image_file_weight').val ''
     return
+  ### End clear the commodity picture upload fields for generic picture uploads ###
 
+  ### File upload ###
   $("#new_image_file").fileupload
     dataType: "script"
     disableImageResize: false
@@ -200,8 +211,7 @@ jQuery ->
       if data.context
         progress = parseInt(data.loaded / data.total * 100, 10)
         data.context.find('.progress-bar').css('width', progress + '%')
-
-  
+  ### End file upload ###
 
   ### Check if any tares are zero ###
   $('#close_button, #close_and_pay_button').on 'click', (e) ->
@@ -221,18 +231,192 @@ jQuery ->
       #  return
       return
     return
+  ### End check if any tares are zero ###
 
-  $('.scale_read').on 'click', (e) ->
+  ### Scale read and camera trigger ###
+  $(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
     e.preventDefault()
+    # Get data from scale button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    event_code = $(this).data( "event-code" )
+    location = $(this).data( "location" )
+    commodity_name = $(this).data( "item-name" )
+
     dashboard_icon = $(this).find( ".fa-dashboard" )
     dashboard_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
     weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
-    $.ajax(url: "/tud_devices/scale_read", dataType: 'json').done (data) ->
-      dashboard_icon.show()
-      spinner_icon.hide()
-      weight = data.weight
-      weight_text_field.val weight
-      $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
-      false
+    weight = weight_text_field.val()
+
+    # Make call to get the weight off the scale
+    scale_read_ajax = ->
+      $.ajax
+        url: "/devices/" + device_id + "/scale_read"
+        dataType: 'json'
+        success: (data) ->
+          weight = data.weight
+          weight_text_field.val weight
+          $('.purchase_order_input_fields_wrap .amount-calculation-field').trigger 'keyup'
+          dashboard_icon.show()
+          spinner_icon.hide()
+          return
+        error: ->
+          dashboard_icon.show()
+          spinner_icon.hide()
+          #alert 'Error reading weight scale.'
+          return
+
+    # Make call to trigger scale camera
+    camera_trigger_ajax = ->
+      $.ajax
+        url: "/devices/" + device_id + "/scale_camera_trigger"
+        dataType: 'json'
+        data:
+          ticket_number: ticket_number
+          event_code: event_code
+          commodity_name: commodity_name
+          location: location
+          #weight: weight  
+          weight: weight_text_field.val()
+        success: (response) ->
+          #alert 'Scale camera trigger successful.'
+          return
+        error: ->
+          #alert 'Scale camera trigger failed'
+          return
+
+    # Kick off the scale read and camera trigger ajax calls
+    scale_read_ajax().success camera_trigger_ajax
+  ### End scale read and camera trigger ###
+
+  ### Scale camera trigger ###
+  $(document).on 'click', '.scale_camera_trigger', (e) ->
+    e.preventDefault()
+    # Get data from scale button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    event_code = $(this).data( "event-code" )
+    location = $(this).data( "location" )
+    commodity_name = $(this).data( "item-name" )
+
+    camera_icon = $(this).find( ".fa-camera" )
+    camera_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+    weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
+
+    # Make call to trigger scale camera
+    $.ajax
+      url: "/devices/" + device_id + "/scale_camera_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        event_code: event_code
+        commodity_name: commodity_name
+        location: location
+        weight: weight_text_field.val()
+      success: (response) ->
+        camera_icon.show()
+        spinner_icon.hide()
+        #alert 'Scale camera trigger successful.'
+        return
+      error: ->
+        camera_icon.show()
+        spinner_icon.hide()
+        #alert 'Scale camera trigger failed'
+        return
+  ### End scale camera trigger ###
+
+  ### TUD signature pad ###
+  $(document).on 'click', '.tud_signature_pad', (e) ->
+    e.preventDefault()
+    # Get data from scale button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    company_id = $(this).data( "company-id" )
+
+    pencil_icon = $(this).find( ".fa-pencil" )
+    pencil_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger TUD signature pad
+    $.ajax
+      url: "/devices/" + device_id + "/get_signature"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        company_id: company_id
+      success: (response) ->
+        pencil_icon.show()
+        spinner_icon.hide()
+        #alert 'Signature pad call successful.'
+        return
+      error: ->
+        pencil_icon.show()
+        spinner_icon.hide()
+        #alert 'Signature pad call failed'
+        return
+  ### End TUD signature pad ###
+
+  ### Finger print reader ###
+  $(document).on 'click', '.finger_print_trigger', (e) ->
+    e.preventDefault()
+    # Get data from button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    location = $(this).data( "company-id" )
+
+    pointer_icon = $(this).find( ".fa-hand-pointer-o" )
+    pointer_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger scale camera
+    $.ajax
+      url: "/devices/" + device_id + "/finger_print_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        location: location
+      success: (response) ->
+        pointer_icon.show()
+        spinner_icon.hide()
+        #alert 'Finger print trigger successful.'
+        return
+      error: ->
+        pointer_icon.show()
+        spinner_icon.hide()
+        #alert 'Finger print trigger failed'
+        return
+  ### End finger print reader ###
+
+  ### Scanner Trigger ###
+  $(document).on 'click', '.scanner_trigger', (e) ->
+    e.preventDefault()
+    # Get data from button
+    this_ticket_number = $(this).data( "ticket-number" )
+    device_id = $(this).data( "device-id" )
+    this_event_code = $('#image_file_event_code').val()
+    this_location = $(this).data( "location" )
+      
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger scanner
+    $.ajax
+      url: "/devices/" + device_id + "/scanner_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: this_ticket_number
+        event_code: this_event_code
+        location: this_location
+      success: (response) ->
+        spinner_icon.hide()
+        return
+      error: ->
+        spinner_icon.hide()
+        return
+  ### End Scanner Trigger ###

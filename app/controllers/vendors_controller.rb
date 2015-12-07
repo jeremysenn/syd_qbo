@@ -39,10 +39,11 @@ class VendorsController < ApplicationController
   def show
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
+    @customer = Customer.find_by_id(@vendor.id)
     first_item_query = "select * from Item maxresults 1"
     @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
     @first_item = @first_items.first
-    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
+#    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
 
   # GET /vendors/new
@@ -51,9 +52,10 @@ class VendorsController < ApplicationController
 
   # GET /vendors/1/edit
   def edit
+    @customer = Customer.find_or_create_by(id: @vendor.id)
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
-    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
+#    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
   end
   
   # POST /vendors
@@ -91,19 +93,24 @@ class VendorsController < ApplicationController
 
     respond_to do |format|
       if @vendor.id.present?
-        
-        # Update the all_vendors rails cache
-        vendors = @vendor_service.query(nil, :per_page => 1000)
-        Rails.cache.delete("all_vendors")
-        Rails.cache.fetch("all_vendors") {Hash[vendors.map{ |v| [v.display_name,v.id] }]}
-        
         format.html { 
+          @customer = Customer.new(id: @vendor.id, first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
+            company_name: @vendor.company_name, display_name: @vendor.display_name, primary_phone: @vendor.primary_phone.free_form_number, primary_email_address: @vendor.email_address.address,
+            height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
+            dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
+            employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone], license_number: vendor_params[:license_number])
+          # Create customer in jpegger
+          @customer.save
           if params[:vendor_quick_create]
             redirect_to :back, notice: 'Vendor was successfully created.'
           elsif params[:vendor_quick_create_from_ticket]
             redirect_to new_purchase_order_path(vendor_id: @vendor.id), notice: 'Vendor was successfully created.'
           else
-            redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
+            unless current_user.license_imager_devices.blank?
+              redirect_to edit_vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
+            else
+              redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.'
+            end
           end
           }
 #        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.' }
@@ -149,7 +156,16 @@ class VendorsController < ApplicationController
     
     respond_to do |format|
       if @vendor.present?
-        format.html { redirect_to vendor_path(@vendor.id) }
+        format.html { 
+          @customer = Customer.find(@vendor.id)
+          # Update customer in jpegger
+          @customer.update_attributes(first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
+            company_name: @vendor.company_name, display_name: @vendor.display_name, primary_phone: @vendor.primary_phone.free_form_number, primary_email_address: @vendor.email_address.address,
+            height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
+            dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
+            employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone], license_number: vendor_params[:license_number])
+          redirect_to vendor_path(@vendor.id) 
+          }
         format.json { render :show, status: :ok, location: vendor_path(@vendor.id) }
       else
         format.html { render :edit }
@@ -210,6 +226,8 @@ class VendorsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vendor_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:vendor).permit(:given_name, :family_name, :company_name, :display_name, :email, :phone_number, billing_address: [:line1, :city, :country_sub_division_code, :postal_code])
+      params.require(:vendor).permit(:given_name, :family_name, :height, :weight, :eye_color, :hair_color, :license_number, :dob, :sex, :employer_phone, 
+          :license_issue_date, :license_expiration_date, :company_name, :display_name, :email, :phone_number, 
+          billing_address: [:line1, :city, :country_sub_division_code, :postal_code])
     end
 end

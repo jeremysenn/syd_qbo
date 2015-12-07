@@ -18,7 +18,7 @@
             = f.text_field :ticket_number, :placeholder => "Ticket Number", value: "#{@doc_number.present? ? @doc_number : @ticket_number}", class: "form-control input-lg", required: true, readonly: true
           .form-group{:id => "event_code"}
             = f.label "Event Code", :class => 'control-label'
-            = f.select :event_code, options_for_select(ticket_event_codes), {prompt: "Select event code"}, {:class => "form-control input-lg"}
+            = f.select :event_code, options_for_select(ticket_event_codes), {prompt: "Select event code"}, {:class => "form-control input-lg", onchange: "$('#upload_button').show();"}
             =# f.select :event_code, options_for_select(LookupDef.image_event_codes.map(&:LookupValue)), {prompt: "Select event code"}, {:class => "form-control input-lg", onchange: "$('#upload_button').show();"}
           .form-group{id: 'vin_form_group', style: 'display:none;'}
             = f.label "VIN", :class => 'control-label'
@@ -32,8 +32,12 @@
               = f.file_field :file, title: "<i class='fa fa-photo'/> Choose image".html_safe, class: 'btn btn-warning', required: true
 
           %div{:id => 'uploads', :style => 'display:block;'}
-            %p{id: "upload_button", style: "display:block;"}
+            %p{id: "upload_button", style: "display:none;"}
               = f.file_field :file, name: "image_file[file]", :type => 'file', :class => 'btn-primary btn-block btn-lg', title: "<i class='fa fa-camera'/> Picture".html_safe
+              %a{href: '#', class: "scanner btn btn-lg btn-block btn-warning", 'data-location' => current_user.location, 'data-ticket-number' => @doc_number}
+                %i.fa.fa-newspaper-o
+                Scanner
+                %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
           .picture_loading_spinner{:style => "display:none;", :id => "spinner"}
             = image_tag("ajax-loader.gif", :id => "loading_spinner", :alt => "Loading")
             Uploading ...
@@ -51,20 +55,6 @@
         
         .modal-footer
           %button.btn.btn-default.btn-lg{"data-dismiss" => "modal", :type => "button"} Done
-          -#
-            %div#images
-              - unless @images.blank?
-                - @images.each_slice(2) do |images|
-                  %div.row
-                    - images.each do |image|
-                      .col-xs-12.col-sm-6.col-md-6.col-lg-6
-                        %div.thumbnail
-                          - unless image.hidden?
-                            = image_tag(show_preview_image_image_path(image))
-          -#
-            = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
-              Upload
-              %i.fa.fa-arrow-up
 
 :javascript
   //$('input[type=file]').bootstrapFileInput();
