@@ -31,23 +31,23 @@
       %div.list-group-item
         %strong= "Height:"
         .pull-right
-          = "#{@customer.height}"
+          = "#{@customer.height}" unless @customer.blank?
       %div.list-group-item
         %strong= "Weight:"
         .pull-right
-          = "#{@customer.weight}"
+          = "#{@customer.weight}" unless @customer.blank?
       %div.list-group-item
         %strong= "Eye Color:"
         .pull-right
-          = @customer.eye_color
+          = @customer.eye_color unless @customer.blank?
       %div.list-group-item
         %strong= "Hair Color:"
         .pull-right
-          =  @customer.hair_color
+          =  @customer.hair_color unless @customer.blank?
       %div.list-group-item
         %strong= "Sex:"
         .pull-right
-          =  @customer.sex
+          =  @customer.sex unless @customer.blank?
       %div.list-group-item
         %strong= "Date of Birth:"
         .pull-right
@@ -58,15 +58,15 @@
       %div.list-group-item
         %strong= "License Number:"
         .pull-right
-          = "#{@customer.license_number}"
+          = "#{@customer.license_number}" unless @customer.blank?
       %div.list-group-item
         %strong= "License Issue:"
         .pull-right
-          = "#{@customer.issue_date}"
+          = "#{@customer.issue_date}" unless @customer.blank?
       %div.list-group-item
         %strong= "License Expiration:"
         .pull-right
-          = @customer.expiration_date
+          = @customer.expiration_date unless @customer.blank?
 
   %div.panel.panel-primary
     %div.panel-body
@@ -96,7 +96,7 @@
       %div.list-group-item
         %strong= "Employer Phone:"
         .pull-right
-          = @customer.employer_phone
+          = @customer.employer_phone unless @customer.blank?
       %div.list-group-item
         %strong= "Balance:"
         .pull-right
