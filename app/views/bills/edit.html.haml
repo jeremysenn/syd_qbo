@@ -97,18 +97,23 @@
                     %i.fa.fa-chevron-down.fa-lg
               
     %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-    %p= link_to 'Add items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning btn-lg add_field", onclick: "$(this).hide(); $('#spinner').show();"
-    %br
+    %p
+      =# link_to 'Add items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning btn-lg add_field", onclick: "$(this).hide(); $('#spinner').show();"
+      %a{ href: line_item_fields_bills_path, 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg", onclick: "$(this).hide(); $('#spinner').show();" }
+        %i.fa.fa-plus
+        Item
     %br
     %br
     %br
     .row.form-group
       %div{:class => "col-sm-12 col-md-12"}
-        = button_tag(:type => 'submit', :class => 'btn btn-default btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#pay_button').first().removeAttr('data-disable-with');") do
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#pay_button').first().removeAttr('data-disable-with');") do
+          %i.fa.fa-check.fa-lg
           Save
         %br
         = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay ticket"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
-          Pay ticket
+          %i.fa.fa-dollar.fa-lg
+          Pay
 
     %div#images
 

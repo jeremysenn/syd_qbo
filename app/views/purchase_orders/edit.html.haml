@@ -122,7 +122,6 @@
     %br
     %br
     %br
-    %br
     .row.form-group
       %div{:class => "col-sm-12 col-md-12"}
         = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Hold"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
