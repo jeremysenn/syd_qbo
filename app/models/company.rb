@@ -9,7 +9,7 @@ class Company < ActiveRecord::Base
   has_many :workstations
   has_many :devices
   has_one :qbo_access_credential
-  has_one :jpegger_contract, foreign_key: "contract_id"
+#  has_one :jpegger_contract, foreign_key: "contract_id"
   
   #############################
   #     Instance Methods      #
@@ -33,6 +33,10 @@ class Company < ActiveRecord::Base
   
   def device_groups
     DeviceGroup.where("CompanyID" => self.CompanyID.to_i)
+  end
+  
+  def jpegger_contract
+    JpeggerContract.where(contract_id: self.CompanyID.to_i)
   end
   
   #############################

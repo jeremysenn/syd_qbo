@@ -5,14 +5,14 @@ class JpeggerContract < ActiveRecord::Base
   self.table_name = 'contracts'
   self.primary_key = 'contract_id'
   
-  belongs_to :company
+#  belongs_to :company
   
   #############################
   #     Instance Methods      #
   ############################
   
   def company
-    Company.find_by_CompanyID(contract_id.to_i)
+    Company.find_by_CompanyID(contract_id)
   end
   
   def verbiage
