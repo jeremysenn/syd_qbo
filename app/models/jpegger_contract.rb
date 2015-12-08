@@ -5,6 +5,8 @@ class JpeggerContract < ActiveRecord::Base
   self.table_name = 'contracts'
   self.primary_key = 'contract_id'
   
+  belongs_to :company
+  
   #############################
   #     Instance Methods      #
   ############################
