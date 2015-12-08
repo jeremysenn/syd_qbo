@@ -12,7 +12,7 @@ class JpeggerContract < ActiveRecord::Base
   ############################
   
   def company
-    Company.find_by_CompanyID(contract_id)
+    Company.find_by_CompanyID(contract_id.to_i)
   end
   
   def verbiage
