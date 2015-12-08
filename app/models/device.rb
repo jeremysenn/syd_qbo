@@ -49,7 +49,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: ENV['JPEGGER_WSDL_URL'])
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -108,7 +108,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: ENV['JPEGGER_WSDL_URL'])
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -132,7 +132,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTriggerr")
+    client = Savon.client(wsdl: ENV['JPEGGER_WSDL_URL'])
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -205,7 +205,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: ENV['JPEGGER_WSDL_URL'])
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -456,7 +456,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: ENV['JPEGGER_WSDL_URL'])
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
