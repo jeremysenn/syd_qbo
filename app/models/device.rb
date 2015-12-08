@@ -24,7 +24,7 @@ class Device < ActiveRecord::Base
             </mns:ReadScale>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
     response = client.call(:encode, xml: xml_string)
     data = response.to_hash
     return data[:read_scale_response][:return]
@@ -73,7 +73,7 @@ class Device < ActiveRecord::Base
             </mns:ReadID>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
     response = client.call(:encode, xml: xml_string)
     data = response.to_hash
     return Hash.from_xml(data[:read_id_response][:return])["response"]
@@ -184,7 +184,7 @@ class Device < ActiveRecord::Base
             </mns:GetSignature>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
     client.call(:encode, xml: xml_string)
   end
   
@@ -220,7 +220,7 @@ class Device < ActiveRecord::Base
             </NS1:PrintPDF>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
     client.call(:encode, xml: xml_string)
   end
   
@@ -235,7 +235,7 @@ class Device < ActiveRecord::Base
             </NS1:PrintPDF>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
     client.call(:encode, xml: xml_string)
   end
   
@@ -250,7 +250,7 @@ class Device < ActiveRecord::Base
             </NS1:PrintPDF>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
     client.call(:encode, xml: xml_string)
   end
   
@@ -278,7 +278,7 @@ class Device < ActiveRecord::Base
             </mns:GetSignature>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
     client.call(:encode, xml: xml_string)
   end
   
