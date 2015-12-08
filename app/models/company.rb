@@ -36,7 +36,7 @@ class Company < ActiveRecord::Base
   end
   
   def jpegger_contract
-    JpeggerContract.where(contract_id: self.CompanyID.to_i)
+    JpeggerContract.where(contract_id: self.CompanyID.to_i).last
   end
   
   #############################
