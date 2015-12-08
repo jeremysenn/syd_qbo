@@ -24,7 +24,7 @@ class Device < ActiveRecord::Base
             </mns:ReadScale>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
     response = client.call(:encode, xml: xml_string)
     data = response.to_hash
     return data[:read_scale_response][:return]
@@ -49,7 +49,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -73,7 +73,7 @@ class Device < ActiveRecord::Base
             </mns:ReadID>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
     response = client.call(:encode, xml: xml_string)
     data = response.to_hash
     return Hash.from_xml(data[:read_id_response][:return])["response"]
@@ -108,7 +108,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -132,7 +132,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTriggerr")
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -184,7 +184,7 @@ class Device < ActiveRecord::Base
             </mns:GetSignature>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
     client.call(:encode, xml: xml_string)
   end
   
@@ -205,7 +205,7 @@ class Device < ActiveRecord::Base
          </mns:JpeggerTrigger>
       </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
+    client = Savon.client(wsdl: "http://uat.tranact.com/jpeggertrigger.dll/wsdl/IJpeggerTrigger")
     client.call(:jpegger_trigger, xml: xml_string)
   end
   
@@ -220,7 +220,7 @@ class Device < ActiveRecord::Base
             </NS1:PrintPDF>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
     client.call(:encode, xml: xml_string)
   end
   
@@ -235,7 +235,7 @@ class Device < ActiveRecord::Base
             </NS1:PrintPDF>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
     client.call(:encode, xml: xml_string)
   end
   
@@ -250,7 +250,7 @@ class Device < ActiveRecord::Base
             </NS1:PrintPDF>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
     client.call(:encode, xml: xml_string)
   end
   
@@ -278,7 +278,7 @@ class Device < ActiveRecord::Base
             </mns:GetSignature>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
-    client = Savon.client(wsdl: "http://personalfinancesystem.com/tudauth/tudauth.dll/wsdl/ITUD")
+    client = Savon.client(wsdl: "http://uat.tranact.com/tudauth/tudauth.dll/wsdl/ITUD")
     client.call(:encode, xml: xml_string)
   end
   
