@@ -23,7 +23,7 @@ set :environment, 'development'
 # Learn more: http://github.com/javan/whenever
 
 every :reboot do
-  job_type :application, "cd /usr/local/Ruby/syd_uat && :task :output"
+  job_type :application, "cd /usr/local/Ruby/syd_qbo_uat && :task :output"
   application "bundle exec unicorn -l 3000 -E development"
   application "bundle exec sidekiq"
 end
