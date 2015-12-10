@@ -107,6 +107,10 @@ class User < ActiveRecord::Base
     user_setting.customer_camera
   end
   
+  def scanner_devices
+    user_setting.scanner_devices
+  end
+  
   #############################
   #     Class Methods      #
   #############################

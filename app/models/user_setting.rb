@@ -88,6 +88,14 @@ class UserSetting < ActiveRecord::Base
     end
   end
   
+  def scanner_devices
+    unless device_group.blank?
+      device_group.scanner_devices
+    else
+      []
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################

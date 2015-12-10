@@ -355,6 +355,10 @@ class Device < ActiveRecord::Base
     self.DeviceType == 17
   end
   
+  def scanner?
+    self.DeviceType == 18
+  end
+  
   def device_type_icon
     if scale?
       unless scale_camera_only?
@@ -374,6 +378,8 @@ class Device < ActiveRecord::Base
       "<i class='fa fa-print fa-lg'></i>"
     elsif finger_print_reader?
       "<i class='fa fa-hand-pointer-o fa-lg'></i>"
+    elsif scanner?
+      "<i class='fa fa-newspaper-o fa-lg'></i>"
     else
       ""
     end
@@ -410,6 +416,8 @@ class Device < ActiveRecord::Base
       else
         "Fingerprint Reader"
       end
+    elsif scanner?
+      "Scanner"
     else
       "Unknown"
     end
