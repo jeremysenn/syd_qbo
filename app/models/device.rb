@@ -254,11 +254,11 @@ class Device < ActiveRecord::Base
     client.call(:encode, xml: xml_string)
   end
   
-  def call_scanner(ticket_nbr, company_id, event_code)
+  def scanner_trigger(ticket_nbr, event_code, company_id)
     xml_string = "<?xml version='1.0' encoding='UTF-8'?>
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
-            <mns:GetSignature xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+            <mns:AttachDoc xmlns:mns='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
                <WorkstationIP xsi:type='xs:string'>#{ENV['PROXY_IP']}</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <Fields xsi:type='soapenc:Array' soapenc:arrayType='ns1:TTUDField[4]'>
@@ -267,15 +267,15 @@ class Device < ActiveRecord::Base
                      <FieldValue xsi:type='xs:string'>#{ticket_nbr}</FieldValue>
                   </item>
                   <item xsi:type='ns1:TTUDField'>
-                     <FieldName xsi:type='xs:string'>location</FieldName>
-                     <FieldValue xsi:type='xs:string'>#{company_id}</FieldValue>
-                  </item>
-                  <item xsi:type='ns1:TTUDField'>
                      <FieldName xsi:type='xs:string'>event_code</FieldName>
                      <FieldValue xsi:type='xs:string'>#{event_code}</FieldValue>
                   </item>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>location</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{company_id}</FieldValue>
+                  </item>
                </Fields>
-            </mns:GetSignature>
+            </mns:AttachDoc>
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
     client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])

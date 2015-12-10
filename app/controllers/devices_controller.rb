@@ -3,7 +3,7 @@ class DevicesController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_device, only: [:show, :show_scanned_jpeg_image, :scale_read, :scale_camera_trigger, 
-      :drivers_license_scan, :drivers_license_camera_trigger, :get_signature, :finger_print_trigger]
+      :drivers_license_scan, :drivers_license_camera_trigger, :get_signature, :finger_print_trigger, :scanner_trigger]
 
   # GET /devices
   # GET /devices.json
@@ -156,6 +156,14 @@ class DevicesController < ApplicationController
   
   def call_printer_for_bill_payment_pdf
     @device.call_printer_for_bill_payment_pdf(Base64.encode64(open(URI.parse('http://localhost:3000/purchase_orders/934.pdf'))))
+  end
+  
+  def scanner_trigger
+    @device.scanner_trigger(params[:ticket_number], params[:event_code], params[:location])
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
   end
 
   private

@@ -418,5 +418,6 @@ jQuery ->
         return
       error: ->
         spinner_icon.hide()
+        alert 'Scanner trigger failed'
         return
   ### End Scanner Trigger ###

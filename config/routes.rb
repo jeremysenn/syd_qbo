@@ -69,7 +69,7 @@ Rails.application.routes.draw do
       get :get_signature
       get :call_printer_for_purchase_order_pdf
       get :finger_print_trigger
-      
+      get :scanner_trigger
     end
     collection do
       get :customer_camera_trigger

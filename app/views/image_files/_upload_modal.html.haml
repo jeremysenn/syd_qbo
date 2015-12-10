@@ -35,7 +35,7 @@
             %p{id: "upload_button", style: "display:none;"}
               = f.file_field :file, name: "image_file[file]", :type => 'file', :class => 'btn-primary btn-block btn-lg', title: "<i class='fa fa-camera'/> Picture".html_safe
               - current_user.scanner_devices.each do |scanner_device|
-                %a{href: '#', class: "scanner btn btn-lg btn-block btn-warning", 'data-location' => current_user.location, 'data-ticket-number' => @doc_number, title: scanner_device.DeviceName}
+                %a{href: '#', class: "scanner_trigger btn btn-lg btn-block btn-warning", 'data-device-id' => scanner_device.id, 'data-location' => current_user.location, 'data-ticket-number' => @doc_number, title: scanner_device.DeviceName}
                   %i.fa.fa-newspaper-o
                   Scanner
                   %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
