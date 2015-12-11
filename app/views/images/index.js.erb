@@ -4,7 +4,6 @@ $('#more_images_spinner').hide();
 <% if @images.next_page %>
   $('a.load-more-images').show();
   $('a.load-more-images').attr('href', '<%= images_path page: @images.next_page, q: params[:q], one_image_per_ticket: params[:one_image_per_ticket] %>');
-  $('#more_images_spinner').hide();
 <% else %>
   $(window).off('scroll');
   $('a.load-more-images').attr('href', '#');
