@@ -45,6 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1.json
   def show
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
+    @customer = Customer 
     @doc_number = @purchase_order.doc_number # Ticket number
     
     respond_to do |format|
@@ -66,6 +67,11 @@ class PurchaseOrdersController < ApplicationController
         # Remove the temporary pdf file that was created above
         FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
       end
+       format.xml do
+#         builder = Builder::XmlMarkup.new
+#         @xml = builder.person { |b| b.name("Jim"); b.phone("555-1234") }
+#         render xml: @xml
+       end
     end
   end
   
@@ -80,7 +86,8 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1/edit
   def edit
     @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
+#    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
+    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
 #    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
     @doc_number = @purchase_order.doc_number # Ticket number
 #    @contract = Contract.find(current_company_id) # Find contract for this company

@@ -39,7 +39,8 @@ class VendorsController < ApplicationController
   def show
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
-    @customer = Customer.find_by_id(@vendor.id)
+#    @customer = Customer.find_by_id(@vendor.id)
+    @customer = Customer.where(id: @vendor.id, qb_company_id: current_company.CompanyID).last
     first_item_query = "select * from Item maxresults 1"
     @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
     @first_item = @first_items.first
@@ -52,7 +53,7 @@ class VendorsController < ApplicationController
 
   # GET /vendors/1/edit
   def edit
-    @customer = Customer.find_or_create_by(id: @vendor.id)
+    @customer = Customer.find_or_create_by(id: @vendor.id, qb_company_id: current_company.CompanyID)
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
 #    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
@@ -157,7 +158,7 @@ class VendorsController < ApplicationController
     respond_to do |format|
       if @vendor.present?
         format.html { 
-          @customer = Customer.find(@vendor.id)
+          @customer = Customer.where(id: @vendor.id, qb_company_id: current_company.CompanyID).last
           # Update customer in jpegger
           @customer.update_attributes(first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
             company_name: @vendor.company_name, display_name: @vendor.display_name, primary_phone: @vendor.primary_phone.free_form_number, primary_email_address: @vendor.email_address.address,
