@@ -274,6 +274,10 @@ class Device < ActiveRecord::Base
                      <FieldName xsi:type='xs:string'>location</FieldName>
                      <FieldValue xsi:type='xs:string'>#{company_id}</FieldValue>
                   </item>
+                  <item xsi:type='ns1:TTUDField'>
+                     <FieldName xsi:type='xs:string'>camera_name</FieldName>
+                     <FieldValue xsi:type='xs:string'>#{self.DeviceName}</FieldValue>
+                  </item>
                </Fields>
             </mns:AttachDoc>
          </SOAP-ENV:Body>
