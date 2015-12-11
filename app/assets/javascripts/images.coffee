@@ -8,7 +8,8 @@ jQuery ->
   $('a.load-more-images').on 'inview', (e, visible) ->
     return if loading_images or not visible
     loading_images = true
-    $('#more_images_spinner').show()
+    if not $('a.load-more-images').is(':hidden')
+      $('#more_images_spinner').show()
     $('a.load-more-images').hide()
 
     $.getScript $(this).attr('href'), ->

@@ -59,6 +59,10 @@ class DeviceGroup < ActiveRecord::Base
 #    end
   end
   
+  def scanner_devices
+    devices.select {|device| device.DeviceType == 18}
+  end
+  
   #############################
   #     Class Methods      #
   #############################

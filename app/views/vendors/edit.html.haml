@@ -123,8 +123,8 @@
 
   %div{id: 'endless_page'}
     %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
-    %p= link_to 'Load pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'load-more-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();"
-    %p= link_to 'Re-load pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'reload-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show(); $('#cust_pics').empty();", style: "display:none;"
+    %p= link_to 'More pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'load-more-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();"
+    %p= link_to 'Re-load pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'reload-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show(); $('#cust_pics').empty(); $('a.load-more-cust-pics').attr('href', '<%= cust_pics_path page: @cust_pics.next_page, q: params[:q] %>');", style: "display:none;"
 
 
 = render partial: "shared/vendor_footer_navbar", locals: {title: "Vendor"}
