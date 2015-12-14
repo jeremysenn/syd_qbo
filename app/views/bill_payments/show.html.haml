@@ -1,15 +1,12 @@
-= render partial: "shared/navbars/show_bill_payment_navbar", locals: {title: "Paid #{@bill_payment.doc_number}", bill_payment_id: @bill_payment.id, total: "#{number_to_currency(@bill_payment.total)}"}
+= render partial: "shared/navbars/show_bill_payment_navbar", locals: {title: "#{@bill_payment.doc_number}", bill_payment_id: @bill_payment.id, total: "#{number_to_currency(@bill_payment.total)}"}
 - @title="Paid #{@bill_payment.doc_number}" 
 
 .container
-  -#
-    %p
-      .btn-group
-        = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg", id: 'payments_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
-        = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg", id: 'payments_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
-        = link_to "Closed", bills_path, :class => "btn btn-default btn-lg", id: 'payments_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
-        %button{class: 'btn btn-default btn-lg active'}
-          Paid
+  %p
+    .btn-group
+      = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg bill_payment_button", id: 'payments_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
+      = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg bill_payment_button", id: 'payments_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
+      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg bill_payment_button", id: 'payments_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
       
   #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
     .panel.panel-default
@@ -53,22 +50,10 @@
         Print  
   
   %div#images
-    -#
-      %a{href: "#{current_user.images_table? ? images_path("q[ticket_nbr_eq]" => @bill_payment.doc_number, "q[location_eq]" => current_user.location) : shipments_path("q[ticket_nbr_eq]" => @purchase_order.doc_number, "q[location_eq]" => current_user.location)}", target: '_blank'}
-        = "Ticket #{@bill_payment.doc_number} Pictures"
-    -#
-      - unless @images.blank?
-        - @images.each_slice(6) do |images|
-          %div.row
-            - images.each do |image|
-              .col-xs-12.col-sm-2.col-md-2.col-lg-2
-                %div.thumbnail
-                  - unless image.hidden?
-                    = link_to image_tag(show_preview_image_image_path(image)), image
 
   %div{id: 'endless_page'}
     %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
     %p= link_to 'More pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @bill_payment.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'load-more-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();" #if @images.next_page
-
+    %p= link_to 'Re-load pictures ...', images_path(:page => nil, :q => {ticket_nbr_eq: @bill_payment.doc_number, location_eq: current_user.location}, :one_image_per_ticket => '0'), :class => 'reload-images btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show(); $('#images').empty(); $('a.load-more-images').attr('href', '<%= images_path page: @images.next_page, q: params[:q], one_image_per_ticket: params[:one_image_per_ticket] %>');", style: "display:none;" #if @images.next_page
   
 = render partial: "shared/bill_payment_footer_navbar", locals: {title: "BillPayment"}

@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/new_and_edit_bill_payment_navbar", locals: {title: "Pay #{@bill.doc_number}", total: number_to_currency(@bill.balance)}
+= render partial: "shared/navbars/new_and_edit_bill_payment_navbar", locals: {title: "#{@bill.doc_number}", total: number_to_currency(@bill.balance)}
 
 .container
   = form_tag bill_payments_path, id: 'bill_payment_form', :class => "form-horizontal" do |f|
