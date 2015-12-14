@@ -1,5 +1,5 @@
 .container
-  %center= @bill_order.doc_number
+  %center= @bill.doc_number
   - unless @current_user.company.logo_url.blank?
     = image_tag(@current_user.company.logo_url, size: '50x50')
   - else
