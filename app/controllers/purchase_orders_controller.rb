@@ -45,7 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1.json
   def show
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @customer = Customer 
+    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     @doc_number = @purchase_order.doc_number # Ticket number
     
     respond_to do |format|
@@ -68,6 +68,8 @@ class PurchaseOrdersController < ApplicationController
         FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
       end
        format.xml do
+          stream = render_to_string(:template=>"purchase_orders/show" )  
+          send_data(stream, :type=>"text/xml",:filename => "test.xml")
 #         builder = Builder::XmlMarkup.new
 #         @xml = builder.person { |b| b.name("Jim"); b.phone("555-1234") }
 #         render xml: @xml
