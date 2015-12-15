@@ -27,6 +27,40 @@
           = @vendor.display_name
 
   %div.panel.panel-primary
+    %div.panel-body
+      %strong= "Address:"
+      - unless @vendor.billing_address.blank?
+        %p
+          = @vendor.billing_address.line1
+          %br
+          - unless @vendor.billing_address.line2.blank?
+            = @vendor.billing_address.line2
+            %br
+          = @vendor.billing_address.city
+          = @vendor.billing_address.country_sub_division_code
+          = @vendor.billing_address.postal_code
+      - else
+        %p None
+  %div.panel.panel-primary
+    %div.list_group
+      %div.list-group-item
+        %strong= "Email:"
+        .pull-right
+          = mail_to @vendor.primary_email_address.address unless @vendor.primary_email_address.blank?
+      %div.list-group-item
+        %strong= "Phone:"
+        .pull-right
+          = @vendor.primary_phone.free_form_number unless @vendor.primary_phone.blank?
+      %div.list-group-item
+        %strong= "Employer Phone:"
+        .pull-right
+          = @customer.employer_phone unless @customer.blank?
+      %div.list-group-item
+        %strong= "Balance:"
+        .pull-right
+          = number_to_currency(@vendor.balance)
+
+  %div.panel.panel-primary
     %div.list_group
       %div.list-group-item
         %strong= "Height:"
@@ -68,43 +102,12 @@
         .pull-right
           = @customer.expiration_date unless @customer.blank?
 
-  %div.panel.panel-primary
-    %div.panel-body
-      %strong= "Address:"
-      - unless @vendor.billing_address.blank?
-        %p
-          = @vendor.billing_address.line1
-          %br
-          - unless @vendor.billing_address.line2.blank?
-            = @vendor.billing_address.line2
-            %br
-          = @vendor.billing_address.city
-          = @vendor.billing_address.country_sub_division_code
-          = @vendor.billing_address.postal_code
-      - else
-        %p None
-  %div.panel.panel-primary
-    %div.list_group
-      %div.list-group-item
-        %strong= "Email:"
-        .pull-right
-          = mail_to @vendor.primary_email_address.address unless @vendor.primary_email_address.blank?
-      %div.list-group-item
-        %strong= "Phone:"
-        .pull-right
-          = @vendor.primary_phone.free_form_number unless @vendor.primary_phone.blank?
-      %div.list-group-item
-        %strong= "Employer Phone:"
-        .pull-right
-          = @customer.employer_phone unless @customer.blank?
-      %div.list-group-item
-        %strong= "Balance:"
-        .pull-right
-          = number_to_currency(@vendor.balance)
-    
+  %hr
   %div#cust_pics
-    %div{id: 'endless_page'}
-      %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
-      %p= link_to 'More pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'load-more-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();"
+
+  %div{id: 'endless_page'}
+    %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
+    %p= link_to 'More pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'load-more-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show();"
+    %p= link_to 'Re-load pictures ...', cust_pics_path(:page => nil, :q => {cust_nbr_eq: @vendor.id, location_eq: current_user.location}), :class => 'reload-cust-pics btn btn-default', :remote => true, :onclick => "$(this).hide(); $('#more_images_spinner').show(); $('#cust_pics').empty(); $('a.load-more-cust-pics').attr('href', '<%= cust_pics_path page: @cust_pics.next_page, q: params[:q] %>');", style: "display:none;"
 
 = render partial: "shared/vendor_footer_navbar", locals: {title: "Vendor"}

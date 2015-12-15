@@ -30,11 +30,8 @@
               %h4.panel-title
                 %ul{class: 'list-inline'}
                   %li
-                    -#
-                      %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
-                    .line_item
+                    %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed bill_item_collapse_link"}
                       = line_item.item_based_expense_line_detail.item_ref.name
-                      =# " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
                   %li.pull-right
                     %a{href: '#', class: 'remove_field'}
                       %i.fa.fa-trash.fa-lg.text-danger
@@ -77,12 +74,12 @@
                 = label_tag "Rate", nil, :class => 'control-label'
                 %div.input-group
                   %span.input-group-addon
-                    $
+                    %i.fa.fa-dollar.fa-lg
                   = text_field_tag "bill[line_items][][rate]", number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
                 = label_tag "Amount", nil, :class => 'control-label'
                 %div.input-group
                   %span.input-group-addon
-                    $
+                    %i.fa.fa-dollar.fa-lg
                   = text_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
             %div.panel-footer
               %ul{class: 'list-inline'}
@@ -93,28 +90,23 @@
                   = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5)}"
                   = "= #{number_to_currency(line_item.amount)}"
                 %li.pull-right
-                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
-                    %i.fa.fa-chevron-down.fa-lg
-              
-    %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-    %p
-      =# link_to 'Add items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning btn-lg add_field", onclick: "$(this).hide(); $('#spinner').show();"
-      %a{ href: line_item_fields_bills_path, 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg", onclick: "$(this).hide(); $('#spinner').show();" }
-        %i.fa.fa-plus
-        Item
-    %br
-    %br
-    %br
+                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right bill_item_collapse_link" }
+                    %i.fa.fa-chevron-down.fa-lg.collapse_icon
     .row.form-group
-      %div{:class => "col-sm-12 col-md-12"}
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#pay_button').first().removeAttr('data-disable-with');") do
+      %div.col-xs-4.col-sm-4
+        = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+        %a{ href: line_item_fields_bills_path, 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg btn-block", onclick: "$(this).hide(); $('#spinner').show();" }
+          %i.fa.fa-plus
+          Item
+      %div.col-xs-4.col-sm-4
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#pay_button').removeAttr('data-disable-with');") do
           %i.fa.fa-check.fa-lg
           Save
-        %br
-        = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+      %div.col-xs-4.col-sm-4
+        = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
           %i.fa.fa-dollar.fa-lg
           Pay
-
+    %hr
     %div#images
 
     %div{id: 'endless_page'}

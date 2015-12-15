@@ -38,11 +38,7 @@
               %h4.panel-title
                 %ul{class: 'list-inline'}
                   %li
-                    -#
-                      %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
-                    .line_item_name
-                      =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
-                      =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+                    %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}, purchase_order_collapse_link" }
                       = line_item.item_based_expense_line_detail.item_ref.name
                   %li.pull-right
                     %a{href: '#', class: 'remove_field'}
@@ -59,11 +55,11 @@
                   - current_user.scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
-                        %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                        %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                           %i.fa.fa-camera.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                       - else
-                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                           %i.fa.fa-dashboard.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   = phone_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
@@ -75,11 +71,11 @@
                   - current_user.scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
-                        %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                        %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                           %i.fa.fa-camera.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                       - else
-                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                           %i.fa.fa-dashboard.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   = phone_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
@@ -91,12 +87,12 @@
                 = label_tag "Rate", nil, :class => 'control-label'
                 %div.input-group
                   %span.input-group-addon
-                    $
+                    %i.fa.fa-dollar.fa-lg
                   = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
                 = label_tag "Amount", nil, :class => 'control-label'
                 %div.input-group
                   %span.input-group-addon
-                    $
+                    %i.fa.fa-dollar.fa-lg
                   = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true 
             %div.panel-footer
               %ul{class: 'list-inline'}
@@ -107,34 +103,30 @@
                   = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5)}"
                   = "= #{number_to_currency(line_item.amount)}"
                 %li.pull-right
-                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right purchase_order_collapse_link" }
                     - if @purchase_order.line_items.count > 1
-                      %i.fa.fa-chevron-down.fa-lg
+                      %i.fa.fa-chevron-down.fa-lg.collapse_icon
                     - else
-                      %i.fa.fa-check-square.fa-lg
-          
-    %p= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-    %p
-      %a{ href: line_item_fields_purchase_orders_path(doc_number: @doc_number), 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg", onclick: "$(this).hide(); $('#spinner').show();" }
-        %i.fa.fa-plus
-        Item
-      =# link_to 'Add items', line_item_fields_purchase_orders_path(doc_number: @doc_number), remote: true, id: "add_item_button", class: "btn btn-warning btn-lg", onclick: "$(this).hide(); $('#spinner').show();"
-    %br
-    %br
-    %br
+                      %i.fa.fa-check-square.fa-lg.collapse_icon
     .row.form-group
-      %div{:class => "col-sm-12 col-md-12"}
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Hold"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
-          %i.fa.fa-folder-open-o.fa-lg
-          Hold
-        %br
-        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+      %div.col-xs-3.col-sm-3
+        = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
+        %a{ href: line_item_fields_purchase_orders_path(doc_number: @doc_number), 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg btn-block", onclick: "$(this).hide(); $('#spinner').show();" }
+          %i.fa.fa-plus
+          Item
+      %div.col-xs-3.col-sm-3
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#close_and_pay_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#close_button').removeAttr('data-disable-with');") do
+          %i.fa.fa-check.fa-lg
+          Save
+      %div.col-xs-3.col-sm-3
+        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find.('#close_and_pay_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
           %i.fa.fa-folder.fa-lg
           Close
-        %br
-        = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#close_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+      %div.col-xs-3.col-sm-3
+        = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#close_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
           %i.fa.fa-dollar.fa-lg
           Pay
+    %hr
     %div#images
       
     %div{id: 'endless_page'}

@@ -4,9 +4,9 @@
 .container
   %p
     .btn-group
-      = link_to "Vendors", vendors_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
-      = link_to "Open", purchase_orders_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
-      = link_to "Closed", bills_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
+      = link_to "<i class='fa fa-users fa-lg'></i> Vendors".html_safe, vendors_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_vendors', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Vendors"}
+      = link_to "<i class='fa fa-folder-open-o fa-lg'></i> Open".html_safe, purchase_orders_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
+      = link_to "<i class='fa fa-folder fa-lg'></i> Closed".html_safe, bills_path, :class => "btn btn-default btn-lg item_button", id: 'items_to_closed', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}
   -#
     %p
       .btn-group
@@ -34,7 +34,7 @@
                 %a{href: edit_item_path(item.id), class: "list-group-item item_button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> #{item.name}"}}
                   = item.name
                   .pull-right
-                    %i.fa.fa-chevron-right
+                    %i.fa.fa-chevron-right.fa-lg
                   %br/
                   %small
                     =# "#{number_to_currency(item.purchase_cost)}" unless item.purchase_cost.blank?

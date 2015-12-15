@@ -123,3 +123,8 @@ jQuery ->
     if typeof $(e.target).data('original-title') == 'undefined' and !$(e.target).parents().is('.popover.in')
       $('[data-original-title]').popover 'hide'
     return
+
+  ### Panel Collapse Links ###
+  $(document).on 'click', '.bill_item_collapse_link', (e) ->
+    $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square fa-chevron-down')
+    return

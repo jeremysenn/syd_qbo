@@ -3,9 +3,7 @@
     %h4.panel-title
       %ul{class: 'list-inline'}
         %li
-          -#
-            %a.text-success.line_item_name{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button"}
-          .line_item_name
+          %a.text-success.line_item_name{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button", class: 'purchase_order_collapse_link'}
             Choose an item*
         %li.pull-right
           %a{href: '#', class: 'remove_field'}
@@ -22,11 +20,11 @@
         - current_user.scale_devices.each do |scale_device|
           %span.input-group-addon
             - if scale_device.scale_camera_only?
-              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                 %i.fa.fa-camera.fa-lg
                 %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
             - else
-              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                 %i.fa.fa-dashboard.fa-lg
                 %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
         = phone_field_tag "purchase_order[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
@@ -38,11 +36,11 @@
         - current_user.scale_devices.each do |scale_device|
           %span.input-group-addon
             - if scale_device.scale_camera_only?
-              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+              %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                 %i.fa.fa-camera.fa-lg
                 %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
             - else
-              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id}
+              %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
                 %i.fa.fa-dashboard.fa-lg
                 %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
         = phone_field_tag "purchase_order[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
@@ -54,16 +52,16 @@
       = label_tag "Rate", nil, :class => 'control-label'
       %div.input-group
         %span.input-group-addon
-          $
+          %i.fa.fa-dollar.fa-lg
         = text_field_tag "purchase_order[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Amount", nil, :class => 'control-label'
       %div.input-group
         %span.input-group-addon
-          $
+          %i.fa.fa-dollar.fa-lg
         = text_field_tag "purchase_order[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
   %div.panel-footer
     %ul{class: 'list-inline'}
       %li.calculation_details
       %li.pull-right
-        %a.text-success{"aria-controls" => "collapse#{index}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", class: 'pull-right', onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
-          %i.fa.fa-check-square.fa-lg
+        %a.text-success{"aria-controls" => "collapse#{index}", "data-toggle" => "collapse", :href => "#collapse_#{index}", class: 'pull-right purchase_order_collapse_link' }
+          %i.fa.fa-check-square.fa-lg.collapse_icon

@@ -421,3 +421,11 @@ jQuery ->
         alert 'Scanner trigger failed'
         return
   ### End Scanner Trigger ###
+
+  ### Bind tooltip to dynamically created elements ###
+  $("body").tooltip({ selector: '[data-toggle="tooltip"]' })
+
+  ### Panel Collapse Links ###
+  $(document).on 'click', '.purchase_order_collapse_link', (e) ->
+    $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square fa-chevron-down')
+    return

@@ -39,7 +39,11 @@
     
     = render 'layouts/messages'
     = yield
-    = render 'shared/footer'
+    %br
+    %br
+    %br
+    =# render 'shared/footer'
+    
     
 :javascript
   var zoom = "#{((params[:controller]=='images' or params[:controller]=='image_files' or params[:controller]=='shipments' or params[:controller]=='shipment_files') and params[:action]=='show')}"
