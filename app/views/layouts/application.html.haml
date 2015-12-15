@@ -41,7 +41,7 @@
     .text-center
       %i.fa.fa-dashcube.fa-2x
     = yield
-    = render 'shared/footer'
+    
     
 :javascript
   var zoom = "#{((params[:controller]=='images' or params[:controller]=='image_files' or params[:controller]=='shipments' or params[:controller]=='shipment_files') and params[:action]=='show')}"
