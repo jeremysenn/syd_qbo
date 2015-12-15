@@ -424,3 +424,9 @@ jQuery ->
 
   ### Bind tooltip to dynamically created elements ###
   $("body").tooltip({ selector: '[data-toggle="tooltip"]' })
+
+  ### Panel Collapse Links ###
+  $(document).on 'click', '.collapse_link', (e) ->
+    $('#items_accordion').find( ".fa-check-square" ).toggleClass('fa-check-square fa-chevron-down')
+    $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square fa-chevron-down')
+    return

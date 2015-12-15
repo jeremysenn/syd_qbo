@@ -38,11 +38,7 @@
               %h4.panel-title
                 %ul{class: 'list-inline'}
                   %li
-                    -#
-                      %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}" }
-                    .line_item_name
-                      =# "#{line_item.item_based_expense_line_detail.item_ref.name}"
-                      =# @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name
+                    %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => "#{@purchase_order.line_items.count > 1 ? false : true}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "#{@purchase_order.line_items.count > 1 ? 'collapsed' : ''}, collapse_link" }
                       = line_item.item_based_expense_line_detail.item_ref.name
                   %li.pull-right
                     %a{href: '#', class: 'remove_field'}
@@ -107,11 +103,11 @@
                   = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5)}"
                   = "= #{number_to_currency(line_item.amount)}"
                 %li.pull-right
-                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right collapse_link" }
                     - if @purchase_order.line_items.count > 1
-                      %i.fa.fa-chevron-down.fa-lg
+                      %i.fa.fa-chevron-down.fa-lg.collapse_icon
                     - else
-                      %i.fa.fa-check-square.fa-lg
+                      %i.fa.fa-check-square.fa-lg.collapse_icon
     .row.form-group
       %div.col-xs-3.col-sm-3
         = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
