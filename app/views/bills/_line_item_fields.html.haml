@@ -34,12 +34,12 @@
       = label_tag "Rate", nil, :class => 'control-label'
       %div.input-group
         %span.input-group-addon
-          $
+          %i.fa.fa-dollar.fa-lg
         = text_field_tag "bill[line_items][][rate]", nil, :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
       = label_tag "Amount", nil, :class => 'control-label'
       %div.input-group
         %span.input-group-addon
-          $
+          %i.fa.fa-dollar.fa-lg
         = text_field_tag "bill[line_items][][amount]", nil, :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
   %div.panel-footer
     %ul{class: 'list-inline'}

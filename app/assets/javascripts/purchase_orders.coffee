@@ -421,3 +421,6 @@ jQuery ->
         alert 'Scanner trigger failed'
         return
   ### End Scanner Trigger ###
+
+  ### Bind tooltip to dynamically created elements ###
+  $("body").tooltip({ selector: '[data-toggle="tooltip"]' })

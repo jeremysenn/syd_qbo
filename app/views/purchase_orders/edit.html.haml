@@ -91,12 +91,12 @@
                 = label_tag "Rate", nil, :class => 'control-label'
                 %div.input-group
                   %span.input-group-addon
-                    $
+                    %i.fa.fa-dollar.fa-lg
                   = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
                 = label_tag "Amount", nil, :class => 'control-label'
                 %div.input-group
                   %span.input-group-addon
-                    $
+                    %i.fa.fa-dollar.fa-lg
                   = text_field_tag "purchase_order[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true 
             %div.panel-footer
               %ul{class: 'list-inline'}
@@ -120,7 +120,7 @@
           Item
       %div.col-xs-3.col-sm-3
         = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
-          %i.fa.fa-folder-open-o.fa-lg
+          %i.fa.fa-check.fa-lg
           Save
       %div.col-xs-3.col-sm-3
         = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
