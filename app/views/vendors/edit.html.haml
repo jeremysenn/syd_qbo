@@ -37,6 +37,54 @@
           = label_tag "Last Name", nil, :class => 'control-label'
           = text_field_tag "vendor[family_name]", @vendor.family_name, :placeholder => "Last Name", value: @vendor.family_name, class: "form-control input-lg"
       .row.form-group
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "Company Name", nil, :class => 'control-label'
+          = text_field_tag "vendor[company_name]", @vendor.company_name, :placeholder => "Company Name", class: "form-control input-lg"
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "Display Name", nil, :class => 'control-label'
+          = text_field_tag "vendor[display_name]", @vendor.display_name, :placeholder => "Display Name", value: @vendor.display_name, class: "form-control input-lg"
+      %hr
+      .row.form-group
+        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
+          = label_tag "Street Address", nil, :class => 'control-label'
+          - unless @vendor.billing_address.blank?
+            = text_field_tag "vendor[billing_address][line1]", @vendor.billing_address.line1, :placeholder => "Street Address", class: "form-control input-lg"#, required: true
+          - else
+            = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg"#, required: true
+      .row.form-group
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "City", nil, :class => 'control-label'
+          - unless @vendor.billing_address.blank?
+            = text_field_tag "vendor[billing_address][city]", @vendor.billing_address.city, :placeholder => "City", class: "form-control input-lg"#, required: true
+          - else
+            = text_field_tag "vendor[billing_address][city]", nil, :placeholder => "City", class: "form-control input-lg"#, required: true
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "State", nil, :class => 'control-label'
+          - unless @vendor.billing_address.blank?
+            = select_tag "vendor[billing_address][country_sub_division_code]", options_for_select(us_states, @vendor.billing_address.country_sub_division_code), :class => "form-control input-lg"#, required: true
+            =# text_field_tag "vendor[billing_address][country_sub_division_code]", @vendor.billing_address.country_sub_division_code, :placeholder => "State", class: "form-control input-lg"
+          - else
+            = select_tag "vendor[billing_address][country_sub_division_code]", options_for_select(us_states), :class => "form-control input-lg"#, required: true
+            =# text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg"
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "Zipcode", nil, :class => 'control-label'
+          - unless @vendor.billing_address.blank?
+            = text_field_tag "vendor[billing_address][postal_code]", @vendor.billing_address.postal_code, :placeholder => "Zipcode", class: "form-control input-lg"#, required: true
+          - else
+            = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg"#, required: true
+      %hr
+      .row.form-group
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "Email", "Email*", :class => 'control-label'
+          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", class: "form-control input-lg", required: true
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "Phone", "Phone*", :class => 'control-label'
+          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.primary_phone.present? ? @vendor.primary_phone.free_form_number : ''}", class: "vendor_phone_field form-control input-lg", required: true
+        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+          = label_tag "Employer Phone", nil, :class => 'control-label'
+          = phone_field_tag "vendor[employer_phone]", "#{@customer.blank? ? nil : @customer.employer_phone}", :placeholder => "Employer Phone", class: "vendor_phone_field form-control input-lg"
+      %hr
+      .row.form-group
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
           = label_tag "Height", nil, :class => 'control-label'
           = text_field_tag "vendor[height]", "#{@customer.blank? ? nil : @customer.height}", :placeholder => "Height", class: "form-control input-lg"
@@ -68,51 +116,7 @@
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "vendor[license_expiration_date]", "License Expiration Date", :class => 'control-label'
           = date_field_tag   "vendor[license_expiration_date]", "#{@customer.blank? ? nil : @customer.expiration_date}", :placeholder => "License Expiration Date", class: "form-control input-lg"
-      .row.form-group
-        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-          = label_tag "Company Name", nil, :class => 'control-label'
-          = text_field_tag "vendor[company_name]", @vendor.company_name, :placeholder => "Company Name", class: "form-control input-lg"
-        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-          = label_tag "Display Name", nil, :class => 'control-label'
-          = text_field_tag "vendor[display_name]", @vendor.display_name, :placeholder => "Display Name", value: @vendor.display_name, class: "form-control input-lg"
-      .row.form-group
-        %div{:class => "col-xs-12 col-sm-6 col-md-6"}
-          = label_tag "Street Address", nil, :class => 'control-label'
-          - unless @vendor.billing_address.blank?
-            = text_field_tag "vendor[billing_address][line1]", @vendor.billing_address.line1, :placeholder => "Street Address", class: "form-control input-lg"#, required: true
-          - else
-            = text_field_tag "vendor[billing_address][line1]", nil, :placeholder => "Street Address", class: "form-control input-lg"#, required: true
-      .row.form-group
-        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "City", nil, :class => 'control-label'
-          - unless @vendor.billing_address.blank?
-            = text_field_tag "vendor[billing_address][city]", @vendor.billing_address.city, :placeholder => "City", class: "form-control input-lg"#, required: true
-          - else
-            = text_field_tag "vendor[billing_address][city]", nil, :placeholder => "City", class: "form-control input-lg"#, required: true
-        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "State", nil, :class => 'control-label'
-          - unless @vendor.billing_address.blank?
-            = select_tag "vendor[billing_address][country_sub_division_code]", options_for_select(us_states, @vendor.billing_address.country_sub_division_code), :class => "form-control input-lg"#, required: true
-            =# text_field_tag "vendor[billing_address][country_sub_division_code]", @vendor.billing_address.country_sub_division_code, :placeholder => "State", class: "form-control input-lg"
-          - else
-            = select_tag "vendor[billing_address][country_sub_division_code]", options_for_select(us_states), :class => "form-control input-lg"#, required: true
-            =# text_field_tag "vendor[billing_address][country_sub_division_code]", nil, :placeholder => "State", class: "form-control input-lg"
-        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "Zipcode", nil, :class => 'control-label'
-          - unless @vendor.billing_address.blank?
-            = text_field_tag "vendor[billing_address][postal_code]", @vendor.billing_address.postal_code, :placeholder => "Zipcode", class: "form-control input-lg"#, required: true
-          - else
-            = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg"#, required: true
-      .row.form-group
-        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "Email", "Email*", :class => 'control-label'
-          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", class: "form-control input-lg", required: true
-        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "Phone", "Phone*", :class => 'control-label'
-          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.primary_phone.present? ? @vendor.primary_phone.free_form_number : ''}", class: "vendor_phone_field form-control input-lg", required: true
-        %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "Employer Phone", nil, :class => 'control-label'
-          = phone_field_tag "vendor[employer_phone]", "#{@customer.blank? ? nil : @customer.employer_phone}", :placeholder => "Employer Phone", class: "vendor_phone_field form-control input-lg"
+      
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           =# link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
