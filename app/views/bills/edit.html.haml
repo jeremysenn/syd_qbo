@@ -30,11 +30,8 @@
               %h4.panel-title
                 %ul{class: 'list-inline'}
                   %li
-                    -#
-                      %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed"}
-                    .line_item
+                    %a.line_item_name.text-success{"aria-controls" => "collapse#{line_item.id}", "aria-expanded" => false, "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", :role => "button", class: "collapsed bill_item_collapse_link"}
                       = line_item.item_based_expense_line_detail.item_ref.name
-                      =# " (#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).description})"
                   %li.pull-right
                     %a{href: '#', class: 'remove_field'}
                       %i.fa.fa-trash.fa-lg.text-danger
@@ -93,8 +90,8 @@
                   = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5)}"
                   = "= #{number_to_currency(line_item.amount)}"
                 %li.pull-right
-                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
-                    %i.fa.fa-chevron-down.fa-lg
+                  %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right bill_item_collapse_link" }
+                    %i.fa.fa-chevron-down.fa-lg.collapse_icon
     .row.form-group
       %div.col-xs-4.col-sm-4
         = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
