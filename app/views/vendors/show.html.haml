@@ -101,7 +101,7 @@
         %strong= "Balance:"
         .pull-right
           = number_to_currency(@vendor.balance)
-    
+  %hr
   %div#cust_pics
     %div{id: 'endless_page'}
       %p= image_tag("ajax-loader.gif", :id => "more_images_spinner", :alt => "Loading ...", style: "display:none;")
