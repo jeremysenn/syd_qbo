@@ -102,11 +102,11 @@
           %i.fa.fa-plus
           Item
       %div.col-xs-4.col-sm-4
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#pay_button').first().removeAttr('data-disable-with');") do
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#pay_button').removeAttr('data-disable-with');") do
           %i.fa.fa-check.fa-lg
           Save
       %div.col-xs-4.col-sm-4
-        = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+        = button_tag(pay_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'pay_button', name: 'pay_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
           %i.fa.fa-dollar.fa-lg
           Pay
     %hr

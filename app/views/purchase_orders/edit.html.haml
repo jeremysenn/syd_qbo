@@ -115,15 +115,15 @@
           %i.fa.fa-plus
           Item
       %div.col-xs-3.col-sm-3
-        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).nextAll('#close_button').first().removeAttr('data-disable-with');") do
+        = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_button', name: 'save', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#close_and_pay_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#close_button').removeAttr('data-disable-with');") do
           %i.fa.fa-check.fa-lg
           Save
       %div.col-xs-3.col-sm-3
-        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close ticket"}, autocomplete: "off", onclick: "$(this).nextAll('#close_and_pay_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find.('#close_and_pay_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
           %i.fa.fa-folder.fa-lg
           Close
       %div.col-xs-3.col-sm-3
-        = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).prevAll('#close_button').first().removeAttr('data-disable-with'); $(this).prevAll('#save_button').first().removeAttr('data-disable-with');") do
+        = button_tag(close_and_pay: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_and_pay_button', name: 'close_and_pay', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#close_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
           %i.fa.fa-dollar.fa-lg
           Pay
     %hr

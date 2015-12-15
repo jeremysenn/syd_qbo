@@ -58,13 +58,6 @@
             = number_field_tag "bill_payment[total]", number_with_precision(@bill.balance, :precision => 2), max: "#{@bill.balance}", min: 0, step: "0.01", :placeholder => "Amount", class: "form-control input-lg", required: true
           = hidden_field_tag "bill_payment[doc_number]", @bill.doc_number
           = hidden_field_tag :bill_id, @bill.id
-      -#
-        %p.pull-right= image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-        %p= link_to 'More items', line_item_fields_bills_path, remote: true, id: "add_item_button", class: "btn btn-warning pull-right add_field", onclick: "$(this).hide(); $('#spinner').show();"
-        %br
-        %br
-        %br
-        %br
     .row.form-group
       %div{:class => "col-sm-12 col-md-12"}
         = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Pay"}, autocomplete: "off") do
