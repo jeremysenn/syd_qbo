@@ -3,7 +3,7 @@
     %h4.panel-title
       %ul{class: 'list-inline'}
         %li
-          %a.line_item_name.text-success{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button", class: 'bill_item_collapse_link'}
+          %a.line_item_name.text-success{"aria-controls" => "collapse#{index}", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapse_#{index}", :role => "button", class: 'bill_item_collapse_link'}
             Choose an item*
         %li.pull-right
           %a{href: '#', class: 'remove_field'}
@@ -43,5 +43,5 @@
     %ul{class: 'list-inline'}
       %li.calculation_details
       %li.pull-right
-        %a.text-success{"aria-controls" => "collapse#{index}", "data-parent" => "#items_accordion", "data-toggle" => "collapse", :href => "#collapse_#{index}", class: 'pull-right bill_item_collapse_link' }
+        %a.text-success{"aria-controls" => "collapse#{index}", "data-toggle" => "collapse", :href => "#collapse_#{index}", class: 'pull-right bill_item_collapse_link' }
           %i.fa.fa-check-square.fa-lg.collapse_icon
