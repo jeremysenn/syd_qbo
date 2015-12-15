@@ -69,7 +69,7 @@ class PurchaseOrdersController < ApplicationController
       end
        format.xml do
           stream = render_to_string(:template=>"purchase_orders/show" )  
-          send_data(stream, :type=>"text/xml",:filename => "test.xml")
+          send_data(stream, :type=>"text/xml",:filename => "f_0_46347_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml")
 #         builder = Builder::XmlMarkup.new
 #         @xml = builder.person { |b| b.name("Jim"); b.phone("555-1234") }
 #         render xml: @xml
