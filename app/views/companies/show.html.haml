@@ -7,6 +7,8 @@
       .panel.panel-default
         .panel-heading
           = "#{@company.CompanyName}" 
+          .pull-right
+            = link_to 'Edit', edit_company_path(@company)
         %ul.list-group
           %li.list-group-item
             %strong= "Company ID:"
@@ -42,6 +44,7 @@
         .panel.panel-default
           .panel-heading
             Contract
+            .pull-right= link_to 'Edit', edit_jpegger_contract_path(@company.jpegger_contract)
           %ul.list-group
             %li.list-group-item
               %strong= @company.jpegger_contract.contract_name

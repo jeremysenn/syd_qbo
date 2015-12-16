@@ -76,7 +76,9 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :contracts
+#  resources :contracts
+  
+  resources :jpegger_contracts
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
