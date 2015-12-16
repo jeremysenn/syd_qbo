@@ -98,6 +98,13 @@ class Ability
     end
     can :create, Contract
     
+    # JpeggerContracts
+    ############
+    can :manage, JpeggerContract do |jpegger_contract|
+      jpegger_contract.contract_id.to_s == user.location
+    end
+    can :create, JpeggerContract
+    
     # Companies
     ############
     can :manage, Company do |company|

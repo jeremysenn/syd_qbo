@@ -1,4 +1,4 @@
-= render partial: "shared/navbars/show_company_navbar", locals: {title: truncate(@company.CompanyName, length: 25)}
+= render partial: "shared/navbars/show_company_navbar", locals: {title: @company.CompanyName}
 - @title="#{@company.CompanyName}" 
 
 .container
@@ -7,6 +7,8 @@
       .panel.panel-default
         .panel-heading
           = "#{@company.CompanyName}" 
+          .pull-right
+            = link_to 'Edit', edit_company_path(@company)
         %ul.list-group
           %li.list-group-item
             %strong= "Company ID:"
@@ -42,11 +44,14 @@
         .panel.panel-default
           .panel-heading
             Contract
+            .pull-right= link_to 'Edit', edit_jpegger_contract_path(@company.jpegger_contract)
           %ul.list-group
             %li.list-group-item
               %strong= @company.jpegger_contract.contract_name
             %li.list-group-item= @company.jpegger_contract.verbiage.html_safe
             -#
               %li.list-group-item= link_to "Edit", edit_contract_path(current_user.default_contract.id), id: 'edit_contract_button', class: 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Edit"}
+      - else
+        %p.lead= link_to "New Contract", new_jpegger_contract_path
 
 = render partial: "shared/company_footer_navbar", locals: {title: "Company"}
