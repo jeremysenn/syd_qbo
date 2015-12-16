@@ -2,8 +2,9 @@
   .container-fluid
     .navbar-header
       %div{class: 'navbar-brand navbar-center'}
-        .col-xs-8.col-sm-8
+        .col-xs-12.col-sm-12
           = title
-        .col-xs-4.col-sm-4
-          %a{href: edit_company_path(@company.id)}
-            Edit
+        -#
+          .col-xs-4.col-sm-4
+            %a{href: edit_company_path(@company.id)}
+              Edit
