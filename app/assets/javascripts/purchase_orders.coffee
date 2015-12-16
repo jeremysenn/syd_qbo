@@ -362,7 +362,7 @@ jQuery ->
   ### End TUD signature pad ###
 
   ### Finger print reader ###
-  $(document).on 'click', '.po_finger_print_trigger', (e) ->
+  $(document).on 'click', '.finger_print_trigger', (e) ->
     e.preventDefault()
     # Get data from button
     device_id = $(this).data( "device-id" )
