@@ -38,6 +38,7 @@
                   .pull-right
                     &nbsp;
                     %i.fa.fa-plus.fa-lg
+                    Ticket
                   - if current_user.user_setting.show_vendor_thumbnails? and not Vendor.default_cust_pic_id(vendor.id, current_company_id).blank?
                     =# image_tag(show_preview_image_cust_pic_path(Vendor.default_cust_pic_id(vendor.id, current_company_id)), class: 'thumbnail img-responsive')
                     = image_tag(Vendor.default_cust_pic(vendor.id, current_company_id).preview_data_uri, class: 'thumbnail img-responsive')
@@ -48,7 +49,7 @@
                   .pull-right
                     &nbsp;
                     %i.fa.fa-chevron-right.fa-lg
-                  Details
+                  Vendor Details
               
   %div.row
     .text-center
