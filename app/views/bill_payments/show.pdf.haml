@@ -66,14 +66,10 @@
         %td
         %td
           %strong= "Total: #{number_to_currency(@bill_payment.total)}"
-
-  %table
-    %tbody
       %tr
-        %td
+        %td{colspan: "5"}
           - unless @signature_image.blank?
             %p= image_tag(@signature_image.jpeg_image_data_uri, style: 'width: 150%')
-      %tr
-        %td
+        %td{colspan: "2"}
           - unless @finger_print_image.blank?
             %p= image_tag(@finger_print_image.jpeg_image_data_uri, style: 'width: 75%')

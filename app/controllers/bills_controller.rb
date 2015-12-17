@@ -50,7 +50,7 @@ class BillsController < ApplicationController
         @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
         @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
         render pdf: "Bill#{@doc_number}",
-        :page_width => 4,
+#        :page_width => 4,
         :layout => 'pdf.html.haml',
         :zoom => 1.75,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}Bill#{@doc_number}.pdf")
