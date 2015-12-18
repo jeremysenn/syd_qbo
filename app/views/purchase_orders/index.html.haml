@@ -43,6 +43,10 @@
                   .pull-right
                     %i.fa.fa-file-pdf-o.fa-lg
                     Print
+                -#
+                  %a{href: send_to_leads_online_purchase_order_path(purchase_order.id), class: "list-group-item", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Send to Leads Online"}}
+                    %i.fa.fa-search
+                    Send to Leads Online
 
   %div.row
     .text-center

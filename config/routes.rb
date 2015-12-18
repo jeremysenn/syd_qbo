@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     member do
       get :update_qb
+      get :send_to_leads_online
     end
   end
   
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
     member do
       get :update_qb
       get :download
+      get :send_to_leads_online
     end
   end
   

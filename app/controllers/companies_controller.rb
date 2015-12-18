@@ -83,6 +83,6 @@ class CompaniesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:company).permit(:custom_field_1, :custom_field_1_value, :custom_field_2, :custom_field_2_value, :logo_url)
+      params.require(:company).permit(:custom_field_1, :custom_field_1_value, :custom_field_2, :custom_field_2_value, :logo_url, :leads_online_store_id)
     end
 end
