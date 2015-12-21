@@ -3,15 +3,15 @@ class BillsController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_oauth_client
-  before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
-  before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
-  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
+  before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
+  before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update, :send_to_leads_online]
+  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields, :send_to_leads_online]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_bill_payment_service, only: [:show]
   before_action :set_account_service, only: [:index]
-  before_action :set_company_service, only: [:show]
+  before_action :set_company_service, only: [:show, :send_to_leads_online]
   
-  before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy]
+  before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
 
   # GET /bills
   # GET /bills.json
@@ -50,7 +50,7 @@ class BillsController < ApplicationController
         @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
         @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
         render pdf: "Bill#{@doc_number}",
-        :page_width => 4,
+#        :page_width => 4,
         :layout => 'pdf.html.haml',
         :zoom => 1.75,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}Bill#{@doc_number}.pdf")
@@ -202,6 +202,27 @@ class BillsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to bills_url, notice: 'Bill was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def send_to_leads_online
+    require 'net/ftp'
+    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
+    @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    
+    path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
+#    SendBillToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill, @bill_service, @company_info, current_company_id, current_user, @customer, @item_service, @images)
+    SendBillToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill.id, current_company_id, current_user.id, @customer.id)
+#    File.open(path_to_file, 'w') {|f| f.write(Bill.generate_xml(@bill, @company_info, current_company_id, current_user, @customer, @item_service, @images)) }
+#    Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
+#      ftp.passive = true;
+#      ftp.putbinaryfile(path_to_file);
+#    end
+#    @bill.private_note = "Sent to Leads Online"
+#    @bill = @bill_service.update(@bill)
+#    
+    respond_to do |format|
+      format.html { redirect_to bills_path, notice: 'Bill details sent to Leads Online.' }
     end
   end
   

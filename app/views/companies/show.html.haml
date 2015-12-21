@@ -39,6 +39,11 @@
               = "#{@company.logo_url}"
             - unless @company.logo_url.blank?
               = image_tag(@company.logo_url, class: 'img-responsive')
+        %ul.list-group
+          %li.list-group-item
+            %strong= "Leads Online Store ID:"
+            .pull-right
+              = "#{@company.leads_online_store_id}"
       
       - unless @company.jpegger_contract.blank?
         .panel.panel-default

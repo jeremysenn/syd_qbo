@@ -3,13 +3,13 @@ class PurchaseOrdersController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_oauth_client
-  before_action :set_purchase_order_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
-  before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
-  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
+  before_action :set_purchase_order_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
+  before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update, :send_to_leads_online]
+  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields, :send_to_leads_online]
   before_action :set_bill_service, only: [:show, :update_qb]
-  before_action :set_company_service, only: [:show]
+  before_action :set_company_service, only: [:show, :send_to_leads_online]
   
-  before_action :set_purchase_order, only: [:show, :edit, :update, :update_qb, :destroy]
+  before_action :set_purchase_order, only: [:show, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
 
   # GET /purchase_orders
   # GET /purchase_orders.json
@@ -57,7 +57,7 @@ class PurchaseOrdersController < ApplicationController
         @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
         @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
         render pdf: "PO#{@doc_number}",
-        :page_width => 4,
+#        :page_width => 4,
         :layout => 'pdf.html.haml',
         :zoom => 1.75,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
@@ -69,7 +69,7 @@ class PurchaseOrdersController < ApplicationController
       end
        format.xml do
           stream = render_to_string(:template=>"purchase_orders/show" )  
-          send_data(stream, :type=>"text/xml",:filename => "f_0_46347_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml")
+#          send_data(stream, :type=>"text/xml",:filename => "f_0_46347_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml")
 #         builder = Builder::XmlMarkup.new
 #         @xml = builder.person { |b| b.name("Jim"); b.phone("555-1234") }
 #         render xml: @xml
@@ -222,6 +222,21 @@ class PurchaseOrdersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to purchase_orders_url, notice: 'PurchaseOrder was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def send_to_leads_online
+    require 'net/ftp'
+    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
+    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
+    File.open(path_to_file, 'w') {|f| f.write(PurchaseOrder.generate_xml(@purchase_order, @company_info, current_company_id, current_user, @customer, @item_service)) }
+    Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
+      ftp.passive = true;
+      ftp.putbinaryfile(path_to_file);
+    end
+    respond_to do |format|
+      format.html { redirect_to purchase_orders_path, notice: 'PurchaseOrder details sent to Leads Online.' }
     end
   end
   
