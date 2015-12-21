@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   
-  resources :bill_payments
+  resources :bill_payments do
+    member do
+      get :send_to_leads_online
+    end
+  end
   
   resources :bills do
     collection do

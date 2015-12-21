@@ -29,6 +29,14 @@ class Image < ActiveRecord::Base
     end
   end
   
+  def jpeg_image_base_64
+    unless jpeg_image.blank?
+      Base64.encode64(jpeg_image)
+    else
+      nil
+    end
+  end
+  
   def preview_data_uri
     unless preview.blank?
       "data:image/jpg;base64, #{Base64.encode64(preview)}"

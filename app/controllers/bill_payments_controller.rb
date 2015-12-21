@@ -3,15 +3,15 @@ class BillPaymentsController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_oauth_client
-  before_action :set_bill_payment_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
+  before_action :set_bill_payment_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
-  before_action :set_bill_service, only: [:show, :new, :create, :update_qb]
+  before_action :set_bill_service, only: [:show, :new, :create, :update_qb, :send_to_leads_online]
   before_action :set_account_service, only: [:new, :create]
   before_action :set_company_service, only: [:show]
   
-  before_action :set_bill_payment, only: [:show, :edit, :update, :update_qb, :destroy]
+  before_action :set_bill_payment, only: [:show, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
 
   # GET /bill_payments
   # GET /bill_payments.json
@@ -198,6 +198,18 @@ class BillPaymentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to bill_payments_url, notice: 'BillPayment was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def send_to_leads_online
+    @bill = @bill_service.query.entries.find{ |b| b.doc_number == @bill_payment.doc_number }
+    @customer = Customer.where(id: @bill_payment.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    
+    path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
+    SendBillPaymentToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill_payment.id, @bill.id, current_company_id, current_user.id, @customer.id)
+
+    respond_to do |format|
+      format.html { redirect_to bill_payments_path, notice: 'Bill Payment details sent to Leads Online.' }
     end
   end
   

@@ -130,7 +130,7 @@ class Bill < ActiveRecord::Base
                 xml.item_amount(line_item.amount)
                 xml.item_received_title("N")
                 images.each do |image|
-                  xml.item_picture(image.preview_base_64, :code => "A", :type => 'jpg')
+                  xml.item_picture(image.jpeg_image_base_64, :code => "A", :type => 'jpg')
                 end
               end
             end

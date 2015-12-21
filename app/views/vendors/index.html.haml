@@ -45,7 +45,7 @@
                   - if Vendor.customer_photo_id_warning?(vendor.id)
                     %i.fa.fa-warning.text-warning
                   = vendor.display_name
-                %a{href: vendor_path(vendor.id), data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Details"}, class: "list-group-item vendor_button"}
+                %a{href: vendor_path(vendor.id), data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Vendor Details"}, class: "list-group-item vendor_button"}
                   .pull-right
                     &nbsp;
                     %i.fa.fa-chevron-right.fa-lg
