@@ -210,7 +210,7 @@ class BillsController < ApplicationController
     @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
-    File.open(path_to_file, 'w') {|f| f.write(PurchaseOrder.generate_xml(@bill, @company_info, current_company_id, current_user, @customer, @item_service)) }
+    File.open(path_to_file, 'w') {|f| f.write(Bill.generate_xml(@bill, @company_info, current_company_id, current_user, @customer, @item_service)) }
     Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
       ftp.passive = true;
       ftp.putbinaryfile(path_to_file);

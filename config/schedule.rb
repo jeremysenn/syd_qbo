@@ -4,7 +4,7 @@
 # http://en.wikipedia.org/wiki/Cron
 
 set :output, "#{path}/log/cron.log"
-set :environment, 'development'
+set :environment, 'production'
 
 # Example:
 #
@@ -24,7 +24,7 @@ set :environment, 'development'
 
 every :reboot do
   job_type :application, "cd /usr/local/Ruby/syd_qbo_dev && :task :output"
-  application "bundle exec unicorn -l 8080 -E development"
+  application "bundle exec unicorn -l 8080 -E production"
   application "bundle exec sidekiq"
 end
 #
