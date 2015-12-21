@@ -36,7 +36,7 @@ class Bill < ActiveRecord::Base
     return @bill
   end
   
-  def self.generate_xml(bill, company_info, company_id, user, customer, item_service)
+  def self.generate_xml(bill, company_info, company_id, user, customer, item_service, images)
     xml = ::Builder::XmlMarkup.new(:indent => 2)
     xml.instruct!
     xml.LeadsOnlineUpload do
@@ -129,7 +129,9 @@ class Bill < ActiveRecord::Base
                 xml.item_net_wt(line_item.item_based_expense_line_detail.quantity)
                 xml.item_amount(line_item.amount)
                 xml.item_received_title("N")
-                xml.item_picture(:code => "A")
+                images.each do |image|
+                  xml.item_picture(image.preview_base_64, :code => "A", :type => 'jpg')
+                end
               end
             end
           end

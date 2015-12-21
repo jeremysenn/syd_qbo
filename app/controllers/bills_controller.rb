@@ -209,12 +209,18 @@ class BillsController < ApplicationController
     require 'net/ftp'
     @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    
     path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
-    File.open(path_to_file, 'w') {|f| f.write(Bill.generate_xml(@bill, @company_info, current_company_id, current_user, @customer, @item_service)) }
-    Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
-      ftp.passive = true;
-      ftp.putbinaryfile(path_to_file);
-    end
+#    SendBillToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill, @bill_service, @company_info, current_company_id, current_user, @customer, @item_service, @images)
+    SendBillToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill.id, current_company_id, current_user.id, @customer.id)
+#    File.open(path_to_file, 'w') {|f| f.write(Bill.generate_xml(@bill, @company_info, current_company_id, current_user, @customer, @item_service, @images)) }
+#    Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
+#      ftp.passive = true;
+#      ftp.putbinaryfile(path_to_file);
+#    end
+#    @bill.private_note = "Sent to Leads Online"
+#    @bill = @bill_service.update(@bill)
+#    
     respond_to do |format|
       format.html { redirect_to bills_path, notice: 'Bill details sent to Leads Online.' }
     end

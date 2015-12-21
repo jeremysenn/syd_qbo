@@ -37,6 +37,14 @@ class Image < ActiveRecord::Base
     end
   end
   
+  def preview_base_64
+    unless preview.blank?
+      Base64.encode64(preview)
+    else
+      nil
+    end
+  end
+  
   def is_customer_image(customer_name)
     Image.where(ticket_nbr: ticket_nbr, cust_name: customer_name).exists?
   end
