@@ -10,15 +10,10 @@ class CustPic < ActiveRecord::Base
   
   belongs_to :blob
 
-  ### SEARCH WITH RANSACK ###
-  def self.ransack_search(query, sort, direction)
-    search = CustPic.ransack(query)
-    search.sorts = "#{sort} #{direction}"
-    cust_pics = search.result
-
-    return cust_pics
-  end
-
+  #############################
+  #     Instance Methods      #
+  ############################
+  
   def jpeg_image
     blob.jpeg_image
   end
@@ -35,6 +30,14 @@ class CustPic < ActiveRecord::Base
     end
   end
   
+  def jpeg_image_base_64
+    unless jpeg_image.blank?
+      Base64.encode64(jpeg_image)
+    else
+      nil
+    end
+  end
+  
   def preview_data_uri
     unless preview.blank?
       "data:image/jpg;base64, #{Base64.encode64(preview)}"
@@ -42,5 +45,44 @@ class CustPic < ActiveRecord::Base
       nil
     end
   end
+  
+  def preview_base_64
+    unless preview.blank?
+      Base64.encode64(preview)
+    else
+      nil
+    end
+  end
+  
+  def customer_photo?
+    event_code == "Customer Photo"
+  end
+  
+  def photo_id?
+    event_code == "Photo ID"
+  end
+  
+  def leads_online_code
+    if customer_photo?
+      "C"
+    elsif photo_id?
+      "I"
+    else
+      "C"
+    end
+  end
+  
+  #############################
+  #     Class Methods         #
+  #############################
 
+  ### SEARCH WITH RANSACK ###
+  def self.ransack_search(query, sort, direction)
+    search = CustPic.ransack(query)
+    search.sorts = "#{sort} #{direction}"
+    cust_pics = search.result
+
+    return cust_pics
+  end
+  
 end

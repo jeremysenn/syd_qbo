@@ -5,7 +5,7 @@ class Bill < ActiveRecord::Base
   ############################
   
   #############################
-  #     Class Methods      #
+  #     Class Methods         #
   #############################
   
   def self.create_from_purchase_order(purchase_order_service, bill_service, purchase_order)
@@ -36,7 +36,7 @@ class Bill < ActiveRecord::Base
     return @bill
   end
   
-  def self.generate_xml(bill, company_info, company_id, user, customer, item_service, images)
+  def self.generate_xml(bill, company_info, company_id, user, customer, item_service, images, cust_pics)
     xml = ::Builder::XmlMarkup.new(:indent => 2)
     xml.instruct!
     xml.LeadsOnlineUpload do
@@ -85,6 +85,9 @@ class Bill < ActiveRecord::Base
             xml.cust_race
             xml.cust_sex(customer.sex)
             xml.cust_info
+            cust_pics.each do |cust_pic|
+              xml.cust_picture(cust_pic.jpeg_image_base_64, :code => cust_pic.leads_online_code, :type => 'jpg')
+            end
             xml.cust_picture(:code => "C")
             xml.cust_picture(:code => "I")
             xml.cust_picture(:code => "T")
