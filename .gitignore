@@ -24,7 +24,7 @@ public/uploads/*
 /nbproject/private/
 
 # Ignore Leads Online XML files.
-public/leads_online
+public/leads_online/*
 
 # Ignore public assets
 public/assets/
