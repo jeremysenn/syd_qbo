@@ -14,8 +14,21 @@
             = bill_payment.vendor_ref.name unless bill_payment.vendor_ref.blank?
             .pull-right
               = number_to_currency(bill_payment.total)
-          %a{href: bill_payment_path(bill_payment.id, now: DateTime.now, format: 'pdf'), class: "list-group-item", target: '_blank'}
+          %div.list-group-item
             = bill_payment.txn_date.strftime("%m/%d/%y")
             .pull-right
-              %i.fa.fa-file-pdf-o.fa-lg
-              Print
+              - unless bill_payment.private_note.blank?
+                %i= bill_payment.private_note
+              %a.btn.btn-primary{class: "", "data-content" => "#{render partial: 'more_bill_payment_options', locals: {bill_payment: bill_payment}}", "data-placement" => 'left', "data-html" => "true", "data-toggle" => "popover", :role => "button", :tabindex => "0", title: "Print or Leads"}
+                More
+            %br
+            %br
+          -#
+            %a{href: bill_payment_path(bill_payment.id, now: DateTime.now, format: 'pdf'), class: "list-group-item", target: '_blank'}
+              = bill_payment.txn_date.strftime("%m/%d/%y")
+              .pull-right
+                %i.fa.fa-file-pdf-o.fa-lg
+                Print
+
+:javascript
+  $('[data-toggle="popover"]').popover();

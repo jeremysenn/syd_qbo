@@ -51,22 +51,23 @@ jQuery ->
       name = data.name
       purchase_desc = data.purchase_desc
       rate = parseFloat(data.purchase_cost).toFixed(5)
-      quantity = 0
+      quantity = input_select.closest('.panel').find('#bill_line_items__quantity:first').val()
       input_select.closest('.panel').find('.calculation_details').text ''
       #input_select.closest('.panel').find('.panel-footer').text ''
       input_select.closest('.panel').find('.line_item_name').text name + ' (' + purchase_desc + ')'
       input_select.closest('.panel').find('#item_description').val purchase_desc
 
       input_select.closest('.panel').find('#bill_line_items__rate:first').val rate
-      input_select.closest('.panel').find('#bill_line_items__gross:first').val 0
-      input_select.closest('.panel').find('#bill_line_items__tare:first').val 0
-      input_select.closest('.panel').find('#bill_line_items__quantity:first').val 0
+      #input_select.closest('.panel').find('#bill_line_items__gross:first').val 0
+      #input_select.closest('.panel').find('#bill_line_items__tare:first').val 0
+      #input_select.closest('.panel').find('#bill_line_items__quantity:first').val 0
       amount = (parseFloat(rate) * parseFloat(quantity))
       input_select.closest('.panel').find('#bill_line_items__amount:first').val amount
       input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-name', name 
       input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-name', name
       input_select.closest('.panel').find('#gross_picture_button:first').attr 'data-item-id', item_id 
       input_select.closest('.panel').find('#tare_picture_button:first').attr 'data-item-id', item_id
+      $('.amount-calculation-field').keyup()
 
       return
     

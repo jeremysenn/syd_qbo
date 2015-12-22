@@ -53,7 +53,7 @@
                   .pull-right
                     - unless bill.private_note.blank?
                       %i= bill.private_note
-                    %a.btn.btn-primary{class: "", "data-content" => "#{render partial: 'more_bill_options', locals: {bill: bill}}", "data-placement" => 'left', "data-html" => "true", "data-toggle" => "popover", :role => "button", :tabindex => "0", title: "Print or Pay"}
+                    %a.btn.btn-primary{class: "", "data-content" => "#{render partial: 'more_bill_options', locals: {bill: bill}}", "data-placement" => 'left', "data-html" => "true", "data-toggle" => "popover", :role => "button", :tabindex => "0", title: "Print, Pay, or Leads"}
                       More
                   %br
                   %br
