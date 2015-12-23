@@ -37,15 +37,16 @@
                 %div.list-group-item
                   .pull-right
                     %p
-                      %a{href: '#', class: "btn btn-primary vendor_button new_ticket_from_vendor", data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Ticket"}, onclick: "event.preventDefault();"}
+                      %a{href: '#', class: "btn btn-primary btn-lg vendor_button new_ticket_from_vendor", data: {"vendor-id" => vendor.id, disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Ticket"}, onclick: "event.preventDefault();"}
                         %i.fa.fa-plus.fa-lg
                         Ticket
                   - if current_user.user_setting.show_vendor_thumbnails? and not Vendor.default_cust_pic_id(vendor.id, current_company_id).blank?
                     =# image_tag(show_preview_image_cust_pic_path(Vendor.default_cust_pic_id(vendor.id, current_company_id)), class: 'thumbnail img-responsive')
                     = image_tag(Vendor.default_cust_pic(vendor.id, current_company_id).preview_data_uri, class: 'thumbnail img-responsive')
-                  - if Vendor.customer_photo_id_warning?(vendor.id)
-                    %i.fa.fa-warning.text-warning
-                  = vendor.display_name
+                  %p.lead
+                    - if Vendor.customer_photo_id_warning?(vendor.id)
+                      %i.fa.fa-warning.text-warning
+                    = vendor.display_name
                 %a{href: vendor_path(vendor.id), data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Vendor Details"}, class: "list-group-item vendor_button"}
                   .pull-right
                     &nbsp;
