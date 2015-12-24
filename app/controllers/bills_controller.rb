@@ -52,7 +52,7 @@ class BillsController < ApplicationController
         render pdf: "Bill#{@doc_number}",
 #        :page_width => 4,
         :layout => 'pdf.html.haml',
-        :zoom => 1.75,
+        :zoom => 1.25,
         :save_to_file => Rails.root.join('pdfs', "#{current_company_id}Bill#{@doc_number}.pdf")
         unless current_user.printer_devices.blank?
           current_user.printer_devices.last.call_printer_for_bill_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}Bill#{@doc_number}.pdf"))))
