@@ -88,10 +88,10 @@
           = text_field_tag "vendor[billing_address][postal_code]", nil, :placeholder => "Zipcode", class: "form-control input-lg" #, required: true
       .row.form-group
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "Email", "Email*", :class => 'control-label'
-          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", class: "form-control input-lg", required: true
+          = label_tag "Email", "Email", :class => 'control-label'
+          = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", class: "form-control input-lg"
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
-          = label_tag "Phone", "Phone*", :class => 'control-label'
+          = label_tag "Phone", "Phone", :class => 'control-label'
           = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", class: "vendor_phone_field form-control input-lg", required: true
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Employer Phone", nil, :class => 'control-label'
