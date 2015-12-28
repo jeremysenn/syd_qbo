@@ -25,7 +25,7 @@ class Device < ActiveRecord::Base
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
     client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
-    response = client.call(:encode, xml: xml_string)
+    response = client.call(:read_scale, xml: xml_string)
     data = response.to_hash
     return data[:read_scale_response][:return]
   end
