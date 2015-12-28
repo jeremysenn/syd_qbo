@@ -244,7 +244,7 @@ class Device < ActiveRecord::Base
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
     client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
-    client.call(:encode, xml: xml_string)
+    client.call(:print_pdf, xml: xml_string)
   end
   
   def call_printer_for_bill_pdf(pdf_binary)
@@ -259,7 +259,7 @@ class Device < ActiveRecord::Base
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
     client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
-    client.call(:encode, xml: xml_string)
+    client.call(:print_pdf, xml: xml_string)
   end
   
   def call_printer_for_bill_payment_pdf(pdf_binary)
@@ -274,7 +274,7 @@ class Device < ActiveRecord::Base
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
     client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
-    client.call(:encode, xml: xml_string)
+    client.call(:print_pdf, xml: xml_string)
   end
   
   def scanner_trigger(ticket_nbr, event_code, company_id)
