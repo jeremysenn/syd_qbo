@@ -65,7 +65,7 @@ class PurchaseOrdersController < ApplicationController
           current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
         end
         # Remove the temporary pdf file that was created above
-        #FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
+        FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
       end
        format.xml do
           stream = render_to_string(:template=>"purchase_orders/show" )  
