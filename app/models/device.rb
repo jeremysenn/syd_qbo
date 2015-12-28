@@ -306,7 +306,7 @@ class Device < ActiveRecord::Base
          </SOAP-ENV:Body>
       </SOAP-ENV:Envelope>"
     client = Savon.client(wsdl: ENV['TUD_WSDL_URL'])
-    client.call(:encode, xml: xml_string)
+    client.call(:attach_doc, xml: xml_string)
   end
   
   # Serial scale
