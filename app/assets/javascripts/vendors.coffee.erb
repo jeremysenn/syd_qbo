@@ -55,7 +55,8 @@ jQuery ->
       loading_vendors = false
   ### End endless page stuff ###
 
-  $(document).on 'click', '.new_ticket_from_vendor', (e) ->
+  #$(document).on 'click', '.new_ticket_from_vendor', (e) ->
+  $('.new_ticket_from_vendor').click ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
     return
