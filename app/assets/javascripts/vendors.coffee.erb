@@ -153,9 +153,14 @@ jQuery ->
   # Force phone format
   $(".vendor_phone_field").mask("(999) 999-9999")
   
+  $(document).on 'click', '.customer_camera_trigger', ->
+    alert 'Customer Camera button click trigger'
+    return
+    
   # Just call the customer camera trigger
-  $(document).on 'click', '.customer_camera_trigger', (e) ->
-    e.preventDefault()
+  #$(document).on 'click', '.customer_camera_trigger', (e) ->
+  $('.customer_camera_trigger').click ->
+    #e.preventDefault()
     # Get data from button
     # device_id = $(this).data( "device-id" )
     this_vendor_id = $(this).data( "vendor-id" )
