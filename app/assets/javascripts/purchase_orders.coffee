@@ -215,23 +215,23 @@ jQuery ->
   ### End file upload ###
 
   ### Check if any tares are zero ###
-  $('#close_button, #close_and_pay_button').on 'click', (e) ->
-    numZeroTare = 0
-    $('.tare').each (index) ->
-      if ($(this).val() == '0') || ($(this).val() == '')
-        numZeroTare++
-        return
-      return
-    if numZeroTare > 0
-      alert 'You have empty or zero tare(s)'
+  #$('#close_button, #close_and_pay_button').on 'click', (e) ->
+  #  numZeroTare = 0
+  #  $('.tare').each (index) ->
+  #    if ($(this).val() == '0') || ($(this).val() == '')
+  #      numZeroTare++
+  #      return
+  #    return
+  #  if numZeroTare > 0
+  #    alert 'You have empty or zero tare(s)'
       #confirm1 = confirm('You have empty or zero tare(s). Are you sure you want to close this ticket?')
       #if confirm1
       #  return
       #else
       #  e.preventDefault()
       #  return
-      return
-    return
+  #    return
+  #  return
   ### End check if any tares are zero ###
 
   ### Scale read and camera trigger ###
