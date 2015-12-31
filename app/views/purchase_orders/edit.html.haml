@@ -127,7 +127,7 @@
           %i.fa.fa-check.fa-lg
           Save
       %div.col-xs-4.col-sm-4
-        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find.('#close_and_pay_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
+        = button_tag(close_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'close_button', name: 'close_ticket', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Close"}, autocomplete: "off", onclick: "$(this).closest('.form-group').find('#close_and_pay_button').removeAttr('data-disable-with'); $(this).closest('.form-group').find('#save_button').removeAttr('data-disable-with');") do
           %i.fa.fa-folder.fa-lg
           Close
       %div.col-xs-4.col-sm-4
