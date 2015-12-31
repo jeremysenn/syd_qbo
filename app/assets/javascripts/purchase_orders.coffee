@@ -237,7 +237,7 @@ jQuery ->
   ### Scale read and camera trigger ###
   #$(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
   #$('.scale_read_and_camera_trigger').click ->
-  $('#items_accordion').on 'click', '.scale_read_and_camera_trigger', (e) ->
+  $('#items_accordion').on 'click', '.scale_read_and_camera_trigger', ->
     #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
