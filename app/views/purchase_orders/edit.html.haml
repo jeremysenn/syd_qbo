@@ -2,11 +2,12 @@
 - @title="Open #{@purchase_order.doc_number}" 
 
 .container
-  - if not @customer.blank? and @customer.photo_id_warning?
-    .alert.alert-warning
-      %i.fa.fa-warning.fa-lg
-      Vendor Photo ID is missing or expired.
-      = link_to 'Update', edit_vendor_path(@customer.id), class: 'btn btn-default', target: '_blank'
+  -#
+    - if not @customer.blank? and @customer.photo_id_warning?
+      .alert.alert-warning
+        %i.fa.fa-warning.fa-lg
+        Vendor Photo ID is missing or expired.
+        = link_to 'Update', edit_vendor_path(@customer.id), class: 'btn btn-default', target: '_blank'
   = form_tag update_qb_purchase_order_path, method: 'get', id: 'purchase_order_form', :class => "form-horizontal" do
     #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
       .panel.panel-default
@@ -48,42 +49,44 @@
               .panel-body
                 = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 %br
-                =# select_tag "purchase_order[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
-                =# select_tag "purchase_order[line_items][][item]", options_for_select(@items.map{ |item| ["#{item.name} (#{item.description})", item.id]}, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
                 =# label_tag "Gross", nil, :class => 'control-label'
                 %div.input-group
                   - current_user.scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
-                        %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
+                        %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
                           %i.fa.fa-camera.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                       - else
-                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
                           %i.fa.fa-dashboard.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                    %span.input-group-addon
+                      %strong G
                   = phone_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').first}
-                      %i.fa.fa-camera.fa-lg
+                      %i.fa.fa-mobile.fa-2x
                 %br
                 =# label_tag "Tare", nil, :class => 'control-label'
                 %div.input-group
                   - current_user.scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
-                        %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
+                        %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
                           %i.fa.fa-camera.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                       - else
-                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-toggle' => 'tooltip', 'data-placement' => 'top'}
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
                           %i.fa.fa-dashboard.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+                  %span.input-group-addon
+                    %strong T
                   = phone_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').second}
-                      %i.fa.fa-camera.fa-lg
+                      %i.fa.fa-mobile.fa-2x
                 %br
                 =# label_tag "Net", nil, :class => 'control-label'
                 = hidden_field_tag "purchase_order[line_items][][quantity]", number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0), :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true

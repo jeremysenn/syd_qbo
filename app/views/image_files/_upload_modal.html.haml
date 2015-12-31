@@ -3,8 +3,8 @@
     .modal-dialog.modal-sm
       .modal-content
         .modal-header
+          %strong= @doc_number.present? ? @doc_number : @ticket_number
           = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
-          %br
         .modal-body
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :location, value: current_company_id
@@ -14,8 +14,8 @@
           = f.hidden_field :commodity_name
           = f.hidden_field :weight
           .form-group
-            = f.label "Ticket Number*", :class => 'control-label'
-            = f.text_field :ticket_number, :placeholder => "Ticket Number", value: "#{@doc_number.present? ? @doc_number : @ticket_number}", class: "form-control input-lg", required: true, readonly: true
+            =# f.label "Ticket Number*", :class => 'control-label'
+            = f.hidden_field :ticket_number, :placeholder => "Ticket Number", value: "#{@doc_number.present? ? @doc_number : @ticket_number}", class: "form-control input-lg", required: true, readonly: true
           .form-group{:id => "event_code"}
             = f.label "Event Code", :class => 'control-label'
             = f.select :event_code, options_for_select(ticket_event_codes), {prompt: "Select event code"}, {:class => "form-control input-lg", onchange: "$('#upload_button').show();"}
@@ -35,7 +35,7 @@
             %p{id: "upload_button", style: "display:none;"}
               = f.file_field :file, name: "image_file[file]", :type => 'file', :class => 'btn-primary btn-block btn-lg', title: "<i class='fa fa-camera'/> Picture".html_safe
               - current_user.scanner_devices.each do |scanner_device|
-                %a{href: '#', class: "scanner_trigger btn btn-lg btn-block btn-warning", 'data-device-id' => scanner_device.id, 'data-location' => current_user.location, 'data-ticket-number' => @doc_number, title: scanner_device.DeviceName}
+                %a{href: '#', class: "scanner_trigger btn btn-lg btn-block btn-info", 'data-device-id' => scanner_device.id, 'data-location' => current_user.location, 'data-ticket-number' => @doc_number, title: scanner_device.DeviceName}
                   %i.fa.fa-newspaper-o
                   Scanner
                   %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
