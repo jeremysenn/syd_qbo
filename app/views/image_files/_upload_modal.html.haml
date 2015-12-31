@@ -3,7 +3,7 @@
     .modal-dialog.modal-sm
       .modal-content
         .modal-header
-          %strong= @doc_number.present? ? @doc_number : @ticket_number
+          %strong= "#{@doc_number.present? ? @doc_number : @ticket_number}"
           = link_to "×", '#', :class => "close", "data-dismiss" => "modal"
         .modal-body
           = f.hidden_field :user_id, value: current_user.id

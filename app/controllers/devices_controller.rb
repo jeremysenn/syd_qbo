@@ -151,7 +151,7 @@ class DevicesController < ApplicationController
   end
   
   def call_printer_for_bill_pdf
-#    @device.call_printer_for_bill_pdf(params[:bill_id])
+    #@device.call_printer_for_bill_pdf(params[:bill_id])
     @device.call_printer_for_bill_pdf(Base64.encode64(open(bill_url(params[:bill_id], format: 'pdf'))))
   end
   
