@@ -55,7 +55,8 @@ jQuery ->
       loading_vendors = false
   ### End endless page stuff ###
 
-  $(document).on 'click', '.new_ticket_from_vendor', (e) ->
+  #$(document).on 'click', '.new_ticket_from_vendor', (e) ->
+  $('.new_ticket_from_vendor').click ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
     return
@@ -154,8 +155,9 @@ jQuery ->
   $(".vendor_phone_field").mask("(999) 999-9999")
   
   # Just call the customer camera trigger
-  $(document).on 'click', '.customer_camera_trigger', (e) ->
-    e.preventDefault()
+  #$(document).on 'click', '.customer_camera_trigger', (e) ->
+  $('.customer_camera_trigger').click ->
+    #e.preventDefault()
     # Get data from button
     # device_id = $(this).data( "device-id" )
     this_vendor_id = $(this).data( "vendor-id" )

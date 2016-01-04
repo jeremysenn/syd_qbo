@@ -7,21 +7,21 @@
       .panel.panel-default
         %div.panel-heading{:role => "tab", id: "vendor_heading"}
           %h4.panel-title
-            -#
-              %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button"}
-            Vendor
+            %a.text-success{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button"}
+              #vendor_name.text-success= @bill.vendor_ref.name
         #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
           .panel-body
             =# select_tag "bill[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             = select_tag "bill[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @bill.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             = hidden_field_tag "bill[doc_number]", @bill.doc_number
-        %div.panel-footer
-          %ul{class: 'list-inline'}
-            %li
-              #vendor_name= @bill.vendor_ref.name
-            %li.pull-right
-              %a.text-success{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "collapsed", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
-                %i.fa.fa-chevron-down.fa-lg
+        -#
+          %div.panel-footer
+            %ul{class: 'list-inline'}
+              %li
+                #vendor_name= @bill.vendor_ref.name
+              %li.pull-right
+                %a.text-success{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "collapsed", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
+                  %i.fa.fa-chevron-down.fa-lg
     %div.bill_input_fields_wrap
       #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
         - @bill.line_items.each do |line_item|
@@ -38,49 +38,30 @@
                 = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse ", "aria-expanded" => false}
               .panel-body
-                =# select_tag "bill[line_items][][item]", options_for_select(Rails.cache.fetch("all_items"), line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
                 = hidden_field_tag "bill[line_items][][description]", line_item.description
-                = label_tag "Gross", nil, :class => 'control-label'
+                %br
                 %div
                   - unless line_item.description.blank?
                     = phone_field_tag "bill[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
-                    -#
-                      %span.input-group-addon
-                        %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').first}
-                          %i.fa.fa-camera.fa-lg
                   - else
-                    = phone_field_tag "bill[line_items][][gross]", nil, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
-                    -#
-                      %span.input-group-addon
-                        %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => 0}
-                          %i.fa.fa-camera.fa-lg
-                = label_tag "Tare", nil, :class => 'control-label'
-                %div
+                    = phone_field_tag "bill[line_items][][gross]", 0, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
+                %br
+                %div.input-group
+                  %span.input-group-addon
+                    %i.fa.fa-minus-circle.fa-lg
                   - unless line_item.description.blank?
-                    = phone_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
-                    -#
-                      %span.input-group-addon
-                        %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').second}
-                          %i.fa.fa-camera.fa-lg
+                    = phone_field_tag "bill[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Subtract", class: "form-control input-lg amount-calculation-field"
                   - else
-                    = phone_field_tag "bill[line_items][][tare]", nil, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field"
-                    -#
-                      %span.input-group-addon
-                        %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => 0}
-                          %i.fa.fa-camera.fa-lg
-                = label_tag "Net", nil, :class => 'control-label'
-                = text_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
-                = label_tag "Rate", nil, :class => 'control-label'
+                    = phone_field_tag "bill[line_items][][tare]", 0, :placeholder => "Subtract", class: "form-control input-lg amount-calculation-field"
+                %br
+                =# label_tag "Net", nil, :class => 'control-label'
+                = hidden_field_tag "bill[line_items][][quantity]", line_item.item_based_expense_line_detail.quantity, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
                 %div.input-group
                   %span.input-group-addon
                     %i.fa.fa-dollar.fa-lg
                   = text_field_tag "bill[line_items][][rate]", number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
-                = label_tag "Amount", nil, :class => 'control-label'
-                %div.input-group
-                  %span.input-group-addon
-                    %i.fa.fa-dollar.fa-lg
-                  = text_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
+                = hidden_field_tag "bill[line_items][][amount]", number_with_precision(line_item.amount, :precision => 2), :placeholder => "Amount", class: "form-control input-lg amount", required: true, readonly: true
             %div.panel-footer
               %ul{class: 'list-inline'}
                 %li.calculation_details
@@ -91,7 +72,7 @@
                   = "= #{number_to_currency(line_item.amount)}"
                 %li.pull-right
                   %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right bill_item_collapse_link" }
-                    %i.fa.fa-chevron-down.fa-lg.collapse_icon
+                    %i.fa.fa-3x.collapse_icon
     .row.form-group
       %div.col-xs-4.col-sm-4
         = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")

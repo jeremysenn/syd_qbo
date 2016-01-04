@@ -215,28 +215,30 @@ jQuery ->
   ### End file upload ###
 
   ### Check if any tares are zero ###
-  $('#close_button, #close_and_pay_button').on 'click', (e) ->
-    numZeroTare = 0
-    $('.tare').each (index) ->
-      if ($(this).val() == '0') || ($(this).val() == '')
-        numZeroTare++
-        return
-      return
-    if numZeroTare > 0
-      alert 'You have empty or zero tare(s)'
+  #$('#close_button, #close_and_pay_button').on 'click', (e) ->
+  #  numZeroTare = 0
+  #  $('.tare').each (index) ->
+  #    if ($(this).val() == '0') || ($(this).val() == '')
+  #      numZeroTare++
+  #      return
+  #    return
+  #  if numZeroTare > 0
+  #    alert 'You have empty or zero tare(s)'
       #confirm1 = confirm('You have empty or zero tare(s). Are you sure you want to close this ticket?')
       #if confirm1
       #  return
       #else
       #  e.preventDefault()
       #  return
-      return
-    return
+  #    return
+  #  return
   ### End check if any tares are zero ###
 
   ### Scale read and camera trigger ###
-  $(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
-    e.preventDefault()
+  #$(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
+  #$('.scale_read_and_camera_trigger').click ->
+  $('#items_accordion').on 'click', '.scale_read_and_camera_trigger', ->
+    #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -293,8 +295,10 @@ jQuery ->
   ### End scale read and camera trigger ###
 
   ### Scale camera trigger ###
-  $(document).on 'click', '.scale_camera_trigger', (e) ->
-    e.preventDefault()
+  #$(document).on 'click', '.scale_camera_trigger', (e) ->
+  #$('.scale_camera_trigger').click ->
+  $('#items_accordion').on 'click', '.scale_camera_trigger', ->
+    #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -331,8 +335,9 @@ jQuery ->
   ### End scale camera trigger ###
 
   ### TUD signature pad ###
-  $(document).on 'click', '.tud_signature_pad', (e) ->
-    e.preventDefault()
+  #$(document).on 'click', '.tud_signature_pad', (e) ->
+  $('.tud_signature_pad').click ->
+    #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -363,8 +368,9 @@ jQuery ->
   ### End TUD signature pad ###
 
   ### Finger print reader ###
-  $(document).on 'click', '.finger_print_trigger', (e) ->
-    e.preventDefault()
+  #$(document).on 'click', '.finger_print_trigger', (e) ->
+  $('.finger_print_trigger').click ->
+    #e.preventDefault()
     # Get data from button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -395,8 +401,9 @@ jQuery ->
   ### End finger print reader ###
 
   ### Scanner Trigger ###
-  $(document).on 'click', '.scanner_trigger', (e) ->
-    e.preventDefault()
+  #$(document).on 'click', '.scanner_trigger', (e) ->
+  $('.scanner_trigger').click ->
+    #e.preventDefault()
     # Get data from button
     this_ticket_number = $(this).data( "ticket-number" )
     device_id = $(this).data( "device-id" )
@@ -428,5 +435,5 @@ jQuery ->
 
   ### Panel Collapse Links ###
   $(document).on 'click', '.purchase_order_collapse_link', (e) ->
-    $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square fa-chevron-down')
+    $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square ')
     return
