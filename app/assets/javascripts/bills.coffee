@@ -127,5 +127,5 @@ jQuery ->
 
   ### Panel Collapse Links ###
   $(document).on 'click', '.bill_item_collapse_link', (e) ->
-    $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square fa-chevron-down')
+    $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square ')
     return
