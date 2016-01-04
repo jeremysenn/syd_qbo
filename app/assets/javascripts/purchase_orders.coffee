@@ -238,7 +238,6 @@ jQuery ->
   #$(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
   #$('.scale_read_and_camera_trigger').click ->
   $('#items_accordion').on 'click', '.scale_read_and_camera_trigger', ->
-    #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -298,7 +297,6 @@ jQuery ->
   #$(document).on 'click', '.scale_camera_trigger', (e) ->
   #$('.scale_camera_trigger').click ->
   $('#items_accordion').on 'click', '.scale_camera_trigger', ->
-    #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -333,6 +331,43 @@ jQuery ->
         #alert 'Scale camera trigger failed'
         return
   ### End scale camera trigger ###
+
+  ### TUD camera trigger ###
+  $('#uploads').on 'click', '.tud_camera_trigger', ->
+    # Get data from scale button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    event_code = this_event_code = $('#image_file_event_code').val()
+    location = $(this).data( "location" )
+    commodity_name = $(this).data( "item-name" )
+
+    camera_icon = $(this).find( ".fa-camera" )
+    camera_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+    weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
+
+    # Make call to trigger scale camera
+    $.ajax
+      url: "/devices/" + device_id + "/scale_camera_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        event_code: event_code
+        commodity_name: commodity_name
+        location: location
+        weight: weight_text_field.val()
+      success: (response) ->
+        camera_icon.show()
+        spinner_icon.hide()
+        #alert 'Scale camera trigger successful.'
+        return
+      error: ->
+        camera_icon.show()
+        spinner_icon.hide()
+        #alert 'Scale camera trigger failed'
+        return
+  ### End TUD camera trigger ###
 
   ### TUD signature pad ###
   #$(document).on 'click', '.tud_signature_pad', (e) ->
