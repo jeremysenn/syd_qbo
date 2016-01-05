@@ -59,7 +59,7 @@ jQuery ->
     $.ajax(url: "/items/" + item_id, dataType: 'json').done (data) ->
       name = data.name
       purchase_desc = data.purchase_desc
-      rate = parseFloat(data.purchase_cost).toFixed(5)
+      rate = parseFloat(data.purchase_cost).toFixed(3)
       quantity = input_select.closest('.panel').find('#purchase_order_line_items__quantity:first').val()
       input_select.closest('.panel').find('.calculation_details').text ''
       #input_select.closest('.panel').find('.panel-footer').text ''
@@ -88,7 +88,7 @@ jQuery ->
   $('.purchase_order_input_fields_wrap').on 'keyup', '.amount-calculation-field', ->
     gross = $(this).closest('.panel').find('#purchase_order_line_items__gross').val()
     tare = $(this).closest('.panel').find('#purchase_order_line_items__tare').val()
-    net = (parseFloat(gross) - parseFloat(tare)).toFixed(0)
+    net = (parseFloat(gross) - parseFloat(tare)).toFixed(2)
     $(this).closest('.panel').find('#purchase_order_line_items__quantity').val net
     $(this).closest('.panel').find('#gross_picture_button:first').attr 'data-weight', gross
     $(this).closest('.panel').find('#tare_picture_button:first').attr 'data-weight', tare

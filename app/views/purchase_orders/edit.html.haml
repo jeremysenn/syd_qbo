@@ -94,7 +94,7 @@
                 %div.input-group
                   %span.input-group-addon
                     %i.fa.fa-dollar.fa-lg
-                  = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
+                  = text_field_tag "purchase_order[line_items][][rate]", number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 3), :placeholder => "Rate", class: "form-control input-lg amount-calculation-field", required: true
                 -#
                   = label_tag "Amount", nil, :class => 'control-label'
                   %div.input-group
@@ -106,8 +106,8 @@
                 %li.calculation_details
                   =# "(#{line_item.description}) ="
                   = "(#{line_item.description.split(' - ').first} - #{line_item.description.split(' - ').second}) ="
-                  = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc}"
-                  = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 5)}"
+                  = "#{number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 2)}#{@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc}"
+                  = " x $#{number_with_precision(line_item.item_based_expense_line_detail.unit_price, :precision => 3)}"
                   = "= #{number_to_currency(line_item.amount)}"
                 %li.pull-right
                   %a.text-success{"aria-controls" => "collapse#{line_item.id}", "data-toggle" => "collapse", :href => "#collapse_#{line_item.id}", class: "pull-right purchase_order_collapse_link" }
