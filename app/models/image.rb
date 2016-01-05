@@ -62,7 +62,7 @@ class Image < ActiveRecord::Base
   end
   
   def pdf?
-     blob.jpeg_image[0..3] == "%PDF"
+    blob.jpeg_image[0..3] == "%PDF"
   end
   
   #############################
