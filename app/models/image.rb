@@ -61,6 +61,10 @@ class Image < ActiveRecord::Base
     event_code == "Signature"
   end
   
+  def pdf?
+     blob.jpeg_image[0..3] == "%PDF"
+  end
+  
   #############################
   #     Class Methods      #
   #############################
