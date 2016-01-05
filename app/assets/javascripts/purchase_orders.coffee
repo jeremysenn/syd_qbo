@@ -238,7 +238,6 @@ jQuery ->
   #$(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
   #$('.scale_read_and_camera_trigger').click ->
   $('#items_accordion').on 'click', '.scale_read_and_camera_trigger', ->
-    #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -298,7 +297,6 @@ jQuery ->
   #$(document).on 'click', '.scale_camera_trigger', (e) ->
   #$('.scale_camera_trigger').click ->
   $('#items_accordion').on 'click', '.scale_camera_trigger', ->
-    #e.preventDefault()
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -333,6 +331,43 @@ jQuery ->
         #alert 'Scale camera trigger failed'
         return
   ### End scale camera trigger ###
+
+  ### TUD camera trigger ###
+  $('#uploads').on 'click', '.tud_camera_trigger', ->
+    # Get data from scale button
+    device_id = $(this).data( "device-id" )
+    ticket_number = $(this).data( "ticket-number" )
+    event_code = this_event_code = $('#image_file_event_code').val()
+    location = $(this).data( "location" )
+    commodity_name = $(this).data( "item-name" )
+
+    camera_icon = $(this).find( ".fa-camera" )
+    camera_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+    weight_text_field = $(this).closest('.input-group').find('.amount-calculation-field:first')
+
+    # Make call to trigger scale camera
+    $.ajax
+      url: "/devices/" + device_id + "/scale_camera_trigger"
+      dataType: 'json'
+      data:
+        ticket_number: ticket_number
+        event_code: event_code
+        commodity_name: commodity_name
+        location: location
+        weight: weight_text_field.val()
+      success: (response) ->
+        camera_icon.show()
+        spinner_icon.hide()
+        #alert 'Scale camera trigger successful.'
+        return
+      error: ->
+        camera_icon.show()
+        spinner_icon.hide()
+        #alert 'Scale camera trigger failed'
+        return
+  ### End TUD camera trigger ###
 
   ### TUD signature pad ###
   #$(document).on 'click', '.tud_signature_pad', (e) ->
@@ -429,6 +464,47 @@ jQuery ->
         alert 'Scanner trigger failed'
         return
   ### End Scanner Trigger ###
+
+  ### Customer camera trigger ###
+  $('.customer_camera_trigger_from_ticket').click ->
+    # Get data from button
+    this_vendor_id = $(this).data( "vendor-id" )
+    this_event_code = $('#image_file_event_code').val()
+    this_location = $(this).data( "location" )
+    this_camera_name = $(this).data( "camera-name" )
+    if $('#vendor_given_name').length > 0
+      this_given_name = $('#vendor_given_name').val()
+    else
+      this_given_name = $(this).data( "given-name" )
+    if $('#vendor_family_name').length > 0
+      this_family_name = $('#vendor_family_name').val()
+    else
+      this_family_name = $(this).data( "family-name" )
+      
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger customer camera
+    $.ajax
+      # url: "/devices/" + device_id + "/customer_camera_trigger"
+      url: "/devices/customer_camera_trigger"
+      dataType: 'json'
+      data:
+        customer_number: this_vendor_id
+        customer_first_name: this_given_name
+        customer_last_name: this_family_name
+        event_code: this_event_code
+        location: this_location
+        camera_name: this_camera_name
+      success: (response) ->
+        spinner_icon.hide()
+        #alert 'Customer camera trigger successful.'
+        return
+      error: ->
+        spinner_icon.hide()
+        #alert 'Customer camera trigger failed'
+        return
+  ### End customer camera trigger ###
 
   ### Bind tooltip to dynamically created elements ###
   $("body").tooltip({ selector: '[data-toggle="tooltip"]' })
