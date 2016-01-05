@@ -465,6 +465,47 @@ jQuery ->
         return
   ### End Scanner Trigger ###
 
+  ### Customer camera trigger ###
+  $('.customer_camera_trigger_from_ticket').click ->
+    # Get data from button
+    this_vendor_id = $(this).data( "vendor-id" )
+    this_event_code = $('#image_file_event_code').val()
+    this_location = $(this).data( "location" )
+    this_camera_name = $(this).data( "camera-name" )
+    if $('#vendor_given_name').length > 0
+      this_given_name = $('#vendor_given_name').val()
+    else
+      this_given_name = $(this).data( "given-name" )
+    if $('#vendor_family_name').length > 0
+      this_family_name = $('#vendor_family_name').val()
+    else
+      this_family_name = $(this).data( "family-name" )
+      
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+
+    # Make call to trigger customer camera
+    $.ajax
+      # url: "/devices/" + device_id + "/customer_camera_trigger"
+      url: "/devices/customer_camera_trigger"
+      dataType: 'json'
+      data:
+        customer_number: this_vendor_id
+        customer_first_name: this_given_name
+        customer_last_name: this_family_name
+        event_code: this_event_code
+        location: this_location
+        camera_name: this_camera_name
+      success: (response) ->
+        spinner_icon.hide()
+        #alert 'Customer camera trigger successful.'
+        return
+      error: ->
+        spinner_icon.hide()
+        #alert 'Customer camera trigger failed'
+        return
+  ### End customer camera trigger ###
+
   ### Bind tooltip to dynamically created elements ###
   $("body").tooltip({ selector: '[data-toggle="tooltip"]' })
 
