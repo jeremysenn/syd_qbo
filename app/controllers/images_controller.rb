@@ -83,6 +83,10 @@ class ImagesController < ApplicationController
     send_data @image.preview, :type => 'image/jpeg',:disposition => 'inline'
   end
   
+  def send_pdf_data
+    send_data @image.jpeg_image, :type => 'application/pdf',:disposition => 'attachment'
+  end
+  
   def destroy
     @image.destroy
     respond_with(@image)

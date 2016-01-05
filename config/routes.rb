@@ -112,6 +112,7 @@ Rails.application.routes.draw do
     member do
       get 'show_jpeg_image'
       get 'show_preview_image'
+      get 'send_pdf_data'
     end
   end
   
