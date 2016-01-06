@@ -67,7 +67,7 @@
                   = phone_field_tag "purchase_order[line_items][][gross]", line_item.description.split(' - ').first, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').first}
-                      %i.fa.fa-mobile.fa-2x
+                      %i.fa.fa-upload.fa-2x
                 %br
                 =# label_tag "Tare", nil, :class => 'control-label'
                 %div.input-group
@@ -86,7 +86,7 @@
                   = phone_field_tag "purchase_order[line_items][][tare]", line_item.description.split(' - ').second, :placeholder => "Tare", class: "form-control input-lg amount-calculation-field tare", required: true
                   %span.input-group-addon
                     %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-item-id' => line_item.item_based_expense_line_detail.item_ref, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-weight' => line_item.description.split(' - ').second}
-                      %i.fa.fa-mobile.fa-2x
+                      %i.fa.fa-upload.fa-2x
                 %br
                 =# label_tag "Net", nil, :class => 'control-label'
                 = hidden_field_tag "purchase_order[line_items][][quantity]", number_with_precision(line_item.item_based_expense_line_detail.quantity, :precision => 0), :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true

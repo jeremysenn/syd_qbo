@@ -29,7 +29,7 @@
         = phone_field_tag "purchase_order[line_items][][gross]", 0, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field", required: true
         %span.input-group-addon
           %a{href: '#', id: 'gross_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Gross", 'data-weight' => 0}
-            %i.fa.fa-mobile.fa-2x
+            %i.fa.fa-upload.fa-2x
       %br
       %div.input-group
         - current_user.scale_devices.each do |scale_device|
@@ -47,7 +47,7 @@
         = phone_field_tag "purchase_order[line_items][][tare]", 0, :placeholder => "Subtract", class: "form-control input-lg amount-calculation-field tare", required: true
         %span.input-group-addon
           %a{href: '#', id: 'tare_picture_button', class: 'gross_or_tare_picture_button', 'data-event-code' => "Tare", 'data-weight' => 0}
-            %i.fa.fa-mobile.fa-2x
+            %i.fa.fa-upload.fa-2x
       %br
       = hidden_field_tag "purchase_order[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
       %div.input-group
