@@ -13,12 +13,14 @@
     .panel-body
       = select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
       %br
-      %div
+      %div.input-group
+        %span.input-group-addon
+          %i.fa.fa-plus{style: "font-size:0.7em;"}
         = phone_field_tag "bill[line_items][][gross]", 0, :placeholder => "Gross", class: "form-control input-lg amount-calculation-field"
       %br
       %div.input-group
         %span.input-group-addon
-          %i.fa.fa-minus-circle.fa-lg
+          %i.fa.fa-minus{style: "font-size:0.7em;"}
         = phone_field_tag "bill[line_items][][tare]", 0, :placeholder => "Subtract", class: "form-control input-lg amount-calculation-field"
       %br
       = hidden_field_tag "bill[line_items][][quantity]", nil, :placeholder => "Net", class: "form-control input-lg amount-calculation-field", required: true, readonly: true
