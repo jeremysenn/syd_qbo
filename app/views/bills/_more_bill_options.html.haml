@@ -2,11 +2,11 @@
   %a{href: bill_path(bill.id, now: DateTime.now, format: 'pdf'), class: 'btn btn-default btn-lg btn-block', target: '_blank'}
     %i.fa.fa-file-pdf-o.fa-lg
     Print
-
-%p
-  %a{href: send_to_leads_online_bill_path(bill.id), class: "btn btn-primary btn-lg btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Send to Leads"}}
-    %i.fa.fa-search
-    Send to Leads
+- if current_company.leads_online_config_settings_present?
+  %p
+    %a{href: send_to_leads_online_bill_path(bill.id), class: "btn btn-primary btn-lg btn-block", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Send to Leads"}}
+      %i.fa.fa-search
+      Send to Leads
 
 = form_tag bill_payments_path, id: 'bill_payment_form', :class => "form-inline" do |f|
   .form-group

@@ -44,6 +44,14 @@
             %strong= "Leads Online Store ID:"
             .pull-right
               = "#{@company.leads_online_store_id}"
+          %li.list-group-item
+            %strong= "Leads Online FTP Username:"
+            .pull-right
+              = "#{@company.leads_online_ftp_username}"
+          %li.list-group-item
+            %strong= "Leads Online FTP Password:"
+            .pull-right
+              = "#{@company.leads_online_ftp_password}"
       
       - unless @company.jpegger_contract.blank?
         .panel.panel-default

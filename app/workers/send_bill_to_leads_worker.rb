@@ -29,7 +29,8 @@ class SendBillToLeadsWorker
     cust_pics = CustPic.where(cust_nbr: customer.id, location: current_company_id)
     
     File.open(path_to_file, 'w') {|f| f.write(Bill.generate_xml(bill, company_info, current_company_id, user, customer, item_service, images, cust_pics)) }
-    Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
+    #Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
+    Net::FTP.open('ftp.leadsonline.com', user.company.leads_online_ftp_username, user.company.leads_online_ftp_password) do |ftp|
       ftp.passive = true;
       ftp.putbinaryfile(path_to_file);
     end
