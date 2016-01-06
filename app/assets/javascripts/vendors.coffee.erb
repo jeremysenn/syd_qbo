@@ -161,7 +161,8 @@ jQuery ->
     # Get data from button
     # device_id = $(this).data( "device-id" )
     this_vendor_id = $(this).data( "vendor-id" )
-    this_event_code = $(this).data( "event-code" )
+    #this_event_code = $(this).data( "event-code" )
+    this_event_code = $('#cust_pic_file_event_code').val()
     this_location = $(this).data( "location" )
     this_camera_name = $(this).data( "camera-name" )
     if $('#vendor_given_name').length > 0
