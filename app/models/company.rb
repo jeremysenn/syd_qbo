@@ -39,6 +39,14 @@ class Company < ActiveRecord::Base
     JpeggerContract.where(contract_id: self.CompanyID.to_i).last
   end
   
+  def leads_online_config_settings_present?
+    if leads_online_store_id.blank? or leads_online_ftp_username.blank? or leads_online_ftp_password.blank?
+      return false
+    else
+      return true
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################

@@ -79,7 +79,7 @@
           = email_field_tag "vendor[email]", nil, :placeholder => "Email Address", value: "#{@vendor.primary_email_address.present? ? @vendor.primary_email_address.address : ''}", class: "form-control input-lg"
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Phone", "Phone", :class => 'control-label'
-          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.primary_phone.present? ? @vendor.primary_phone.free_form_number : ''}", class: "vendor_phone_field form-control input-lg", required: true
+          = phone_field_tag "vendor[phone_number]", nil, :placeholder => "Phone Number", value: "#{@vendor.primary_phone.present? ? @vendor.primary_phone.free_form_number : ''}", class: "vendor_phone_field form-control input-lg"
         %div{:class => "col-xs-12 col-sm-4 col-md-4"}
           = label_tag "Employer Phone", nil, :class => 'control-label'
           = phone_field_tag "vendor[employer_phone]", "#{@customer.blank? ? nil : @customer.employer_phone}", :placeholder => "Employer Phone", class: "vendor_phone_field form-control input-lg"
