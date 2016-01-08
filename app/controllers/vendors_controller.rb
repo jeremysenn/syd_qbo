@@ -40,7 +40,8 @@ class VendorsController < ApplicationController
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
 #    @customer = Customer.find_by_id(@vendor.id)
-    @customer = Customer.where(id: @vendor.id, qb_company_id: current_company_id).last
+#    @customer = Customer.where(id: @vendor.id, qb_company_id: current_company_id).last
+    @customer = Customer.where(vendorid: @vendor.id, qb_company_id: current_company_id).last
     first_item_query = "select * from Item maxresults 1"
     @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
     @first_item = @first_items.first
@@ -53,7 +54,8 @@ class VendorsController < ApplicationController
 
   # GET /vendors/1/edit
   def edit
-    @customer = Customer.find_or_create_by(id: @vendor.id, qb_company_id: current_company_id)
+    @customer = Customer.find_or_create_by(vendorid: @vendor.id, qb_company_id: current_company_id)
+#    @customer = Customer.find_or_create_by(id: @vendor.id, qb_company_id: current_company_id)
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
 #    @cust_pics = CustPic.where(cust_nbr: @vendor.id, location: current_company_id)
@@ -96,7 +98,7 @@ class VendorsController < ApplicationController
       if @vendor.id.present?
         format.html { 
           ### Create customer in jpegger ###
-          @customer = Customer.new(id: @vendor.id, first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
+          @customer = Customer.new(vendorid: @vendor.id, first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
             company_name: @vendor.company_name, display_name: @vendor.display_name,
             height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
             dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
@@ -160,8 +162,8 @@ class VendorsController < ApplicationController
       if @vendor.present?
         format.html { 
           ### Update customer in jpegger ###
-          @customer = Customer.where(id: @vendor.id, qb_company_id: current_company_id).last
-          @customer.update_attributes(first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
+          @customer = Customer.where(vendorid: @vendor.id, qb_company_id: current_company_id).last
+          @customer.update_attributes(vendorid: @vendor.id, first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
             company_name: @vendor.company_name, display_name: @vendor.display_name,
             height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
             dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
