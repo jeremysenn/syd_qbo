@@ -6,8 +6,8 @@ class ImageFile < ActiveRecord::Base
   belongs_to :image
   belongs_to :blob
   
-  after_commit :sidekiq_blob_and_image_creation, :on => :create # To circumvent "Can't find ModelName with ID=12345" Sidekiq error, use after_commit
-  after_commit :sidekiq_image_to_quickbooks, :on => :create
+  after_commit :sidekiq_blob_and_image_creation, :sidekiq_image_to_quickbooks, :on => :create # To circumvent "Can't find ModelName with ID=12345" Sidekiq error, use after_commit
+  #after_commit :sidekiq_image_to_quickbooks, :on => :create
   
   validates :ticket_number, presence: true
 #  validates :event_code, presence: true
