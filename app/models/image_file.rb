@@ -7,6 +7,7 @@ class ImageFile < ActiveRecord::Base
   belongs_to :blob
   
   after_commit :sidekiq_blob_and_image_creation, :on => :create # To circumvent "Can't find ModelName with ID=12345" Sidekiq error, use after_commit
+  after_commit :sidekiq_image_to_quickbooks, :on => :create
   
   validates :ticket_number, presence: true
 #  validates :event_code, presence: true
@@ -22,8 +23,14 @@ class ImageFile < ActiveRecord::Base
     self.name ||= File.basename(file_url, '.*').titleize
   end
   
+  # Create the image record and the blob in the background
   def sidekiq_blob_and_image_creation
-    ImageBlobWorker.perform_async(self.id) # Create the image record and the blob in the background
+    ImageBlobWorker.perform_async(self.id) 
+  end
+  
+  # Attach image to Quickbooks record
+  def sidekiq_image_to_quickbooks
+    ImageToQuickbooksWorker.perform_async(self.id, user.company.qbo_access_credential.access_token, user.company.qbo_access_credential.access_secret) 
   end
   
   #############################

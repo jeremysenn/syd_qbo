@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105171428) do
+ActiveRecord::Schema.define(version: 20160107183941) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20151105171428) do
     t.string   "container_number"
     t.string   "booking_number"
     t.string   "contract_number"
-    t.boolean  "hidden",           default: false
+    t.boolean  "hidden",                  default: false
     t.integer  "blob_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -91,6 +91,8 @@ ActiveRecord::Schema.define(version: 20151105171428) do
     t.string   "customer_name"
     t.string   "tag_number"
     t.string   "vin_number"
+    t.string   "quickbooks_expense_type"
+    t.integer  "quickbooks_expense_id"
   end
 
   create_table "licenses", force: true do |t|
