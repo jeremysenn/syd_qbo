@@ -11,7 +11,7 @@
               =# image_tag(show_preview_image_image_path(Image.where(ticket_nbr: purchase_order.doc_number, event_code: "Gross").last.id), class: 'thumbnail img-responsive')
               = image_tag(Image.where(ticket_nbr: purchase_order.doc_number, location: current_company_id, event_code: "Gross").last.preview_data_uri, class: 'thumbnail img-responsive')
             = purchase_order.doc_number
-            - if Vendor.customer_photo_id_warning?(purchase_order.vendor_ref.value)
+            - if Vendor.customer_photo_id_warning?(purchase_order.vendor_ref.value, current_company_id)
               %i.fa.fa-warning.text-warning
             = purchase_order.vendor_ref.name unless purchase_order.vendor_ref.blank?
             .pull-right
