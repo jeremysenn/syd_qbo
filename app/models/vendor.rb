@@ -14,7 +14,7 @@ class Vendor < ActiveRecord::Base
   
   def self.customer_photo_id_warning?(vendor_id, company_id)
     #customer = Customer.find_by_id(vendor_id)
-    customer = Customer.where(id: vendor_id, qb_company_id: company_id).last
+    customer = Customer.where(vendorid: vendor_id, qb_company_id: company_id).last
     unless customer.blank?
       customer.photo_id_warning?
     else
