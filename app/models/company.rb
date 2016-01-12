@@ -16,15 +16,15 @@ class Company < ActiveRecord::Base
   ############################
   
   def users
-    User.where(location: self.CompanyID.to_i)
+    User.where(location: self.CompanyID)
   end
   
   def workstations
-    Workstation.where("CompanyID" => self.CompanyID.to_i)
+    Workstation.where("CompanyID" => self.CompanyID)
   end
   
   def devices
-    Device.where("CompanyID" => self.CompanyID.to_i)
+    Device.where("CompanyID" => self.CompanyID)
   end
   
   def scale_devices
@@ -32,11 +32,11 @@ class Company < ActiveRecord::Base
   end
   
   def device_groups
-    DeviceGroup.where("CompanyID" => self.CompanyID.to_i)
+    DeviceGroup.where("CompanyID" => self.CompanyID)
   end
   
   def jpegger_contract
-    JpeggerContract.where(contract_id: self.CompanyID.to_i).last
+    JpeggerContract.where(contract_id: self.CompanyID).last
   end
   
   def leads_online_config_settings_present?
