@@ -30,7 +30,7 @@ class CompaniesController < ApplicationController
       format.html { 
         @company = Company.new(company_params)
         if @company.save
-          redirect_to :back, notice: 'CustPic file was successfully created.' 
+          redirect_to :back, notice: 'Company file was successfully created.' 
         else
           render :new
         end
@@ -55,7 +55,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, notice: 'CustPic file was successfully updated.' }
+        format.html { redirect_to @company, notice: 'Company file was successfully updated.' }
         format.json { render :show, status: :ok, location: @company }
       else
         format.html { render :edit }
@@ -69,7 +69,7 @@ class CompaniesController < ApplicationController
   def destroy
     @company.destroy
     respond_to do |format|
-      format.html { redirect_to companies_url, notice: 'CustPic file was successfully destroyed.' }
+      format.html { redirect_to companies_url, notice: 'Company file was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
