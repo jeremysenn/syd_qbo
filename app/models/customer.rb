@@ -10,7 +10,7 @@ class Customer < ActiveRecord::Base
   ############################
   
   def photo_id_warning?
-    search_results = CustPic.where(location: qb_company_id, cust_nbr: id, event_code: "Photo ID")
+    search_results = CustPic.where(location: qb_company_id, cust_nbr: vendorid, event_code: "Photo ID")
     unless search_results.blank? 
       # At least one Photo ID picture found
       if expiration_date.blank? or expiration_date < Date.today
