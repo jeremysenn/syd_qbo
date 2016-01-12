@@ -13,7 +13,7 @@
               =# image_tag(show_preview_image_cust_pic_path(Vendor.default_cust_pic_id(vendor.id, current_company_id)), class: 'thumbnail img-responsive')
               = image_tag(Vendor.default_cust_pic(vendor.id, current_company_id).preview_data_uri, class: 'thumbnail img-responsive')
             %p.lead
-              - if Vendor.customer_photo_id_warning?(vendor.id)
+              - if Vendor.customer_photo_id_warning?(vendor.id, current_company_id)
                 %i.fa.fa-warning.text-warning
               = vendor.display_name
           %a{href: vendor_path(vendor.id), data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Vendor Details"}, class: "list-group-item vendor_button"}
