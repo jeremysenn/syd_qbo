@@ -101,6 +101,9 @@ gem 'wkhtmltopdf-binary'
 # SOAP calls (TUD devices web service calls)
 gem 'savon'
 
+# Exception notifications
+gem 'exception_notification'
+
 # See the speed of a request on the page
 # gem 'rack-mini-profiler'
 
