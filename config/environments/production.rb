@@ -67,7 +67,10 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "#{ENV['SCRAP_YARD_DOG_HOST']}" }
   Rails.application.routes.default_url_options[:host] = "#{ENV['SCRAP_YARD_DOG_HOST']}"
   
+  config.action_mailer.default_url_options = { :host => 'www.scrapyarddog.com' }
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default :charset => "utf-8"
 
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
