@@ -237,7 +237,7 @@ jQuery ->
   ### Scale read and camera trigger ###
   #$(document).on 'click', '.scale_read_and_camera_trigger', (e) ->
   #$('.scale_read_and_camera_trigger').click ->
-  $('#items_accordion').on 'click', '.scale_read_and_camera_trigger', ->
+  $('#items_accordion').on 'click', '.scale_read_and_camera_trigger', (e) ->
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -291,12 +291,13 @@ jQuery ->
 
     # Kick off the scale read and camera trigger ajax calls
     scale_read_ajax().success camera_trigger_ajax
+    e.preventDefault() # Don't hop to top of page due to anchor
   ### End scale read and camera trigger ###
 
   ### Scale camera trigger ###
   #$(document).on 'click', '.scale_camera_trigger', (e) ->
   #$('.scale_camera_trigger').click ->
-  $('#items_accordion').on 'click', '.scale_camera_trigger', ->
+  $('#items_accordion').on 'click', '.scale_camera_trigger', (e) ->
     # Get data from scale button
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
@@ -330,6 +331,7 @@ jQuery ->
         spinner_icon.hide()
         #alert 'Scale camera trigger failed'
         return
+    e.preventDefault() # Don't hop to top of page due to anchor
   ### End scale camera trigger ###
 
   ### TUD camera trigger ###
