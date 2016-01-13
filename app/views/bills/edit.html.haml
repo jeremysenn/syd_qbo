@@ -2,7 +2,7 @@
 - @title="Closed #{@bill.doc_number}" 
 
 .container
-  = form_tag update_qb_bill_path, method: 'get', id: 'bill_form', :class => "form-horizontal" do
+  = form_tag update_qb_bill_path, method: 'post', id: 'bill_form', :class => "form-horizontal" do
     #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
       .panel.panel-default
         %div.panel-heading{:role => "tab", id: "vendor_heading"}
