@@ -102,8 +102,4 @@ Rails.application.configure do
     :sender_address => %{"SYD QBO Exception Notifier" <notifier@example.com>},
     :exception_recipients => %w{senn.jeremy@gmail.com jeremy@tranact.com shark@tranact.com}
   }
-<<<<<<< HEAD
-=======
-  
->>>>>>> staging
 end
