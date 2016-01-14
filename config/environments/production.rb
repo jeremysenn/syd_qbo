@@ -64,7 +64,7 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: "#{ENV['SCRAP_YARD_DOG_HOST']}" }
   Rails.application.routes.default_url_options[:host] = "#{ENV['SCRAP_YARD_DOG_HOST']}"
   
@@ -102,4 +102,8 @@ Rails.application.configure do
     :sender_address => %{"SYD QBO Exception Notifier" <notifier@example.com>},
     :exception_recipients => %w{senn.jeremy@gmail.com jeremy@tranact.com shark@tranact.com}
   }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> staging
 end

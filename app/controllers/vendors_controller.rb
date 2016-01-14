@@ -23,7 +23,12 @@ class VendorsController < ApplicationController
     end
     respond_to do |format|
       format.html {
-        @vendors = Kaminari.paginate_array(@vendors.entries).page(params[:page]).per(5)
+        if @vendors.count == 0 and not params[:search].blank?
+          redirect_to new_vendor_path(first_name: params[:first_name], last_name: params[:last_name], license_number: params[:license_number], dob: params[:dob],
+            sex: params[:sex], issue_date: params[:issue_date], expiration_date: params[:expiration_date], streetaddress: params[:streetaddress], city: params[:city], state: params[:state], zip: params[:zip])
+        else
+          @vendors = Kaminari.paginate_array(@vendors.entries).page(params[:page]).per(5)
+        end
       }
       format.js {
         @vendors = Kaminari.paginate_array(@vendors.entries).page(params[:page]).per(5)
