@@ -68,7 +68,8 @@ class PurchaseOrdersController < ApplicationController
         FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
       end
        format.xml do
-          stream = render_to_string(:template=>"purchase_orders/show" )  
+          stream = render_to_string(:template=>"purchase_orders/show" ) # Leads Online generated XML
+          send_data(stream, :type=>"text/xml",:filename => "test.xml")
 #          send_data(stream, :type=>"text/xml",:filename => "f_0_46347_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml")
 #         builder = Builder::XmlMarkup.new
 #         @xml = builder.person { |b| b.name("Jim"); b.phone("555-1234") }
