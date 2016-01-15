@@ -201,7 +201,7 @@ jQuery ->
         #$("#new_image_file").prepend data.context
         #$('#new_image_file').append('<img src="' + URL.createObjectURL(data.files[0]) + '"/>')
         $('#pictures').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
-        $('#images').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
+        $('#images').prepend('<div class="row"><div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
         #data.submit()
         $(".picture_loading_spinner").show()
         #$("#uploads").hide()
@@ -471,7 +471,7 @@ jQuery ->
   $('.customer_camera_trigger_from_ticket').click ->
     # Get data from button
     this_vendor_id = $(this).data( "vendor-id" )
-    this_event_code = $('#image_file_event_code').val()
+    #this_event_code = $('#image_file_event_code').val()
     this_location = $(this).data( "location" )
     this_camera_name = $(this).data( "camera-name" )
     if $('#vendor_given_name').length > 0
@@ -482,7 +482,8 @@ jQuery ->
       this_family_name = $('#vendor_family_name').val()
     else
       this_family_name = $(this).data( "family-name" )
-      
+    camera_icon = $(this).find( ".fa-camera" )
+    camera_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
 
@@ -495,11 +496,12 @@ jQuery ->
         customer_number: this_vendor_id
         customer_first_name: this_given_name
         customer_last_name: this_family_name
-        event_code: this_event_code
+        event_code: 'Customer Photo'
         location: this_location
         camera_name: this_camera_name
       success: (response) ->
         spinner_icon.hide()
+        camera_icon.show()
         #alert 'Customer camera trigger successful.'
         return
       error: ->

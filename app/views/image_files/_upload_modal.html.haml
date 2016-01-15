@@ -53,11 +53,12 @@
                     %i.fa.fa-camera
                     %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                     = scale_device.DeviceName
-              - unless current_user.customer_camera.blank? or @customer.blank?
-                %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger_from_ticket btn btn-lg btn-block btn-default", 'data-location' => current_user.location, 'data-given-name' => @customer.first_name, 'data-family-name' => @customer.last_name, 'data-vendor-id' => @customer.id, 'data-camera-name' => current_user.customer_camera}
-                  %i.fa.fa-camera
-                  Customer Camera
-                  %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+              -#
+                - unless current_user.customer_camera.blank? or @customer.blank?
+                  %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger_from_ticket btn btn-lg btn-block btn-default", 'data-location' => current_user.location, 'data-given-name' => @customer.first_name, 'data-family-name' => @customer.last_name, 'data-vendor-id' => @customer.id, 'data-camera-name' => current_user.customer_camera}
+                    %i.fa.fa-camera
+                    Customer Camera
+                    %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
           .picture_loading_spinner{:style => "display:none;", :id => "spinner"}
             = image_tag("ajax-loader.gif", :id => "loading_spinner", :alt => "Loading")
             Uploading ...

@@ -22,7 +22,13 @@
             =# label_tag "Vendor", nil, :class => 'control-label'
             =# select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
-            = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+            %div.input-group
+              - unless current_user.customer_camera.blank? or @customer.blank?
+                %span.input-group-addon
+                  %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger_from_ticket", 'data-location' => current_user.location, 'data-given-name' => @customer.first_name, 'data-family-name' => @customer.last_name, 'data-vendor-id' => @customer.id, 'data-camera-name' => current_user.customer_camera, title: current_user.customer_camera}
+                    %i.fa.fa-camera.fa-lg
+                    %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+              = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
         -#
           %div.panel-footer
             %ul{class: 'list-inline'}
