@@ -7,7 +7,7 @@ xml.import(:xmlns => "RAPIDv2.1") do
   xml.date(DateTime.now)
   xml.transaction(:transid => @doc_number, :transtype => 'B') do
     xml.date("#{@purchase_order.txn_date}T00:00:00Z")
-    xml.declaration
+    xml.declaration("Ticket #{@purchase_order.txn_date} on #{@purchase_order.txn_date}.")
     xml.employee do
       xml.name(current_user.email)
     end
@@ -24,6 +24,7 @@ xml.import(:xmlns => "RAPIDv2.1") do
       xml.gender(@customer.sex)
       #xml.height(@customer.height)
       xml.weight(@customer.weight)
+      xml.build('Average')
       unless @customer.eye_color.blank?
         xml.eyecolor(@customer.eye_color)
       end
@@ -58,7 +59,7 @@ xml.import(:xmlns => "RAPIDv2.1") do
       xml.item do
         xml.description(@item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).name)
         xml.serial
-        xml.class
+        xml.class(338)
         xml.make
         xml.model
         xml.size
