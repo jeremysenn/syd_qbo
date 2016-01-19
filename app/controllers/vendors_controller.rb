@@ -16,7 +16,7 @@ class VendorsController < ApplicationController
     @first_item = @first_items.first
     unless params[:search].blank?
       #query = "SELECT * FROM Vendor WHERE DisplayName LIKE #{params[:search]};"
-      query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].gsub("'"){"\\'"}}%'"
+      query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].strip.gsub("'"){"\\'"}}%'"
       @vendors = @vendor_service.query(query, :per_page => 1000)
     else
       @vendors = @vendor_service.query(nil, :per_page => 1000)

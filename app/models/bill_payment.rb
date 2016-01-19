@@ -8,7 +8,7 @@ class BillPayment < ActiveRecord::Base
   #     Class Methods         #
   #############################
   
-  def self.generate_xml(bill_payment, bill, company_info, company_id, user, customer, item_service, images)
+  def self.generate_leads_online_xml(bill_payment, bill, company_info, company_id, user, customer, item_service, images)
     xml = ::Builder::XmlMarkup.new(:indent => 2)
     xml.instruct!
     xml.LeadsOnlineUpload do

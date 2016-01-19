@@ -23,7 +23,9 @@ xml.import(:xmlns => "RAPIDv2.1") do
       end
       xml.gender(@customer.sex)
       #xml.height(@customer.height)
-      xml.weight(@customer.weight)
+      unless @customer.weight.blank?
+        xml.weight(@customer.weight)
+      end
       xml.build('Average')
       unless @customer.eye_color.blank?
         xml.eyecolor(@customer.eye_color)

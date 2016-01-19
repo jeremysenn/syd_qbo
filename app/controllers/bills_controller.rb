@@ -3,15 +3,15 @@ class BillsController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_oauth_client
-  before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
+  before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online, :send_to_bwi]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
-  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
+  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields, :send_to_bwi]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_bill_payment_service, only: [:show]
   before_action :set_account_service, only: [:index]
   before_action :set_company_service, only: [:show]
   
-  before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
+  before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy, :send_to_leads_online, :send_to_bwi]
 
   # GET /bills
   # GET /bills.json
@@ -214,6 +214,16 @@ class BillsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to bills_path, notice: 'Bill details sent to Leads Online.' }
+    end
+  end
+  
+  def send_to_bwi
+    @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    
+    path_to_file = "public/bwi/bwi_#{current_company_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
+    SendBillToBwiWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill.id, current_company_id, current_user.id, @customer.id)
+    respond_to do |format|
+      format.html { redirect_to bills_path, notice: 'Bill details sent to BWI.' }
     end
   end
   

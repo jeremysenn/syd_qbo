@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       #get :update_qb
       post :update_qb
       get :send_to_leads_online
+      get :send_to_bwi
     end
   end
   

@@ -73,18 +73,18 @@
       %hr
       .row.form-group
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
-          = label_tag "Height", nil, :class => 'control-label'
+          = label_tag "Height", "Height (inches)", :class => 'control-label'
           = text_field_tag "vendor[height]", "#{@customer.blank? ? nil : @customer.height}", :placeholder => "Height", class: "form-control input-lg"
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
-          = label_tag "Weight", nil, :class => 'control-label'
+          = label_tag "Weight", "Weight (pounds)", :class => 'control-label'
           = text_field_tag "vendor[weight]", "#{@customer.blank? ? nil : @customer.weight}", :placeholder => "Weight", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
           = label_tag "Eye Color", nil, :class => 'control-label'
-          = text_field_tag "vendor[eye_color]", "#{@customer.blank? ? nil : @customer.eye_color}", :placeholder => "Eye Color", class: "form-control input-lg"
+          = select_tag "vendor[eye_color]", options_for_select(['Blue', 'Gray', 'Grey', 'Hazel', 'Green', 'Black', 'Brown', 'Other'], "#{@customer.blank? ? nil : @customer.eye_color}"), :class => "form-control input-lg"
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
           = label_tag "Hair Color", nil, :class => 'control-label'
-          = text_field_tag "vendor[hair_color]", "#{@customer.blank? ? nil : @customer.hair_color}", :placeholder => "Hair Color", class: "form-control input-lg"
+          = select_tag "vendor[hair_color]", options_for_select(['Black', 'Dark Brown', 'Brown', 'Light Brown', 'Sandy', 'Blonde', 'Auburn', 'Red', 'Dyed', 'Bald', 'Graying', 'Gray', 'Grey', 'Unknown'], "#{@customer.blank? ? nil : @customer.hair_color}"), :class => "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-6 col-sm-3 col-md-3"}
           = label_tag "Sex", nil, :class => 'control-label'

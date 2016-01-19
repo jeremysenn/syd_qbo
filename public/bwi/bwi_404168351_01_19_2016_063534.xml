@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<import xmlns="RAPIDv2.1">
+  <user username="JSenn" password="bwidemo"/>
+  <shop id="999">
+    <name>BWDEMO</name>
+  </shop>
+  <date>2016-01-19T06:35:34-08:00</date>
+  <transaction transid="1412" transtype="B">
+    <date>2016-01-19T00:00:00Z</date>
+    <declaration>Ticket 2016-01-19 on 2016-01-19.</declaration>
+    <employee>
+      <name>colby@tranact.com</name>
+    </employee>
+    <customer id="99">
+      <lname>SOLITAIRE</lname>
+      <middlename/>
+      <fname>Bill</fname>
+      <initials/>
+      <birthdate>1959-01-08</birthdate>
+      <gender>M</gender>
+      <build>Average</build>
+      <haircolor>Unknown</haircolor>
+      <vehiclemaker/>
+      <vehiclemodel/>
+      <vehiclecolor/>
+      <street>1711 28TH AVE N</street>
+      <city>ST PETERSBURG</city>
+      <prov>FL</prov>
+      <postalcode>33713--413</postalcode>
+      <phone>(727) 741-1423</phone>
+      <workphone></workphone>
+      <id1type>DL</id1type>
+      <id1>S436811590080</id1>
+      <id1issuer>0</id1issuer>
+      <id1image/>
+      <id2type/>
+      <id2/>
+      <id2issuer/>
+      <id2image/>
+      <identification type="1"/>
+      <identification type="1"/>
+      <customerpicture/>
+      <signature/>
+    </customer>
+    <item>
+      <description>Gold OZ</description>
+      <serial/>
+      <class>338</class>
+      <make/>
+      <model/>
+      <size/>
+      <color/>
+      <engravings/>
+      <quantity>1</quantity>
+      <price>1000.0</price>
+      <itempicture/>
+      <vehicletitlenumber/>
+    </item>
+    <item>
+      <description>Yellow Brass LB</description>
+      <serial/>
+      <class>338</class>
+      <make/>
+      <model/>
+      <size/>
+      <color/>
+      <engravings/>
+      <quantity>10</quantity>
+      <price>6.5</price>
+      <itempicture/>
+      <vehicletitlenumber/>
+    </item>
+  </transaction>
+</import>
