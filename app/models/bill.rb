@@ -145,13 +145,13 @@ class Bill < ActiveRecord::Base
   end
   
 #  def self.generate_bwi_xml(bill, company_info, company_id, user, customer, item_service, images, customer_photo)
-  def self.generate_bwi_xml(bill, company_info, company_id, user, customer, item_service)
+  def self.generate_bwi_xml(bill, current_company, user, customer, item_service)
     xml = ::Builder::XmlMarkup.new(:indent => 2)
     xml.instruct!
     xml.import(:xmlns => "RAPIDv2.1") do
       xml.user(:username => 'JSenn', :password => 'bwidemo')
-      xml.shop(:id => "999") do
-        xml.name("BWDEMO")
+      xml.shop(:id => "#{current_company.bwi_company_id}") do
+        xml.name("#{current_company.bwi_company_name}")
       end
       xml.date(DateTime.now)
       xml.transaction(:transid => bill.doc_number, :transtype => 'B') do

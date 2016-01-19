@@ -5,7 +5,7 @@ class BillsController < ApplicationController
   before_action :set_oauth_client
   before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online, :send_to_bwi]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
-  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields, :send_to_bwi]
+  before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
   before_action :set_bill_payment_service, only: [:show]
   before_action :set_account_service, only: [:index]

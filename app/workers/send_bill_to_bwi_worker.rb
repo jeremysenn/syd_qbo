@@ -6,10 +6,12 @@ class SendBillToBwiWorker
     
     oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, access_token, access_secret)
     
-    company_info_service = Quickbooks::Service::CompanyInfo.new
-    company_info_service.access_token = oauth_client
-    company_info_service.company_id = current_company_id
-    company_info = company_info_service.fetch_by_id(current_company_id)
+#    company_info_service = Quickbooks::Service::CompanyInfo.new
+#    company_info_service.access_token = oauth_client
+#    company_info_service.company_id = current_company_id
+#    company_info = company_info_service.fetch_by_id(current_company_id)
+
+    current_company = Company.find(current_company_id)
     
     bill_service = Quickbooks::Service::Bill.new
     bill_service.access_token = oauth_client
@@ -29,9 +31,9 @@ class SendBillToBwiWorker
 #    customer_photo = CustPic.where(cust_nbr: customer.id, location: current_company_id, event_code: 'Customer Photo').last
     
 #    File.open(path_to_file, 'w') {|f| f.write(Bill.generate_bwi_xml(bill, company_info, current_company_id, user, customer, item_service, images, customer_photo)) }
-    File.open(path_to_file, 'w') {|f| f.write(Bill.generate_bwi_xml(bill, company_info, current_company_id, user, customer, item_service)) }
+    File.open(path_to_file, 'w') {|f| f.write(Bill.generate_bwi_xml(bill, current_company, user, customer, item_service)) }
       
-    %x(curl -H "Content-Type: text/xml" -d @"#{path_to_file}" -X POST https://dealer.southrapid.com/bwident/upload.aspx)
+    %x(curl -H "Content-Type: text/xml" -d @"#{path_to_file}" -X POST "#{current_company.bwi_upload_url}")
     
     bill.private_note = "Sent to BWI"
     bill = bill_service.update(bill)
