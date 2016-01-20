@@ -98,7 +98,7 @@ Rails.application.configure do
   :email => {
     :ignore_exceptions => ['ActionView::MissingTemplate'] + ExceptionNotifier.ignored_exceptions,
     :sender_address => %{"SYD QBO Exception Notifier" <notifier@example.com>},
-    :exception_recipients => %w{senn.jeremy@gmail.com jeremy@tranact.com shark@tranact.com}
+    :exception_recipients => %w{jeremy@tranact.com shark@tranact.com}
   }
   
 end
