@@ -3,5 +3,7 @@ $('.preview').show();
 $('#items_accordion').find('.collapse.in').collapse('hide');
 $('#items_accordion').find('.fa-check-square').toggleClass('fa-check-square ')
 $('#items_accordion').append("<%= j render(:partial => 'line_item_fields', locals: {index: rand(1..1000000)}) %>");
+options = $(".item_select:first > option").clone();
+$('.item_select:last').append(options);
 $('#spinner').hide();
 $('#add_item_button').show(); 

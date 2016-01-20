@@ -24,11 +24,12 @@
             =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             %div.input-group
               - unless current_user.customer_camera.blank? or @customer.blank?
-                %span.input-group-addon
-                  %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger_from_ticket", 'data-location' => current_user.location, 'data-given-name' => @customer.first_name, 'data-family-name' => @customer.last_name, 'data-vendor-id' => @customer.id, 'data-camera-name' => current_user.customer_camera, title: current_user.customer_camera}
-                    %i.fa.fa-camera.fa-lg
-                    %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
-              = select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
+                -# %span.input-group-addon
+                %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger_from_ticket btn btn-default btn-lg", 'data-location' => current_user.location, 'data-given-name' => @customer.first_name, 'data-family-name' => @customer.last_name, 'data-vendor-id' => @customer.id, 'data-camera-name' => current_user.customer_camera, title: current_user.customer_camera}
+                  %i.fa.fa-camera.fa-lg
+                  %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
+              = hidden_field_tag "purchase_order[vendor]", @purchase_order.vendor_ref
+              =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
         -#
           %div.panel-footer
             %ul{class: 'list-inline'}
@@ -58,7 +59,7 @@
                 = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
                 =# label_tag "Gross", nil, :class => 'control-label'
                 %div.input-group
-                  - current_user.scale_devices.each do |scale_device|
+                  - @scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
                         %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
@@ -77,7 +78,7 @@
                 %br
                 =# label_tag "Tare", nil, :class => 'control-label'
                 %div.input-group
-                  - current_user.scale_devices.each do |scale_device|
+                  - @scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
                         %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
@@ -124,7 +125,7 @@
     .row.form-group
       %div.col-xs-3.col-sm-3
         = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-        %a{ href: line_item_fields_purchase_orders_path(doc_number: @doc_number), 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg btn-block", onclick: "$(this).hide(); $('#spinner').show();" }
+        %a{ href: line_item_fields_purchase_orders_path(doc_number: @doc_number, scale_device_ids: "#{@scale_devices.blank? ? '' : @scale_devices.map{|d| d.DevID}}"), 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg btn-block", onclick: "$(this).hide(); $('#spinner').show();" }
           %i.fa.fa-plus
           Item
       %div.col-xs-3.col-sm-3

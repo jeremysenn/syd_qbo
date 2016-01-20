@@ -74,7 +74,7 @@ class BillsController < ApplicationController
 
   # GET /bills/1/edit
   def edit
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     @doc_number = @bill.doc_number

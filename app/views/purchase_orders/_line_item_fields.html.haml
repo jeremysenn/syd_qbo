@@ -11,10 +11,11 @@
       = hidden_field_tag :item_description, nil
   %div.panel-collapse{id: "collapse_#{index}", "aria-labelledby" => "headingitem", :role => "tabpanel", class: "collapse in"}
     .panel-body
-      = select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+      =# select_tag "purchase_order[line_items][][item]", options_from_collection_for_select(@items, "id", "name"), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+      = select_tag "purchase_order[line_items][][item]", "", class: "form-control input-lg item_select", required: true
       %br
       %div.input-group
-        - current_user.scale_devices.each do |scale_device|
+        - @scale_devices.each do |scale_device|
           %span.input-group-addon
             - if scale_device.scale_camera_only?
               %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
@@ -32,7 +33,7 @@
             %i.fa.fa-upload.fa-2x
       %br
       %div.input-group
-        - current_user.scale_devices.each do |scale_device|
+        - @scale_devices.each do |scale_device|
           %span.input-group-addon
             - if scale_device.scale_camera_only?
               %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'tare_scale_button', 'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName }
