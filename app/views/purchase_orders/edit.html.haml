@@ -2,12 +2,6 @@
 - @title="Open #{@purchase_order.doc_number}" 
 
 .container
-  -#
-    - if not @customer.blank? and @customer.photo_id_warning?
-      .alert.alert-warning
-        %i.fa.fa-warning.fa-lg
-        Vendor Photo ID is missing or expired.
-        = link_to 'Update', edit_vendor_path(@customer.id), class: 'btn btn-default', target: '_blank'
   = form_tag update_qb_purchase_order_path, method: 'post', id: 'purchase_order_form', :class => "form-horizontal" do
     #vendor_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
       .panel.panel-default
@@ -30,14 +24,6 @@
                   %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
               = hidden_field_tag "purchase_order[vendor]", @purchase_order.vendor_ref
               =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", @purchase_order.vendor_ref), prompt: "Choose a vendor", class: "form-control input-lg", required: true
-        -#
-          %div.panel-footer
-            %ul{class: 'list-inline'}
-              %li
-                #vendor_name= @purchase_order.vendor_ref.name
-              %li.pull-right
-                %a.text-success{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button", class: "collapsed", onclick: "$(this).find('i').toggleClass('fa-check-square fa-chevron-down');" }
-                  %i.fa.fa-chevron-down.fa-lg
     %div.purchase_order_input_fields_wrap
       #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
         - @purchase_order.line_items.each do |line_item|
