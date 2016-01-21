@@ -44,7 +44,7 @@
                 %br
                 = hidden_field_tag "purchase_order[line_items][][description]", line_item.description
                 =# label_tag "Gross", nil, :class => 'control-label'
-                %div.input-group
+                %div.input-group.gross_input_group
                   - @scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
@@ -63,7 +63,7 @@
                       %i.fa.fa-upload.fa-2x
                 %br
                 =# label_tag "Tare", nil, :class => 'control-label'
-                %div.input-group
+                %div.input-group.tare_input_group
                   - @scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
@@ -111,7 +111,7 @@
     .row.form-group
       %div.col-xs-3.col-sm-3
         = image_tag("ajax-loader.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-        %a{ href: line_item_fields_purchase_orders_path(doc_number: @doc_number, scale_device_ids: "#{@scale_devices.blank? ? '' : @scale_devices.map{|d| d.DevID}}"), 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg btn-block", onclick: "$(this).hide(); $('#spinner').show();" }
+        %a{ href: line_item_fields_purchase_orders_path(doc_number: @doc_number), 'data-remote' => true, id: "add_item_button", class: "btn btn-warning btn-lg btn-block", onclick: "$(this).hide(); $('#spinner').show();" }
           %i.fa.fa-plus
           Item
       %div.col-xs-3.col-sm-3

@@ -82,6 +82,8 @@ class BillsController < ApplicationController
     
 #    query = "Select * From Item Where Type = 'Inventory'"
     @items = @item_service.query(nil, :per_page => 1000)
+    
+    @scale_devices = current_user.scale_devices
 #    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
   end
   
@@ -190,7 +192,7 @@ class BillsController < ApplicationController
   end
   
   def line_item_fields
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
     respond_to do |format|
       format.js
     end

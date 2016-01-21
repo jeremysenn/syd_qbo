@@ -88,21 +88,26 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders/1/edit
   def edit
-    #@vendors = @vendor_service.query(nil, :per_page => 1000)
-#    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
-    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
-#    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @doc_number = @purchase_order.doc_number # Ticket number
-#    @contract = Contract.find(current_company_id) # Find contract for this company
-
-#    query = "Select * From Item Where Type = 'Inventory'"
-    @items = @item_service.query(nil, :per_page => 1000)
+    respond_to do |format|
+      format.html{
+        #@vendors = @vendor_service.query(nil, :per_page => 1000)
+        #    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
+        @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+        #    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
+        @doc_number = @purchase_order.doc_number # Ticket number
+        #    @contract = Contract.find(current_company_id) # Find contract for this company
+        
+        #    query = "Select * From Item Where Type = 'Inventory'"
+        @items = @item_service.query(nil, :per_page => 1000)
+        
+        @scale_devices = current_user.scale_devices
+        
+        #    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
+        #    search = Image.ransack(ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location)
+        #    @images = search.result.page(params[:page]).per(1)
+      }
+    end
     
-    @scale_devices = current_user.scale_devices
-    
-#    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
-#    search = Image.ransack(ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location)
-#    @images = search.result.page(params[:page]).per(1)
   end
   
   # POST /purchase_orders
@@ -210,7 +215,7 @@ class PurchaseOrdersController < ApplicationController
   
   def line_item_fields
     @doc_number = params[:doc_number]
-    @scale_devices = Device.where(Devid: eval(params[:scale_device_ids]))
+#    @scale_devices = Device.where(Devid: eval(params[:scale_device_ids]))
 #    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
