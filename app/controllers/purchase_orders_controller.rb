@@ -183,9 +183,9 @@ class PurchaseOrdersController < ApplicationController
             redirect_to root_path, notice: 'Ticket closed'
 #            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...'
           elsif params[:close_and_pay]
-            @bill = Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
-            redirect_to new_bill_payment_path(bill_id: @bill.id)
-#            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true), notice: 'Closing ticket, please wait ...'
+#            @bill = Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
+#            redirect_to new_bill_payment_path(bill_id: @bill.id)
+            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true) #, notice: 'Closing ticket, please wait ...'
           else
 #            redirect_to purchase_orders_path
             redirect_to root_path
