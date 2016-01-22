@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   
   resources :vendors do
     member do
-      get :update_qb
+      post :update_qb
     end
   end
   

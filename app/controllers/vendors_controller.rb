@@ -60,6 +60,9 @@ class VendorsController < ApplicationController
   # GET /vendors/1/edit
   def edit
     @customer = Customer.find_or_create_by(vendorid: @vendor.id, qb_company_id: current_company_id)
+    first_item_query = "select * from Item maxresults 1"
+    @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
+    @first_item = @first_items.first
 #    @customer = Customer.find_or_create_by(id: @vendor.id, qb_company_id: current_company_id)
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @items = @item_service.query(nil, :per_page => 1000)
@@ -173,9 +176,11 @@ class VendorsController < ApplicationController
             height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
             dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
             employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone], license_number: vendor_params[:license_number], qb_company_id: current_company_id)
-          
-          redirect_to vendor_path(@vendor.id) 
+          if params[:save]
+            redirect_to vendor_path(@vendor.id) 
+          end
           }
+        format.js {}
         format.json { render :show, status: :ok, location: vendor_path(@vendor.id) }
       else
         format.html { render :edit }

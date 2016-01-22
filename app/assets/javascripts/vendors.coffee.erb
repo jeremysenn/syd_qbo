@@ -55,10 +55,21 @@ jQuery ->
       loading_vendors = false
   ### End endless page stuff ###
 
+  ### Create a new ticket from vendor ###
   #$(document).on 'click', '.new_ticket_from_vendor', (e) ->
   $('#vendors').on 'click', '.new_ticket_from_vendor', (e) ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
+    return
+    
+  ### Save vendor information and create new ticket for vendor with one submit ###
+  $('#vendor_info').on 'click', '#save_and_ticket_button', (e) ->
+    # Submit vendor data via ajax post
+    $.post $('#vendor_form').attr('action'), $('#vendor_form').serialize(), ->
+      return
+    # Submit new purchase order data through regular post
+    $('#purchase_order_form').submit()
+    e.preventDefault() # Don't hop to top of page due to anchor
     return
 
   $('.drivers_license_scan').on 'click', ->
