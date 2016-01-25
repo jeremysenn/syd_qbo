@@ -139,7 +139,7 @@ class DevicesController < ApplicationController
   end
   
   def finger_print_trigger
-    @device.finger_print_trigger(params[:ticket_number], params[:location])
+    @device.finger_print_trigger(params[:ticket_number], params[:location], params[:customer_name])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

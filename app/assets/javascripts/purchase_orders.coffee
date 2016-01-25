@@ -412,6 +412,7 @@ jQuery ->
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
     location = $(this).data( "company-id" )
+    customer_name = $(this).data( "customer-name" )
 
     pointer_icon = $(this).find( ".fa-hand-pointer-o" )
     pointer_icon.hide()
@@ -425,6 +426,7 @@ jQuery ->
       data:
         ticket_number: ticket_number
         location: location
+        customer_name: customer_name
       success: (response) ->
         pointer_icon.show()
         spinner_icon.hide()

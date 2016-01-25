@@ -35,6 +35,10 @@ class Customer < ActiveRecord::Base
     end
   end
   
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+  
   #############################
   #     Class Methods      #
   #############################
