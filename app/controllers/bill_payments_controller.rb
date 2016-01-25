@@ -30,6 +30,7 @@ class BillPaymentsController < ApplicationController
 #    @items = @item_service.query(nil, :per_page => 1000)
     @doc_number = @bill_payment.doc_number
     @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number }
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     
     respond_to do |format|
       format.html do
