@@ -76,7 +76,7 @@ class BillsController < ApplicationController
   def edit
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
-    @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     @doc_number = @bill.doc_number
 #    @contract = Contract.find(current_company_id) # Find contract for this company
     
@@ -209,7 +209,7 @@ class BillsController < ApplicationController
   end
   
   def send_to_leads_online
-    @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     
     path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
     SendBillToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill.id, current_company_id, current_user.id, @customer.id)
@@ -220,7 +220,7 @@ class BillsController < ApplicationController
   end
   
   def send_to_bwi
-    @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     
     path_to_file = "public/bwi/bwi_#{current_company_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
     SendBillToBwiWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill.id, current_company_id, current_user.id, @customer.id)

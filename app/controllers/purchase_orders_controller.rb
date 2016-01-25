@@ -45,7 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1.json
   def show
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     @doc_number = @purchase_order.doc_number # Ticket number
     
     respond_to do |format|
@@ -92,7 +92,7 @@ class PurchaseOrdersController < ApplicationController
       format.html{
         #@vendors = @vendor_service.query(nil, :per_page => 1000)
         #    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
-        @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+        @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
         #    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
         @doc_number = @purchase_order.doc_number # Ticket number
         #    @contract = Contract.find(current_company_id) # Find contract for this company
@@ -237,7 +237,7 @@ class PurchaseOrdersController < ApplicationController
   def send_to_leads_online
     require 'net/ftp'
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
     File.open(path_to_file, 'w') {|f| f.write(PurchaseOrder.generate_xml(@purchase_order, @company_info, current_company_id, current_user, @customer, @item_service)) }
     Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|
