@@ -8,8 +8,8 @@
           = "#{license_reader_device.DeviceName} Data Scan"
           = image_tag("ajax-loader.gif", :id => "data_scan_spinner", :class => "data_scan_spinner", :alt => "Loading ...", style: "display:none;")
   
-  .well.col-sm-12.col-md-12
-    = form_tag vendors_path, :class => "form-horizontal" do
+  .well.col-sm-12.col-md-12{id: 'vendor_info'}
+    = form_tag vendors_path, id: 'vendor_form', :class => "form-horizontal" do
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "First Name", nil, :class => 'control-label'
@@ -80,8 +80,11 @@
           = label_tag "Employer Phone", nil, :class => 'control-label'
           = phone_field_tag "vendor[employer_phone]", "#{@customer.blank? ? nil : @customer.employer_phone}", :placeholder => "Employer Phone", class: "vendor_phone_field form-control input-lg"
       .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
+        %div{:class => "col-sm-6 col-md-6"}
           = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating..."}) do
             Create
+        %div{:class => "col-sm-6 col-md-6"}
+          %a{href: '#/', name: 'save_and_ticket', id: "new_vendor_and_ticket_button", :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Create & New Ticket"}}
+            Create & New Ticket
 
 = render partial: "shared/footer_navbar", locals: {title: "Vendor"}

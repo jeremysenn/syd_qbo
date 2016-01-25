@@ -3,8 +3,8 @@ class VendorsController < ApplicationController
 #  load_and_authorize_resource
   
   before_action :set_oauth_client
-  before_action :set_vendor_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
-  before_action :set_item_service, only: [:index, :show, :edit]
+  before_action :set_vendor_service, only: [:index, :show, :create, :edit, :new, :update, :update_qb, :destroy]
+  before_action :set_item_service, only: [:index, :show, :edit, :new]
   before_action :set_vendor, only: [:show, :edit, :update, :update_qb, :destroy]
 
   # GET /vendors
@@ -55,6 +55,9 @@ class VendorsController < ApplicationController
 
   # GET /vendors/new
   def new
+    first_item_query = "select * from Item maxresults 1"
+    @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
+    @first_item = @first_items.first
   end
 
   # GET /vendors/1/edit
@@ -104,15 +107,14 @@ class VendorsController < ApplicationController
 
     respond_to do |format|
       if @vendor.id.present?
+        ### Create customer in jpegger ###
+        @customer = Customer.new(vendorid: @vendor.id, first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
+          company_name: @vendor.company_name, display_name: @vendor.display_name,
+          height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
+          dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
+          employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone], license_number: vendor_params[:license_number], qb_company_id: current_company_id)
+        @customer.save
         format.html { 
-          ### Create customer in jpegger ###
-          @customer = Customer.new(vendorid: @vendor.id, first_name: @vendor.given_name, last_name: @vendor.family_name, address1: @vendor.billing_address.line1, city: @vendor.billing_address.city, state: @vendor.billing_address.country_sub_division_code, zip: @vendor.billing_address.postal_code,
-            company_name: @vendor.company_name, display_name: @vendor.display_name,
-            height: vendor_params[:height], weight: vendor_params[:weight], eye_color: vendor_params[:eye_color], hair_color: vendor_params[:hair_color],
-            dob: vendor_params[:dob].to_date, sex: vendor_params[:sex], issue_date: vendor_params[:license_issue_date].to_date, expiration_date: vendor_params[:license_expiration_date].to_date, 
-            employer: @vendor.company_name, employer_phone: vendor_params[:employer_phone], license_number: vendor_params[:license_number], qb_company_id: current_company_id)
-          @customer.save
-          
           if params[:vendor_quick_create]
             redirect_to :back, notice: 'Vendor was successfully created.'
           elsif params[:vendor_quick_create_from_ticket]
@@ -126,7 +128,8 @@ class VendorsController < ApplicationController
           end
           }
 #        format.html { redirect_to vendor_path(@vendor.id), notice: 'Vendor was successfully created.' }
-        format.json { render :show, status: :created, location: vendor_path(@vendor.id) }
+#        format.json { render :show, status: :created, location: vendor_path(@vendor.id) }
+        format.json { render json: {id: @vendor.id}, status: :created }
       else
         format.html { render :new }
         format.json { render json: @vendor.errors, status: :unprocessable_entity }
