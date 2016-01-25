@@ -379,6 +379,7 @@ jQuery ->
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
     company_id = $(this).data( "company-id" )
+    customer_name = $(this).data( "customer-name" )
 
     pencil_icon = $(this).find( ".fa-pencil" )
     pencil_icon.hide()
@@ -392,6 +393,7 @@ jQuery ->
       data:
         ticket_number: ticket_number
         company_id: company_id
+        customer_name: customer_name
       success: (response) ->
         pencil_icon.show()
         spinner_icon.hide()

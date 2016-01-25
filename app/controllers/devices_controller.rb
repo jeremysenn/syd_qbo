@@ -131,7 +131,7 @@ class DevicesController < ApplicationController
   end
   
   def get_signature
-    @device.get_signature(params[:ticket_number], params[:company_id])
+    @device.get_signature(params[:ticket_number], params[:company_id], params[:customer_name])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}
