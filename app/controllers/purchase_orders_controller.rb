@@ -54,18 +54,25 @@ class PurchaseOrdersController < ApplicationController
         @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
       end
       format.pdf do
-        @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
-        @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
-        render pdf: "PO#{@doc_number}",
-#        :page_width => 4,
-        :layout => 'pdf.html.haml',
-        :zoom => 1.25,
-        :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
         unless current_user.printer_devices.blank?
-          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
+          printer = current_user.printer_devices.last
+          @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
+          @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
+          render pdf: "PO#{@doc_number}",
+  #        :page_width => 4,
+          :layout => 'pdf.html.haml',
+#          :zoom => 1.25,
+          :zoom => "#{printer.PrinterWidth < 10 ? 2 : 1.25}",
+          :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
+          printer.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
+          # Remove the temporary pdf file that was created above
+          FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
+        else
+          render pdf: "PO#{@doc_number}",
+          :layout => 'pdf.html.haml',
+          :zoom => 1.25
         end
-        # Remove the temporary pdf file that was created above
-        FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
+        
       end
        format.xml do
           stream = render_to_string(:template=>"purchase_orders/show" ) # Leads Online generated XML
