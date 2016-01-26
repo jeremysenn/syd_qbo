@@ -105,15 +105,13 @@
           = date_field_tag   "vendor[license_expiration_date]", "#{@customer.blank? ? nil : @customer.expiration_date}", :placeholder => "License Expiration Date", class: "form-control input-lg"
       
       .row.form-group
-        %div{:class => "col-sm-6 col-md-6"}
+        %div{:class => "col-sm-12 col-md-12"}
           =# link_to "Cancel", "javascript:history.back()", :class => "btn btn-lg btn-default"
           = button_tag(name: 'save', :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'vendor_update_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save..."}) do
             Save
-        %div{:class => "col-sm-6 col-md-6"}
-          %a{href: '#', name: 'save_and_ticket', id: "save_and_ticket_button", :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Save & New Ticket"}}
-            Save & New Ticket
-          -#
-            = button_tag(save_and_ticket: true, :type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: 'save_and_ticket_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Save & New Ticket..."}) do
+        -#
+          %div{:class => "col-sm-6 col-md-6"}
+            %a{href: '#', name: 'save_and_ticket', id: "save_and_ticket_button", :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Save & New Ticket"}}
               Save & New Ticket
   %hr
   %div#cust_pics

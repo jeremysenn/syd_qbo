@@ -65,16 +65,20 @@ jQuery ->
   ### Save new vendor information and create new ticket for vendor with one submit ###
   $('#vendor_info').on 'click', '#new_vendor_and_ticket_button', (e) ->
     valuesToSubmit = $('#vendor_form').serialize()
-    $.ajax(
+    $.ajax
       type: 'POST'
       url: $('#vendor_form').attr('action')
       data: valuesToSubmit
-      dataType: 'JSON').success (json) ->
+      dataType: 'JSON'
+      success: (json) ->
         # Set the new vendor ID into the new purchase order form
         $('#purchase_order_vendor').val json.id
         $('#purchase_order_form').submit()
         #console.log 'success', json
-      return
+        return
+      error: ->
+        alert 'Error creating vendor'
+        return
     e.preventDefault() # Don't hop to top of page due to anchor
     return
   
