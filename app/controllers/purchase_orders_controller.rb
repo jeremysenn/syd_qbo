@@ -45,7 +45,7 @@ class PurchaseOrdersController < ApplicationController
   # GET /purchase_orders/1.json
   def show
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     @doc_number = @purchase_order.doc_number # Ticket number
     
     respond_to do |format|
@@ -54,21 +54,29 @@ class PurchaseOrdersController < ApplicationController
         @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
       end
       format.pdf do
-        @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
-        @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
-        render pdf: "PO#{@doc_number}",
-#        :page_width => 4,
-        :layout => 'pdf.html.haml',
-        :zoom => 1.25,
-        :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
         unless current_user.printer_devices.blank?
-          current_user.printer_devices.last.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
+          printer = current_user.printer_devices.last
+          @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
+          @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
+          render pdf: "PO#{@doc_number}",
+  #        :page_width => 4,
+          :layout => 'pdf.html.haml',
+#          :zoom => 1.25,
+          :zoom => "#{printer.PrinterWidth < 10 ? 2 : 1.25}",
+          :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
+          printer.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
+          # Remove the temporary pdf file that was created above
+          FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
+        else
+          render pdf: "PO#{@doc_number}",
+          :layout => 'pdf.html.haml',
+          :zoom => 1.25
         end
-        # Remove the temporary pdf file that was created above
-        FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
+        
       end
        format.xml do
-          stream = render_to_string(:template=>"purchase_orders/show" )  
+          stream = render_to_string(:template=>"purchase_orders/show" ) # Leads Online generated XML
+          send_data(stream, :type=>"text/xml",:filename => "test.xml")
 #          send_data(stream, :type=>"text/xml",:filename => "f_0_46347_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml")
 #         builder = Builder::XmlMarkup.new
 #         @xml = builder.person { |b| b.name("Jim"); b.phone("555-1234") }

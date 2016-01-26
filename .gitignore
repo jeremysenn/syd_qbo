@@ -26,6 +26,9 @@ public/uploads/*
 # Ignore Leads Online XML files.
 public/leads_online/*
 
+# Ignore BWI XML files.
+public/bwi/*
+
 # Ignore public assets
 public/assets/
 
