@@ -8,11 +8,10 @@
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Name", nil, :class => 'control-label'
           = text_field_tag "item[name]", nil, :placeholder => "Name", value: @item.name, class: "form-control input-lg"
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Type", nil, :class => 'control-label'
-          =# text_field_tag "item[type]", nil, :placeholder => "Type", value: @item.type, class: "form-control input-lg"
-          = select_tag "item[type]", options_for_select(['NonInventory', 'Inventory', 'Service', 'Category'], @item.type), class: "form-control input-lg", readonly: true
+      =# label_tag "Type", nil, :class => 'control-label'
+      =# text_field_tag "item[type]", nil, :placeholder => "Type", value: @item.type, class: "form-control input-lg"
+      = hidden_field_tag "item[type]", @item.type
+      =# select_tag "item[type]", options_for_select(['NonInventory', 'Inventory', 'Service', 'Category'], @item.type), class: "form-control input-lg", readonly: true
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Unit of Measure", nil, :class => 'control-label'
