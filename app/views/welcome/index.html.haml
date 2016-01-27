@@ -94,13 +94,26 @@
   = render partial: "shared/home_footer_navbar", locals: {title: "Welcome"} if current_user.active? and License.valid?
 
 - else
-  .jumbotron
+  - unless mobile_device?
+    #carousel-example-generic.carousel.slide{"data-ride" => "carousel", "data-pause" => ""}
+      .carousel-inner
+        -#
+          .item.active
+            %div{style: "background-image:('#{url("scrap-metals.jpg")}') center center; background-size:cover;", class: "homepage-slider-size"}
+        .item.active
+          %div{style: "background:url('#{asset_path "scrap-metals.jpg"}') center center; background-size:cover;", class: "homepage-slider-size"}
+  .jumbotron{style: 'background-color: #FFFFFF;'}
     .container
       -#
         .col-sm-12.col-md-4.col-md-offset-4
           %a.btn.btn-primary.btn-lg{:href => new_user_session_path, :role => "button", :class => 'btn-block'} Log In
-      %h2.text-center
-        <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
-        <ipp:login href="#{user_omniauth_authorize_path(:intuit)}" type="vertical"></ipp:login>
+      
+      %p.text-center Scrap Yard Ticket Management Made Easy!
+      %div.text-center
+        = image_tag("SYD_logo_300x200.png")
+      -#
+        %h2.text-center
+          <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+          <ipp:login href="#{user_omniauth_authorize_path(:intuit)}" type="vertical"></ipp:login>
 
 = render 'shared/footer'

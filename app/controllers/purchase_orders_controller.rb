@@ -104,8 +104,8 @@ class PurchaseOrdersController < ApplicationController
         @doc_number = @purchase_order.doc_number # Ticket number
         #    @contract = Contract.find(current_company_id) # Find contract for this company
         
-        #    query = "Select * From Item Where Type = 'Inventory'"
-        @items = @item_service.query(nil, :per_page => 1000)
+        query_string = "Select * From Item Where Type = 'NonInventory'"
+        @items = @item_service.query(query_string, :per_page => 1000)
         
         @scale_devices = current_user.scale_devices
         

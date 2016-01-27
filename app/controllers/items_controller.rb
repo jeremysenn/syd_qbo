@@ -46,17 +46,23 @@ class ItemsController < ApplicationController
 
   # GET /items/new
   def new
-    @accounts = @account_service.query(nil, :per_page => 1000)
+    query_string = "Select * From Account Where AccountType = 'Cost of Goods Sold'"
+    @accounts = @account_service.query(query_string, :per_page => 1000)
+#    @accounts = @account_service.query(nil, :per_page => 1000)
   end
 
   # GET /items/1/edit
   def edit
-    @accounts = @account_service.query(nil, :per_page => 1000)
+    query_string = "Select * From Account Where AccountType = 'Cost of Goods Sold'"
+    @accounts = @account_service.query(query_string, :per_page => 1000)
+#    @accounts = @account_service.query(nil, :per_page => 1000)
   end
   
   def create
     @item = Quickbooks::Model::Item.new
     @item.name = item_params[:name]
+    @item.type = 'NonInventory'
+#    @item.type = item_params[:type]
     @item.purchase_desc = item_params[:purchase_desc]
     @item.purchase_cost = item_params[:purchase_cost]
     @item.expense_account_id = item_params[:expense_account_ref]
@@ -75,6 +81,7 @@ class ItemsController < ApplicationController
 
   def update_qb
     @item.name = item_params[:name]
+    @item.type = item_params[:type]
     @item.purchase_desc = item_params[:purchase_desc]
     @item.purchase_cost = item_params[:purchase_cost]
     @item.expense_account_id = item_params[:expense_account_ref]
@@ -150,6 +157,6 @@ class ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:item).permit(:name, :description, :purchase_cost, :purchase_desc, :expense_account_ref)
+      params.require(:item).permit(:name, :description, :purchase_cost, :purchase_desc, :expense_account_ref, :type)
     end
 end

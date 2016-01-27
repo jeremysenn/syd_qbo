@@ -10,6 +10,10 @@
           = text_field_tag "item[name]", nil, :placeholder => "Name", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
+          = label_tag "Type", nil, :class => 'control-label'
+          = select_tag "item[type]", options_for_select(['NonInventory']), class: "form-control input-lg", readonly: true
+      .row.form-group
+        %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Unit of Measure", nil, :class => 'control-label'
           = select_tag "item[purchase_desc]", options_for_select(units_of_measure), prompt: 'Select unit of measure', class: "form-control input-lg"
       .row.form-group
