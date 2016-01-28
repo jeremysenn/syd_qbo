@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from Quickbooks::IntuitRequestException do |exception|
+    # Still send out exception notification email even if rescuing
+    ExceptionNotifier.notify_exception(exception,
+      :env => request.env, :data => {:message =>  exception.message})
+    
     redirect_to root_url, :flash => { :error =>  exception.message }
   end
   
