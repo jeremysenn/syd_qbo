@@ -17,4 +17,5 @@
               %i.fa.fa-plus.fa-lg
               = "Ticket" unless mobile_device?
 
-= render partial: "purchase_orders/quick_new_purchase_order"
+- if (params[:controller]=='vendors') and (params[:action]=='new' or params[:action]=='edit')
+  = render partial: "purchase_orders/quick_new_purchase_order"
