@@ -30,6 +30,7 @@ class BillPaymentsController < ApplicationController
 #    @items = @item_service.query(nil, :per_page => 1000)
     @doc_number = @bill_payment.doc_number
     @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number }
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     
     respond_to do |format|
       format.html do
@@ -58,6 +59,7 @@ class BillPaymentsController < ApplicationController
   def new
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @bill= @bill_service.fetch_by_id(params[:bill_id])
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     
     query_banks = "Select * from Account Where AccountType = 'Bank'"
     query_credit_cards = "Select * from Account Where AccountType = 'Credit Card'"
@@ -203,7 +205,7 @@ class BillPaymentsController < ApplicationController
   
   def send_to_leads_online
     @bill = @bill_service.query.entries.find{ |b| b.doc_number == @bill_payment.doc_number }
-    @customer = Customer.where(id: @bill_payment.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @bill_payment.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     
     path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
     SendBillPaymentToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill_payment.id, @bill.id, current_company_id, current_user.id, @customer.id)

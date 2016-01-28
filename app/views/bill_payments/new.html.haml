@@ -7,12 +7,13 @@
         %div.panel-heading{:role => "tab", id: "vendor_heading"}
           %h4.panel-title
             %a{"aria-controls" => "collapseVendor", "aria-expanded" => "true", "data-parent" => "#vendor_accordion", "data-toggle" => "collapse", :href => "#collapseVendor", :role => "button"}
-              Vendor
+              #vendor_name= @bill.vendor_ref.name
         #collapseVendor.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
           .panel-body
             = hidden_field "bill_payment[vendor]", @bill.vendor_ref
-        %div.panel-footer
-          .vendor_name= @bill.vendor_ref.name
+        -#
+          %div.panel-footer
+            .vendor_name= @bill.vendor_ref.name
     %div.bill_input_fields_wrap
       #items_accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
         - @bill.line_items.each do |line_item|

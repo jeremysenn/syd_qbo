@@ -61,9 +61,10 @@
 
 -# Submit new bill form automatically
 - if (params[:close_ticket].present?) || (params[:close_and_pay].present?)
-  %p.text-center
-    %i.fa.fa-spinner.fa-spin.fa-4x
-    Closing ticket, please wait ...
+  %p.text-center.lead
+    %i.fa.fa-spinner.fa-spin.fa-3x
+    %br
+    Preparing payment, please wait ...
   :javascript
     $(function() {
       $('#bill_form').submit();

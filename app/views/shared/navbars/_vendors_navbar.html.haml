@@ -10,7 +10,7 @@
           %i.fa.fa-users.fa-lg
           = title
         .col-xs-4.col-sm-4
-          %a{href: new_vendor_path, data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i>"}}
+          %a{href: new_vendor_path, class: 'vendor_button', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i>"}}
             %i.fa.fa-user-plus.fa-lg
             = "Vendor" unless mobile_device?
           -#

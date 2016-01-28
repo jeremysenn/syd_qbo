@@ -23,6 +23,22 @@ class Customer < ActiveRecord::Base
     end
   end
   
+  def weight_in_kilograms
+    unless weight.blank?
+      (0.453592 * weight.to_i).to_i
+    end
+  end
+  
+  def height_in_meters
+    unless height.blank?
+      (0.0254 * height.to_i).round(2)
+    end
+  end
+  
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+  
   #############################
   #     Class Methods      #
   #############################

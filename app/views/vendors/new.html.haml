@@ -8,8 +8,8 @@
           = "#{license_reader_device.DeviceName} Data Scan"
           = image_tag("ajax-loader.gif", :id => "data_scan_spinner", :class => "data_scan_spinner", :alt => "Loading ...", style: "display:none;")
   
-  .well.col-sm-12.col-md-12
-    = form_tag vendors_path, :class => "form-horizontal" do
+  .well.col-sm-12.col-md-12{id: 'vendor_info'}
+    = form_tag vendors_path, id: 'vendor_form', :class => "form-horizontal" do
       .row.form-group
         %div{:class => "col-xs-12 col-sm-6 col-md-6"}
           = label_tag "First Name", nil, :class => 'control-label'
@@ -19,18 +19,18 @@
           = text_field_tag "vendor[family_name]", params[:last_name], :placeholder => "Last Name", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
-          = label_tag "Height", nil, :class => 'control-label'
+          = label_tag "Height", "Height (inches)", :class => 'control-label'
           = text_field_tag "vendor[height]", "#{@customer.blank? ? nil : @customer.height}", :placeholder => "Height", class: "form-control input-lg"
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
-          = label_tag "Weight", nil, :class => 'control-label'
+          = label_tag "Weight", "Weight (pounds)", :class => 'control-label'
           = text_field_tag "vendor[weight]", "#{@customer.blank? ? nil : @customer.weight}", :placeholder => "Weight", class: "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
           = label_tag "Eye Color", nil, :class => 'control-label'
-          = text_field_tag "vendor[eye_color]", "#{@customer.blank? ? nil : @customer.eye_color}", :placeholder => "Eye Color", class: "form-control input-lg"
+          = select_tag "vendor[eye_color]", options_for_select(['Blue', 'Gray', 'Grey', 'Hazel', 'Green', 'Black', 'Brown', 'Other'], "#{@customer.blank? ? nil : @customer.eye_color}"), :class => "form-control input-lg"
         %div{:class => "col-xs-6 col-sm-6 col-md-6"}
           = label_tag "Hair Color", nil, :class => 'control-label'
-          = text_field_tag "vendor[hair_color]", "#{@customer.blank? ? nil : @customer.hair_color}", :placeholder => "Hair Color", class: "form-control input-lg"
+          = select_tag "vendor[hair_color]", options_for_select(['Black', 'Dark Brown', 'Brown', 'Light Brown', 'Sandy', 'Blonde', 'Auburn', 'Red', 'Dyed', 'Bald', 'Graying', 'Gray', 'Grey', 'Unknown'], "#{@customer.blank? ? nil : @customer.hair_color}"), :class => "form-control input-lg"
       .row.form-group
         %div{:class => "col-xs-6 col-sm-3 col-md-3"}
           = label_tag "Sex", nil, :class => 'control-label'
@@ -83,5 +83,9 @@
         %div{:class => "col-sm-12 col-md-12"}
           = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Creating..."}) do
             Create
+        -#
+          %div{:class => "col-sm-6 col-md-6"}
+            %a{href: '#/', name: 'save_and_ticket', id: "new_vendor_and_ticket_button", :class => 'btn btn-primary btn-lg btn-block', data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Create & New Ticket"}}
+              Create & New Ticket
 
 = render partial: "shared/footer_navbar", locals: {title: "Vendor"}

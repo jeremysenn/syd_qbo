@@ -95,19 +95,29 @@ class PurchaseOrdersController < ApplicationController
 
   # GET /purchase_orders/1/edit
   def edit
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
-#    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
-    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
-#    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @doc_number = @purchase_order.doc_number # Ticket number
-#    @contract = Contract.find(current_company_id) # Find contract for this company
-
-#    query = "Select * From Item Where Type = 'Inventory'"
-    @items = @item_service.query(nil, :per_page => 1000)
+    respond_to do |format|
+      format.html{
+        #@vendors = @vendor_service.query(nil, :per_page => 1000)
+        #    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
+        @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+        #    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
+        @doc_number = @purchase_order.doc_number # Ticket number
+        #    @contract = Contract.find(current_company_id) # Find contract for this company
+        
+        query_string = "Select * From Item Where Type = 'NonInventory'"
+        @items = @item_service.query(query_string, :per_page => 1000)
+        
+        category_query_string = "Select * From Item Where Type = 'Category'"
+        @categories = @item_service.query(category_query_string, :per_page => 1000)
+        
+        @scale_devices = current_user.scale_devices
+        
+        #    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
+        #    search = Image.ransack(ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location)
+        #    @images = search.result.page(params[:page]).per(1)
+      }
+    end
     
-#    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
-#    search = Image.ransack(ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location)
-#    @images = search.result.page(params[:page]).per(1)
   end
   
   # POST /purchase_orders
@@ -183,9 +193,9 @@ class PurchaseOrdersController < ApplicationController
             redirect_to root_path, notice: 'Ticket closed'
 #            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...'
           elsif params[:close_and_pay]
-            @bill = Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
-            redirect_to new_bill_payment_path(bill_id: @bill.id)
-#            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true), notice: 'Closing ticket, please wait ...'
+#            @bill = Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
+#            redirect_to new_bill_payment_path(bill_id: @bill.id)
+            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true) #, notice: 'Closing ticket, please wait ...'
           else
 #            redirect_to purchase_orders_path
             redirect_to root_path
@@ -215,7 +225,8 @@ class PurchaseOrdersController < ApplicationController
   
   def line_item_fields
     @doc_number = params[:doc_number]
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @scale_devices = Device.where(Devid: eval(params[:scale_device_ids]))
+#    @items = @item_service.query(nil, :per_page => 1000)
 #    query = "Select * From Item Where Type = 'Inventory'"
 #    @items = @item_service.query(query, :per_page => 1000)
     respond_to do |format|
@@ -236,7 +247,7 @@ class PurchaseOrdersController < ApplicationController
   def send_to_leads_online
     require 'net/ftp'
     @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
-    @customer = Customer.where(id: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
     File.open(path_to_file, 'w') {|f| f.write(PurchaseOrder.generate_xml(@purchase_order, @company_info, current_company_id, current_user, @customer, @item_service)) }
     Net::FTP.open('ftp.leadsonline.com', 'tranact', 'tr@n@ct33710') do |ftp|

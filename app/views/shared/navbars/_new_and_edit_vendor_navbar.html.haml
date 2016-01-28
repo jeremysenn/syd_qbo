@@ -12,13 +12,9 @@
         .col-xs-4.col-sm-4
           = title
         .col-xs-4.col-sm-4
-          - if params[:controller]=='vendors' and params[:action]=='show'
-            %a{href: '#', id: 'new_ticket_navbar_link'}
+          -#
+            %a{href: '#', id: "new_ticket_navbar_link", data: {disable_with: "<i class='fa fa-spinner fa-spin fa-lg'></i> Ticket"}}
               %i.fa.fa-plus.fa-lg
               = "Ticket" unless mobile_device?
-          -#
-            = image_tag("ajax-loader-gray-background.gif", :id => "spinner", :alt => "Loading ...", style: "display:none;")
-            = link_to 'Done', '#', onclick: "$(this).hide(); $('#spinner').show(); $('#purchase_order_form').submit();"
 
-- if params[:controller]=='vendors' and params[:action]=='show'
-  = render partial: "purchase_orders/quick_new_purchase_order"
+= render partial: "purchase_orders/quick_new_purchase_order"
