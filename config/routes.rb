@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     member do
       get :update_qb
     end
+    collection do
+      get :items_by_category
+    end
   end
   
   resources :purchase_orders do

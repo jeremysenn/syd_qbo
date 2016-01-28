@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_oauth_client
-  before_action :set_item_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy]
+  before_action :set_item_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :items_by_category]
   before_action :set_vendor_service, only: [:index, :show, :create, :edit, :update]
   before_action :set_account_service, only: [:new, :edit]
   before_action :set_item, only: [:show, :edit, :update, :update_qb, :destroy]
@@ -109,6 +109,19 @@ class ItemsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  
+  def items_by_category
+    query_string = "Select * From Item Where ParentRef = '#{params[:category_id]}'"
+    @items = @item_service.query(query_string, :per_page => 1000)
+    respond_to do |format|
+      format.js {
+      }
+#      format.json { render json: @items.as_json(:only => [:name]), status: :ok }
+#      format.json { render json: @items.map{|i| i.name} }
+      format.json { render json: Hash[@items.map{|item| [item.id, item.name]}] , status: :ok }
+#      format.json { render json: @items.as_json(:only => [:id, :name])}
     end
   end
 

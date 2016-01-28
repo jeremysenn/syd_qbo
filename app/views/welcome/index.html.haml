@@ -112,7 +112,10 @@
       %div.text-center
         %p= image_tag("SYD_logo_300x200.png")
         %p
-          %a{href: 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-primary', target: '_blank'} Learn More!
+          %a{href: 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'} More Info
+          %a{href: new_user_session_path, class: 'btn btn-lg btn-primary', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Log In"}}
+            %i.fa.fa-lock
+            Log In
       -#
         %h2.text-center
           <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>

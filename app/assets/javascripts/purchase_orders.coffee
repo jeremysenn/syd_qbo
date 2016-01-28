@@ -53,7 +53,7 @@ jQuery ->
   ### End vendor value changed ###
 
   ### Line item changed ###
-  $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
+  $('.purchase_order_input_fields_wrap').on 'change', '.item_select', ->
     item_id = $(this).val()
     input_select = $(this)
     $.ajax(url: "/items/" + item_id, dataType: 'json').done (data) ->
@@ -521,3 +521,21 @@ jQuery ->
   $(document).on 'click', '.purchase_order_collapse_link', (e) ->
     $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square ')
     return
+
+  ### Dynamic Select of Items Based Upon Category ###
+  #$(document).on 'change', '.category_select', (evt) ->
+  $('.category_select').on 'change', (evt) ->
+    this_category_id = $(this).val()
+    alert this_category_id
+    $.ajax 
+      url: "/items/items_by_category"
+      type: 'GET'
+      #dataType: 'script'
+      dataType: 'json'
+      data: {
+        category_id: this_category_id
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log(data)
