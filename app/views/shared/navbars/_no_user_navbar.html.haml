@@ -15,18 +15,21 @@
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li
-          %a{href: 'https://tranact.com/', target: '_blank'} About
+          %a{href: 'https://tranact.com/', target: '_blank'} 
+            %strong ABOUT
         %li
-          %a{href: 'https://tranact.com/scrapyarddog/', target: '_blank'} How it Works
+          %a{href: 'https://tranact.com/scrapyarddog/', target: '_blank'} 
+            %strong HOW IT WORKS
         %li
           %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
-            Quickbooks
+            %strong QUICKBOOKS
       %ul.nav.navbar-nav.navbar-right
         &nbsp;
         %li
           %a{href: new_user_session_path}
-            %i.fa.fa-lock
-            LOG IN
+            %strong
+              %i.fa.fa-lock
+              LOG IN
         -#
           %li
             %a{href: new_user_registration_path}

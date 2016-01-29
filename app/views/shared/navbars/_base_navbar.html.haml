@@ -45,12 +45,13 @@
                 %a{href: items_path} All Items
         %li{:class => (params[:controller] == "images" or params[:controller] == "shipments") ? "active" : ""}
           %a{href: "#{current_user.images_table? ? images_path : shipments_path}"}
-            Pictures
+            %strong PICTURES
         - unless current_company.device_groups.blank?
           %li.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-              Device Group
-              %b.caret
+              %strong
+                DEVICE GROUP
+                %b.caret
             %ul.dropdown-menu
               %li{:class => (current_user.device_group == nil) ? "active" : ""}= link_to 'None', user_setting_path(current_user.user_setting, "user_setting[device_group_id]" => ''), :method => :put
               - current_company.device_groups.each do |device_group|
@@ -58,17 +59,12 @@
                 -#
                   %li{:class => (current_user.device_group == device_group) ? "active" : ""}
                     %a{href: '#'}= device_group.DeviceGroupName
-        %li.dropdown
-          %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-            Company
-            %b.caret
-          %ul.dropdown-menu
-            %li{:class => params[:controller] == "companies" ? "active" : ""}
-              %a{href: company_path(current_company_id)}
-                Company Info
-            %li
-              %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
-                Quickbooks
+        %li{:class => params[:controller] == "companies" ? "active" : ""}
+          %a{href: company_path(current_company_id)}
+            %strong SETTINGS
+        %li
+          %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
+            %strong QUICKBOOKS
       %ul.nav.navbar-nav.navbar-right
         %li= link_to "<strong>#{current_user.email}</strong>".html_safe, edit_user_registration_path(current_user)
         %li= link_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out?' }
