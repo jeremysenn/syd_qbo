@@ -53,7 +53,7 @@ jQuery ->
   ### End vendor value changed ###
 
   ### Line item changed ###
-  $('.purchase_order_input_fields_wrap').on 'change', 'select', ->
+  $('.purchase_order_input_fields_wrap').on 'change', '.item_select', ->
     item_id = $(this).val()
     input_select = $(this)
     $.ajax(url: "/items/" + item_id, dataType: 'json').done (data) ->
@@ -201,7 +201,7 @@ jQuery ->
         #$("#new_image_file").prepend data.context
         #$('#new_image_file').append('<img src="' + URL.createObjectURL(data.files[0]) + '"/>')
         $('#pictures').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
-        $('#images').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
+        $('#images').prepend('<div class="row"><div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
         #data.submit()
         $(".picture_loading_spinner").show()
         #$("#uploads").hide()
@@ -379,6 +379,7 @@ jQuery ->
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
     company_id = $(this).data( "company-id" )
+    customer_name = $(this).data( "customer-name" )
 
     pencil_icon = $(this).find( ".fa-pencil" )
     pencil_icon.hide()
@@ -392,6 +393,7 @@ jQuery ->
       data:
         ticket_number: ticket_number
         company_id: company_id
+        customer_name: customer_name
       success: (response) ->
         pencil_icon.show()
         spinner_icon.hide()
@@ -412,6 +414,7 @@ jQuery ->
     device_id = $(this).data( "device-id" )
     ticket_number = $(this).data( "ticket-number" )
     location = $(this).data( "company-id" )
+    customer_name = $(this).data( "customer-name" )
 
     pointer_icon = $(this).find( ".fa-hand-pointer-o" )
     pointer_icon.hide()
@@ -425,6 +428,7 @@ jQuery ->
       data:
         ticket_number: ticket_number
         location: location
+        customer_name: customer_name
       success: (response) ->
         pointer_icon.show()
         spinner_icon.hide()
@@ -471,7 +475,7 @@ jQuery ->
   $('.customer_camera_trigger_from_ticket').click ->
     # Get data from button
     this_vendor_id = $(this).data( "vendor-id" )
-    this_event_code = $('#image_file_event_code').val()
+    #this_event_code = $('#image_file_event_code').val()
     this_location = $(this).data( "location" )
     this_camera_name = $(this).data( "camera-name" )
     if $('#vendor_given_name').length > 0
@@ -482,7 +486,8 @@ jQuery ->
       this_family_name = $('#vendor_family_name').val()
     else
       this_family_name = $(this).data( "family-name" )
-      
+    camera_icon = $(this).find( ".fa-camera" )
+    camera_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
 
@@ -495,11 +500,12 @@ jQuery ->
         customer_number: this_vendor_id
         customer_first_name: this_given_name
         customer_last_name: this_family_name
-        event_code: this_event_code
+        event_code: 'Customer Photo'
         location: this_location
         camera_name: this_camera_name
       success: (response) ->
         spinner_icon.hide()
+        camera_icon.show()
         #alert 'Customer camera trigger successful.'
         return
       error: ->
@@ -515,3 +521,21 @@ jQuery ->
   $(document).on 'click', '.purchase_order_collapse_link', (e) ->
     $(this).closest('.panel').find('.collapse_icon').toggleClass('fa-check-square ')
     return
+
+  ### Dynamic Select of Items Based Upon Category ###
+  #$(document).on 'change', '.category_select', (evt) ->
+  $('.category_select').on 'change', (evt) ->
+    this_category_id = $(this).val()
+    alert this_category_id
+    $.ajax 
+      url: "/items/items_by_category"
+      type: 'GET'
+      #dataType: 'script'
+      dataType: 'json'
+      data: {
+        category_id: this_category_id
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log(data)

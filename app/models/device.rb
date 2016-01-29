@@ -156,7 +156,7 @@ class Device < ActiveRecord::Base
     end
   end
   
-  def get_signature(ticket_number, company_id)
+  def get_signature(ticket_number, company_id, customer_name)
     xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
       <SOAP-ENV:Body>
          <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
@@ -170,6 +170,7 @@ class Device < ActiveRecord::Base
                   <LOCATION>#{company_id}</LOCATION>
                   <SIG_ID>#{company_id}</SIG_ID>
                   <CONTRACT_ID>#{company_id}</CONTRACT_ID>
+                  <CUST_NAME>#{customer_name}</CUST_NAME>
                </CAPTURE>
             </Trigger>
          </mns:JpeggerTrigger>
@@ -211,7 +212,7 @@ class Device < ActiveRecord::Base
 #    client.call(:encode, xml: xml_string)
 #  end
   
-  def finger_print_trigger(ticket_number, location)
+  def finger_print_trigger(ticket_number, location, customer_name)
     xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
       <SOAP-ENV:Body>
          <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
@@ -222,6 +223,7 @@ class Device < ActiveRecord::Base
                   <TICKET_NBR>#{ticket_number}</TICKET_NBR>
                   <EVENT_CODE>Finger Print</EVENT_CODE>
                   <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
+                  <CUST_NAME>#{customer_name}</CUST_NAME>
                   <LOCATION>#{location}</LOCATION>
                </CAPTURE>
             </Trigger>

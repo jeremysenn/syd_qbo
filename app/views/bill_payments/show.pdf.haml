@@ -1,4 +1,7 @@
-%center= @bill_payment.doc_number
+%center
+  = @bill_payment.doc_number
+  %br
+  = DateTime.now.strftime("%a, %d %b %Y %I:%M%p")
 - unless @current_user.company.logo_url.blank?
   = image_tag(@current_user.company.logo_url, size: '50x50')
 - else

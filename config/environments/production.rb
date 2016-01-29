@@ -98,7 +98,8 @@ Rails.application.configure do
   #SydQbo::Application.config.middleware.use ExceptionNotification::Rack,
   Rails.application.config.middleware.use ExceptionNotification::Rack,
   :email => {
+    :ignore_exceptions => ['ActionView::TemplateError'] + ExceptionNotifier.ignored_exceptions,
     :sender_address => %{"SYD QBO Exception Notifier" <notifier@example.com>},
-    :exception_recipients => %w{senn.jeremy@gmail.com jeremy@tranact.com shark@tranact.com}
+    :exception_recipients => %w{jeremy@tranact.com shark@tranact.com}
   }
 end

@@ -89,7 +89,7 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'whenever', :require => false
 
 # Quickbooks Online REST API Version 3
-gem 'quickbooks-ruby', github: 'ruckus/quickbooks-ruby'
+gem 'quickbooks-ruby'#, github: 'ruckus/quickbooks-ruby'
 
 # OpenID strategy for OmniAuth (single sign on)
 gem 'omniauth-openid'

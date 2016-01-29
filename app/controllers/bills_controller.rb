@@ -3,7 +3,7 @@ class BillsController < ApplicationController
 #  load_and_authorize_resource
 
   before_action :set_oauth_client
-  before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
+  before_action :set_bill_service, only: [:index, :show, :create, :edit, :update, :update_qb, :destroy, :send_to_leads_online, :send_to_bwi]
   before_action :set_vendor_service, only: [:index, :show, :new, :create, :edit, :update]
   before_action :set_item_service, only: [:index, :show, :new, :create, :edit, :line_item_fields]
   before_action :set_purchase_order_service, only: [:new, :create, :edit, :update, :update_qb, :destroy]
@@ -11,7 +11,7 @@ class BillsController < ApplicationController
   before_action :set_account_service, only: [:index]
   before_action :set_company_service, only: [:show]
   
-  before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy, :send_to_leads_online]
+  before_action :set_bill, only: [:show, :edit, :update, :update_qb, :destroy, :send_to_leads_online, :send_to_bwi]
 
   # GET /bills
   # GET /bills.json
@@ -74,13 +74,16 @@ class BillsController < ApplicationController
 
   # GET /bills/1/edit
   def edit
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
 #    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     @doc_number = @bill.doc_number
 #    @contract = Contract.find(current_company_id) # Find contract for this company
     
-#    query = "Select * From Item Where Type = 'Inventory'"
-    @items = @item_service.query(nil, :per_page => 1000)
+    query_string = "Select * From Item Where Type = 'NonInventory'"
+    @items = @item_service.query(query_string, :per_page => 1000)
+    
+    @scale_devices = current_user.scale_devices
 #    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
   end
   
@@ -189,7 +192,7 @@ class BillsController < ApplicationController
   end
   
   def line_item_fields
-    @items = @item_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
     respond_to do |format|
       format.js
     end
@@ -206,13 +209,23 @@ class BillsController < ApplicationController
   end
   
   def send_to_leads_online
-    @customer = Customer.where(id: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
     
     path_to_file = "public/leads_online/f_0_#{current_company.leads_online_store_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
     SendBillToLeadsWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill.id, current_company_id, current_user.id, @customer.id)
 
     respond_to do |format|
       format.html { redirect_to bills_path, notice: 'Bill details sent to Leads Online.' }
+    end
+  end
+  
+  def send_to_bwi
+    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    
+    path_to_file = "public/bwi/bwi_#{current_company_id}_#{Date.today.strftime("%m")}_#{Date.today.strftime("%d")}_#{Date.today.strftime("%Y")}_#{Time.now.strftime("%H%M%S")}.xml"
+    SendBillToBwiWorker.perform_async(current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret, path_to_file, @bill.id, current_company_id, current_user.id, @customer.id)
+    respond_to do |format|
+      format.html { redirect_to bills_path, notice: 'Bill details sent to BWI.' }
     end
   end
   

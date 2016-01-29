@@ -47,6 +47,14 @@ class Company < ActiveRecord::Base
     end
   end
   
+  def bwi_config_settings_present?
+    if bwi_company_id.blank? or bwi_company_name.blank? or bwi_username.blank? or bwi_password.blank? or bwi_upload_url.blank?
+      return false
+    else
+      return true
+    end
+  end
+  
   #############################
   #     Class Methods      #
   #############################

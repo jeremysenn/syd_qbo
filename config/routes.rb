@@ -14,12 +14,16 @@ Rails.application.routes.draw do
       #get :update_qb
       post :update_qb
       get :send_to_leads_online
+      get :send_to_bwi
     end
   end
   
   resources :items do
     member do
       get :update_qb
+    end
+    collection do
+      get :items_by_category
     end
   end
   
@@ -46,7 +50,7 @@ Rails.application.routes.draw do
   
   resources :vendors do
     member do
-      get :update_qb
+      post :update_qb
     end
   end
   

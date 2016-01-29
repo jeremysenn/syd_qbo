@@ -26,7 +26,7 @@ jQuery ->
         ).done ->
           data.submit()
         $('#pictures').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
-        $('#cust_pics').prepend('<div class="row"><div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
+        $('#cust_pics').prepend('<div class="row"><div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><div class="thumbnail"><img src="' + URL.createObjectURL(data.files[0]) + '"/></div></div></div>')
         $(".picture_loading_spinner").show()
       else
         alert "" + file.name + " is not a gif, jpeg, or png picture file"
@@ -55,10 +55,41 @@ jQuery ->
       loading_vendors = false
   ### End endless page stuff ###
 
+  ### Create a new ticket from vendor ###
   #$(document).on 'click', '.new_ticket_from_vendor', (e) ->
   $('#vendors').on 'click', '.new_ticket_from_vendor', (e) ->
     $('#purchase_order_vendor').val $(this).attr 'data-vendor-id'
     $('#purchase_order_form').submit()
+    return
+    
+  ### Save new vendor information and create new ticket for vendor with one submit ###
+  $('#vendor_info').on 'click', '#new_vendor_and_ticket_button', (e) ->
+    valuesToSubmit = $('#vendor_form').serialize()
+    $.ajax
+      type: 'POST'
+      url: $('#vendor_form').attr('action')
+      data: valuesToSubmit
+      dataType: 'JSON'
+      success: (json) ->
+        # Set the new vendor ID into the new purchase order form
+        $('#purchase_order_vendor').val json.id
+        $('#purchase_order_form').submit()
+        #console.log 'success', json
+        return
+      error: ->
+        alert 'Error creating vendor'
+        return
+    e.preventDefault() # Don't hop to top of page due to anchor
+    return
+  
+  ### Update vendor information and create new ticket for vendor with one submit ###
+  $('#vendor_info').on 'click', '#save_and_ticket_button', (e) ->
+    # Submit vendor data via ajax post
+    $.post $('#vendor_form').attr('action'), $('#vendor_form').serialize(), ->
+      return
+    # Submit new purchase order data through regular post
+    $('#purchase_order_form').submit()
+    e.preventDefault() # Don't hop to top of page due to anchor
     return
 
   $('.drivers_license_scan').on 'click', ->

@@ -3,15 +3,16 @@
 
 .container
   .well.col-sm-6.col-md-4.col-md-offset-4
+    %p.lead *Items will be sorted alphabetically. Include unit of measure on the end of item name (e.g. Copper LB).
     = form_tag update_qb_item_path, method: 'get', :class => "form-horizontal" do
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Name", nil, :class => 'control-label'
           = text_field_tag "item[name]", nil, :placeholder => "Name", value: @item.name, class: "form-control input-lg"
-      .row.form-group
-        %div{:class => "col-sm-12 col-md-12"}
-          = label_tag "Type", nil, :class => 'control-label'
-          = text_field_tag "item[type]", nil, :placeholder => "Type", value: @item.type, class: "form-control input-lg"
+      =# label_tag "Type", nil, :class => 'control-label'
+      =# text_field_tag "item[type]", nil, :placeholder => "Type", value: @item.type, class: "form-control input-lg"
+      = hidden_field_tag "item[type]", @item.type
+      =# select_tag "item[type]", options_for_select(['NonInventory', 'Inventory', 'Service', 'Category'], @item.type), class: "form-control input-lg", readonly: true
       .row.form-group
         %div{:class => "col-sm-12 col-md-12"}
           = label_tag "Unit of Measure", nil, :class => 'control-label'
