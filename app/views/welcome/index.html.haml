@@ -94,14 +94,15 @@
   = render partial: "shared/home_footer_navbar", locals: {title: "Welcome"} if current_user.active? and License.valid?
 
 - else
-  - unless mobile_device?
-    #carousel-example-generic.carousel.slide{"data-ride" => "carousel", "data-pause" => ""}
-      .carousel-inner
-        -#
+  -#
+    - unless mobile_device?
+      #carousel-example-generic.carousel.slide{"data-ride" => "carousel", "data-pause" => ""}
+        .carousel-inner
+          -#
+            .item.active
+              %div{style: "background-image:('#{url("scrap-metals.jpg")}') center center; background-size:cover;", class: "homepage-slider-size"}
           .item.active
-            %div{style: "background-image:('#{url("scrap-metals.jpg")}') center center; background-size:cover;", class: "homepage-slider-size"}
-        .item.active
-          %div{style: "background:url('#{asset_path "scrap-metals.jpg"}') center center; background-size:cover;", class: "homepage-slider-size"}
+            %div{style: "background:url('#{asset_path "scrap-metals.jpg"}') center center; background-size:cover;", class: "homepage-slider-size"}
   .jumbotron{style: 'background-color: #FFFFFF;'}
     .container
       -#
@@ -110,7 +111,7 @@
       
       %p.text-center Scrap Yard Ticket Management Made Easy!
       %div.text-center
-        %p= image_tag("SYD_logo_300x200.png")
+        %p= image_tag("syd_metal_logo_672x378.png")
         %p
           %a{href: 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'} More Info
           %a{href: new_user_session_path, class: 'btn btn-lg btn-primary', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Log In"}}
