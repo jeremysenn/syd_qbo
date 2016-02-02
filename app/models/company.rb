@@ -5,6 +5,8 @@ class Company < ActiveRecord::Base
   self.primary_key = 'CompanyID'
   self.table_name = 'Company'
   
+  mount_uploader :logo_url, LogoUploader
+  
   has_many :users
   has_many :workstations
   has_many :devices
