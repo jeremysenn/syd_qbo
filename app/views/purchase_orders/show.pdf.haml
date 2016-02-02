@@ -5,10 +5,7 @@
   
 - unless @current_user.company.logo_url.blank?
   =# image_tag(@current_user.company.logo_url, size: '50x50')
-  =# image_tag(@current_user.company.logo_url.path, size: '50x50')
-  = image_tag ["http://", request.host_with_port, @current_user.company.logo_url.url].join()
-  =# image_tag("http://localhost:3000/uploads/company/logo_url/404168351/recycle_logo_57x57.png")
-  =# image_tag image_url(@current_user.company.logo_url.path)
+  = image_tag ["http://", request.host_with_port, @current_user.company.logo_url.url].join(), size: '50x50'
 - else
   = wicked_pdf_image_tag 'recycle_logo_57x57.png'
 %strong= @company_info.company_name
