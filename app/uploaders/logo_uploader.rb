@@ -17,21 +17,21 @@ class LogoUploader < CarrierWave::Uploader::Base
   end
   
   # Create different versions of your uploaded files:
-  version :thumb do
-    process :rotate
+#  version :thumb do
+#    process :rotate
+##    process :resize_to_fit => [320, 240]
 #    process :resize_to_fit => [320, 240]
-    process :resize_to_fit => [320, 240]
-    process :convert => :jpg
-
-    def full_filename (for_file = model.source.file)
-      super.chomp(File.extname(super)) + '.jpg'
-    end
-  end
+#    process :convert => :jpg
+#
+#    def full_filename (for_file = model.source.file)
+#      super.chomp(File.extname(super)) + '.jpg'
+#    end
+#  end
   
-  version :large do
-    process :rotate
+#  version :large do
+#    process :rotate
 #    process :resize_to_fit => [2000, 2000]
-  end
+#  end
   
   def rotate
     manipulate! do |image|
