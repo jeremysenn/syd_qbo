@@ -35,7 +35,7 @@
           =# f.text_field :logo_url, :placeholder => "Logo URL", class: "form-control input-lg"
           = f.file_field :logo_url
           - unless @company.logo_url.blank?
-            = image_tag(@company.logo_url, class: 'img-responsive')
+            = image_tag(@company.logo_url, class: 'img-responsive', size: '50x50')
   #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
     .panel.panel-default
       #headingOne.panel-heading{:role => "tab"}
