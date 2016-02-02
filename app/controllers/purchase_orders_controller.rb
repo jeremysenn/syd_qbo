@@ -59,11 +59,11 @@ class PurchaseOrdersController < ApplicationController
           @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
           @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
           render pdf: "PO#{@doc_number}",
-  #        :page_width => 4,
-          :layout => 'pdf.html.haml',
-#          :zoom => 1.25,
-          :zoom => "#{printer.PrinterWidth < 10 ? 2 : 1.25}",
-          :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
+    #        :page_width => 4,
+            :layout => 'pdf.html.haml',
+  #          :zoom => 1.25,
+            :zoom => "#{printer.PrinterWidth < 10 ? 2 : 1.25}",
+            :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
           printer.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
           # Remove the temporary pdf file that was created above
           FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
