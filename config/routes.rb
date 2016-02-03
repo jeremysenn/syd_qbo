@@ -120,6 +120,9 @@ Rails.application.routes.draw do
       get 'show_preview_image'
       get 'send_pdf_data'
     end
+    collection do
+      get 'advanced_search'
+    end
   end
   
   resources :shipments do
