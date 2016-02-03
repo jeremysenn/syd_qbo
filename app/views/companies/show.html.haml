@@ -36,8 +36,9 @@
         %ul.list-group
           %li.list-group-item
             = "Logo:"
-            .pull-right
-              = "#{@company.logo_url}"
+            -#
+              .pull-right
+                = "#{@company.logo_url}"
           - unless @company.logo_url.blank?
             %li.list-group-item
               = image_tag(@company.logo_url, class: 'img-responsive', size: '50x50')
