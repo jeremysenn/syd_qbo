@@ -15,8 +15,12 @@ class ImagesController < ApplicationController
       @start_date = params[:q][:sys_date_time_gteq]
       @end_date = params[:q][:sys_date_time_lteq]
       
-      if (@start_date.present? and @end_date.present?) and (@start_date == @end_date) # User select the same date for both
-        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.tomorrow.strftime("%Y-%m-%d") 
+#      if (@start_date.present? and @end_date.present?) and (@start_date == @end_date) # User select the same date for both
+#        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.tomorrow.strftime("%Y-%m-%d") 
+#      end
+
+      if @end_date.present? # Use end date's end of day
+        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.end_of_day
       end
       
       search = Image.ransack(params[:q])
@@ -105,8 +109,12 @@ class ImagesController < ApplicationController
       @customer_number = params[:q][:cust_nbr_eq]
       @commodity_name = params[:q][:cmdy_name_cont]
 
-      if (@start_date.present? and @end_date.present?) and (@start_date == @end_date) # User select the same date for both
-        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.tomorrow.strftime("%Y-%m-%d") 
+#      if (@start_date.present? and @end_date.present?) and (@start_date == @end_date) # User select the same date for both
+#        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.tomorrow.strftime("%Y-%m-%d") 
+#      end
+      
+      if @end_date.present? # Use end date's end of day
+        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.end_of_day
       end
 
       search = Image.ransack(params[:q])
