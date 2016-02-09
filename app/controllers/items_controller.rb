@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
         @items = Kaminari.paginate_array(@items.entries).page(params[:page]).per(5)
       }
       format.json {
-        render json: @items.map{|i| i.name}
+        render json: @items.entries.map{|i| i.name}
       }
     end
   end
