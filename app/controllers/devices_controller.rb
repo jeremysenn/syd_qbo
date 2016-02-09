@@ -105,7 +105,7 @@ class DevicesController < ApplicationController
   end
   
   def scale_camera_trigger
-    @device.scale_camera_trigger(params[:ticket_number], params[:event_code], params[:commodity_name], params[:location], params[:weight])
+    @device.scale_camera_trigger(params[:ticket_number], params[:event_code], params[:commodity_name], params[:location], params[:weight], params[:customer_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}
@@ -131,7 +131,7 @@ class DevicesController < ApplicationController
   end
   
   def get_signature
-    @device.get_signature(params[:ticket_number], params[:company_id], params[:customer_name])
+    @device.get_signature(params[:ticket_number], params[:company_id], params[:customer_name], params[:customer_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}
@@ -139,7 +139,7 @@ class DevicesController < ApplicationController
   end
   
   def finger_print_trigger
-    @device.finger_print_trigger(params[:ticket_number], params[:location], params[:customer_name])
+    @device.finger_print_trigger(params[:ticket_number], params[:location], params[:customer_name], params[:customer_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}
@@ -161,7 +161,7 @@ class DevicesController < ApplicationController
   end
   
   def scanner_trigger
-    @device.scanner_trigger(params[:ticket_number], params[:event_code], params[:location])
+    @device.scanner_trigger(params[:ticket_number], params[:event_code], params[:location], params[:customer_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

@@ -14,7 +14,8 @@
           .col-xs-12.col-sm-2.col-md-2
             %div.panel.panel-primary
               %div.list_group
-                - unless @today == true or params[:q].blank? or @ticket_number.blank?
+                -# unless @today == true or params[:q].blank? or params[:one_image_per_ticket] == '1' or params[:one_image_per_ticket] != '0'
+                - unless @today == true or params[:q].blank? or (@ticket_number.blank? and params[:one_image_per_ticket] != '0')
                   %a{href: image_path(image), class: "list-group-item"}
                     - unless image.hidden? or not current_user.show_thumbnails?
                       =# image_tag(show_preview_image_image_path(image), alt: image.id, class: 'thumbnail img-responsive')
@@ -45,8 +46,6 @@
                       - unless image.camera_name.blank?
                         %br/
                         %small= image.camera_name
-                    %br/
-                    %small.text-muted= image.sys_date_time.strftime("%-m/%-d/%y %l:%M %p")
   .row
     .text-center
       %div{id: 'endless_page'}

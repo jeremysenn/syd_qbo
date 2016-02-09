@@ -35,11 +35,13 @@
               = "#{@company.custom_field_2_value}"
         %ul.list-group
           %li.list-group-item
-            = "Logo URL:"
-            .pull-right
-              = "#{@company.logo_url}"
-            - unless @company.logo_url.blank?
-              = image_tag(@company.logo_url, class: 'img-responsive')
+            = "Logo:"
+            -#
+              .pull-right
+                = "#{@company.logo_url}"
+          - unless @company.logo_url.blank?
+            %li.list-group-item
+              = image_tag(@company.logo_url, class: 'img-responsive', size: '50x50')
       .panel.panel-default
         .panel-heading
           %h4.panel-title 
