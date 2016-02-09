@@ -30,12 +30,14 @@
               Vendors
         %div.row
           %p
-            .col-xs-6
+            .col-xs-12
               %a.btn.btn-primary.btn-lg.btn-block{:href => purchase_orders_path,  id: 'welcome_to_open', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}} 
                 %i.fa.fa-folder-open-o.fa-lg
                 Open
               =# link_to "Open", purchase_orders_path, :class => "btn btn-warning btn-lg btn-block", id: 'welcome_to_open', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Open"}
-            .col-xs-6 
+        %div.row
+          %p
+            .col-xs-12
               %a.btn.btn-primary.btn-lg.btn-block{:href => bills_path,  id: 'welcome_to_closed', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Closed"}} 
                 %i.fa.fa-folder.fa-lg
                 Closed
@@ -43,12 +45,12 @@
         %div.row
           %p
             .col-xs-6
-              %a.btn.btn-primary.btn-lg.btn-block{:href => bill_payments_path,  id: 'welcome_to_paid', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}} 
+              %a.btn.btn-default.btn-lg.btn-block{:href => bill_payments_path,  id: 'welcome_to_paid', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}} 
                 %i.fa.fa-dollar.fa-lg
                 Paid
               =# link_to "Paid", bill_payments_path, :class => "btn btn-default btn-lg btn-block purchase_order_button", id: 'purchase_orders_to_bill_payments', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Paid"}
             .col-xs-6
-              %a.btn.btn-primary.btn-lg.btn-block{:href => items_path,  id: 'welcome_to_items', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}} 
+              %a.btn.btn-default.btn-lg.btn-block{:href => items_path,  id: 'welcome_to_items', :role => "button", data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}} 
                 %i.fa.fa-th-list.fa-lg
                 Items
               =# link_to "Items", items_path, :class => "btn btn-default btn-lg btn-block purchase_order_button", id: 'purchase_orders_to_items', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Items"}
@@ -111,7 +113,7 @@
       
       %p.text-center Scrap Yard Ticket Management Made Easy!
       %div.text-center
-        %p= image_tag("syd_metal_logo_672x378.png")
+        %p= image_tag("syd_transparent_metal_logo_624x351.jpg")
         %p
           %a{href: 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'} More Info
           %a{href: new_user_session_path, class: 'btn btn-lg btn-primary', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Log In"}}

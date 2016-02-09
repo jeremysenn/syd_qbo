@@ -244,6 +244,7 @@ jQuery ->
     event_code = $(this).data( "event-code" )
     location = $(this).data( "location" )
     commodity_name = $(this).data( "item-name" )
+    customer_number = $(this).data( "vendor-id" )
 
     dashboard_icon = $(this).find( ".fa-dashboard" )
     dashboard_icon.hide()
@@ -282,6 +283,7 @@ jQuery ->
           location: location
           #weight: weight  
           weight: weight_text_field.val()
+          customer_number: customer_number
         success: (response) ->
           #alert 'Scale camera trigger successful.'
           return
@@ -304,6 +306,7 @@ jQuery ->
     event_code = $(this).data( "event-code" )
     location = $(this).data( "location" )
     commodity_name = $(this).data( "item-name" )
+    customer_number = $(this).data( "vendor-id" )
 
     camera_icon = $(this).find( ".fa-camera" )
     camera_icon.hide()
@@ -321,6 +324,7 @@ jQuery ->
         commodity_name: commodity_name
         location: location
         weight: weight_text_field.val()
+        customer_number: customer_number
       success: (response) ->
         camera_icon.show()
         spinner_icon.hide()
@@ -342,6 +346,7 @@ jQuery ->
     event_code = this_event_code = $('#image_file_event_code').val()
     location = $(this).data( "location" )
     commodity_name = $(this).data( "item-name" )
+    customer_number = $(this).data( "vendor-id" )
 
     camera_icon = $(this).find( ".fa-camera" )
     camera_icon.hide()
@@ -359,6 +364,7 @@ jQuery ->
         commodity_name: commodity_name
         location: location
         weight: weight_text_field.val()
+        customer_number: customer_number
       success: (response) ->
         camera_icon.show()
         spinner_icon.hide()
@@ -380,6 +386,7 @@ jQuery ->
     ticket_number = $(this).data( "ticket-number" )
     company_id = $(this).data( "company-id" )
     customer_name = $(this).data( "customer-name" )
+    customer_number = $(this).data( "vendor-id" )
 
     pencil_icon = $(this).find( ".fa-pencil" )
     pencil_icon.hide()
@@ -394,6 +401,7 @@ jQuery ->
         ticket_number: ticket_number
         company_id: company_id
         customer_name: customer_name
+        customer_number: customer_number
       success: (response) ->
         pencil_icon.show()
         spinner_icon.hide()
@@ -415,6 +423,7 @@ jQuery ->
     ticket_number = $(this).data( "ticket-number" )
     location = $(this).data( "company-id" )
     customer_name = $(this).data( "customer-name" )
+    customer_number = $(this).data( "vendor-id" )
 
     pointer_icon = $(this).find( ".fa-hand-pointer-o" )
     pointer_icon.hide()
@@ -429,6 +438,7 @@ jQuery ->
         ticket_number: ticket_number
         location: location
         customer_name: customer_name
+        customer_number: customer_number
       success: (response) ->
         pointer_icon.show()
         spinner_icon.hide()
@@ -450,6 +460,7 @@ jQuery ->
     device_id = $(this).data( "device-id" )
     this_event_code = $('#image_file_event_code').val()
     this_location = $(this).data( "location" )
+    this_customer_number = $(this).data( "vendor-id" )
       
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
@@ -462,6 +473,7 @@ jQuery ->
         ticket_number: this_ticket_number
         event_code: this_event_code
         location: this_location
+        this_customer_number: this_customer_number
       success: (response) ->
         spinner_icon.hide()
         return

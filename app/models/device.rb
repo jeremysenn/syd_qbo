@@ -30,7 +30,7 @@ class Device < ActiveRecord::Base
     return data[:read_scale_response][:return]
   end
   
-  def scale_camera_trigger(ticket_number, event_code, commodity_name, location, weight)
+  def scale_camera_trigger(ticket_number, event_code, commodity_name, location, weight, customer_number)
     xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
       <SOAP-ENV:Body>
          <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
@@ -44,6 +44,7 @@ class Device < ActiveRecord::Base
                   <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
                   <WEIGHT>#{weight}</WEIGHT>
                   <LOCATION>#{location}</LOCATION>
+                  <CUST_NBR>#{customer_number}</CUST_NBR>
                </CAPTURE>
             </Trigger>
          </mns:JpeggerTrigger>
@@ -156,7 +157,7 @@ class Device < ActiveRecord::Base
     end
   end
   
-  def get_signature(ticket_number, company_id, customer_name)
+  def get_signature(ticket_number, company_id, customer_name, customer_number)
     xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
       <SOAP-ENV:Body>
          <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
@@ -171,6 +172,7 @@ class Device < ActiveRecord::Base
                   <SIG_ID>#{company_id}</SIG_ID>
                   <CONTRACT_ID>#{company_id}</CONTRACT_ID>
                   <CUST_NAME>#{customer_name}</CUST_NAME>
+                  <CUST_NBR>#{customer_number}</CUST_NBR>
                </CAPTURE>
             </Trigger>
          </mns:JpeggerTrigger>
@@ -212,7 +214,7 @@ class Device < ActiveRecord::Base
 #    client.call(:encode, xml: xml_string)
 #  end
   
-  def finger_print_trigger(ticket_number, location, customer_name)
+  def finger_print_trigger(ticket_number, location, customer_name, customer_number)
     xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
       <SOAP-ENV:Body>
          <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
@@ -225,6 +227,7 @@ class Device < ActiveRecord::Base
                   <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
                   <CUST_NAME>#{customer_name}</CUST_NAME>
                   <LOCATION>#{location}</LOCATION>
+                  <CUST_NBR>#{customer_number}</CUST_NBR>
                </CAPTURE>
             </Trigger>
          </mns:JpeggerTrigger>
@@ -279,7 +282,7 @@ class Device < ActiveRecord::Base
     client.call(:print_pdf, xml: xml_string)
   end
   
-  def scanner_trigger(ticket_number, event_code, company_id)
+  def scanner_trigger(ticket_number, event_code, company_id, customer_number)
     xml_string = "<?xml version='1.0' encoding='UTF-8'?>
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
@@ -292,6 +295,7 @@ class Device < ActiveRecord::Base
                    <EVENT_CODE>#{event_code}</EVENT_CODE>
                    <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
                    <LOCATION>#{company_id}</LOCATION>
+                   <CUST_NBR>#{customer_number}</CUST_NBR>
                 </CAPTURE>
                </Trigger>
             </mns:JpeggerTrigger>
