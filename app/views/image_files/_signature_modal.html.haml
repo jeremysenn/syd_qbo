@@ -9,10 +9,10 @@
           = f.hidden_field :location, value: current_company_id
           = f.hidden_field :ticket_number, value: @doc_number
           = f.hidden_field :event_code, value: 'SIGNATURE CAPTURE'
-          =# f.hidden_field :customer_number, value: @vendor.id unless @vendor.blank?
-          =# f.hidden_field :customer_name, value: @vendor.display_name unless @vendor.blank?
-          = f.hidden_field :customer_number, value: @customer.id
-          = f.hidden_field :customer_name, value: @customer.full_name
+          = f.hidden_field :customer_number, value: @vendor.id unless @vendor.blank?
+          = f.hidden_field :customer_name, value: @vendor.display_name unless @vendor.blank?
+          =# f.hidden_field :customer_number, value: @customer.id
+          =# f.hidden_field :customer_name, value: @customer.full_name
           %h3
             - unless current_company.jpegger_contract.blank?
               = current_company.jpegger_contract.verbiage.html_safe

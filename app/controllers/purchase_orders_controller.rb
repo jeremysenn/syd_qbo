@@ -99,8 +99,8 @@ class PurchaseOrdersController < ApplicationController
       format.html{
         #@vendors = @vendor_service.query(nil, :per_page => 1000)
         #    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
-        @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
-        #    @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
+#        @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+        @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
         @doc_number = @purchase_order.doc_number # Ticket number
         #    @contract = Contract.find(current_company_id) # Find contract for this company
         
