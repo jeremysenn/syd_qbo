@@ -46,7 +46,8 @@ class VendorsController < ApplicationController
 #    @items = @item_service.query(nil, :per_page => 1000)
 #    @customer = Customer.find_by_id(@vendor.id)
 #    @customer = Customer.where(id: @vendor.id, qb_company_id: current_company_id).last
-    @customer = Customer.where(vendorid: @vendor.id, qb_company_id: current_company_id).last
+#    @customer = Customer.where(vendorid: @vendor.id, qb_company_id: current_company_id).last
+    @customer = Customer.find_or_create_by(vendorid: @vendor.id, qb_company_id: current_company_id)
     first_item_query = "select * from Item maxresults 1"
     @first_items = @item_service.query(first_item_query, :per_page => 1) # Just get first item into array
     @first_item = @first_items.first
