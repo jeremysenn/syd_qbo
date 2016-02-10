@@ -30,7 +30,8 @@ class BillPaymentsController < ApplicationController
 #    @items = @item_service.query(nil, :per_page => 1000)
     @doc_number = @bill_payment.doc_number
     @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number }
-    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+#    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     
     respond_to do |format|
       format.html do
@@ -65,7 +66,8 @@ class BillPaymentsController < ApplicationController
   def new
 #    @vendors = @vendor_service.query(nil, :per_page => 1000)
     @bill= @bill_service.fetch_by_id(params[:bill_id])
-    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+#    @customer = Customer.where(vendorid: @bill.vendor_ref.value, qb_company_id: current_company.CompanyID).last
+    @vendor = @vendor_service.fetch_by_id(@bill.vendor_ref)
     
     query_banks = "Select * from Account Where AccountType = 'Bank'"
     query_credit_cards = "Select * from Account Where AccountType = 'Credit Card'"

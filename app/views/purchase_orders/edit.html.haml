@@ -17,9 +17,9 @@
             =# select_tag "purchase_order[vendor]", options_for_select(Rails.cache.fetch("all_vendors"), @vendor.id), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             =# select_tag "purchase_order[vendor]", options_from_collection_for_select(@vendors, "id", "display_name", "#{@vendor.present? ? @vendor.id : nil }"), prompt: "Choose a vendor", class: "form-control input-lg", required: true
             %div.input-group
-              - unless current_user.customer_camera.blank? or @customer.blank?
+              - unless current_user.customer_camera.blank? or @vendor.blank?
                 -# %span.input-group-addon
-                %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger_from_ticket btn btn-default btn-lg", 'data-location' => current_user.location, 'data-given-name' => @customer.first_name, 'data-family-name' => @customer.last_name, 'data-vendor-id' => @customer.id, 'data-camera-name' => current_user.customer_camera, title: current_user.customer_camera}
+                %a{href: '#', style: "color: hotpink;", class: "customer_camera_trigger_from_ticket btn btn-default btn-lg", 'data-location' => current_user.location, 'data-given-name' => @vendor.given_name, 'data-family-name' => @vendor.family_name, 'data-vendor-id' => @vendor.id, 'data-camera-name' => current_user.customer_camera, title: current_user.customer_camera}
                   %i.fa.fa-camera.fa-lg
                   %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
               = hidden_field_tag "purchase_order[vendor]", @purchase_order.vendor_ref
@@ -51,11 +51,11 @@
                   - @scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
-                        %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @customer.id }
+                        %a{href: '#', style: "color: hotpink;", class: "scale_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @vendor.id }
                           %i.fa.fa-camera.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                       - else
-                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @customer.id }
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'gross_scale_button', 'data-event-code' => "Gross", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @vendor.id }
                           %i.fa.fa-dashboard.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   %span.input-group-addon
@@ -70,11 +70,11 @@
                   - @scale_devices.each do |scale_device|
                     %span.input-group-addon
                       - if scale_device.scale_camera_only?
-                        %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @customer.id }
+                        %a{href: '#', style: "color: hotpink", class: "scale_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @vendor.id }
                           %i.fa.fa-camera.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                       - else
-                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @customer.id }
+                        %a{href: '#', class: "scale_read_and_camera_trigger", id: 'tare_scale_button',  'data-event-code' => "Tare", 'data-ticket-number' => @doc_number, 'data-item-name' => line_item.item_based_expense_line_detail.item_ref.name, 'data-location' => current_user.location, 'data-device-id' => scale_device.id, title: scale_device.DeviceName, 'data-vendor-id' => @vendor.id }
                           %i.fa.fa-dashboard.fa-lg
                           %i.fa.fa-spinner.fa-lg.fa-spin{style: 'display:none;'}
                   %span.input-group-addon
