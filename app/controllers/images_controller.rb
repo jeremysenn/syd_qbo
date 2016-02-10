@@ -108,6 +108,7 @@ class ImagesController < ApplicationController
       @end_date = params[:q][:sys_date_time_lteq]
       @customer_number = params[:q][:cust_nbr_eq]
       @commodity_name = params[:q][:cmdy_name_cont]
+      @event_code = params[:q][:event_code_eq]
 
 #      if (@start_date.present? and @end_date.present?) and (@start_date == @end_date) # User select the same date for both
 #        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.tomorrow.strftime("%Y-%m-%d") 
