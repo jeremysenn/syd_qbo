@@ -536,18 +536,28 @@ jQuery ->
 
   ### Dynamic Select of Items Based Upon Category ###
   #$(document).on 'change', '.category_select', (evt) ->
-  $('.category_select').on 'change', (evt) ->
+  #$('.category_select').on 'change', (evt) ->
+  $('#items_accordion').on 'change', '.category_select', (evt) ->
     this_category_id = $(this).val()
-    alert this_category_id
-    $.ajax 
-      url: "/items/items_by_category"
-      type: 'GET'
-      #dataType: 'script'
-      dataType: 'json'
-      data: {
-        category_id: this_category_id
-      }
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log("AJAX Error: #{textStatus}")
-      success: (data, textStatus, jqXHR) ->
-        console.log(data)
+    category_select = $(this)
+    panel = category_select.closest('.panel')
+    item_select = panel.find('.item_select')
+    if this_category_id == ''
+      item_select.find('option').show()
+    else
+      item_select.find('[data-parent-ref!=' + this_category_id + ']').hide()
+      item_select.find('[data-parent-ref=' + this_category_id + ']').show()
+
+    #alert this_category_id
+    #$.ajax 
+    #  url: "/items/items_by_category"
+    #  type: 'GET'
+    #  #dataType: 'script'
+    #  dataType: 'json'
+    #  data: {
+    #    category_id: this_category_id
+    #  }
+    #  error: (jqXHR, textStatus, errorThrown) ->
+    #    console.log("AJAX Error: #{textStatus}")
+    #  success: (data, textStatus, jqXHR) ->
+    #    console.log(data)

@@ -36,27 +36,15 @@
                   .pull-right
                     %i.fa.fa-chevron-right.fa-lg
                   %br
-                  %small= "(#{item.type})"
+                  %small
+                    = "(#{item.type})"
+                    - if item.sub_item? and not item.parent_ref.blank?
+                      %br
+                      = "Category: #{@item_service.fetch_by_id(item.parent_ref).name}"
                   %br/
                   %small
                     =# "#{number_to_currency(item.purchase_cost)}" unless item.purchase_cost.blank?
                     = "$#{number_with_precision(item.purchase_cost, :precision => 5)}" unless item.purchase_cost.blank?
-                  -#
-                    = @vendor_service.fetch_by_id(purchase.entity_ref).display_name unless purchase.entity_ref.blank?
-                    .pull-right
-                      %i.fa.fa-chevron-right
-                    %br/
-                    %small
-                      = purchase.txn_date.strftime("%m/%d/%y")
-                      %br
-                      = purchase.payment_type
-                      %br
-                      = number_to_currency(purchase.total)
-                      -#
-                        - unless vendor.primary_phone.blank?
-                          = vendor.primary_phone.free_form_number 
-                          %br
-                        = number_to_currency(vendor.balance)
 
   %div.row
     .text-center
