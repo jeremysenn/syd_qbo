@@ -547,3 +547,8 @@ jQuery ->
     else
       item_select.find('[data-parent-ref!=' + this_category_id + ']').hide()
       item_select.find('[data-parent-ref=' + this_category_id + ']').show()
+
+  ### Invoke category select to filter items out ###
+  $(document).ready ->
+    $('.category_select').trigger("change");
+    return
