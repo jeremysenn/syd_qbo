@@ -44,7 +44,7 @@ jQuery ->
     input_select.closest('.panel').find('#vendor_name').text name
 
   ### Line item changed ###
-  $('.bill_input_fields_wrap').on 'change', 'item_select', ->
+  $('.bill_input_fields_wrap').on 'change', '.item_select', ->
     item_id = $(this).val()
     input_select = $(this)
     $.ajax(url: "/items/" + item_id, dataType: 'json').done (data) ->
