@@ -85,6 +85,8 @@ Rails.application.routes.draw do
     end
     collection do
       get :customer_camera_trigger
+      get :customer_scanner_trigger
+      get :customer_scale_camera_trigger
     end
   end
   
@@ -136,6 +138,7 @@ Rails.application.routes.draw do
     member do
       get 'show_jpeg_image'
       get 'show_preview_image'
+      get 'send_pdf_data'
     end
   end
   

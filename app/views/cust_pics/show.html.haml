@@ -3,7 +3,13 @@
   %div.row
     .col-xs-12.col-sm-12.col-md-12
       =# link_to image_tag(show_jpeg_image_cust_pic_path(@cust_pic), alt: @cust_pic.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'
-      = link_to image_tag(@cust_pic.jpeg_image_data_uri, alt: @cust_pic.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'
+      - unless @cust_pic.pdf?
+        = link_to image_tag(@cust_pic.jpeg_image_data_uri, alt: @cust_pic.id, class: 'img-responsive'), "#image_popup", "data-toggle" => "modal", :alt => "Image", :class => 'thumbnail'
+      - else
+        %p.lead.text-center
+          %a{href: send_pdf_data_cust_pic_path(@cust_pic)}
+            %i.fa.fa-file-pdf-o.fa-lg
+            Download PDF
   - unless mobile_device?
     %div{:id => "image_popup", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
       .modal-dialog.modal-lg
