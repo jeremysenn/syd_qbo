@@ -547,17 +547,3 @@ jQuery ->
     else
       item_select.find('[data-parent-ref!=' + this_category_id + ']').hide()
       item_select.find('[data-parent-ref=' + this_category_id + ']').show()
-
-    #alert this_category_id
-    #$.ajax 
-    #  url: "/items/items_by_category"
-    #  type: 'GET'
-    #  #dataType: 'script'
-    #  dataType: 'json'
-    #  data: {
-    #    category_id: this_category_id
-    #  }
-    #  error: (jqXHR, textStatus, errorThrown) ->
-    #    console.log("AJAX Error: #{textStatus}")
-    #  success: (data, textStatus, jqXHR) ->
-    #    console.log(data)

@@ -110,9 +110,6 @@ class PurchaseOrdersController < ApplicationController
         category_query_string = "Select * From Item Where Type = 'Category'"
         @categories = @item_service.query(category_query_string, :per_page => 1000)
         
-        #category_query_string = "Select * From Item Where Type = 'Category'"
-        #@categories = @item_service.query(category_query_string, :per_page => 1000)
-        
         @scale_devices = current_user.scale_devices
         
         #    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
