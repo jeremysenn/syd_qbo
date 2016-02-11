@@ -32,6 +32,13 @@
                   %i.fa.fa-remove.fa-lg
         %div.row.form-group
           %div{:class => "col-xs-12 col-sm-4 col-md-4"}
+            = label_tag "Event Code", nil, :class => 'control-label'
+            .input-group
+              = select_tag "q[event_code_eq]", options_for_select(ticket_event_codes, @event_code), prompt: 'All' , class: "form-control input-lg"
+              %span.input-group-addon 
+                %a{href: '#', onclick: "$('#q_event_code_eq').val('');"}
+                  %i.fa.fa-remove.fa-lg
+          %div{:class => "col-xs-12 col-sm-4 col-md-4"}
             = label_tag "Start Date", nil, :class => 'control-label'
             .input-group
               = date_field_tag "q[sys_date_time_gteq]", nil, :placeholder => "Start Date", value: @start_date, class: "form-control input-lg"
@@ -45,6 +52,7 @@
               %span.input-group-addon 
                 %a{href: '#', onclick: "$('#q_sys_date_time_lteq').val('');"}
                   %i.fa.fa-remove.fa-lg
+        %div.row.form-group
           %div{:class => "col-xs-12 col-sm-4 col-md-4"}
             - if @ticket_number.blank?
               %br/

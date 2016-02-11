@@ -167,6 +167,22 @@ class DevicesController < ApplicationController
       format.json { render json: {}, :status => :ok}
     end
   end
+  
+  def customer_scanner_trigger
+    Device.customer_scanner_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], params[:camera_name])
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
+  end
+  
+  def customer_scale_camera_trigger
+    Device.customer_scale_camera_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], params[:camera_name])
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
