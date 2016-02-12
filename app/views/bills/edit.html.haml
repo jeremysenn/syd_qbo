@@ -45,7 +45,11 @@
                 = hidden_field_tag :item_description, @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).purchase_desc
             %div{id: "collapse_#{line_item.id}", "aria-labelledby" => "heading#{line_item.id}", :role => "tabpanel", class: "panel-collapse collapse ", "aria-expanded" => false}
               .panel-body
-                = select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                - unless @categories.count < 1
+                  = select_tag "purchase_order[line_items][][category]", options_from_collection_for_select(@categories, "id", "name", @item_service.fetch_by_id(line_item.item_based_expense_line_detail.item_ref).parent_ref), prompt: 'All categories' , class: "form-control input-lg category_select"
+                  %br
+                =# select_tag "bill[line_items][][item]", options_from_collection_for_select(@items, "id", "name", line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item' , class: "form-control input-lg item_select", required: true
+                = select_tag "bill[line_items][][item]", options_for_select(@items.map{ |item| [item.name, item.id, { 'data-parent-ref' => item.parent_ref }] }, line_item.item_based_expense_line_detail.item_ref), prompt: 'Choose an item', class: "form-control input-lg item_select", required: true
                 = hidden_field_tag "bill[line_items][][description]", line_item.description
                 %br
                 %div.input-group

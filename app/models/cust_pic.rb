@@ -72,6 +72,10 @@ class CustPic < ActiveRecord::Base
     end
   end
   
+  def pdf?
+    blob.jpeg_image[0..3] == "%PDF"
+  end
+  
   #############################
   #     Class Methods         #
   #############################

@@ -70,6 +70,10 @@ class CustPicsController < ApplicationController
     @cust_pic.destroy
     respond_with(@cust_pic)
   end
+  
+  def send_pdf_data
+    send_data @cust_pic.jpeg_image, :type => 'application/pdf',:disposition => 'attachment'
+  end
 
   private
     def set_cust_pic
