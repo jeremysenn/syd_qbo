@@ -66,12 +66,12 @@ class LogoUploader < CarrierWave::Uploader::Base
     end
     
     ### When the move_to_cache and/or move_to_store methods return true, files will be moved (instead of copied) to the cache and store respectively. ###
-    def move_to_cache
-      true
-    end
-    def move_to_store
-      true
-    end
+#    def move_to_cache
+#      true
+#    end
+#    def move_to_store
+#      true
+#    end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
