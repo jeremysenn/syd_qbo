@@ -39,9 +39,9 @@
             -#
               .pull-right
                 = "#{@company.logo_url}"
-          - unless @company.logo_url.blank?
+          - unless @company.logo_url_url.blank?
             %li.list-group-item
-              = image_tag(@company.logo_url, class: 'img-responsive', size: '50x50')
+              = image_tag(@company.logo_url_url, class: 'img-responsive', size: '50x50')
       .panel.panel-default
         .panel-heading
           %h4.panel-title 
