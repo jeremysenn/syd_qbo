@@ -54,10 +54,10 @@ class PurchaseOrdersController < ApplicationController
         @bill = @bill_service.query.entries.find{ |b| b.doc_number == @doc_number } if @purchase_order.po_status == "Closed"
       end
       format.pdf do
+        @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
+        @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
         unless current_user.printer_devices.blank?
           printer = current_user.printer_devices.last
-          @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
-          @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
           render pdf: "PO#{@doc_number}",
     #        :page_width => 4,
             :layout => 'pdf.html.haml',
