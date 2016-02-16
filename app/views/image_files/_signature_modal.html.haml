@@ -1,6 +1,6 @@
 %div{:id => "signature_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
   = form_for ImageFile.new, remote: true do |f|
-    .modal-dialog
+    .modal-dialog.modal-lg
       .modal-content
         .modal-header
           %p= link_to "×", '#', :class => "close", "data-dismiss" => "modal"
@@ -28,10 +28,11 @@
                   %a{href: "#clear", class: 'pull-right'} Clear signature
               .sig.sigWrapper
                 .typed
-                %canvas.pad{height: "85", width: "498"}
+                %canvas.pad{height: "105", width: "698"}
                 %input.output{name: "output", type: "hidden"}/
+          %hr
           %p
-            = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg btn-block', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
+            = button_tag(:type => 'submit', :class => 'btn btn-primary btn-lg', id: "new_image_file_submit", data: { disable_with: "Please wait..." }) do
               I accept the terms of this agreement
 -#
   %div{:id => "signature_form", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
