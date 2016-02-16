@@ -3,7 +3,7 @@
   %br
   = DateTime.now.strftime("%a, %d %b %Y %I:%M%p")
   
-- if @current_user.company.logo_url
+- unless @current_user.company.logo_url.url.blank?
   =# image_tag(@current_user.company.logo_url, size: '50x50')
   = image_tag ["http://", request.host_with_port, @current_user.company.logo_url_url].join(), size: '50x50'
 - else
