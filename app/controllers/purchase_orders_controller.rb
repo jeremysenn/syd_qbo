@@ -60,6 +60,7 @@ class PurchaseOrdersController < ApplicationController
           printer = current_user.printer_devices.last
           render pdf: "PO#{@doc_number}",
     #        :page_width => 4,
+            :show_as_html => true,
             :layout => 'pdf.html.haml',
   #          :zoom => 1.25,
             :zoom => "#{printer.PrinterWidth < 10 ? 2 : 1.25}",
