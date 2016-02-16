@@ -67,7 +67,7 @@ class PurchaseOrdersController < ApplicationController
             :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
           printer.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))
           # Remove the temporary pdf file that was created above
-          FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
+#          FileUtils.remove(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))
         else
           render pdf: "PO#{@doc_number}",
           :layout => 'pdf.html.haml',
