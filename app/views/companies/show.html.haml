@@ -39,7 +39,7 @@
             -#
               .pull-right
                 = "#{@company.logo_url}"
-          - unless @company.logo_url_url.blank?
+          - if @company.logo_url
             %li.list-group-item
               = image_tag(@company.logo_url_url, class: 'img-responsive', size: '50x50')
       .panel.panel-default
