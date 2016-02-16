@@ -59,6 +59,7 @@ class PurchaseOrdersController < ApplicationController
         unless current_user.printer_devices.blank?
           printer = current_user.printer_devices.last
           render pdf: "PO#{@doc_number}",
+            show_as_html: true,
     #        :page_width => 4,
             :layout => 'pdf.html.haml',
   #          :zoom => 1.25,
