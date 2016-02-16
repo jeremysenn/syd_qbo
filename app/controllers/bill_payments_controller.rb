@@ -38,10 +38,10 @@ class BillPaymentsController < ApplicationController
         @images = Image.where(ticket_nbr: @doc_number)
       end
       format.pdf do
+        @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
+        @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
         unless current_user.printer_devices.blank?
           printer = current_user.printer_devices.last
-          @signature_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "SIGNATURE CAPTURE").last
-          @finger_print_image = Image.where(ticket_nbr: @doc_number, location: current_company_id, event_code: "Finger Print").last
           render pdf: "BillPayment#{@doc_number}",
     #        :page_width => 4,
             :layout => 'pdf.html.haml',
