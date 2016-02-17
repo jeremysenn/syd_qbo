@@ -7,7 +7,8 @@
   =# image_tag(@current_user.company.logo_url, size: '50x50')
   = image_tag ["http://", request.host_with_port, @current_user.company.logo_url.url].join(), size: '50x50'
 - else
-  = wicked_pdf_image_tag 'recycle_logo_57x57.png'
+  =# wicked_pdf_image_tag 'recycle_logo_57x57.png'
+  = wicked_pdf_image_tag 'Irving_logo.png', size: '50x50'
 %strong= @company_info.company_name
 %br
 - unless @company_info.company_address.blank?
