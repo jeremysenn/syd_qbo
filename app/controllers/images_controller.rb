@@ -12,6 +12,7 @@ class ImagesController < ApplicationController
   def index
     unless params[:q].blank? or params[:today] == true
       @ticket_number = params[:q][:ticket_nbr_eq]
+      @event_code = params[:q][:event_code_eq]
       @start_date = params[:q][:sys_date_time_gteq]
       @end_date = params[:q][:sys_date_time_lteq]
       
@@ -102,7 +103,9 @@ class ImagesController < ApplicationController
   def advanced_search
     unless params[:q].blank?
       @search = Image.search(params[:q].merge(proper_location: current_user.location))
+      
       @images = @search.result.page(params[:page]).per(6)
+      
     else
       # Default search to today's images
       params[:q] = {:sys_date_time_gteq => Date.today.beginning_of_day, :sys_date_time_lteq => Date.today.end_of_day, proper_location: current_user.location}
