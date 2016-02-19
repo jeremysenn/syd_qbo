@@ -5,6 +5,16 @@
 
     .panel.panel-default
       .panel-heading
+        Quickbooks Location
+      %ul.list-group
+        %li.list-group-item
+          - if @user_setting.qb_location_id.blank?
+            None
+          - else
+            = @user_setting.qb_location_id
+
+    .panel.panel-default
+      .panel-heading
         Show Thumbnails
       %ul.list-group
         %li.list-group-item

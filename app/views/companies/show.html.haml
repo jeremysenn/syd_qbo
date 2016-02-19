@@ -2,6 +2,7 @@
 - @title="#{@company.CompanyName}" 
 
 .container
+
   %div.row
     .col-xs-12.col-sm-6.col-md-offset-3
       .panel.panel-default
@@ -36,12 +37,30 @@
         %ul.list-group
           %li.list-group-item
             = "Logo:"
+            - if @company.logo_url.url.blank?
+              .pull-right
+                None
             -#
               .pull-right
                 = "#{@company.logo_url}"
           - unless @company.logo_url.url.blank?
             %li.list-group-item
               = image_tag(@company.logo_url.url, class: 'img-responsive', size: '50x50')
+  %div.row
+    .col-xs-12.col-sm-6.col-md-offset-3
+      .panel.panel-default
+        .panel-heading
+          %h4.panel-title
+            Quickbooks Locations 
+        - unless @departments.count < 1
+          - @departments.each do |department|
+            %ul.list-group
+              %li.list-group-item
+                = department.name
+        - else
+          %ul.list-group
+            %li.list-group-item
+              No locations
       .panel.panel-default
         .panel-heading
           %h4.panel-title 
