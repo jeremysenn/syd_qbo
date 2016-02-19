@@ -69,7 +69,11 @@ class Image < ActiveRecord::Base
   end
   
   def pdf?
-    blob.jpeg_image[0..3] == "%PDF"
+    unless jpeg_image.blank?
+      blob.jpeg_image[0..3] == "%PDF" 
+    else
+      return false
+    end
   end
   
   #############################
