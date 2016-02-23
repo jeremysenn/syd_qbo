@@ -565,6 +565,7 @@ jQuery ->
           customer_number: vendor_id
           event_code: "Vendor"
           location: location
+          camera_name: camera_name
         success: (data) ->
           spinner_icon.hide()
           user_icon.show()
