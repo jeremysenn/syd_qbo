@@ -486,6 +486,7 @@ jQuery ->
   ### Customer camera trigger ###
   $('.customer_camera_trigger_from_ticket').click ->
     # Get data from button
+    this_ticket_number = $(this).data( "ticket-number" )
     this_vendor_id = $(this).data( "vendor-id" )
     this_event_code = $('#image_file_event_code').val()
     this_location = $(this).data( "location" )
@@ -500,6 +501,7 @@ jQuery ->
       url: "/devices/customer_camera_trigger_from_ticket"
       dataType: 'json'
       data:
+        ticket_number: this_ticket_number
         customer_number: this_vendor_id
         event_code: this_event_code
         location: this_location
