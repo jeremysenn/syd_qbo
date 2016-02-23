@@ -487,17 +487,9 @@ jQuery ->
   $('.customer_camera_trigger_from_ticket').click ->
     # Get data from button
     this_vendor_id = $(this).data( "vendor-id" )
-    #this_event_code = $('#image_file_event_code').val()
+    this_event_code = $('#image_file_event_code').val()
     this_location = $(this).data( "location" )
     this_camera_name = $(this).data( "camera-name" )
-    if $('#vendor_given_name').length > 0
-      this_given_name = $('#vendor_given_name').val()
-    else
-      this_given_name = $(this).data( "given-name" )
-    if $('#vendor_family_name').length > 0
-      this_family_name = $('#vendor_family_name').val()
-    else
-      this_family_name = $(this).data( "family-name" )
     camera_icon = $(this).find( ".fa-camera" )
     camera_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
@@ -505,14 +497,11 @@ jQuery ->
 
     # Make call to trigger customer camera
     $.ajax
-      # url: "/devices/" + device_id + "/customer_camera_trigger"
-      url: "/devices/customer_camera_trigger"
+      url: "/devices/customer_camera_trigger_from_ticket"
       dataType: 'json'
       data:
         customer_number: this_vendor_id
-        customer_first_name: this_given_name
-        customer_last_name: this_family_name
-        event_code: 'Customer Photo'
+        event_code: this_event_code
         location: this_location
         camera_name: this_camera_name
       success: (response) ->
@@ -552,3 +541,38 @@ jQuery ->
   $(document).ready ->
     $('.category_select').trigger("change");
     return
+
+  ### Scan drivers license image from ticket ###
+  $('.save_license_scan_to_jpegger_from_ticket').on 'click', ->
+    # Get data from button
+    ticket_number = $(this).data( "ticket-number" )
+    vendor_id = $(this).data( "vendor-id" )
+    location = $(this).data( "location" )
+    camera_name = $(this).data( "camera-name" )
+
+    user_icon = $(this).find( ".fa-user" )
+    user_icon.hide()
+    spinner_icon = $(this).find('.fa-spinner')
+    spinner_icon.show()
+    save_license_scan_to_jpegger_ajax = ->
+      $.ajax
+        url: "/devices/drivers_license_camera_trigger_from_ticket"
+        dataType: 'json'
+        data:
+          ticket_number: ticket_number
+          customer_number: vendor_id
+          event_code: "Vendor"
+          location: location
+        success: (data) ->
+          spinner_icon.hide()
+          user_icon.show()
+          #alert 'Saved scanned image to Jpegger.'
+          return
+        error: ->
+          spinner_icon.hide()
+          image_icon.show()
+          #alert 'Error saving scanned image to Jpegger.'
+          return
+    
+    save_license_scan_to_jpegger_ajax()
+  ### End Scan drivers license image from ticket ###

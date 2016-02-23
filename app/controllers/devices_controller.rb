@@ -120,10 +120,26 @@ class DevicesController < ApplicationController
     end
   end
   
+  def customer_camera_trigger_from_ticket
+    Device.customer_camera_trigger_from_ticket(params[:ticket_number], params[:event_code], params[:location], params[:customer_number], params[:camera_name])
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
+  end
+  
   def drivers_license_camera_trigger
     @device.drivers_license_camera_trigger(params[:customer_first_name], params[:customer_last_name], params[:customer_number], params[:license_number], 
       params[:license_issue_date], params[:license_expiration_date],
       params[:dob], params[:sex], params[:event_code], params[:location], params[:address1], params[:city], params[:state], params[:zip])
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {}, :status => :ok}
+    end
+  end
+  
+  def drivers_license_camera_trigger_from_ticket
+    Device.drivers_license_camera_trigger_from_ticket(params[:ticket_number], params[:event_code], params[:location], params[:customer_number], params[:camera_name])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

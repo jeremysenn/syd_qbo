@@ -424,7 +424,7 @@ class Device < ActiveRecord::Base
     elsif license_reader?
       "<i class='fa fa-list-alt fa-lg'></i>"
     elsif license_imager?
-      "<i class='fa fa-image fa-lg'></i>"
+      "<i class='fa fa-user fa-lg'></i>"
     elsif camera?
       "<i class='fa fa-camera fa-lg'></i>"
     elsif signature_pad?
@@ -562,6 +562,50 @@ class Device < ActiveRecord::Base
                   <LAST_NAME>#{customer_last_name}</LAST_NAME>
                   <EVENT_CODE>#{event_code}</EVENT_CODE>
                   <LOCATION>#{location}</LOCATION>
+               </CAPTURE>
+            </Trigger>
+         </mns:JpeggerTrigger>
+      </SOAP-ENV:Body>
+    </SOAP-ENV:Envelope>"
+    client = Savon.client(wsdl: ENV['JPEGGER_WSDL_URL'])
+    client.call(:jpegger_trigger, xml: xml_string)
+  end
+  
+  def self.customer_camera_trigger_from_ticket(ticket_number, event_code, location, customer_number, camera_name)
+    xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+      <SOAP-ENV:Body>
+         <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+            <Host xsi:type='xs:string'>127.0.0.1</Host>
+            <Port xsi:type='xs:int'>3333</Port>
+            <Trigger xsi:type='xs:string'>
+               <CAPTURE>
+                  <TICKET_NBR>#{ticket_number}</TICKET_NBR>
+                  <EVENT_CODE>#{event_code}</EVENT_CODE>
+                  <CAMERA_NAME>#{camera_name}</CAMERA_NAME>
+                  <LOCATION>#{location}</LOCATION>
+                  <CUST_NBR>#{customer_number}</CUST_NBR>
+               </CAPTURE>
+            </Trigger>
+         </mns:JpeggerTrigger>
+      </SOAP-ENV:Body>
+    </SOAP-ENV:Envelope>"
+    client = Savon.client(wsdl: ENV['JPEGGER_WSDL_URL'])
+    client.call(:jpegger_trigger, xml: xml_string)
+  end
+  
+  def self.drivers_license_camera_trigger_from_ticket(ticket_number, event_code, location, customer_number, camera_name)
+    xml_string = "<SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+      <SOAP-ENV:Body>
+         <mns:JpeggerTrigger xmlns:mns='urn:JpeggerTriggerIntf-IJpeggerTrigger' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
+            <Host xsi:type='xs:string'>127.0.0.1</Host>
+            <Port xsi:type='xs:int'>3333</Port>
+            <Trigger xsi:type='xs:string'>
+               <CAPTURE>
+                  <TICKET_NBR>#{ticket_number}</TICKET_NBR>
+                  <EVENT_CODE>#{event_code}</EVENT_CODE>
+                  <CAMERA_NAME>#{camera_name}</CAMERA_NAME>
+                  <LOCATION>#{location}</LOCATION>
+                  <CUST_NBR>#{customer_number}</CUST_NBR>
                </CAPTURE>
             </Trigger>
          </mns:JpeggerTrigger>

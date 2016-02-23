@@ -87,6 +87,8 @@ Rails.application.routes.draw do
       get :customer_camera_trigger
       get :customer_scanner_trigger
       get :customer_scale_camera_trigger
+      get :customer_camera_trigger_from_ticket
+      get :drivers_license_camera_trigger_from_ticket
     end
   end
   
