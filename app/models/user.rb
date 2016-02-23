@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # :database_authenticatable
   devise :registerable,:database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable, 
-         :omniauthable, :timeoutable, :omniauth_providers => [:intuit]
+         :omniauthable, :omniauth_providers => [:intuit]
        
   has_many :image_files
   has_many :shipment_files
