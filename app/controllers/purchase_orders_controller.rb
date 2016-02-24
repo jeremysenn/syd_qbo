@@ -59,9 +59,10 @@ class PurchaseOrdersController < ApplicationController
         unless current_user.printer_devices.blank?
           printer = current_user.printer_devices.last
           render pdf: "PO#{@doc_number}",
-    #        :page_width => 4,
+#            :page_width => 4,
             :layout => 'pdf.html.haml',
-  #          :zoom => 1.25,
+#            :dpi => '200',
+#            :zoom => 1.25,
             :zoom => "#{printer.PrinterWidth < 10 ? 2 : 1.25}",
             :save_to_file => Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf")
           printer.call_printer_for_purchase_order_pdf(Base64.encode64(File.binread(Rails.root.join('pdfs', "#{current_company_id}PO#{@doc_number}.pdf"))))

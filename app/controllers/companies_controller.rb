@@ -1,6 +1,9 @@
 class CompaniesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :set_oauth_client
+  before_action :set_department_service, only: [:show]
+  
   load_and_authorize_resource
 
   # GET /companies
@@ -12,6 +15,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
+    @departments = @department_service.query(nil, :per_page => 1000)
   end
 
   # GET /companies/new
@@ -78,6 +82,16 @@ class CompaniesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_company
       @company = Company.find(params[:id])
+    end
+    
+    def set_oauth_client
+      @oauth_client = OAuth::AccessToken.new($qb_oauth_consumer, current_user.qbo_access_credential.access_token, current_user.qbo_access_credential.access_secret)
+    end
+    
+    def set_department_service
+      @department_service = Quickbooks::Service::Department.new
+      @department_service.access_token = @oauth_client
+      @department_service.company_id = current_company_id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
