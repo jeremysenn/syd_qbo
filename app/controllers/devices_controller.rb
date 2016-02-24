@@ -121,7 +121,7 @@ class DevicesController < ApplicationController
   end
   
   def customer_camera_trigger_from_ticket
-    Device.customer_camera_trigger_from_ticket(params[:ticket_number], params[:event_code], params[:location], params[:customer_number], params[:camera_name])
+    Device.customer_camera_trigger_from_ticket(params[:ticket_number], params[:event_code], params[:location], params[:customer_number], params[:camera_name], params[:vin_number], params[:tag_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

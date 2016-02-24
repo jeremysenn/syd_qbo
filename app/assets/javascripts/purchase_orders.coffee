@@ -500,6 +500,9 @@ jQuery ->
     this_event_code = $('#image_file_event_code').val()
     this_location = $(this).data( "location" )
     this_camera_name = $(this).data( "camera-name" )
+    this_vin_number = $('#image_file_vin_number').val()
+    this_tag_number = $('#image_file_tag_number').val()
+
     camera_icon = $(this).find( ".fa-camera" )
     camera_icon.hide()
     spinner_icon = $(this).find('.fa-spinner')
@@ -515,6 +518,8 @@ jQuery ->
         event_code: this_event_code
         location: this_location
         camera_name: this_camera_name
+        vin_number: this_vin_number
+        tag_number: this_tag_number
       success: (response) ->
         spinner_icon.hide()
         camera_icon.show()
