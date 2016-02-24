@@ -177,7 +177,7 @@ class DevicesController < ApplicationController
   end
   
   def scanner_trigger
-    @device.scanner_trigger(params[:ticket_number], params[:event_code], params[:location], params[:customer_number])
+    @device.scanner_trigger(params[:ticket_number], params[:event_code], params[:location], params[:customer_number], params[:vin_number], params[:tag_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

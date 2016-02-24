@@ -461,6 +461,8 @@ jQuery ->
     this_event_code = $('#image_file_event_code').val()
     this_location = $(this).data( "location" )
     this_customer_number = $(this).data( "vendor-id" )
+    this_vin_number = $('#image_file_vin_number').val()
+    this_tag_number = $('#image_file_tag_number').val()
       
     spinner_icon = $(this).find('.fa-spinner')
     spinner_icon.show()
@@ -473,7 +475,9 @@ jQuery ->
         ticket_number: this_ticket_number
         event_code: this_event_code
         location: this_location
-        this_customer_number: this_customer_number
+        customer_number: this_customer_number
+        vin_number: this_vin_number
+        tag_number: this_tag_number
       success: (response) ->
         spinner_icon.hide()
         return

@@ -282,7 +282,7 @@ class Device < ActiveRecord::Base
     client.call(:print_pdf, xml: xml_string)
   end
   
-  def scanner_trigger(ticket_number, event_code, company_id, customer_number)
+  def scanner_trigger(ticket_number, event_code, company_id, customer_number, vin_number, tag_number)
     xml_string = "<?xml version='1.0' encoding='UTF-8'?>
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body>
@@ -296,6 +296,8 @@ class Device < ActiveRecord::Base
                    <CAMERA_NAME>#{self.DeviceName}</CAMERA_NAME>
                    <LOCATION>#{company_id}</LOCATION>
                    <CUST_NBR>#{customer_number}</CUST_NBR>
+                   <VIN>#{vin_number}</VIN>
+                   <TagNbr>#{tag_number}</TagNbr>
                 </CAPTURE>
                </Trigger>
             </mns:JpeggerTrigger>
