@@ -105,7 +105,7 @@ class DevicesController < ApplicationController
   end
   
   def scale_camera_trigger
-    @device.scale_camera_trigger(params[:ticket_number], params[:event_code], params[:commodity_name], params[:location], params[:weight], params[:customer_number])
+    @device.scale_camera_trigger(params[:ticket_number], params[:event_code], params[:commodity_name], params[:location], params[:weight], params[:customer_number], params[:vin_number], params[:tag_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

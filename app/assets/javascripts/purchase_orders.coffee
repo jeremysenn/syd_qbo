@@ -347,6 +347,9 @@ jQuery ->
     location = $(this).data( "location" )
     commodity_name = $(this).data( "item-name" )
     customer_number = $(this).data( "vendor-id" )
+    this_vin_number = $('#image_file_vin_number').val()
+    this_tag_number = $('#image_file_tag_number').val()
+    
 
     camera_icon = $(this).find( ".fa-camera" )
     camera_icon.hide()
@@ -365,6 +368,8 @@ jQuery ->
         location: location
         weight: weight_text_field.val()
         customer_number: customer_number
+        vin_number: this_vin_number
+        tag_number: this_tag_number
       success: (response) ->
         camera_icon.show()
         spinner_icon.hide()
