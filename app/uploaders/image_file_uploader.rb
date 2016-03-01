@@ -33,6 +33,7 @@ class ImageFileUploader < CarrierWave::Uploader::Base
     process :rotate
 #    process :resize_to_fit => [2000, 2000]
     process :caption, :if => :should_process_caption?
+    process :contract, :if => :should_process_contract?
   end
   
   def rotate
@@ -89,6 +90,37 @@ class ImageFileUploader < CarrierWave::Uploader::Base
       end
     end
   end
+  
+  def contract
+    # top caption
+    manipulate! do |source|
+      txt = Magick::Draw.new
+      txt.pointsize = 10
+      txt.font_family = "Helvetica"
+      txt.gravity = Magick::NorthGravity
+      txt.fill = "black"
+#      txt.stroke = "#000000"
+#      txt.fill = "#F3F315"
+      txt.font_weight = Magick::LighterWeight
+      caption = "#{model.user.company.jpegger_contract.verbiage}"
+#      caption = "#{model.customer_name} #{Time.now.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S")} \\n Ticket: #{model.ticket_number} Event: #{model.event_code}"
+      source.annotate(txt, 0, 0, 0, 0, caption)
+    end
+    
+    # bottom right caption
+    manipulate! do |source|
+      txt = Magick::Draw.new
+      txt.pointsize = 10
+      txt.font_family = "Helvetica"
+      txt.gravity = Magick::SouthEastGravity
+      txt.fill = "black"
+#      txt.stroke = "#000000"
+#      txt.fill = "#F3F315"
+      txt.font_weight = Magick::LighterWeight
+      caption = "#{Time.now.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S")} \\n Ticket: #{model.ticket_number} \\n Customer: #{model.customer_name}"
+      source.annotate(txt, 0, 0, 0, 0, caption)
+    end
+  end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -141,7 +173,11 @@ class ImageFileUploader < CarrierWave::Uploader::Base
     end
     
     def should_process_caption?(file)
-      (model.class.name == "ImageFile" or model.class.name == "ShipmentFile") and model.event_code != "Signature"
+      (model.class.name == "ImageFile" or model.class.name == "ShipmentFile") and model.event_code != "SIGNATURE CAPTURE"
+    end
+    
+    def should_process_contract?(file)
+      (model.class.name == "ImageFile" or model.class.name == "ShipmentFile") and model.event_code == "SIGNATURE CAPTURE"
     end
 
 end

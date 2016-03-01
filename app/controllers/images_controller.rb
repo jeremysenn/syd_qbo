@@ -12,6 +12,7 @@ class ImagesController < ApplicationController
   def index
     unless params[:q].blank? or params[:today] == true
       @ticket_number = params[:q][:ticket_nbr_eq]
+      @event_code = params[:q][:event_code_eq]
       @start_date = params[:q][:sys_date_time_gteq]
       @end_date = params[:q][:sys_date_time_lteq]
       
@@ -100,53 +101,68 @@ class ImagesController < ApplicationController
   end
   
   def advanced_search
-    @vendors = @vendor_service.query(nil, :per_page => 1000)
-    @items = @item_service.query(nil, :per_page => 1000)
     unless params[:q].blank?
-      @ticket_number = params[:q][:ticket_nbr_eq]
-      @start_date = params[:q][:sys_date_time_gteq]
-      @end_date = params[:q][:sys_date_time_lteq]
-      @customer_number = params[:q][:cust_nbr_eq]
-      @commodity_name = params[:q][:cmdy_name_cont]
-      @event_code = params[:q][:event_code_eq]
-
-#      if (@start_date.present? and @end_date.present?) and (@start_date == @end_date) # User select the same date for both
-#        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.tomorrow.strftime("%Y-%m-%d") 
-#      end
+      @search = Image.search(params[:q].merge(proper_location: current_user.location))
       
-      if @end_date.present? # Use end date's end of day
-        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.end_of_day
-      end
-
-      search = Image.ransack(params[:q])
-
-      ### Only show one image per ticket by default, unless there is a ticket number being searched ###
-      unless @ticket_number.blank?
-        params[:one_image_per_ticket] == '0'
-        @one_image_per_ticket = '0'
-        search.sorts = "sys_date_time desc"
-        @images = search.result.page(params[:page]).per(6)
-      else
-        search.sorts = "ticket_nbr desc"
-        if params[:one_image_per_ticket] == '1' or not params[:one_image_per_ticket] == '0'
-          @images = search.result
-          @images = Kaminari.paginate_array(@images.to_a.uniq { |image| image.ticket_nbr }).page(params[:page]).per(6)
-        else
-          @images = search.result.page(params[:page]).per(6)
-        end
-      end
-    else # Show today's tickets
+      @images = @search.result.page(params[:page]).per(6)
+      
+    else
       # Default search to today's images
-      @today = true
-      search = Image.ransack(:sys_date_time_gteq => Date.today.beginning_of_day, :sys_date_time_lteq => Date.today.end_of_day, :location_eq => current_user.location)
-      params[:q] = {}
-      @start_date = Date.today.to_s
-      @end_date = Date.today.to_s
-      search.sorts = "ticket_nbr desc"
-      @images = search.result
-      @images = Kaminari.paginate_array(@images.to_a.uniq { |image| image.ticket_nbr }).page(params[:page]).per(6)
+      params[:q] = {:sys_date_time_gteq => Date.today.beginning_of_day, :sys_date_time_lteq => Date.today.end_of_day, proper_location: current_user.location}
+      @search = Image.ransack(params[:q])
+      @images = @search.result.page(params[:page]).per(6)
     end
+    @search.build_condition if @search.conditions.blank?
   end
+  
+#  def advanced_search
+#    @vendors = @vendor_service.query(nil, :per_page => 1000)
+#    @items = @item_service.query(nil, :per_page => 1000)
+#    unless params[:q].blank?
+#      @ticket_number = params[:q][:ticket_nbr_eq]
+#      @start_date = params[:q][:sys_date_time_gteq]
+#      @end_date = params[:q][:sys_date_time_lteq]
+#      @customer_number = params[:q][:cust_nbr_eq]
+#      @commodity_name = params[:q][:cmdy_name_cont]
+#      @event_code = params[:q][:event_code_eq]
+#
+##      if (@start_date.present? and @end_date.present?) and (@start_date == @end_date) # User select the same date for both
+##        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.tomorrow.strftime("%Y-%m-%d") 
+##      end
+#      
+#      if @end_date.present? # Use end date's end of day
+#        params[:q][:sys_date_time_lteq] = params[:q][:sys_date_time_lteq].to_date.end_of_day
+#      end
+#
+#      search = Image.ransack(params[:q])
+#
+#      ### Only show one image per ticket by default, unless there is a ticket number being searched ###
+#      unless @ticket_number.blank?
+#        params[:one_image_per_ticket] == '0'
+#        @one_image_per_ticket = '0'
+#        search.sorts = "sys_date_time desc"
+#        @images = search.result.page(params[:page]).per(6)
+#      else
+#        search.sorts = "ticket_nbr desc"
+#        if params[:one_image_per_ticket] == '1' or not params[:one_image_per_ticket] == '0'
+#          @images = search.result
+#          @images = Kaminari.paginate_array(@images.to_a.uniq { |image| image.ticket_nbr }).page(params[:page]).per(6)
+#        else
+#          @images = search.result.page(params[:page]).per(6)
+#        end
+#      end
+#    else # Show today's tickets
+#      # Default search to today's images
+#      @today = true
+#      search = Image.ransack(:sys_date_time_gteq => Date.today.beginning_of_day, :sys_date_time_lteq => Date.today.end_of_day, :location_eq => current_user.location)
+#      params[:q] = {}
+#      @start_date = Date.today.to_s
+#      @end_date = Date.today.to_s
+#      search.sorts = "ticket_nbr desc"
+#      @images = search.result
+#      @images = Kaminari.paginate_array(@images.to_a.uniq { |image| image.ticket_nbr }).page(params[:page]).per(6)
+#    end
+#  end
 
   private
     def set_image

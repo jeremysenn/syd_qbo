@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160107183941) do
+ActiveRecord::Schema.define(version: 20160218182422) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160107183941) do
     t.boolean  "show_bill_thumbnails",           default: false
     t.boolean  "show_bill_payment_thumbnails",   default: false
     t.integer  "device_group_id"
+    t.integer  "qb_location_id"
   end
 
   create_table "users", force: true do |t|
