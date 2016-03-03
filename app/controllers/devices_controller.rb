@@ -113,7 +113,8 @@ class DevicesController < ApplicationController
   end
   
   def customer_camera_trigger
-    Device.customer_camera_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], params[:camera_name])
+    Device.customer_camera_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], 
+      params[:camera_name], params[:vin_number], params[:tag_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}
@@ -185,7 +186,8 @@ class DevicesController < ApplicationController
   end
   
   def customer_scanner_trigger
-    Device.customer_scanner_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], params[:camera_name])
+    Device.customer_scanner_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], 
+      params[:camera_name], params[:vin_number], params[:tag_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}
@@ -193,7 +195,8 @@ class DevicesController < ApplicationController
   end
   
   def customer_scale_camera_trigger
-    Device.customer_scale_camera_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], params[:camera_name])
+    Device.customer_scale_camera_trigger(params[:customer_number], params[:customer_first_name], params[:customer_last_name], params[:event_code], params[:location], 
+      params[:camera_name], params[:vin_number], params[:tag_number])
     respond_to do |format|
       format.html {}
       format.json { render json: {}, :status => :ok}

@@ -131,7 +131,7 @@ jQuery ->
   ### Prettier file upload buttons ###
   $('input[type=file]').bootstrapFileInput()
 
-  ### Event code changed - clear data; check if License Plate or VIN ###
+  ### Event code changed - clear data; check if License Plate or VIN or Vehicle ###
   $('#image_file_event_code').on 'change', ->
     $('#image_file_tare_seq_nbr').val ''
     $('#image_file_commodity_name').val ''
@@ -148,7 +148,7 @@ jQuery ->
       $('#vin_form_group').hide()
       $('#image_file_vin_number').val ''
     return
-  ### End event code changed - clear data; check if License Plate or VIN ###
+  ### End event code changed - clear data; check if License Plate or VIN or Vehicle ###
 
   ### Gross/Tare Picture Uploads ###
   #$(document).on 'click', '.gross_or_tare_picture_button', ->
