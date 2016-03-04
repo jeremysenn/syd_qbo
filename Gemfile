@@ -102,7 +102,7 @@ gem 'wkhtmltopdf-binary'
 gem 'savon'
 
 # Exception notifications
-gem 'exception_notification', '4.1.1'
+gem 'exception_notification'#, '4.1.1'
 
 # See the speed of a request on the page
 # gem 'rack-mini-profiler'

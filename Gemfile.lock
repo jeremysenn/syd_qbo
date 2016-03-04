@@ -307,7 +307,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.1.0)
   devise
-  exception_notification (= 4.1.1)
+  exception_notification
   figaro
   haml
   jbuilder (~> 2.0)
