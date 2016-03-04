@@ -22,7 +22,7 @@ module ApplicationHelper
   end
   
   def cust_pic_event_codes
-    ["Photo ID", "Customer Photo", "Certificate", "Finger Print"]
+    ["Photo ID", "Customer Photo", "Certificate", "Finger Print", "Vehicle"]
   end
   
   def units_of_measure
