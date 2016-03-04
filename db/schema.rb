@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218182422) do
+ActiveRecord::Schema.define(version: 20160302203521) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20160218182422) do
     t.integer  "blob_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "vin_number"
+    t.string   "tag_number"
   end
 
   create_table "image_files", force: true do |t|

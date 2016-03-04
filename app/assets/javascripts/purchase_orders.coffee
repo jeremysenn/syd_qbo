@@ -131,24 +131,24 @@ jQuery ->
   ### Prettier file upload buttons ###
   $('input[type=file]').bootstrapFileInput()
 
-  ### Event code changed - clear data; check if License Plate or VIN ###
+  ### Event code changed - clear data; check if License Plate or VIN or Vehicle ###
   $('#image_file_event_code').on 'change', ->
     $('#image_file_tare_seq_nbr').val ''
     $('#image_file_commodity_name').val ''
     $('#image_file_weight').val ''
     input_select = $(this)
-    if input_select.val() == 'License Plate' || input_select.val() == 'Title'
+    if input_select.val() == 'License Plate' || input_select.val() == 'Title' || input_select.val() == 'Vehicle'
       $('#tag_form_group').show()
     else
       $('#tag_form_group').hide()
       $('#image_file_tag_number').val ''
-    if input_select.val() == 'VIN' || input_select.val() == 'Title'
+    if input_select.val() == 'VIN' || input_select.val() == 'Title' || input_select.val() == 'Vehicle'
       $('#vin_form_group').show()
     else
       $('#vin_form_group').hide()
       $('#image_file_vin_number').val ''
     return
-  ### End event code changed - clear data; check if License Plate or VIN ###
+  ### End event code changed - clear data; check if License Plate or VIN or Vehicle ###
 
   ### Gross/Tare Picture Uploads ###
   #$(document).on 'click', '.gross_or_tare_picture_button', ->

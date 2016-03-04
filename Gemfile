@@ -10,7 +10,7 @@ gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
 
 # Set environment variables within application.yml
-gem "figaro" 
+gem "figaro"
 
 # Use haml
 gem 'haml'
