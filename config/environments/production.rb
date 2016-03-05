@@ -96,10 +96,10 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   
   #SydQbo::Application.config.middleware.use ExceptionNotification::Rack,
-#  Rails.application.config.middleware.use ExceptionNotification::Rack,
-#  :email => {
-#    :ignore_exceptions => ['ActionView::TemplateError'] + ExceptionNotifier.ignored_exceptions,
-#    :sender_address => %{"SYD QBO Exception Notifier" <notifier@example.com>},
-#    :exception_recipients => %w{jeremy@tranact.com shark@tranact.com}
-#  }
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    :ignore_exceptions => ['ActionView::TemplateError'] + ExceptionNotifier.ignored_exceptions,
+    :sender_address => %{"SYD QBO Exception Notifier" <notifier@example.com>},
+    :exception_recipients => %w{jeremy@tranact.com shark@tranact.com}
+  }
 end
