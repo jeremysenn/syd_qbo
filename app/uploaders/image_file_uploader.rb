@@ -102,7 +102,11 @@ class ImageFileUploader < CarrierWave::Uploader::Base
 #      txt.stroke = "#000000"
 #      txt.fill = "#F3F315"
       txt.font_weight = Magick::LighterWeight
-      caption = "#{model.user.company.jpegger_contract.verbiage}" unless model.user.company.jpegger_contract.blank?
+      unless model.user.company.jpegger_contract.blank?
+        caption = "#{model.user.company.jpegger_contract.verbiage}" 
+      else
+        caption = ""
+      end
 #      caption = "#{model.customer_name} #{Time.now.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S")} \\n Ticket: #{model.ticket_number} Event: #{model.event_code}"
       source.annotate(txt, 0, 0, 0, 0, caption)
     end
