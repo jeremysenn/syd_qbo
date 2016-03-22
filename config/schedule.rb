@@ -24,7 +24,7 @@ set :environment, 'production'
 
 every :reboot do
   job_type :application, "cd /usr/local/Ruby/syd_qbo && :task :output"
-  application "bundle exec unicorn -l 3000 -E production"
+  application "bundle exec unicorn -l 3000 -E production -c ./config/unicorn.rb"
   application "bundle exec sidekiq"
 end
 #
