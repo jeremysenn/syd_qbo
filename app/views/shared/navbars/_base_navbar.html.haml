@@ -63,6 +63,9 @@
           %a{href: company_path(current_company_id)}
             %strong COMPANY
         %li
+          %a{href: user_setting_path(current_user.user_setting)}
+            %strong SETTINGS
+        %li
           %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
             %strong QUICKBOOKS
       %ul.nav.navbar-nav.navbar-right
