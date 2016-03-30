@@ -302,7 +302,7 @@ class BillsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def bill_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:bill).permit(:vendor, :doc_number, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount])
+      params.require(:bill).permit(:vendor, :doc_number, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount, :category])
     end
     
 #    def line_params
