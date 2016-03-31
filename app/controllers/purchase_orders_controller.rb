@@ -98,12 +98,8 @@ class PurchaseOrdersController < ApplicationController
   def edit
     respond_to do |format|
       format.html{
-        #@vendors = @vendor_service.query(nil, :per_page => 1000)
-        #    @customer = Customer.find_by_id(@purchase_order.vendor_ref.value)
-#        @customer = Customer.where(vendorid: @purchase_order.vendor_ref.value, qb_company_id: current_company.CompanyID).last
         @vendor = @vendor_service.fetch_by_id(@purchase_order.vendor_ref)
         @doc_number = @purchase_order.doc_number # Ticket number
-        #    @contract = Contract.find(current_company_id) # Find contract for this company
         
         query_string = "Select * From Item Where Type = 'NonInventory'"
         @items = @item_service.query(query_string, :per_page => 1000)
@@ -112,10 +108,6 @@ class PurchaseOrdersController < ApplicationController
         @categories = @item_service.query(category_query_string, :per_page => 1000)
         
         @scale_devices = current_user.scale_devices
-        
-        #    @images = Image.where(ticket_nbr: @doc_number, location: current_user.location)
-        #    search = Image.ransack(ticket_nbr_eq: @purchase_order.doc_number, location_eq: current_user.location)
-        #    @images = search.result.page(params[:page]).per(1)
       }
     end
     
@@ -191,12 +183,12 @@ class PurchaseOrdersController < ApplicationController
         format.html { 
           if params[:close_ticket]
             Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
-            redirect_to root_path, notice: 'Ticket closed'
+            redirect_to bills_path, notice: 'Ticket closed'
 #            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_ticket: true), notice: 'Closing ticket, please wait ...'
-          elsif params[:close_and_pay]
-#            @bill = Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
-#            redirect_to new_bill_payment_path(bill_id: @bill.id)
-            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true) #, notice: 'Closing ticket, please wait ...'
+#          elsif params[:close_and_pay]
+##            @bill = Bill.create_from_purchase_order(@purchase_order_service, @bill_service, @purchase_order)
+##            redirect_to new_bill_payment_path(bill_id: @bill.id)
+#            redirect_to new_bill_path(purchase_order_id: @purchase_order.id, close_and_pay: true) #, notice: 'Closing ticket, please wait ...'
           else
 #            redirect_to purchase_orders_path
             redirect_to root_path
@@ -310,7 +302,7 @@ class PurchaseOrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_order_params
       # order matters here in that to have access to model attributes in uploader methods, they need to show up before the file param in this permitted_params list 
-      params.require(:purchase_order).permit(:vendor, :po_status, :item_description, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount])
+      params.require(:purchase_order).permit(:vendor, :po_status, :item_description, line_items: [:item, :description, :gross, :tare, :quantity, :rate, :amount, :category])
     end
     
 #    def line_params
