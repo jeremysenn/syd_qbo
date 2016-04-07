@@ -19,7 +19,9 @@ class VendorsController < ApplicationController
       query = "SELECT * FROM Vendor WHERE DisplayName LIKE '%#{params[:search].strip.gsub("'"){"\\'"}}%'"
       @vendors = @vendor_service.query(query, :per_page => 1000)
     else
-      @vendors = @vendor_service.query(nil, :per_page => 1000)
+      query = "SELECT * FROM Vendor WHERE DisplayName = 'FUBAR'"
+       @vendors = @vendor_service.query(query, :per_page => 1000)
+#      @vendors = @vendor_service.query(nil, :per_page => 1000)
     end
     respond_to do |format|
       format.html {
