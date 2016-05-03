@@ -232,7 +232,8 @@ Devise.setup do |config|
   # up on your models and hooks.
   # 
     require 'openid/store/filesystem'
-    config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'intuit', :identifier => 'https://openid.intuit.com/openid/xrds', :require => 'omniauth-openid'
+    config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('./tmp'), :name => 'intuit', :identifier => 'https://openid.intuit.com/openid/xrds', :require => 'omniauth-openid'
+#    config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'intuit', :identifier => 'https://openid.intuit.com/openid/xrds', :require => 'omniauth-openid'
   # 
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
