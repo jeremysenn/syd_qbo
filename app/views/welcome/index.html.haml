@@ -116,11 +116,13 @@
         = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
       .row
         .col-sm-12.col-md-4.col-md-offset-4
-          %p.text-center
-            %a{href: 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'} More Info
-            %a{href: new_user_session_path, class: 'btn btn-lg btn-primary', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Log In"}}
+          %p.text-center.inline
+            %a{href: 'http://173.227.154.149:8082/login', class: 'btn btn-lg btn-primary welcome_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Scrap Dragon"}} 
               %i.fa.fa-lock
-              Log In
+              Scrap Dragon
+            %a{href: new_user_session_path, class: 'btn btn-lg btn-success welcome_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Quickbooks"}}
+              %i.fa.fa-lock
+              Quickbooks
       -#
         %h2.text-center
           <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
