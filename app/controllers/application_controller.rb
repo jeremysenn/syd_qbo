@@ -25,6 +25,14 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :flash => { :error =>  exception.message }
   end
   
+  rescue_from Quickbooks::AuthorizationFailure do |exception|
+    # Still send out exception notification email even if rescuing
+    ExceptionNotifier.notify_exception(exception,
+      :env => request.env, :data => {:message =>  exception.message})
+    
+    redirect_to root_url, :flash => { :error =>  exception.message }
+  end
+  
   private
   def current_company_id
     session[:realm_id] ||= current_user.location
