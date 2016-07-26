@@ -14,7 +14,7 @@
           = form_tag set_user_location_user_settings_path, :class => "form-horizontal" do |f|
             .row.form-group
               %div{:class => "col-sm-12 col-md-12"}
-                = label_tag "Quickbooks Admin Email", nil, :class => 'control-label'
+                = label_tag "QuickBooks Admin Email", nil, :class => 'control-label'
                 %br/
                 = email_field_tag "user_setting[admin_email]", nil, placeholder: "admin@mail.com", :class => "form-control input-lg"
             .row.form-group
@@ -122,7 +122,7 @@
               Scrap Dragon
             %a{href: new_user_session_path, class: 'btn btn-lg btn-success welcome_button', data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Quickbooks"}}
               %i.fa.fa-lock
-              Quickbooks
+              QuickBooks
       -#
         %h2.text-center
           <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
