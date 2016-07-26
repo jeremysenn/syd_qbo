@@ -46,7 +46,8 @@
             %strong= "Search table:"
             .pull-right
               = "#{@user_setting.table_name}"
-      - unless current_company.device_groups.blank?
+    - unless current_company.device_groups.blank?
+      .panel.panel-default
         .panel-heading
           - unless current_user.device_group.blank?
             = "#{current_user.device_group.DeviceGroupName} Device Group"

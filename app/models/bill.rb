@@ -117,7 +117,7 @@ class Bill < ActiveRecord::Base
             xml.vehicle_picture(:code => "L")
           end
           xml.property do
-            bill.line_items.each do |line_item|
+            bill.line_items.each_with_index do |line_item, index|
               xml.item do
                 xml.item_number(line_item.id)
                 xml.item_make
@@ -132,8 +132,12 @@ class Bill < ActiveRecord::Base
                 xml.item_net_wt(line_item.item_based_expense_line_detail.quantity)
                 xml.item_amount(line_item.amount)
                 xml.item_received_title("N")
-                images.each do |image|
-                  xml.item_picture(image.jpeg_image_base_64, :code => "A", :type => 'jpg')
+                if index == 0
+                  unless images.blank?
+                    images.each do |image|
+                      xml.item_picture(image.jpeg_image_base_64, :code => "A", :type => 'jpg')
+                    end
+                  end
                 end
               end
             end

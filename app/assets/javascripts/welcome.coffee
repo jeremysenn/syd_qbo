@@ -11,4 +11,7 @@ jQuery ->
     $.rails.enableElement $('#welcome_to_paid')
     $.rails.enableElement $('#welcome_to_search_pictures')
     $.rails.enableElement $('#welcome_to_vendors')
+    $('.welcome_button').each ->
+      $.rails.enableElement $(this)
+      return
     return
