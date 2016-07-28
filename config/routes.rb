@@ -152,6 +152,7 @@ Rails.application.routes.draw do
   
   get 'welcome/privacy' => 'welcome#privacy'
   get 'welcome/tos' => 'welcome#tos'
+  get 'welcome/about' => 'welcome#about'
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
