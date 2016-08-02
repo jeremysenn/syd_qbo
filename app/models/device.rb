@@ -244,7 +244,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body xmlns:NS1='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
             <NS1:PrintPDF>
-               <WorkstationIP xsi:type='xs:string'>#{ENV['PROXY_IP']}</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>127.0.0.1</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <PDFFile xsi:type='xsd:base64Binary'>#{pdf_binary}</PDFFile>
             </NS1:PrintPDF>
@@ -259,7 +259,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body xmlns:NS1='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
             <NS1:PrintPDF>
-               <WorkstationIP xsi:type='xs:string'>#{ENV['PROXY_IP']}</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>127.0.0.1</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <PDFFile xsi:type='xsd:base64Binary'>#{pdf_binary}</PDFFile>
             </NS1:PrintPDF>
@@ -274,7 +274,7 @@ class Device < ActiveRecord::Base
       <SOAP-ENV:Envelope xmlns:SOAP-ENV='http://schemas.xmlsoap.org/soap/envelope/' xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/' xmlns:ns1='urn:TUDIntf' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://tempuri.org/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
          <SOAP-ENV:Body xmlns:NS1='urn:TUDIntf-ITUD' SOAP-ENV:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>
             <NS1:PrintPDF>
-               <WorkstationIP xsi:type='xs:string'>#{ENV['PROXY_IP']}</WorkstationIP>
+               <WorkstationIP xsi:type='xs:string'>127.0.0.1</WorkstationIP>
                <WorkstationPort xsi:type='xs:int'>#{self.LocalListenPort}</WorkstationPort>
                <PDFFile xsi:type='xsd:base64Binary'>#{pdf_binary}</PDFFile>
             </NS1:PrintPDF>
