@@ -13,18 +13,76 @@
           %hr.intro-divider/
           %ul.list-inline.intro-social-buttons
             %li
-              %a.btn.btn-default.btn-lg{:href => "#"}
-                %span.network-name ScrapDragon
+              %a.btn.btn-default.btn-lg{:href => "https://sdx.scrapyarddog.com/login"}
+                %span.network-name 
+                  %i.fa.fa-lock
+                  ScrapDragon Login
             %li
-              %a.btn.btn-default.btn-lg{:href => "#"}
-                %span.network-name QuickBooks
+              %a.btn.btn-default.btn-lg{:href => new_user_session_path}
+                %span.network-name 
+                  %i.fa.fa-lock
+                  QuickBooks Login
             %li
-              %a.btn.btn-default.btn-lg{:href => "#"}
-                %span.network-name More Info
+              %a.btn.btn-default.btn-lg{:href => "#more_info"}
+                %span.network-name 
+                  %i.fa.fa-angle-down
+                  More Info
   / /.container
 / /.intro-header
 
 / Page Content
+#more_info
+.content-section-b
+  %hr
+  .clearfix
+  .container
+    .row
+      .col-sm-4
+        .well
+          .clearfix
+          %h2.section-heading.text-center
+            = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
+            %br
+            Scrap Yard Dog
+            %br
+            JPEGger
+          %h4.text-center The Easy Way to Snap Pictures
+          %p.lead.text-center
+            You’re no longer restricted to the location of your fixed cameras. Instead, use your mobile device to easily capture those hard to reach pictures: 
+            inspection, license plate, or shipping container images. Jpegger Dog has your image compliance covered, & you can easily share your pictures with your customers. 
+          = link_to 'Learn More', 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'
+      .col-sm-4
+        .well
+          .clearfix
+          %h2.section-heading.text-center
+            = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
+            %br
+            Scrap Yard Dog
+            %br
+            Scrap Dragon
+          %h4.text-center The Smart Way to Buy Scrap
+          %p.lead.text-center
+            Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. 
+            Your scale operators will be buying scrap within minutes of its installation, and once entered, the data is 
+            available for management reporting and uploading to law enforcement agencies, as required.
+          = link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
+          = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-primary', target: '_blank'
+      .col-sm-4
+        .well
+          .clearfix
+          %h2.section-heading.text-center
+            = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
+            %br
+            Scrap Yard Dog
+            %br
+            QuickBooks
+          %h4.text-center The Safe Way to Do Accounting
+          %p.lead.text-center
+            Run your whole scrap buying business better with QuickBooks Dog. Use any mobile device, smart phone, or tablet to track your scrap buying
+            in QuickBooks Online. Easily capture transaction scale weights, pictures, drivers licenses, thumbprints, and signatures in a dead-simple to use interface.
+          = link_to 'Learn More', 'https://tranact.com/scrapyarddogqb/', class: 'btn btn-lg btn-default', target: '_blank'
+  / /.container
+/ /.content-section-b
 
 %a{:name => "services"}
 .content-section-a
@@ -115,16 +173,17 @@
       .col-lg-6
         %ul.list-inline.banner-social-buttons
           %li
-            %a.btn.btn-default.btn-lg{:href => "#"}
+            %a.btn.btn-default.btn-lg{:href => "https://twitter.com/tranactsoftware", target: '_blank'}
               %i.fa.fa-twitter.fa-fw
               %span.network-name Twitter
           %li
-            %a.btn.btn-default.btn-lg{:href => "#"}
+            %a.btn.btn-default.btn-lg{:href => "https://www.facebook.com/tranactsoftware/?ref=aymt_homepage_panel", target: '_blank'}
               %i.fa.fa-facebook.fa-fw
               %span.network-name Facebook
-          %li
-            %a.btn.btn-default.btn-lg{:href => "#"}
-              %i.fa.fa-linkedin.fa-fw
-              %span.network-name Linkedin
+          -#
+            %li
+              %a.btn.btn-default.btn-lg{:href => "#"}
+                %i.fa.fa-linkedin.fa-fw
+                %span.network-name Linkedin
   / /.container
 / /.banner
