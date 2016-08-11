@@ -148,6 +148,7 @@ Rails.application.routes.draw do
   
   get 'welcome/privacy' => 'welcome#privacy'
   get 'welcome/tos' => 'welcome#tos'
+  get 'welcome/about' => 'welcome#about'
   
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

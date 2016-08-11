@@ -1,8 +1,12 @@
-.jumbotron
+.jumbotron{style: "background: white;"}
   .container
-    %h2.text-center
-      <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
-      <ipp:login href="#{user_omniauth_authorize_path(:intuit)}" type="vertical"></ipp:login>
+    .well.col-sm-6.col-md-4.col-md-offset-4
+      %h2.text-center
+        <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+        <ipp:login href="#{user_omniauth_authorize_path(:intuit)}" type="vertical"></ipp:login>
+      .text-center
+        %a{href: "https://sandbox.qbo.intuit.com/app/homepage", target: '_blank'}
+          Go to your QuickBooks Online account
   -#
     .container
       .well.col-sm-6.col-md-4.col-md-offset-4

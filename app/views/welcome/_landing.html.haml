@@ -1,0 +1,189 @@
+/ Header
+%a{:name => "about"}
+.intro-header
+  .container
+    .row
+      .col-lg-12
+        .intro-message
+          %h1 
+            Scrap Yard Dog
+          %h3 
+            Scrap Yard Ticket Management Made Easy!
+            -# %img.img-responsive{:alt => "", :src => image_path('APL_logo_transparent_261x157')}
+          %hr.intro-divider/
+          %ul.list-inline.intro-social-buttons
+            %li
+              %a.btn.btn-default.btn-lg{:href => "https://sdx.scrapyarddog.com/login"}
+                %span.network-name 
+                  %i.fa.fa-lock
+                  ScrapDragon Login
+            %li
+              %a.btn.btn-default.btn-lg{:href => new_user_session_path}
+                %span.network-name 
+                  %i.fa.fa-lock
+                  QuickBooks Login
+            %li
+              %a.btn.btn-default.btn-lg{:href => "#more_info"}
+                %span.network-name 
+                  %i.fa.fa-angle-down
+                  More Info
+  / /.container
+/ /.intro-header
+
+/ Page Content
+#more_info
+.content-section-b
+  %hr
+  .clearfix
+  .container
+    .row
+      .col-sm-4
+        .well
+          .clearfix
+          %h2.section-heading.text-center
+            = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
+            %br
+            Scrap Yard Dog
+            %br
+            JPEGger
+          %h4.text-center The Easy Way to Snap Pictures
+          %p.lead.text-center
+            You’re no longer restricted to the location of your fixed cameras. Instead, use your mobile device to easily capture those hard to reach pictures: 
+            inspection, license plate, or shipping container images. Jpegger Dog has your image compliance covered, & you can easily share your pictures with your customers. 
+          = link_to 'Learn More', 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'
+      .col-sm-4
+        .well
+          .clearfix
+          %h2.section-heading.text-center
+            = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
+            %br
+            Scrap Yard Dog
+            %br
+            Scrap Dragon
+          %h4.text-center The Smart Way to Buy Scrap
+          %p.lead.text-center
+            Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. 
+            Your scale operators will be buying scrap within minutes of its installation, and once entered, the data is 
+            available for management reporting and uploading to law enforcement agencies, as required.
+          = link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
+          = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-primary', target: '_blank'
+      .col-sm-4
+        .well
+          .clearfix
+          %h2.section-heading.text-center
+            = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
+            %br
+            Scrap Yard Dog
+            %br
+            QuickBooks
+          %h4.text-center The Safe Way to Do Accounting
+          %p.lead.text-center
+            Run your whole scrap buying business better with QuickBooks Dog. Use any mobile device, smart phone, or tablet to track your scrap buying
+            in QuickBooks Online. Easily capture transaction scale weights, pictures, drivers licenses, thumbprints, and signatures in a dead-simple to use interface.
+          = link_to 'Learn More', 'https://tranact.com/scrapyarddogqb/', class: 'btn btn-lg btn-default', target: '_blank'
+  / /.container
+/ /.content-section-b
+
+%a{:name => "services"}
+.content-section-a
+  .container
+    .row
+      .col-lg-5.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          Easier Than Ever To
+          %br>/
+          To Manage Images
+        %p.lead
+          Create tickets, take pictures, organize commodities, and manage customers. We've created a process that makes it super easy from any device.
+          %br
+          %ul.list-inline
+            %li
+              %i.fa.fa-mobile-phone.fa-5x
+            %li
+              %i.fa.fa-tablet.fa-5x
+            %li
+              %i.fa.fa-desktop.fa-5x
+      .col-lg-5.col-lg-offset-2.col-sm-6
+        %img.img-responsive{:alt => "", :src => asset_path('scrap_heap.jpeg')}/
+  / /.container
+/ /.content-section-a
+
+.content-section-b
+  .container
+    .row
+      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          %i.fa.fa-cloud-upload
+          No More Pen & Paper because
+          %br>/
+          Everything is in the Cloud
+        %p.lead
+          Let the power of the web handle the large volume of data your yard generates. Access anytime, anywhere.
+      .col-lg-5.col-sm-pull-6.col-sm-6
+        %img.img-responsive{:alt => "", :src => asset_path('scrap_piles.jpg')}/
+  / /.container
+/ /.content-section-b
+
+.content-section-a
+  .container
+    .row
+      .col-lg-5.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          %i.fa.fa-thumbs-up
+          Better & More Efficient Management
+          %br>/
+          of your Yard's Image Capturing
+        %p.lead
+          Make it easier on your employees to gather pictures for compliance.
+      .col-lg-5.col-lg-offset-2.col-sm-6
+        %img.img-responsive{:alt => "", :src => asset_path('soda_can.jpg')}/
+  / /.container
+/ /.content-section-a
+
+.content-section-b
+  .container
+    .row
+      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          %i.fa.fa-dollar
+          Peace of Mind Knowing
+          %br>/
+          All Ticket Images are Tracked & Recorded
+        %p.lead
+          Money is no longer left on the table due to compliance fines.
+      .col-lg-5.col-sm-pull-6.col-sm-6
+        %img.img-responsive{:alt => "", :src => asset_path('money.jpg')}/
+  / /.container
+/ /.content-section-b
+
+%a{:name => "contact"}
+.banner
+  .container
+    .row
+      .col-lg-6
+        %h2 Connect with Us:
+      .col-lg-6
+        %ul.list-inline.banner-social-buttons
+          %li
+            %a.btn.btn-default.btn-lg{:href => "https://twitter.com/tranactsoftware", target: '_blank'}
+              %i.fa.fa-twitter.fa-fw
+              %span.network-name Twitter
+          %li
+            %a.btn.btn-default.btn-lg{:href => "https://www.facebook.com/tranactsoftware/?ref=aymt_homepage_panel", target: '_blank'}
+              %i.fa.fa-facebook.fa-fw
+              %span.network-name Facebook
+          -#
+            %li
+              %a.btn.btn-default.btn-lg{:href => "#"}
+                %i.fa.fa-linkedin.fa-fw
+                %span.network-name Linkedin
+  / /.container
+/ /.banner
