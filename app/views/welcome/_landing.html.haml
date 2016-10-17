@@ -16,12 +16,15 @@
               %a.btn.btn-default.btn-lg{:href => "https://sdx.scrapyarddog.com/login"}
                 %span.network-name 
                   %i.fa.fa-lock
-                  ScrapDragon Login
+                  DragonDog Login
             %li
               %a.btn.btn-default.btn-lg{:href => new_user_session_path}
                 %span.network-name 
                   %i.fa.fa-lock
                   QuickBooks Login
+          %ul.list-inline.intro-social-buttons
+            %li
+              = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
             %li
               %a.btn.btn-default.btn-lg{:href => "#more_info"}
                 %span.network-name 
@@ -68,7 +71,7 @@
             Your scale operators will be buying scrap within minutes of its installation, and once entered, the data is 
             available for management reporting and uploading to law enforcement agencies, as required.
           = link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
-          = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-primary', target: '_blank'
+          = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
       .col-sm-4
         .well
           .clearfix
