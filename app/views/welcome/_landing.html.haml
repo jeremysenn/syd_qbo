@@ -11,17 +11,18 @@
             Scrap Yard Ticket Management Made Easy!
             -# %img.img-responsive{:alt => "", :src => image_path('APL_logo_transparent_261x157')}
           %hr.intro-divider/
-          %ul.list-inline.intro-social-buttons
-            %li
-              %a.btn.btn-default.btn-lg{:href => "https://sdx.scrapyarddog.com/login"}
-                %span.network-name 
-                  %i.fa.fa-lock
-                  DragonDog Login
-            %li
-              %a.btn.btn-default.btn-lg{:href => new_user_session_path}
-                %span.network-name 
-                  %i.fa.fa-lock
-                  QuickBooks Login
+          -#
+            %ul.list-inline.intro-social-buttons
+              %li
+                %a.btn.btn-default.btn-lg{:href => "https://sdx.scrapyarddog.com/login"}
+                  %span.network-name 
+                    %i.fa.fa-lock
+                    DragonDog Login
+              %li
+                %a.btn.btn-default.btn-lg{:href => new_user_session_path}
+                  %span.network-name 
+                    %i.fa.fa-lock
+                    QuickBooks Login
           %ul.list-inline.intro-social-buttons
             %li
               = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
@@ -40,52 +41,115 @@
   .container
     .row
       .col-sm-12.col-md-4.col-md-offset-4
+        %p.text-center
+          %i.fa.fa-chevron-circle-up.fa-3x
         = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
-    .row
-      .col-sm-4
+      .col-sm-12
+        %h1.text-center The Smart Way to Buy Scrap
+        .lead.text-center
+          %p
+            Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. Your scale operators will be buying scrap 
+            within minutes of its installation, and once entered, the data is available for management reporting and uploading to Leads Online.
+          %p
+            Dragon Dog is a FREE web interface for scrap yards to buy scrap using any mobile device or computer. Pictures can be taken with mobile device and added 
+            to tickets for compliance and your records. All data is hosted at our state-of-the-art data hosting facility. This easy to use web interface allows you 
+            to view transaction and commodity reports for business planning and daily review.
+          %p
+            =# link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
+            = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
+
+    %div.row
+      %div.col-sm-4.col-md-4
         .well
-          .clearfix
-          %h2.section-heading.text-center
-            = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
-            %br
-            Scrap Yard Dog
-            %br
-            JPEGger
-          %h4.text-center The Easy Way to Snap Pictures
-          %p.lead.text-center
-            You’re no longer restricted to the location of your fixed cameras. Instead, use your mobile device to easily capture those hard to reach pictures: 
-            inspection, license plate, or shipping container images. Jpegger Dog has your image compliance covered, & you can easily share your pictures with your customers. 
-          = link_to 'Learn More', 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'
-      .col-sm-4
+          .text-center
+            %i.fa.fa-hand-pointer-o.fa-5x
+            %p.lead 
+              Simplified buttons control all aspects of using Dragon Dog.
+          %ul
+            %li Commodity List Provided
+            %li Create Custom Contracts
+            %li Customize Viewable Settings
+            %li Easily Edit Customers
+            %li Take Pictures with Mobile Device
+            %li Easy Ticket Management
+        = image_tag('SYD-Home-Screen.png', class: 'img-responsive center-block')
+
+      %div.col-sm-4.col-md-4
         .well
-          .clearfix
-          %h2.section-heading.text-center
-            = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
-            %br
-            Scrap Yard Dog
-            %br
-            Scrap Dragon
-          %h4.text-center The Smart Way to Buy Scrap
-          %p.lead.text-center
-            Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. 
-            Your scale operators will be buying scrap within minutes of its installation, and once entered, the data is 
-            available for management reporting and uploading to Leads Online.
-          = link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
-          = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
-      .col-sm-4
+          .text-center
+            %i.fa.fa-user.fa-5x
+            %p.lead View tickets and review or create new customers easily.
+          %ul
+            %li Store Vital Contact Information
+            %li Add Images of Customer
+            %li Add Picture of ID
+            %li Search Feature for Quick Access
+            %li Easily Add Ticket in Customer Detail View
+            %li Customer Reports
+        = image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block')
+        
+      %div.col-sm-4.col-md-4
         .well
-          .clearfix
-          %h2.section-heading.text-center
-            = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
-            %br
-            Scrap Yard Dog
-            %br
-            QuickBooks
-          %h4.text-center The Safe Way to Do Accounting
-          %p.lead.text-center
-            Run your whole scrap buying business better with QuickBooks Dog. Use any mobile device, smart phone, or tablet to track your scrap buying
-            in QuickBooks Online. Easily capture transaction scale weights, pictures, drivers licenses, thumbprints, and signatures in a dead-simple to use interface.
-          = link_to 'Learn More', 'https://tranact.com/scrapyarddogqb/', class: 'btn btn-lg btn-default', target: '_blank'
+          .text-center
+            %i.fa.fa-ticket.fa-5x
+            %p.lead Create a quick ticket and review customizable commodity list provided.
+          %ul
+            %li Choose Commodity (customizable)
+            %li Tare and Gross Weights
+            %li Dragon Dog Calculates Pricing
+            %li Add as Many Items as Needed
+            %li Add Pictures via your Mobile Device
+            %li Gather Customer Signatures
+        = image_tag('New-Ticket-Picture-985x1024.png', class: 'img-responsive center-block')
+      
+    %br
+
+    -#
+      .row
+        .col-sm-4
+          .well
+            .clearfix
+            %h2.section-heading.text-center
+              = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
+              %br
+              Scrap Yard Dog
+              %br
+              JPEGger
+            %h4.text-center The Easy Way to Snap Pictures
+            %p.lead.text-center
+              You’re no longer restricted to the location of your fixed cameras. Instead, use your mobile device to easily capture those hard to reach pictures: 
+              inspection, license plate, or shipping container images. Jpegger Dog has your image compliance covered, & you can easily share your pictures with your customers. 
+            = link_to 'Learn More', 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'
+        .col-sm-4
+          .well
+            .clearfix
+            %h2.section-heading.text-center
+              = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
+              %br
+              Scrap Yard Dog
+              %br
+              Scrap Dragon
+            %h4.text-center The Smart Way to Buy Scrap
+            %p.lead.text-center
+              Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. 
+              Your scale operators will be buying scrap within minutes of its installation, and once entered, the data is 
+              available for management reporting and uploading to Leads Online.
+            = link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
+            = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
+        .col-sm-4
+          .well
+            .clearfix
+            %h2.section-heading.text-center
+              = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
+              %br
+              Scrap Yard Dog
+              %br
+              QuickBooks
+            %h4.text-center The Safe Way to Do Accounting
+            %p.lead.text-center
+              Run your whole scrap buying business better with QuickBooks Dog. Use any mobile device, smart phone, or tablet to track your scrap buying
+              in QuickBooks Online. Easily capture transaction scale weights, pictures, drivers licenses, thumbprints, and signatures in a dead-simple to use interface.
+            = link_to 'Learn More', 'https://tranact.com/scrapyarddogqb/', class: 'btn btn-lg btn-default', target: '_blank'
   / /.container
 / /.content-section-b
 
@@ -185,10 +249,17 @@
             %a.btn.btn-default.btn-lg{:href => "https://www.facebook.com/tranactsoftware/?ref=aymt_homepage_panel", target: '_blank'}
               %i.fa.fa-facebook.fa-fw
               %span.network-name Facebook
-          -#
-            %li
-              %a.btn.btn-default.btn-lg{:href => "#"}
-                %i.fa.fa-linkedin.fa-fw
-                %span.network-name Linkedin
+    %br
+    .row
+      .col-lg-6
+      .col-lg-6
+        %ul.list-inline.banner-social-buttons
+          %li
+            %a.btn.btn-default.btn-lg{:href => 'https://tranact.com/scrapyarddog/', target: '_blank'}
+              JPEGger
+          %li
+            %a.btn.btn-default.btn-lg{:href => 'https://tranact.com/scrapyarddogqb/', target: '_blank'}
+              QuickbooksOnline
+    
   / /.container
 / /.banner
