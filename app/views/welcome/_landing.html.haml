@@ -26,11 +26,12 @@
           %ul.list-inline.intro-social-buttons
             %li
               = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
-            %li
-              %a.btn.btn-default.btn-lg{:href => "#more_info"}
-                %span.network-name 
-                  %i.fa.fa-angle-down
-                  More Info
+          %br
+          %br
+          %h3
+            More Info
+            %br
+            %i.fa.fa-chevron-circle-down.fa-2x
   / /.container
 / /.intro-header
 
@@ -41,11 +42,12 @@
   .container
     %div.row
       .col-sm-12.col-md-4.col-md-offset-4
-        %p.text-center
-          %i.fa.fa-chevron-circle-up.fa-3x
+        -#
+          %p.text-center
+            %i.fa.fa-chevron-circle-up.fa-3x
         = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
     %div.row
-      %div.col-sm-6
+      %div.col-sm-12
         .well
           %h1.text-center DragonDOG Free
           .lead
@@ -57,17 +59,26 @@
               Your DragonDOG company has a list of default commodities which you’ll want to edit and price prior to getting started.  All your data is available 
               for management reporting and uploading to Leads Online. Your data is stored in a Scrap Dragon format so upgrades are available for the entire 
               TranAct® product line.
-      %div.col-sm-6
-        .well
-          %h1.text-center The Smart Way to Buy Scrap
-          .lead
-            %p
-              Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. Scale operators will be buying scrap 
-              within minutes of signup, and once entered, the data is available for management reporting and uploading to Leads Online.
-            %p
-              Dragon Dog is a FREE web interface for scrap yards to buy scrap using any mobile device or computer. Pictures can be taken with mobile device and added 
-              to tickets for compliance and retention. All data is hosted at our state-of-the-art data hosting facility. Easily 
-              view transactions and commodity reports for business planning and daily review.
+          .text-center
+            %ul.list-inline
+              %li
+                %i.fa.fa-mobile-phone.fa-5x
+              %li
+                %i.fa.fa-tablet.fa-5x
+              %li
+                %i.fa.fa-desktop.fa-5x
+      -#
+        %div.col-sm-6
+          .well
+            %h1.text-center The Smart Way to Buy Scrap
+            .lead
+              %p
+                Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. Scale operators will be buying scrap 
+                within minutes of signup, and once entered, the data is available for management reporting and uploading to Leads Online.
+              %p
+                Dragon Dog is a FREE web interface for scrap yards to buy scrap using any mobile device or computer. Pictures can be taken with mobile device and added 
+                to tickets for compliance and retention. All data is hosted at our state-of-the-art data hosting facility. Easily 
+                view transactions and commodity reports for business planning and daily review.
       .text-center
         %p
           =# link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
@@ -119,180 +130,199 @@
     / /.container
   / /.content-section-b
     
-
-.content-section-b
-  .container
-    .row
-      .col-lg-5.col-sm-6
-        %hr.section-heading-spacer/
-        .clearfix
-        %h2.section-heading
-          Scrap Yard DOG-DragonDOG using cameras and scanners.
-        %p.lead
-          A subscription to the TranAct® Proxy allows free users to drive local devices directly from Scrap Yard DOG.
-      .col-lg-5.col-lg-offset-2.col-sm-6
-        = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
-  / /.container
-/ /.content-section-b
-
-%a{:name => "services"}
-.content-section-a
-  .container
-    .row
-      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
-        %hr.section-heading-spacer/
-        .clearfix
-        %h2.section-heading
-          Scrap Yard DOG–SDX user subscription
-        %p.lead
-          If you are running SDX at your location, a subscription to DragonDOG and a local web server takes ticket management and imaging mobile.  
-      .col-lg-5.col-sm-pull-6.col-sm-6
-        = image_tag('dragon_dog_logo_529x214.png', class: 'img-responsive')
-  / /.container
-/ /.content-section-a
-
-.content-section-b
-  .container
-    .row
-      .col-lg-5.col-sm-6
-        %hr.section-heading-spacer/
-        .clearfix
-        %h2.section-heading
-          Scrap Yard DOG-JPEGger user subscription
-        %p.lead
-          If you are running JPEGger on your network, a DOG subscription and a local WEB server will capture images directly into your JPEGger database.
-      .col-lg-5.col-lg-offset-2.col-sm-6
-        = image_tag("jpegger_banner.jpg", class: 'img-responsive')
-  / /.container
-/ /.content-section-b
-
 -#
-  .row
+  .content-section-b
+    .container
+      .row
+        .col-lg-5.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            Scrap Yard DOG-DragonDOG using cameras and scanners.
+          %p.lead
+            A subscription to the TranAct® Proxy allows free users to drive local devices directly from Scrap Yard DOG.
+        .col-lg-5.col-lg-offset-2.col-sm-6
+          = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
+    / /.container
+  / /.content-section-b
+
+  %a{:name => "services"}
+  .content-section-a
+    .container
+      .row
+        .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            Scrap Yard DOG–SDX user subscription
+          %p.lead
+            If you are running SDX at your location, a subscription to DragonDOG and a local web server takes ticket management and imaging mobile.  
+        .col-lg-5.col-sm-pull-6.col-sm-6
+          = image_tag('dragon_dog_logo_529x214.png', class: 'img-responsive')
+    / /.container
+  / /.content-section-a
+
+  .content-section-b
+    .container
+      .row
+        .col-lg-5.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            Scrap Yard DOG-JPEGger user subscription
+          %p.lead
+            If you are running JPEGger on your network, a DOG subscription and a local WEB server will capture images directly into your JPEGger database.
+        .col-lg-5.col-lg-offset-2.col-sm-6
+          = image_tag("jpegger_banner.jpg", class: 'img-responsive')
+    / /.container
+  / /.content-section-b
+
+.jumbotron
+  .container
     .col-sm-4
-      .well
-        .clearfix
-        %h2.section-heading.text-center
-          = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
-          %br
-          Scrap Yard Dog
-          %br
-          JPEGger
-        %h4.text-center The Easy Way to Snap Pictures
-        %p.lead.text-center
-          You’re no longer restricted to the location of your fixed cameras. Instead, use your mobile device to easily capture those hard to reach pictures: 
-          inspection, license plate, or shipping container images. Jpegger Dog has your image compliance covered, & you can easily share your pictures with your customers. 
-        = link_to 'Learn More', 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'
-    .col-sm-4
-      .well
-        .clearfix
-        %h2.section-heading.text-center
-          = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
-          %br
+      %h2.section-heading.text-center
+        = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
+        %br
+        Scrap Yard DOG-DragonDOG using cameras and scanners
+        -#
           Scrap Yard Dog
           %br
           Scrap Dragon
+      %p.lead.text-center
+        A subscription to the TranAct® Proxy allows free users to drive local devices directly from Scrap Yard DOG.
+      %h2.text-center
+        Scrap Yard DOG–SDX user subscription
+      %p.text-center
+        If you are running SDX at your location, a subscription to DragonDOG and a local web server takes ticket management and imaging mobile.
+      -#
         %h4.text-center The Smart Way to Buy Scrap
         %p.lead.text-center
+          -
           Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. 
           Your scale operators will be buying scrap within minutes of its installation, and once entered, the data is 
           available for management reporting and uploading to Leads Online.
         = link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
         = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
     .col-sm-4
-      .well
-        .clearfix
-        %h2.section-heading.text-center
-          = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
-          %br
+      %h2.section-heading.text-center
+        = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
+        %br
+        Scrap Yard DOG-QuickBooks Online subscription
+        -#
           Scrap Yard Dog
           %br
           QuickBooks
+      -#
         %h4.text-center The Safe Way to Do Accounting
-        %p.lead.text-center
+      %p.lead.text-center
+        Scrap Yard DOG for QuickBooks is the same as Dragon DOG, but stores data in QuickBooks Online instead of Scrap Dragon’s shared server.  
+        Scrap Yard Dog for QuickBooks requires a TranAct and QuickBooks Online subscription.
+      %p.text-center
+        Run your whole scrap buying business better with Scrap Yard DOG for QuickBooks. Use any mobile device, smart phone, or tablet to track your scrap 
+        buying in QuickBooks Online. Easily capture transaction scale weights, pictures, driver’s licenses, thumbprints, and signatures in a dead-simple to 
+        use interface.
+        -#
           Run your whole scrap buying business better with QuickBooks Dog. Use any mobile device, smart phone, or tablet to track your scrap buying
           in QuickBooks Online. Easily capture transaction scale weights, pictures, drivers licenses, thumbprints, and signatures in a dead-simple to use interface.
-        = link_to 'Learn More', 'https://tranact.com/scrapyarddogqb/', class: 'btn btn-lg btn-default', target: '_blank'
-  
-
-%a{:name => "services"}
-.content-section-a
-  .container
-    .row
-      .col-lg-5.col-sm-6
-        %hr.section-heading-spacer/
-        .clearfix
-        %h2.section-heading
-          Easier Than Ever To
-          %br>/
-          To Manage Images
-        %p.lead
-          Create tickets, take pictures, organize commodities, and manage customers. We've created a process that makes it super easy from any device.
+      =# link_to 'Learn More', 'https://tranact.com/scrapyarddogqb/', class: 'btn btn-lg btn-default', target: '_blank'
+    .col-sm-4
+      %h2.section-heading.text-center
+        = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
+        %br
+        Scrap Yard DOG-JPEGger user subscription
+        -#
+          Scrap Yard Dog
           %br
-          %ul.list-inline
-            %li
-              %i.fa.fa-mobile-phone.fa-5x
-            %li
-              %i.fa.fa-tablet.fa-5x
-            %li
-              %i.fa.fa-desktop.fa-5x
-      .col-lg-5.col-lg-offset-2.col-sm-6
-        %img.img-responsive{:alt => "", :src => asset_path('scrap_heap.jpeg')}/
-  / /.container
-/ /.content-section-a
+          JPEGger
+      -#
+        %h4.text-center The Easy Way to Snap Pictures
+      %p.lead.text-center
+        If you are running JPEGger on your network, a DOG subscription and a local WEB server will capture images directly into your JPEGger database.
+        -#
+          You’re no longer restricted to the location of your fixed cameras. Instead, use your mobile device to easily capture those hard to reach pictures: 
+          inspection, license plate, or shipping container images. Jpegger Dog has your image compliance covered, & you can easily share your pictures with your customers. 
+      =# link_to 'Learn More', 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'
+  
+-#
+  %a{:name => "services"}
+  .content-section-a
+    .container
+      .row
+        .col-lg-5.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            Easier Than Ever To
+            %br>/
+            To Manage Images
+          %p.lead
+            Create tickets, take pictures, organize commodities, and manage customers. We've created a process that makes it super easy from any device.
+            %br
+            %ul.list-inline
+              %li
+                %i.fa.fa-mobile-phone.fa-5x
+              %li
+                %i.fa.fa-tablet.fa-5x
+              %li
+                %i.fa.fa-desktop.fa-5x
+        .col-lg-5.col-lg-offset-2.col-sm-6
+          %img.img-responsive{:alt => "", :src => asset_path('scrap_heap.jpeg')}/
+    / /.container
+  / /.content-section-a
 
-.content-section-b
-  .container
-    .row
-      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
-        %hr.section-heading-spacer/
-        .clearfix
-        %h2.section-heading
-          %i.fa.fa-cloud-upload
-          No More Pen & Paper because
-          %br>/
-          Everything is in the Cloud
-        %p.lead
-          Let the power of the web handle the large volume of data your yard generates. Access anytime, anywhere.
-      .col-lg-5.col-sm-pull-6.col-sm-6
-        %img.img-responsive{:alt => "", :src => asset_path('scrap_piles.jpg')}/
-  / /.container
-/ /.content-section-b
+  .content-section-b
+    .container
+      .row
+        .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            %i.fa.fa-cloud-upload
+            No More Pen & Paper because
+            %br>/
+            Everything is in the Cloud
+          %p.lead
+            Let the power of the web handle the large volume of data your yard generates. Access anytime, anywhere.
+        .col-lg-5.col-sm-pull-6.col-sm-6
+          %img.img-responsive{:alt => "", :src => asset_path('scrap_piles.jpg')}/
+    / /.container
+  / /.content-section-b
 
-.content-section-a
-  .container
-    .row
-      .col-lg-5.col-sm-6
-        %hr.section-heading-spacer/
-        .clearfix
-        %h2.section-heading
-          %i.fa.fa-thumbs-up
-          Better & More Efficient Management
-          %br>/
-          of your Yard's Image Capturing
-        %p.lead
-          Make it easier on your employees to gather pictures for compliance.
-      .col-lg-5.col-lg-offset-2.col-sm-6
-        %img.img-responsive{:alt => "", :src => asset_path('soda_can.jpg')}/
-  / /.container
-/ /.content-section-a
+  .content-section-a
+    .container
+      .row
+        .col-lg-5.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            %i.fa.fa-thumbs-up
+            Better & More Efficient Management
+            %br>/
+            of your Yard's Image Capturing
+          %p.lead
+            Make it easier on your employees to gather pictures for compliance.
+        .col-lg-5.col-lg-offset-2.col-sm-6
+          %img.img-responsive{:alt => "", :src => asset_path('soda_can.jpg')}/
+    / /.container
+  / /.content-section-a
 
-.content-section-b
-  .container
-    .row
-      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
-        %hr.section-heading-spacer/
-        .clearfix
-        %h2.section-heading
-          %i.fa.fa-dollar
-          Peace of Mind Knowing
-          %br>/
-          All Ticket Images are Tracked & Recorded
-        %p.lead
-          Money is no longer left on the table due to compliance fines.
-      .col-lg-5.col-sm-pull-6.col-sm-6
-        %img.img-responsive{:alt => "", :src => asset_path('money.jpg')}/
-  / /.container
-/ /.content-section-b
+  .content-section-b
+    .container
+      .row
+        .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            %i.fa.fa-dollar
+            Peace of Mind Knowing
+            %br>/
+            All Ticket Images are Tracked & Recorded
+          %p.lead
+            Money is no longer left on the table due to compliance fines.
+        .col-lg-5.col-sm-pull-6.col-sm-6
+          %img.img-responsive{:alt => "", :src => asset_path('money.jpg')}/
+    / /.container
+  / /.content-section-b
 
 %a{:name => "contact"}
 .banner
