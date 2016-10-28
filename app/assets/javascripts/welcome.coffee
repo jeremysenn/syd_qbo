@@ -15,3 +15,14 @@ jQuery ->
       $.rails.enableElement $(this)
       return
     return
+
+  # Cycle through testimonials
+  tick = ->
+    $obj = $('.testimonial_listing .testimonials_box .testimonial_type')
+    $obj.first().fadeIn().delay(5000).fadeOut ->
+      $obj.first().insertAfter $obj.last()
+      tick()
+      return
+    return
+
+  tick()
