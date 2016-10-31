@@ -19,7 +19,7 @@ jQuery ->
   # Cycle through testimonials
   tick = ->
     $obj = $('.testimonial_listing .testimonials_box .testimonial_type')
-    $obj.first().fadeIn().delay(5000).fadeOut ->
+    $obj.first().fadeIn().delay(9000).fadeOut ->
       $obj.first().insertAfter $obj.last()
       tick()
       return
