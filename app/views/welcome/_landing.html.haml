@@ -11,135 +11,239 @@
             Scrap Yard Ticket Management Made Easy!
             -# %img.img-responsive{:alt => "", :src => image_path('APL_logo_transparent_261x157')}
           %hr.intro-divider/
-          -#
-            %ul.list-inline.intro-social-buttons
-              %li
-                %a.btn.btn-default.btn-lg{:href => "https://sdx.scrapyarddog.com/login"}
-                  %span.network-name 
-                    %i.fa.fa-lock
-                    DragonDog Login
-              %li
-                %a.btn.btn-default.btn-lg{:href => new_user_session_path}
-                  %span.network-name 
-                    %i.fa.fa-lock
-                    QuickBooks Login
           %ul.list-inline.intro-social-buttons
             %li
               = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
           %br
           %br
-          %h3
+          %a.btn.btn-default.btn-sm{href: '#more_info'}
             More Info
             %br
-            %i.fa.fa-chevron-circle-down.fa-2x
+            %i.fa.fa-chevron-down
   / /.container
 / /.intro-header
 
 / Page Content
 #more_info
+
 .content-section-b
   .container
-    %div.row
-      .col-sm-12.col-md-6
-        = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
-      .col-sm-12.col-md-6
+    .row
+      .col-xs-6
+        %h2.section-heading
+          DragonDog Free
+        %p.lead
+          DragonDog Free is an elegant web browser application allowing scrap professionals to record transactions, signatures, documents and pictures on 
+          TranAct’s shared server for free. Your secure company files are created on signup.   Computers and mobile devices can be used simultaneously with 
+          your single login.  
+        %p.lead
+          A list of default commodities is created which you’ll want to edit and price prior to getting started. 
+          All your data is available for management reporting and uploading to Leads Online. Your data is stored in a Scrap Dragon format so upgrades are 
+          available for the entire TranAct® product line.
+        .col-xs-4= image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
+        .text-center
+          %ul.list-inline
+            %li
+              %i.fa.fa-mobile-phone.fa-5x
+            %li
+              %i.fa.fa-tablet.fa-5x
+            %li
+              %i.fa.fa-desktop.fa-5x
+      .col-xs-6
         .testimonial_listing
           .testimonials_box
             .testimonial_placeholder{style: 'display:inline-block;'}
               .testimonial_type{style: 'display:none'}
-                %p.lead
+                %p.lead.text-muted
                   %i.fa.fa-quote-left
                   I have been using Scrap Yard Dog for almost 10 months. During this time, my company has had a
                   significant improvement in efficiency of the daily operations. This system allows us to store all of our
                   customer information, calculate the purchases or sales, and print the tickets needed, which had
                   previously been done manually.
                   %i.fa.fa-quote-right
-                %p.lead
+                %p.lead.text-muted
                   Kevin Hillman
                   %br
                   Bi-County
               .testimonial_type{style: 'display:none'}  
-                %p.lead
+                %p.lead.text-muted
                   %i.fa.fa-quote-left
                   We were all able to learn this system in days and are successful at using it on daily basis.
                   Though I enter my information manually, Scrapyard Dog comes with all the bells and
                   whistles, including drivers license scanner and thumb print scanner. Scrapyard Dog was
                   affordable for my company, but the quality is not lacking in any regard in comparison to
                   other scrap buying systems.
+                  %br
+                  %br
+                  The system works great and is so user friendly my mother that lives on planet Nebula can even use it!
                   %i.fa.fa-quote-right
-                %p.lead
+                %p.lead.text-muted
                   Kevin Jacques
                   %br
                   Ability Salvage
               .testimonial_type{style: 'display:none'}  
-                %p.lead
+                %p.lead.text-muted
                   %i.fa.fa-quote-left
                   My life before Scrap Yard Dog was very uncontrollable. Cash, checks, scrap tickets and documents were
                   never organized. This was the best thing I ever used in the industry, it works great and, the team behind
                   the scenes is great. Love the tech team!
                   %i.fa.fa-quote-right
-                %p.lead
+                %p.lead.text-muted
                   Bryan Greenburg
                   %br
                   Irving Recycleables
               .testimonial_type{style: 'display:none'}  
-                %p.lead
+                %p.lead.text-muted
                   %i.fa.fa-quote-left
                   TranAct has become a great partner in business for All Scrap Metals. The ability to take a photo with any device and later send it to be 
                   associated with a particular transaction is a tool that once you have it, you won’t be able to do without. We will absolutely recommend the 
                   TranAct team to handle any and all of its transaction documentation needs.
                   %i.fa.fa-quote-right
-                %p.lead
+                %p.lead.text-muted
                   Vincent P. Costanza III
                   %br
                   All Scrap Metals
+  / /.container
+/ /.content-section-b
+
+.content-section-b
+  .container
+    %div.row
+      -#
+        .col-xs-3
+          = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
+        .col-xs-9
+          #text-carousel.carousel.slide{"data-ride" => "carousel"}
+            / Wrapper for slides
+            .row
+              .col-xs-offset-3.col-xs-6
+                .carousel-inner
+                  .item.active
+                    .carousel-content
+                      %p.lead
+                        %i.fa.fa-quote-left
+                        I have been using Scrap Yard Dog for almost 10 months. During this time, my company has had a
+                        significant improvement in efficiency of the daily operations. This system allows us to store all of our
+                        customer information, calculate the purchases or sales, and print the tickets needed, which had
+                        previously been done manually.
+                        %i.fa.fa-quote-right
+                      %p.lead
+                        Kevin Hillman
+                        %br
+                        Bi-County
+                  .item
+                    .carousel-content
+                      %p.lead
+                        %i.fa.fa-quote-left
+                        We were all able to learn this system in days and are successful at using it on daily basis.
+                        Though I enter my information manually, Scrapyard Dog comes with all the bells and
+                        whistles, including drivers license scanner and thumb print scanner. Scrapyard Dog was
+                        affordable for my company, but the quality is not lacking in any regard in comparison to
+                        other scrap buying systems.
+                        %br
+                        %br
+                        The system works great and is so user friendly my mother that lives on planet Nebula can even use it!
+                        %i.fa.fa-quote-right
+                      %p.lead
+                        Kevin Jacques
+                        %br
+                        Ability Salvage
+            / Controls
+            %a.left.carousel-control{"data-slide" => "prev", :href => "#text-carousel"}
+              %i.fa.fa-chevron-left
+            %a.right.carousel-control{"data-slide" => "next", :href => "#text-carousel"}
+              %i.fa.fa-chevron-right
+
+        .col-xs-9
+          .testimonial_listing
+            .testimonials_box
+              .testimonial_placeholder{style: 'display:inline-block;'}
+                .testimonial_type{style: 'display:none'}
+                  %p.lead
+                    %i.fa.fa-quote-left
+                    I have been using Scrap Yard Dog for almost 10 months. During this time, my company has had a
+                    significant improvement in efficiency of the daily operations. This system allows us to store all of our
+                    customer information, calculate the purchases or sales, and print the tickets needed, which had
+                    previously been done manually.
+                    %i.fa.fa-quote-right
+                  %p.lead
+                    Kevin Hillman
+                    %br
+                    Bi-County
+                .testimonial_type{style: 'display:none'}  
+                  %p.lead
+                    %i.fa.fa-quote-left
+                    We were all able to learn this system in days and are successful at using it on daily basis.
+                    Though I enter my information manually, Scrapyard Dog comes with all the bells and
+                    whistles, including drivers license scanner and thumb print scanner. Scrapyard Dog was
+                    affordable for my company, but the quality is not lacking in any regard in comparison to
+                    other scrap buying systems.
+                    %br
+                    %br
+                    The system works great and is so user friendly my mother that lives on planet Nebula can even use it!
+                    %i.fa.fa-quote-right
+                  %p.lead
+                    Kevin Jacques
+                    %br
+                    Ability Salvage
+                .testimonial_type{style: 'display:none'}  
+                  %p.lead
+                    %i.fa.fa-quote-left
+                    My life before Scrap Yard Dog was very uncontrollable. Cash, checks, scrap tickets and documents were
+                    never organized. This was the best thing I ever used in the industry, it works great and, the team behind
+                    the scenes is great. Love the tech team!
+                    %i.fa.fa-quote-right
+                  %p.lead
+                    Bryan Greenburg
+                    %br
+                    Irving Recycleables
+                .testimonial_type{style: 'display:none'}  
+                  %p.lead
+                    %i.fa.fa-quote-left
+                    TranAct has become a great partner in business for All Scrap Metals. The ability to take a photo with any device and later send it to be 
+                    associated with a particular transaction is a tool that once you have it, you won’t be able to do without. We will absolutely recommend the 
+                    TranAct team to handle any and all of its transaction documentation needs.
+                    %i.fa.fa-quote-right
+                  %p.lead
+                    Vincent P. Costanza III
+                    %br
+                    All Scrap Metals
       -#   
         .col-sm-12.col-md-4.col-md-offset-4
         -#
           %p.text-center
             %i.fa.fa-chevron-circle-up.fa-3x
-        = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
-    %div.row
-      %div.col-sm-12
-        .well
-          %h1.text-center DragonDOG Free
-          .lead
-            %p
-              DragonDOG Free is an elegant web browser application allowing scrap professionals to record transactions, signatures, documents and pictures on 
-              TranAct’s shared server for free. Your secure company files are created on signup.   Computers and mobile devices can be used simultaneously with 
-              your single login.  
-            %p
-              A list of default commodities is created which you’ll want to edit and price prior to getting started. 
-              All your data is available for management reporting and uploading to Leads Online. Your data is stored in a Scrap Dragon format so upgrades are 
-              available for the entire TranAct® product line.
-            -#
-              %p
-                Your DragonDOG company has a list of default commodities which you’ll want to edit and price prior to getting started.  All your data is available 
-                for management reporting and uploading to Leads Online. Your data is stored in a Scrap Dragon format so upgrades are available for the entire 
-                TranAct® product line.
-          .text-center
-            %ul.list-inline
-              %li
-                %i.fa.fa-mobile-phone.fa-5x
-              %li
-                %i.fa.fa-tablet.fa-5x
-              %li
-                %i.fa.fa-desktop.fa-5x
-      -#
-        %div.col-sm-6
+          = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
+    -#
+      %div.row
+        %div.col-sm-12
           .well
-            %h1.text-center The Smart Way to Buy Scrap
+            %h1.text-center DragonDog Free
             .lead
               %p
-                Forget hand writing tickets or clumsy programs, Dragon Dog's friendly interface can be used by anyone. Scale operators will be buying scrap 
-                within minutes of signup, and once entered, the data is available for management reporting and uploading to Leads Online.
+                DragonDog Free is an elegant web browser application allowing scrap professionals to record transactions, signatures, documents and pictures on 
+                TranAct’s shared server for free. Your secure company files are created on signup.   Computers and mobile devices can be used simultaneously with 
+                your single login.  
               %p
-                Dragon Dog is a FREE web interface for scrap yards to buy scrap using any mobile device or computer. Pictures can be taken with mobile device and added 
-                to tickets for compliance and retention. All data is hosted at our state-of-the-art data hosting facility. Easily 
-                view transactions and commodity reports for business planning and daily review.
+                A list of default commodities is created which you’ll want to edit and price prior to getting started. 
+                All your data is available for management reporting and uploading to Leads Online. Your data is stored in a Scrap Dragon format so upgrades are 
+                available for the entire TranAct® product line.
+              -#
+                %p
+                  Your DragonDog company has a list of default commodities which you’ll want to edit and price prior to getting started.  All your data is available 
+                  for management reporting and uploading to Leads Online. Your data is stored in a Scrap Dragon format so upgrades are available for the entire 
+                  TranAct® product line.
+            .text-center
+              %ul.list-inline
+                %li
+                  %i.fa.fa-mobile-phone.fa-5x
+                %li
+                  %i.fa.fa-tablet.fa-5x
+                %li
+                  %i.fa.fa-desktop.fa-5x
+
       .text-center
         %p
-          =# link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
           = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
 
     %div.row
@@ -157,7 +261,15 @@
               %li Easily Edit Customers
               %li Take Pictures with Mobile Device
               %li Easy Ticket Management
-        = image_tag('SYD-Home-Screen.png', class: 'img-responsive center-block thumbnail')
+        =# image_tag('SYD-Home-Screen.png', class: 'img-responsive center-block thumbnail')
+        = link_to image_tag('SYD-Home-Screen.png', class: 'img-responsive center-block'), "#home_screen", "data-toggle" => "modal", :alt => "Image", class: 'thumbnail'
+        %div{:id => "home_screen", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %p= link_to "×", '#', :class => "close", "data-dismiss" => "modal"
+              .modal-body
+                = image_tag('SYD-Home-Screen.png', class: 'img-responsive center-block')
 
       %div.col-sm-4.col-md-4
         -#
@@ -172,7 +284,15 @@
               %li Search Feature for Quick Access
               %li Easily Add Ticket from Customer View
               %li Customer Reports
-        = image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block thumbnail')
+        =# image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block thumbnail')
+        = link_to image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block'), "#customer_screen", "data-toggle" => "modal", :alt => "Image", class: 'thumbnail'
+        %div{:id => "customer_screen", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %p= link_to "×", '#', :class => "close", "data-dismiss" => "modal"
+              .modal-body
+                = image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block')
         
       %div.col-sm-4.col-md-4
         -#
@@ -188,94 +308,121 @@
               %li Add Pictures via your Mobile Device
               %li Gather Customer Signatures
         =# image_tag('New-Ticket-Picture.png', class: 'img-responsive center-block')
-        %p= image_tag('Signature-ticket-picture.png', class: 'img-responsive center-block thumbnail')
+        =# image_tag('Signature-ticket-picture.png', class: 'img-responsive center-block thumbnail')
+        %p= link_to image_tag('Signature-ticket-picture.png', class: 'img-responsive center-block'), "#ticket_screen", "data-toggle" => "modal", :alt => "Image", class: 'thumbnail'
+        %div{:id => "ticket_screen", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %p= link_to "×", '#', :class => "close", "data-dismiss" => "modal"
+              .modal-body
+                = image_tag('New-Ticket-Picture.png', class: 'img-responsive center-block')
         %p.text-center= link_to 'Instruction Guide', "https://tranact.com/wp-content/uploads/2016/07/Dragon-Dog-Free-Instruction-Guide.pdf", class: 'btn btn-primary btn-lg', target: '_blank'
     / /.container
   / /.content-section-b
     
--#
-  .content-section-b
-    .container
-      .row
-        .col-lg-5.col-sm-6
-          %hr.section-heading-spacer/
-          .clearfix
-          %h2.section-heading
-            Scrap Yard DOG-DragonDOG using cameras and scanners.
-          %p.lead
-            A subscription to the TranAct® Proxy allows users to drive local devices directly from Scrap Yard DOG.
-        .col-lg-5.col-lg-offset-2.col-sm-6
-          = image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
-    / /.container
-  / /.content-section-b
-
-  %a{:name => "services"}
-  .content-section-a
-    .container
-      .row
-        .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
-          %hr.section-heading-spacer/
-          .clearfix
-          %h2.section-heading
-            Scrap Yard DOG–SDX user subscription
-          %p.lead
-            Scrap Dragon SDX users can implement their own DragonDOG web server and take advantage this mobile interface to enter tickets and manage images. 
-        .col-lg-5.col-sm-pull-6.col-sm-6
-          = image_tag('dragon_dog_logo_529x214.png', class: 'img-responsive')
-    / /.container
-  / /.content-section-a
-
-  .content-section-b
-    .container
-      .row
-        .col-lg-5.col-sm-6
-          %hr.section-heading-spacer/
-          .clearfix
-          %h2.section-heading
-            Scrap Yard DOG-JPEGger user subscription
-          %p.lead
-            JPEGger users with, can implement their own DOG WEB server and capture mobile images directly into JPEGger. 
-            Having DOG as the image interface streamlines document and image management for the entire organization.
-        .col-lg-5.col-lg-offset-2.col-sm-6
-          = image_tag("jpegger_banner.jpg", class: 'img-responsive')
-    / /.container
-  / /.content-section-b
-
-.jumbotron
+.content-section-b
   .container
-    .col-sm-4
-      %h2.section-heading.text-center
-        = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
-        %br
-        Scrap Yard DOG-DragonDOG using cameras and scanners
-      %p.lead.text-center
-        A subscription to the TranAct® Proxy allows users to drive local devices directly from Scrap Yard DOG.
-      %h2.text-center
-        Scrap Yard DOG–SDX user subscription
-      %p.text-center
-        Scrap Dragon SDX users can implement their own DragonDOG web server.
-      -#
-        = link_to 'Learn More', 'https://tranact.com/freescrapbuying/', class: 'btn btn-lg btn-default', target: '_blank'
-        = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
-    .col-sm-4
-      %h2.section-heading.text-center
+    .row
+      .col-lg-5.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          DragonDog adding cameras and scanners
+        %p.lead
+          A subscription to the TranAct® Proxy allows users to drive local devices directly from Scrap Yard Dog. 
+          %br
+          %b $99.00 per month
+        %p.lead
+          Self Hosted: SDX users can implement their own DragonDOG web server and take advantage of this mobile interface to manage tickets and images.
+      .col-lg-5.col-lg-offset-2.col-sm-6
+        = image_tag('dragon_dog_logo_529x214.png', class: 'img-responsive')
+  / /.container
+/ /.content-section-b
+
+%a{:name => "services"}
+.content-section-a
+  .container
+    .row
+      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          ScrapDragon single user
+        %p.lead
+          Includes one Dragon buy station license and releases all the power of Scrap Dragon Buy side while still using DOG on TranAct’s shared server.
+          %br
+          %b $199.00 per month
+        %p.lead
+          Self Hosted: Please see Pricing Matrix for hosted options or contact TranAct for on-site pricing.
+      .col-lg-5.col-sm-pull-6.col-sm-6
+        = image_tag('sdx_logo.png', class: 'img-responsive center-block')
+  / /.container
+/ /.content-section-a
+
+.content-section-b
+  .container
+    .row
+      .col-lg-5.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          Dog for JPEGger
+        %p.lead
+          Self Hosted: JPEGger users can implement their own DOG WEB server and capture mobile images directly into JPEGger.  
+          Using DOG as the image interface streamlines document and image management for the entire organization. 
+      .col-lg-5.col-lg-offset-2.col-sm-6
+        = image_tag("jpegger_banner.jpg", class: 'img-responsive')
+  / /.container
+/ /.content-section-b
+
+.content-section-a
+  .container
+    .row
+      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          QuickBooksOnline subscription
+        %p.lead
+          Scrap Yard Dog for QuickBooks stores data in QuickBooksOnline instead of Scrap Dragon’s shared server. Scrap Yard Dog for QuickBooks requires a 
+          Scrap Yard Dog and QuickBooksOnline subscription. 
+          %br
+          %b $99.00 per month
+      .col-lg-5.col-sm-pull-6.col-sm-6
         = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
-        %br
-        Scrap Yard DOG-QuickBooks Online subscription
-      %p.lead.text-center
-        Scrap Yard DOG for QuickBooks stores data in QuickBooks Online instead of Scrap Dragon’s shared server.  Scrap Yard Dog for QuickBooks requires a 
-        ScrapYardDog and QuickBooks Online subscription.
-      =# link_to 'Learn More', 'https://tranact.com/scrapyarddogqb/', class: 'btn btn-lg btn-default', target: '_blank'
-    .col-sm-4
-      %h2.section-heading.text-center
-        = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
-        %br
-        Scrap Yard DOG-JPEGger user subscription
-      -#
-        %h4.text-center The Easy Way to Snap Pictures
-      %p.lead.text-center
-        JPEGger users with, can implement their own DOG WEB server and capture mobile images directly into JPEGger.
-      =# link_to 'Learn More', 'https://tranact.com/scrapyarddog/', class: 'btn btn-lg btn-default', target: '_blank'
+  / /.container
+/ /.content-section-a
+
+-#
+  .jumbotron
+    .container
+      .col-sm-4
+        %h2.section-heading.text-center
+          = image_tag('scrap_dragon_logo_small.png', class: 'img-responsive center-block')
+          %br
+          Scrap Yard DOG-DragonDOG using cameras and scanners
+        %p.lead.text-center
+          A subscription to the TranAct® Proxy allows users to drive local devices directly from Scrap Yard DOG.
+        %h2.text-center
+          Scrap Yard DOG–SDX user subscription
+        %p.text-center
+          Scrap Dragon SDX users can implement their own DragonDOG web server.
+      .col-sm-4
+        %h2.section-heading.text-center
+          = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
+          %br
+          Scrap Yard DOG-QuickBooks Online subscription
+        %p.lead.text-center
+          Scrap Yard DOG for QuickBooks stores data in QuickBooks Online instead of Scrap Dragon’s shared server.  Scrap Yard Dog for QuickBooks requires a 
+          ScrapYardDog and QuickBooks Online subscription.
+      .col-sm-4
+        %h2.section-heading.text-center
+          = image_tag('jpegger_logo_small.jpg', class: 'img-responsive center-block')
+          %br
+          Scrap Yard DOG-JPEGger user subscription
+        %p.lead.text-center
+          JPEGger users can implement their own DOG WEB server and capture mobile images directly into JPEGger.
   
 -#
   %a{:name => "services"}
