@@ -288,15 +288,14 @@
               %li Search Feature for Quick Access
               %li Easily Add Ticket from Customer View
               %li Customer Reports
-        =# image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block thumbnail')
-        = link_to image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block'), "#customer_screen", "data-toggle" => "modal", :alt => "Image", class: 'thumbnail'
+        = link_to image_tag('customers_list.png', class: 'img-responsive center-block'), "#customer_screen", "data-toggle" => "modal", :alt => "Image", class: 'thumbnail'
         %div{:id => "customer_screen", :class => "modal fade", :tabindex => "-1", :style => "display:none;"}
           .modal-dialog
             .modal-content
               .modal-header
                 %p= link_to "×", '#', :class => "close", "data-dismiss" => "modal"
               .modal-body
-                = image_tag('Customer-Listings-620x1024.png', class: 'img-responsive center-block')
+                = image_tag('customers_list.png', class: 'img-responsive center-block')
         
       %div.col-sm-4.col-md-4
         -#
