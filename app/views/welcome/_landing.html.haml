@@ -29,7 +29,7 @@
 .content-section-b
   .container
     .row
-      .col-xs-6
+      .col-xs-12.col-sm-6
         %h2.section-heading
           DragonDog Free
         %p.lead
@@ -49,7 +49,7 @@
               %i.fa.fa-tablet.fa-5x
             %li
               %i.fa.fa-desktop.fa-5x
-      .col-xs-6
+      .col-xs-12.col-sm-6
         .testimonial_listing
           .testimonials_box
             .testimonial_placeholder{style: 'display:inline-block;'}
@@ -85,6 +85,12 @@
                   %i.fa.fa-quote-right
                 %p.lead.text-muted
                   Local Scrapper
+                %br
+                %br
+                %br
+                %br
+                %br
+                %br
               .testimonial_type{style: 'display:none'}  
                 %p.lead.text-muted
                   %i.fa.fa-quote-left
@@ -96,6 +102,7 @@
                   Bryan Greenburg
                   %br
                   Irving Recycleables
+                %br
               .testimonial_type{style: 'display:none'}  
                 %p.lead.text-muted
                   %i.fa.fa-quote-left
@@ -107,6 +114,8 @@
                   Vincent P. Costanza III
                   %br
                   All Scrap Metals
+          
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "315", :src => "https://www.youtube.com/embed/_6VGxfG1BRY", :width => '100%'}
   / /.container
 / /.content-section-b
 
@@ -358,7 +367,8 @@
           %b $199.00 per month
         %p.lead
           Self Hosted: Please see 
-          = link_to 'Pricing Matrix', "https://tranact.com/wp-content/uploads/2016/07/Software-Price-List-Hosted-2.pdf", target: '_blank'
+          =# link_to 'Pricing Matrix', "https://tranact.com/wp-content/uploads/2016/07/Software-Price-List-Hosted-2.pdf", target: '_blank'
+          = link_to 'Pricing Matrix', "https://tranact.com/wp-content/uploads/2016/07/Software-Price-List-Hosted.pdf", target: '_blank'
           for hosted options or contact TranAct for on-site pricing.
       .col-lg-5.col-sm-pull-6.col-sm-6
         = image_tag('sdx_logo.png', class: 'img-responsive center-block')
