@@ -5,15 +5,21 @@
     .row
       .col-lg-12
         .intro-message
+          %h3
+            From the team that brought you
+            %a{href: 'https://tranact.com/products/scrap-dragon-x/', style: "color: white;"}
+              Scrap Dragon
           %h1 
             Scrap Yard Dog
           %h3 
-            Scrap Yard Ticket Management Made Easy!
+            Mobile Ticket Management Made Easy!
             -# %img.img-responsive{:alt => "", :src => image_path('APL_logo_transparent_261x157')}
           %hr.intro-divider/
           %ul.list-inline.intro-social-buttons
             %li
               = link_to 'Sign Up for Free!', 'https://sdx.scrapyarddog.com/signup', class: 'btn btn-lg btn-warning'
+            %li
+              = link_to 'Log in now', 'https://sdx.scrapyarddog.com/l', class: 'btn btn-lg btn-default'
           %br
           %br
           %a.btn.btn-default.btn-sm{href: '#more_info'}
@@ -31,15 +37,18 @@
     .row
       .col-xs-12.col-sm-6
         %h2.section-heading
-          DragonDog Free
+          Scrap Yard Dog Free
         %p.lead
-          DragonDog Free is an elegant web browser application allowing scrap professionals to record transactions, signatures, documents and pictures on 
+          Scrap Yard Dog Free is an elegant web browser application allowing scrap professionals to record transactions, signatures, documents and pictures on 
           TranAct’s shared server for free. Your secure company files are created on signup.   Computers and mobile devices can be used simultaneously with 
           your single login.  
         %p.lead
           A list of default commodities is created which you’ll want to edit and price prior to getting started. 
-          All your data is available for management reporting and uploading to Leads Online. Your data is stored in a Scrap Dragon format so upgrades are 
-          available for the entire TranAct® product line.
+          All your data is available for management reporting and uploading to Leads Online. Your data is stored in a 
+          = link_to "Scrap Dragon", 'https://tranact.com/products/scrap-dragon-x/'
+          format so upgrades are available for the entire 
+          = link_to "TranAct®", 'http://tranact.com/'
+          product line.
         .col-xs-4= image_tag("syd_transparent_metal_logo_624x351.jpg", class: 'img-responsive')
         .text-center
           %ul.list-inline
@@ -115,7 +124,7 @@
                   %br
                   All Scrap Metals
           
-        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "315", :src => "https://www.youtube.com/embed/WZ5WYWGjEE4", :width => '100%'}
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "315", :src => "https://www.youtube.com/embed/B2z_uqNU8IQ", :width => '100%'}
   / /.container
 / /.content-section-b
 
@@ -329,6 +338,9 @@
                 %p= link_to "×", '#', :class => "close", "data-dismiss" => "modal"
               .modal-body
                 = image_tag('New-Ticket-Picture.png', class: 'img-responsive center-block')
+    .col-xs-12.col-sm-6.col-md-offset-3
+      %iframe{:allowfullscreen => "", :frameborder => "0", :height => "315", :src => "https://www.youtube.com/embed/WZ5WYWGjEE4", :width => '100%'}
+      -#
         %p.text-center= link_to 'Instruction Guide', "https://tranact.com/wp-content/uploads/2016/07/Dragon-Dog-Free-Instruction-Guide.pdf", class: 'btn btn-primary btn-lg', target: '_blank'
     / /.container
   / /.content-section-b
@@ -340,15 +352,35 @@
         %hr.section-heading-spacer/
         .clearfix
         %h2.section-heading
-          DragonDog adding cameras and scanners
-        %p.lead
-          A subscription to the TranAct® Proxy allows users to drive local devices directly from Scrap Yard Dog. 
-          %br
-          %b $99.00 per month
-        %p.lead
-          Self Hosted: SDX users can implement their own DragonDOG web server and take advantage of this mobile interface to manage tickets and images.
+          Integrated with Devices & Peripherals
+        %ul
+          %li
+            %p.lead
+              All the great features of Scrap Yard Dog
+          %li
+            %p.lead
+              Connect to scales, printers, cameras, etc.
+          %li
+            %p.lead
+              Connect to devices for only $99/month
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "315", :src => "https://www.youtube.com/embed/_zqNwUYAIRE", :width => '100%'}
+      
       .col-lg-5.col-lg-offset-2.col-sm-6
-        = image_tag('dragon_dog_logo_529x214.png', class: 'img-responsive')
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          Integrated with QuickBooks Online
+        %ul
+          %li
+            %p.lead
+              All the great features of Scrap Yard Dog
+          %li
+            %p.lead
+              Integrated with QuickBooks for only $99/month
+          %br
+          %br
+        =# image_tag('quickbooks_logo_small.png', class: 'img-responsive')
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "315", :src => "https://www.youtube.com/embed/-d-u-8DrRc0", :width => '100%'}
   / /.container
 / /.content-section-b
 
@@ -356,22 +388,33 @@
 .content-section-a
   .container
     .row
-      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+      .col-lg-5.col-sm-6
         %hr.section-heading-spacer/
         .clearfix
         %h2.section-heading
-          ScrapDragon single user
-        %p.lead
-          Includes one Dragon buy station license and releases all the power of Scrap Dragon Buy side while still using DOG on TranAct’s shared server.
-          %br
-          %b $199.00 per month
-        %p.lead
-          Self Hosted: Please see 
-          =# link_to 'Pricing Matrix', "https://tranact.com/wp-content/uploads/2016/07/Software-Price-List-Hosted-2.pdf", target: '_blank'
-          = link_to 'Pricing Matrix', "https://tranact.com/wp-content/uploads/2016/07/Software-Price-List-Hosted.pdf", target: '_blank'
-          for hosted options or contact TranAct for on-site pricing.
-      .col-lg-5.col-sm-pull-6.col-sm-6
-        = image_tag('sdx_logo.png', class: 'img-responsive center-block')
+          Scrap Dragon Xtreme + JPEGger
+        %ul
+          %li
+            %p.lead
+              For customers with Scrap Dragon Xtreme and JPEGger
+          %li
+            %p.lead
+              Utilize all the features of Scrap Yard Dog for only $99/month
+        = image_tag('dragon_dog_logo_529x214.png', class: 'img-responsive')
+      
+      .col-lg-5.col-lg-offset-2.col-sm-6
+        %hr.section-heading-spacer/
+        .clearfix
+        %h2.section-heading
+          Scrap Dragon Extreme CLOUD HOSTED
+        %ul
+          %li
+            %p.lead
+              For customers with Scrap Dragon Xtreme Cloud Hosted
+          %li
+            %p.lead
+              Utilize all the features of Scrap Yard Dog for FREE!
+        = image_tag('dragon_dog_logo_529x214.png', class: 'img-responsive')
   / /.container
 / /.content-section-a
 
@@ -382,32 +425,49 @@
         %hr.section-heading-spacer/
         .clearfix
         %h2.section-heading
-          Dog for JPEGger
-        %p.lead
-          Self Hosted: JPEGger users can implement their own DOG WEB server and capture mobile images directly into JPEGger.  
-          Using DOG as the image interface streamlines document and image management for the entire organization. 
+          Scrap Dragon Classic + JPEGger
+        %ul
+          %li
+            %p.lead
+              For customers with Scrap Dragon Classic and JPEGger
+          %li
+            %p.lead
+              Attach photos to existing tickets on the fly for only $99/month
+      
       .col-lg-5.col-lg-offset-2.col-sm-6
-        = image_tag("jpegger_banner.jpg", class: 'img-responsive')
-  / /.container
-/ /.content-section-b
-
-.content-section-a
-  .container
-    .row
-      .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
         %hr.section-heading-spacer/
         .clearfix
         %h2.section-heading
-          QuickBooksOnline subscription
-        %p.lead
-          Scrap Yard Dog for QuickBooks stores data in QuickBooksOnline instead of Scrap Dragon’s shared server. Scrap Yard Dog for QuickBooks requires a 
-          Scrap Yard Dog and QuickBooksOnline subscription. 
-          %br
-          %b $99.00 per month
-      .col-lg-5.col-sm-pull-6.col-sm-6
-        = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
+          Container Fetch Pic List
+        %ul
+          %li
+            %p.lead
+              For customers with Scrap Dragon Classic and JPEGger
+          %li
+            %p.lead
+              Attach photos to existing tickets on the fly for only $99/month
+
   / /.container
-/ /.content-section-a
+/ /.content-section-b
+
+-#
+  .content-section-a
+    .container
+      .row
+        .col-lg-5.col-lg-offset-1.col-sm-push-6.col-sm-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            QuickBooksOnline subscription
+          %p.lead
+            Scrap Yard Dog for QuickBooks stores data in QuickBooksOnline instead of Scrap Dragon’s shared server. Scrap Yard Dog for QuickBooks requires a 
+            Scrap Yard Dog and QuickBooksOnline subscription. 
+            %br
+            %b $99.00 per month
+        .col-lg-5.col-sm-pull-6.col-sm-6
+          = image_tag('quickbooks_logo_small.png', class: 'img-responsive center-block')
+    / /.container
+  / /.content-section-a
 
 -#
   .jumbotron
@@ -529,24 +589,17 @@
       .col-lg-6
         %ul.list-inline.banner-social-buttons
           %li
-            %a.btn.btn-default.btn-lg{:href => "https://twitter.com/tranactsoftware", target: '_blank'}
-              %i.fa.fa-twitter.fa-fw
-              %span.network-name Twitter
-          %li
-            %a.btn.btn-default.btn-lg{:href => "https://www.facebook.com/tranactsoftware/?ref=aymt_homepage_panel", target: '_blank'}
+            %a.btn.btn-default.btn-lg{:href => "https://www.facebook.com/TranActScrapDragonSoftware/", target: '_blank'}
               %i.fa.fa-facebook.fa-fw
               %span.network-name Facebook
-    %br
-    .row
-      .col-lg-6
-      .col-lg-6
-        %ul.list-inline.banner-social-buttons
           %li
-            %a.btn.btn-default.btn-lg{:href => 'https://tranact.com/scrapyarddog/', target: '_blank'}
-              JPEGger
+            %a.btn.btn-default.btn-lg{:href => "mailto: info@tranact.com"}
+              %i.fa.fa-envelope.fa-fw
+              %span.network-name Email
           %li
-            %a.btn.btn-default.btn-lg{:href => 'https://tranact.com/scrapyarddogqb/', target: '_blank'}
-              QuickbooksOnline
+            %a.btn.btn-default.btn-lg{:href => "https://tranact.com", target: '_blank'}
+              %i.fa.fa-bolt.fa-fw
+              %span.network-name TranAct
     
   / /.container
 / /.banner
